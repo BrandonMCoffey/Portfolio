@@ -14,7 +14,7 @@ priority: 1
 
 Deaths Bloom is a first person horror puzzler made by a team of 40+ students at the University of Texas at Dallas. For the game, I worked as a Programmer on various level mechanics and the core player animation blueprint.
 
-[View Source Code on GitHub](https://github.com/metalac190/GameLab_ToborQuest){: target="_blank"}
+[View Source Code on GitHub](https://github.com/metalac190/GameLab_S23Game){: target="_blank"}
 
 <a href="hands-state-machine.jpg" target="_blank">![](hands-state-machine.jpg){: class="full gap03" }</a>
 

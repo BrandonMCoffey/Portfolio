@@ -37,6 +37,6 @@ Link to Abstract
 #### Oculus and Unity
 <a href="atec-lab.jpg" target="_blank">![](atec-lab.jpg){: class="full" }</a>
 
-For fun with a class project, I modeled the lab where the class was held, and demoed a simple multiplayer VR experience in the virtual version of the classroom.
+During a simple class project for a VR game, I decided to make the game more insteresting by modeling the lab where the class was held and adding very basic multiplayer. This made the assignment much more interesting and got the professor excited about what all could be done in a VR class (This was the professors first semester at UTD in the Animation and Games program).
 
 [View Side by Side with Actual Lab](https://www.linkedin.com/posts/activity-6980256837178720256-yti5){: target="_blank"}
