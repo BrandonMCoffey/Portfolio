@@ -1,5 +1,5 @@
 ---
 layout: gallery
 title: Portfolio
-permalink: /
+permalink: /portfolio/
 ---
