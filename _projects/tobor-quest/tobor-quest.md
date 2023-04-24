@@ -4,6 +4,7 @@ permalink: /projects/tobor-quest/
 title: Tobor Quest
 description: Whacky Car Platforming Game
 thumbnail: tobor-quest.jpg
+bordercolor: 605050
 tags: Unity
 role: Lead Programmer - Unity
 year: 2022

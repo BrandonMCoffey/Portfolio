@@ -4,6 +4,7 @@ permalink: /projects/deaths-bloom/
 title: Deaths Bloom
 description: A First Person Horror Puzzle Game
 thumbnail: level-02.jpg
+bordercolor: 505059
 tags: Unreal
 role: Programmer - Unreal Engine 5
 year: 2023

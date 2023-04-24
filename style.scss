@@ -14,6 +14,7 @@
   --body-color-light: #333;
   --body-color-lighter: #555;
   --body-link-color: #7788ee;
+  --body-link-color-dark: #415eff;
   --card-bg: #ccc;
   --card-bg-dark: #aaa;
  }
@@ -25,6 +26,7 @@
   --body-color-light: #ccc;
   --body-color-lighter: #aaa;
   --body-link-color: #55aaff;
+  --body-link-color-dark: #99ccff;
   --card-bg: #333;
   --card-bg-dark: #555;
   }
@@ -100,7 +102,7 @@ a {
   text-decoration: none;
 	cursor: pointer;
   &:hover, &:active {
-    color: var(--body-link-color);
+    color: var(--body-link-color-dark);
   }
 }
 
@@ -296,9 +298,16 @@ nav {
   display: block;
   border: 1px solid var(--card-bg-dark);
   border-radius: 0.375rem;
+  color: var(--body-color-light);
+  
 
   grid-row: span 2/span 2;
   padding: 1rem;
+}
+
+.project-grid-container:hover {
+  color: var(--body-color-dark);
+  box-shadow: 0 0 10px var(--card-bg);
 }
 
 .project-grid-image {
@@ -311,6 +320,10 @@ nav {
   font-weight: bold;
   font-size: 30px;
   margin: 0;
+}
+
+.project-grid-container:hover > .project-grid-title {
+  text-decoration: underline;
 }
 
 .project-grid-text {

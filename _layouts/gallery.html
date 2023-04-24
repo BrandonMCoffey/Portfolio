@@ -13,19 +13,15 @@ layout: default
 
   <div class="project-grid">
   {% for project in site.projects %}
-    <div class="project-grid-container">
-      <a href="{{ site.url }}{{ project.url }}">
+  <a href="{{ site.url }}{{ project.url }}">
+    <div class="project-grid-container" {% if project.bordercolor %}style="border: 1px solid #{{ project.bordercolor }}"{% endif %}>
         <img class="project-grid-image" src="{{ site.url }}{{ project.url }}{{ project.thumbnail }}" alt="Project Image">
-      </a>
-
-      <h1 class="project-grid-title">
-        <a href="{{ site.url }}{{ project.url }}">{{ project.title }}</a>
-      </h1>
-
-      <p class="project-grid-text">{{ project.description }}</p>
-      <p class="project-grid-text">{{ project.role }}</p>
-      <p class="project-grid-year">{{ project.year }}</p>
+        <h1 class="project-grid-title">{{ project.title }}</h1>
+        <p class="project-grid-text">{{ project.description }}</p>
+        <p class="project-grid-text">{{ project.role }}</p>
+        <p class="project-grid-year">{{ project.year }}</p>
     </div>
+  </a>
   {% endfor %}
   </div>
 </article>

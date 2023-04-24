@@ -8,18 +8,14 @@ layout: default
 
 <div class="project-grid">
 {% for project in site.projects %}
-    <div class="project-grid-container">
     <a href="{{ site.url }}{{ project.url }}">
-        <img class="project-grid-image" src="{{ site.url }}{{ project.url }}{{ project.thumbnail }}" alt="Project Image">
+        <div class="project-grid-container">
+            <img class="project-grid-image" src="{{ site.url }}{{ project.url }}{{ project.thumbnail }}" alt="Project Image">
+            <h1 class="project-grid-title">{{ project.title }}</h1>
+            <p class="project-grid-text">{{ project.description }}</p>
+            <p class="project-grid-text">{{ project.role }}</p>
+            <p class="project-grid-year">{{ project.year }}</p>
+        </div>
     </a>
-
-    <h1 class="project-grid-title">
-        <a href="{{ site.url }}{{ project.url }}">{{ project.title }}</a>
-    </h1>
-
-    <p class="project-grid-text">{{ project.description }}</p>
-    <p class="project-grid-text">{{ project.role }}</p>
-    <p class="project-grid-year">{{ project.year }}</p>
-    </div>
 {% endfor %}
 </div>

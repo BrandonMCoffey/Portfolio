@@ -4,6 +4,7 @@ permalink: /projects/lighting-and-rendering/
 title: Lighting and Visual FX
 description: Various Projects
 thumbnail: bedroom-lighting.jpg
+bordercolor: 595551
 tags: Maya Nuke Houdini Unreal
 role: Maya, Nuke, and Houdini
 year: 2023
