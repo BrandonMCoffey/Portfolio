@@ -1,6 +1,12 @@
-# frozen_string_literal: true
-
 source "https://rubygems.org"
-gem "jekyll", "~> 3.9.3"
 
-gem "github-pages", "~> 228", group: :jekyll_plugins
+# vanilla jekyll
+gem "github-pages"
+gem "webrick", "~> 1.7"
+
+# jekyll build optimization for windows
+gem "wdm", "~> 0.1.1", :platforms => [:mingw, :x64_mingw, :mswin]
+
+# plugins
+gem "jekyll-redirect-from"
+gem 'jekyll-seo-tag'
