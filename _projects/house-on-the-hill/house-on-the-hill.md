@@ -12,7 +12,9 @@ priority: 2
 
 <iframe class="full aspect16-9" src="https://www.youtube.com/embed/orr80JQBYS4?autoplay=1&mute=1&loop=1&list=PLRNKKzTiLuHRi-ELRREsIU_8ouRoAs2pe&index=1" allowfullscreen></iframe>
 
-House on the Hill is a digital first person adaptation of the board game Betrayal at House on the Hill by Avalon Hill. 
+House on the Hill is a digital first person adaptation of the board game: Betrayal at House on the Hill by Avalon Hill.
+
+[View Source Code on GitHub](https://github.com/BrandonMCoffey/Betrayal-Capstone){: target="_blank"}
 
 <br>
 
@@ -58,7 +60,7 @@ if (otherRoom.HasDoorWithOrientation(Room.ReverseOrientation(orientation)))
 else connections--;
 {% endhighlight %}
 
-Room Generation in Action
+Room Generation and Door Connections:
 
 <a href="room-generation.jpg" target="_blank">![](room-generation.jpg){: class="full" }</a>
 

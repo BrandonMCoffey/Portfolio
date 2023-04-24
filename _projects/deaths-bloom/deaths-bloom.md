@@ -12,8 +12,9 @@ priority: 1
 
 <a href="level-02.jpg" target="_blank">![](level-02.jpg){: class="full gap01" }</a>
 
-Deaths Bloom is a first person horror puzzler made by a team of 40+ students at the University of Texas at Dallas. 
-Game Description, Team, Role, etc.
+Deaths Bloom is a first person horror puzzler made by a team of 40+ students at the University of Texas at Dallas. For the game, I worked as a Programmer on various level mechanics and the core player animation blueprint.
+
+[View Source Code on GitHub](https://github.com/metalac190/GameLab_ToborQuest){: target="_blank"}
 
 <a href="hands-state-machine.jpg" target="_blank">![](hands-state-machine.jpg){: class="full gap03" }</a>
 
@@ -25,11 +26,11 @@ There were 85 individual animations in the game, most of which consisted of repe
 
 <a href="level-03.jpg" target="_blank">![](level-03.jpg){: class="full gap03" }</a>
 
-The third and final level of the game was the main level that I worked on. I talked with the level designer, artists, and animator on the level consistently, working to bring the level to life.
+The third and final level of the game was the main level that I worked on. I talked with the level designer, artists, and animators on the level consistently, working to bring the level to life. My focus was on the moondial in the center, the vine doors blocking the player's passage, and the monster's art and effect on the world.
 
 <a href="moondial.jpg" target="_blank">![](moondial.jpg){: class="full gap03" }</a>
 
-The Moondial is the main mechanic of level 3. Essentially, the player can pick up coins that represent the different phases of the moon and can place them on the dial. Then, when the dial is rotated towards a new moon, the ‘light’ from the moon is siphoned into the lantern, making the lantern brighter and the moon darker. This opens up new passages both by lighting them up and making vines move out of the way (Vines avoid light in the game).
+The Moondial is the main mechanic of level 3 which I designed alongside the level designer. Essentially, the player can pick up coins that represent the different phases of the moon and can place them on the dial. Then, when the dial is rotated towards a new moon, the ‘light’ from the moon is siphoned into the lantern, making the lantern brighter and the moon darker. This opens up new passages both by lighting them up and making vines move out of the way (Vines avoid light in the game).
 
 {% comment %}
 <a href="arveado.jpg" target="_blank">![](arveado.jpg){: class="full gap03" }</a>

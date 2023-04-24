@@ -12,7 +12,11 @@ priority: 3
 
 <iframe class="full aspect16-9" src="https://www.youtube.com/embed/sdNzyZh9RNU?autoplay=1&mute=1&loop=1&list=PLRNKKzTiLuHQo_nG3suXDMp9r3IJNDwYE" allowfullscreen></iframe>
 
-As Programming Lead of this fun, whacky physics game, my goal was to keep development fun and enjoyable, allowing for creative ideas to heavily influence the game, and to keep the team excited about the game. 
+As Programming Lead of this fun, whacky physics game, my goal was to keep development fun and enjoyable, allowing for creative ideas to heavily influence the game, and to keep the team excited about the game.
+
+[View Released Game](https://atec-animgames.com/game-lab){: target="_blank"}
+
+[View Source Code on GitHub](https://github.com/metalac190/GameLab_ToborQuest){: target="_blank"}
 
 <br>
 
