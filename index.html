@@ -9,12 +9,12 @@ layout: default
 <div class="project-grid">
 {% for project in site.projects %}
     <div class="project-grid-container">
-    <a href="{{ site.baseurl }}{{ project.url }}">
-        <img class="project-grid-image" src="{{ site.baseurl }}{{ project.url }}{{ project.thumbnail }}" alt="Project Image">
+    <a href="{{ site.url }}{{ project.url }}">
+        <img class="project-grid-image" src="{{ site.url }}{{ project.url }}{{ project.thumbnail }}" alt="Project Image">
     </a>
 
     <h1 class="project-grid-title">
-        <a href="{{ site.baseurl }}{{ project.url }}">{{ project.title }}</a>
+        <a href="{{ site.url }}{{ project.url }}">{{ project.title }}</a>
     </h1>
 
     <p class="project-grid-text">{{ project.description }}</p>
