@@ -1,7 +1,7 @@
 ---
 layout: project
-permalink: /projects/deaths-bloom/
-title: Deaths Bloom
+permalink: /projects/death-bloom/
+title: Death Bloom
 description: A First Person Horror Puzzle Game
 thumbnail: level-02.jpg
 bordercolor: 505059
@@ -13,7 +13,7 @@ priority: 1
 
 <a href="level-02.jpg" target="_blank">![](level-02.jpg){: class="full gap01" }</a>
 
-Deaths Bloom is a first person horror puzzler made by a team of 40+ students at the University of Texas at Dallas. For the game, I worked as a Programmer on various level mechanics and the core player animation blueprint.
+Death Bloom is a first person horror puzzler made by a team of 40+ students at the University of Texas at Dallas. For the game, I worked as a Programmer on various level mechanics and the core player animation blueprint.
 
 [View Source Code on GitHub](https://github.com/metalac190/GameLab_S23Game){: target="_blank"}
 
