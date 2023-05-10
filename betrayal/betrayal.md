@@ -1,6 +1,6 @@
 ---
 layout: capstone
-permalink: /betrayal/
+permalink: /betrayal2/
 title: House on the Hill Capstone
 description: Multiplayer Exploration Game
 thumbnail: room-generation.jpg

@@ -1,6 +1,8 @@
 ---
 layout: project
 permalink: /projects/death-bloom/
+gallery: true
+
 title: Death Bloom
 description: A First Person Horror Puzzle Game
 thumbnail: level-02.jpg

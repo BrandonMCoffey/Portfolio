@@ -1,6 +1,8 @@
 ---
 layout: project
 permalink: /projects/maya-python-qt-tools/
+gallery: false
+
 title: Maya Python QT Tools
 description: Various Scripts
 thumbnail: 

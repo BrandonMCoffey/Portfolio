@@ -1,6 +1,8 @@
 ---
 layout: project
 permalink: /projects/lighting-and-rendering/
+gallery: true
+
 title: Lighting and Visual FX
 description: Various Projects
 thumbnail: bedroom-lighting.jpg

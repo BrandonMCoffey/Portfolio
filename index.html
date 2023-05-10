@@ -3,13 +3,14 @@ layout: default
 ---
 
 <h1>Portfolio</h1>
-    
+
 <br>
 
 <div class="project-grid">
-{% for project in site.projects %}
+    {% for project in site.projects %}
+    {% if project.gallery %}
     <a href="{{ site.url }}{{ project.url }}">
-        <div class="project-grid-container" {% if project.bordercolor %}style="border: 1px solid #{{ project.bordercolor }}"{% endif %}>
+        <div class="project-grid-container" {% if project.bordercolor %}style="border: 1px solid #{{ project.bordercolor }}" {% endif %}>
             <img class="project-grid-image" src="{{ site.url }}{{ project.url }}{{ project.thumbnail }}" alt="Project Image">
             <h1 class="project-grid-title">{{ project.title }}</h1>
             <p class="project-grid-text">{{ project.description }}</p>
@@ -17,5 +18,6 @@ layout: default
             <p class="project-grid-year">{{ project.year }}</p>
         </div>
     </a>
-{% endfor %}
+    {% endif %}
+    {% endfor %}
 </div>

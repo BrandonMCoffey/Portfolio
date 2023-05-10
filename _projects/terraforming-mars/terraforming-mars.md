@@ -1,6 +1,8 @@
 ---
 layout: project
 permalink: /projects/terraforming-mars/
+gallery: true
+
 title: Terraforming Mars
 description: Terraforming Mars Digital Adaptation
 thumbnail: terraforming-mars.jpg

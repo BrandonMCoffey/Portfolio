@@ -1,6 +1,8 @@
 ---
 layout: project
 permalink: /projects/tobor-quest/
+gallery: true
+
 title: Tobor Quest
 description: Whacky Car Platforming Game
 thumbnail: tobor-quest.jpg

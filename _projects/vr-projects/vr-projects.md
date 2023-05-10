@@ -1,6 +1,8 @@
 ---
 layout: project
 permalink: /projects/vr-projects/
+gallery: true
+
 title: VR Projects
 description: Various Virtual Reality Projects
 thumbnail: atec-lab.jpg
