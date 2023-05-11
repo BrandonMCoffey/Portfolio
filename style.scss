@@ -8,15 +8,15 @@
 /* LIGHT DARK */
 
 :root {
-  --body-bg: #eee;
-  --body-color-dark: #000;
-  --body-color: #222;
-  --body-color-light: #333;
-  --body-color-lighter: #555;
-  --body-link-color: #7788ee;
-  --body-link-color-dark: #415eff;
-  --card-bg: #ccc;
-  --card-bg-dark: #aaa;
+  --body-bg: #222;
+  --body-color-dark: #fff;
+  --body-color: #eee;
+  --body-color-light: #ccc;
+  --body-color-lighter: #aaa;
+  --body-link-color: #55aaff;
+  --body-link-color-dark: #99ccff;
+  --card-bg: #333;
+  --card-bg-dark: #555;
  }
  @media (prefers-color-scheme: dark) {
   :root {
