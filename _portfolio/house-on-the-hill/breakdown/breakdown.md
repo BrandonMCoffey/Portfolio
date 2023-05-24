@@ -1,13 +1,13 @@
 ---
 layout: portfolio-page
-permalink: /projects/house-on-the-hill/breakdown/
+permalink: /portfolio/house-on-the-hill/breakdown/
 title: House on the Hill Breakdown
 description: A breakdown of House on the Hill, a First Person Multiplayer Exploration Game.
 gallery: false
 ---
 
 
-[Back to House on the Hill Game Page](/projects/house-on-the-hill/)
+[Back to House on the Hill Game Page](/portfolio/house-on-the-hill/)
 
 <br>
 

@@ -1,7 +1,8 @@
 ---
 layout: portfolio-page
-permalink: /projects/lighting-and-rendering/
+permalink: /portfolio/lighting-and-rendering/
 gallery: true
+priority: 4
 
 title: Lighting and Visual FX
 tagline: Various Projects
@@ -11,7 +12,6 @@ bordercolor: 595551
 tags: Maya Nuke Houdini Unreal
 role: Maya, Nuke, and Houdini
 year: 2023
-priority: 4
 ---
 
 <br>

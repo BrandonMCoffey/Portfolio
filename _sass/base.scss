@@ -20,18 +20,6 @@ body {
     font: 18px/1.4 $helvetica;
 }
 
-.container, .container {
-    margin: 0 auto;
-    max-width: 96rem;
-    padding-left: 2rem;
-    padding-right: 2rem;
-    width: 100%;
-
-    @include mobile-large {
-    max-width: 64rem;
-    }
-}
-
 h1, h2, h3, h4, h5, h6 {
     font-family: $helveticaNeue;
     color: var(--body-color);

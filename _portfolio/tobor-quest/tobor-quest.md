@@ -1,7 +1,8 @@
 ---
 layout: portfolio-page
-permalink: /projects/tobor-quest/
+permalink: /portfolio/tobor-quest/
 gallery: true
+priority: 3
 
 title: Tobor Quest
 tagline: Whacky Car Platforming Game
@@ -11,7 +12,6 @@ bordercolor: 595050
 tags: Unity
 role: Lead Programmer - Unity
 year: 2022
-priority: 3
 ---
 
 <iframe class="full aspect16-9" src="https://www.youtube.com/embed/sdNzyZh9RNU?autoplay=1&mute=1&loop=1&list=PLRNKKzTiLuHQo_nG3suXDMp9r3IJNDwYE" allowfullscreen></iframe>

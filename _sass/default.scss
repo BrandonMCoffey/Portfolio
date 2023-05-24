@@ -3,14 +3,32 @@
     border-bottom: 1px solid var(--card-bg);
 }
 
-.masthead {
+.masthead, .masthead-full {
     padding: 20px 0;
-    max-width: 1000px;
     margin: 0 auto;
 
     @include mobile {
     text-align: center;
     }
+}
+
+.masthead {
+    max-width: 1000px;
+}
+
+.container, .container-full {
+    margin: 0 auto;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    width: 100%;
+
+    @include mobile-large {
+    max-width: 64rem;
+    }
+}
+
+.container {
+    max-width: 96rem;
 }
 
 .site-info {

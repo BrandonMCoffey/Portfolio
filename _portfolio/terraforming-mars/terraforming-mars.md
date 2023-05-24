@@ -1,7 +1,8 @@
 ---
 layout: portfolio-page
-permalink: /projects/terraforming-mars/
+permalink: /portfolio/terraforming-mars/
 gallery: true
+priority: 8
 
 title: Terraforming Mars
 tagline: Terraforming Mars Digital Adaptation
@@ -10,7 +11,6 @@ thumbnail: terraforming-mars.jpg
 tags: Unity
 role: Solo Project
 year: 2021
-priority: 8
 ---
 
 <iframe class="full aspect16-9" src="https://www.youtube.com/embed/sdNzyZh9RNU?autoplay=1&mute=1&loop=1&list=PLRNKKzTiLuHQa6ldwk-a0kdxk1QzkeKlO" allowfullscreen></iframe>

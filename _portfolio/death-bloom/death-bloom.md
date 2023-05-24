@@ -1,7 +1,8 @@
 ---
 layout: portfolio-page
-permalink: /projects/death-bloom/
+permalink: /portfolio/death-bloom/
 gallery: true
+priority: 1
 
 title: Death Bloom
 tagline: A First Person Horror Puzzle Game
@@ -11,7 +12,6 @@ bordercolor: 505059
 tags: Unreal
 role: Programmer - Unreal Engine 5
 year: 2023
-priority: 1
 ---
 
 <a href="level-02.jpg" target="_blank">![](level-02.jpg){: class="full gap01" }</a>

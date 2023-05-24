@@ -22,7 +22,7 @@ footer-links:
 
 # Collections (Custom Pages)
 collections:
-  projects:
+  portfolio:
     output: true
     sort_by: priority
 

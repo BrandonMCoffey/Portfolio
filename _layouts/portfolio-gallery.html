@@ -11,16 +11,16 @@ layout: portfolio-default
 
   <br>
 
-  <div class="project-grid">
-    {% for project in site.projects %}
+  <div class="portfolio-grid">
+    {% for project in site.portfolio %}
     {% if project.gallery %}
     <a href="{{ site.url }}{{ project.url }}">
-      <div class="project-grid-container" {% if project.bordercolor %}style="border: 1px solid #{{ project.bordercolor }}" {% endif %}>
-        <img class="project-grid-image" src="{{ site.url }}{{ project.url }}{{ project.thumbnail }}" alt="Project Image">
-        <h1 class="project-grid-title">{{ project.title }}</h1>
-        <p class="project-grid-text">{{ project.tagline }}</p>
-        <p class="project-grid-text">{{ project.role }}</p>
-        <p class="project-grid-year">{{ project.year }}</p>
+      <div class="portfolio-grid-container" {% if project.bordercolor %}style="border: 1px solid #{{ project.bordercolor }}" {% endif %}>
+        <img class="portfolio-grid-image" src="{{ site.url }}{{ project.url }}{{ project.thumbnail }}" alt="Project Image">
+        <h1 class="portfolio-grid-title">{{ project.title }}</h1>
+        <p class="portfolio-grid-text">{{ project.tagline }}</p>
+        <p class="portfolio-grid-text">{{ project.role }}</p>
+        <p class="portfolio-grid-year">{{ project.year }}</p>
       </div>
     </a>
     {% endif %}

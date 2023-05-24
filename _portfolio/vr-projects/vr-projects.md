@@ -1,7 +1,8 @@
 ---
 layout: portfolio-page
-permalink: /projects/vr-projects/
+permalink: /portfolio/vr-projects/
 gallery: true
+priority: 7
 
 title: VR Projects
 tagline: Various Virtual Reality Projects
@@ -11,7 +12,6 @@ bordercolor: 505050
 tags: Unity Oculus Ultrahaptics
 role: Programmer and Technical Artist
 year: 2022
-priority: 7
 ---
 
 <br>

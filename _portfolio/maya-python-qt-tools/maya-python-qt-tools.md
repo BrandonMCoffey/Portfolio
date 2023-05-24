@@ -1,7 +1,8 @@
 ---
 layout: portfolio-page
-permalink: /projects/maya-python-qt-tools/
+permalink: /portfolio/maya-python-qt-tools/
 gallery: false
+priority: 6
 
 title: Maya Python QT Tools
 tagline: Various Scripts
@@ -10,8 +11,6 @@ thumbnail:
 tags: Maya
 role: 
 year: 2023
-priority: 6
-published: false
 ---
 
 [Image of Maya Rig side-by-side with Unreal Import]

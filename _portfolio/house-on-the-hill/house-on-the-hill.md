@@ -1,8 +1,9 @@
 ---
 layout: portfolio-page
-permalink: /projects/house-on-the-hill/
+permalink: /portfolio/house-on-the-hill/
 redirect_from: /betrayal
 gallery: true
+priority: 2
 
 title: House on the Hill
 tagline: Multiplayer Exploration Game
@@ -12,7 +13,6 @@ bordercolor: 505050
 tags: Unity
 role: Programmer - Unity
 year: 2023
-priority: 2
 ---
 
 
