@@ -4,7 +4,8 @@ permalink: /projects/lighting-and-rendering/
 gallery: true
 
 title: Lighting and Visual FX
-description: Various Projects
+tagline: Various Projects
+description: Various Lighting and Rendering Projects done in Maya, Houdini, and Nuke
 thumbnail: bedroom-lighting.jpg
 bordercolor: 595551
 tags: Maya Nuke Houdini Unreal

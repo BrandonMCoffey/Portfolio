@@ -4,7 +4,8 @@ permalink: /projects/tobor-quest/
 gallery: true
 
 title: Tobor Quest
-description: Whacky Car Platforming Game
+tagline: Whacky Car Platforming Game
+description: A Whacky Car Platforming Game developed by a team of 40+ students at UTD.
 thumbnail: tobor-quest.jpg
 bordercolor: 595050
 tags: Unity

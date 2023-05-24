@@ -5,8 +5,10 @@ redirect_from: /betrayal
 gallery: true
 
 title: House on the Hill
-description: Multiplayer Exploration Game
+tagline: Multiplayer Exploration Game
+description: A First Person Multiplayer Exploration Game that is a recreation of the board game, Betrayal at House on the Hill.
 thumbnail: start-room.jpg
+bordercolor: 505050
 tags: Unity
 role: Programmer - Unity
 year: 2023

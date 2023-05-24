@@ -2,6 +2,7 @@
 layout: page
 permalink: /projects/house-on-the-hill/breakdown/
 title: House on the Hill Breakdown
+description: A breakdown of House on the Hill, a First Person Multiplayer Exploration Game.
 gallery: false
 ---
 

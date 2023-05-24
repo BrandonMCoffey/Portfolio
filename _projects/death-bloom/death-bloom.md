@@ -4,7 +4,8 @@ permalink: /projects/death-bloom/
 gallery: true
 
 title: Death Bloom
-description: A First Person Horror Puzzle Game
+tagline: A First Person Horror Puzzle Game
+description: A First Person Horror Puzzle Game made in Unreal Engine with a team of 40+ students at UTD.
 thumbnail: level-02.jpg
 bordercolor: 505059
 tags: Unreal

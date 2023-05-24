@@ -4,7 +4,8 @@ permalink: /projects/terraforming-mars/
 gallery: true
 
 title: Terraforming Mars
-description: Terraforming Mars Digital Adaptation
+tagline: Terraforming Mars Digital Adaptation
+description: A digital adaptation of the board game, Terraforming Mars.
 thumbnail: terraforming-mars.jpg
 tags: Unity
 role: Solo Project

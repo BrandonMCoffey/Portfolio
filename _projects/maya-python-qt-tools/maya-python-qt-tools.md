@@ -4,7 +4,8 @@ permalink: /projects/maya-python-qt-tools/
 gallery: false
 
 title: Maya Python QT Tools
-description: Various Scripts
+tagline: Various Scripts
+description: 
 thumbnail: 
 tags: Maya
 role: 

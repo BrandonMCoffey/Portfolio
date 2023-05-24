@@ -4,8 +4,10 @@ permalink: /projects/vr-projects/
 gallery: true
 
 title: VR Projects
-description: Various Virtual Reality Projects
+tagline: Various Virtual Reality Projects
+description: A collection of Virtual Reality projects made in Unity with Oculus, MRTK, and UltraHaptic tools.
 thumbnail: atec-lab.jpg
+bordercolor: 505050
 tags: Unity Oculus Ultrahaptics
 role: Programmer and Technical Artist
 year: 2022
