@@ -1,5 +1,5 @@
 ---
-layout: project
+layout: portfolio-page
 permalink: /projects/maya-python-qt-tools/
 gallery: false
 

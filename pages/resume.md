@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: portfolio-page
 title: Resume
 permalink: /resume/
 ---

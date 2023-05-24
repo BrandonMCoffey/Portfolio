@@ -1,5 +1,5 @@
 ---
-layout: project
+layout: portfolio-page
 permalink: /projects/vr-projects/
 gallery: true
 

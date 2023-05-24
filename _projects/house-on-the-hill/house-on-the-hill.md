@@ -1,5 +1,5 @@
 ---
-layout: project
+layout: portfolio-page
 permalink: /projects/house-on-the-hill/
 redirect_from: /betrayal
 gallery: true
