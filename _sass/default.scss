@@ -1,0 +1,94 @@
+.wrapper-masthead {
+    margin-bottom: 25px;
+    border-bottom: 1px solid var(--card-bg);
+}
+
+.masthead {
+    padding: 20px 0;
+    max-width: 1000px;
+    margin: 0 auto;
+
+    @include mobile {
+    text-align: center;
+    }
+}
+
+.site-info {
+    float: left;
+
+    @include mobile {
+    float: none;
+    display: block;
+    margin: 0 auto;
+    }
+}
+
+.site-name {
+    margin: 0;
+    color: var(--body-color-light);
+    cursor: pointer;
+    font-family: $helveticaNeue;
+    font-weight: 300;
+    font-size: 28px;
+    letter-spacing: 1px;
+}
+
+.site-description {
+    margin: -5px 0 0 0;
+    color: var(--body-color-lighter);
+    font-size: 16px;
+
+    @include mobile {
+    margin: 3px 0;
+    }
+}
+
+nav {
+    float: right;
+    margin-top: 23px;
+    font-family: $helveticaNeue;
+    font-size: 18px;
+
+    @include mobile {
+    float: none;
+    margin-top: 9px;
+    display: block;
+    font-size: 16px;
+    }
+
+    a {
+    margin-left: 20px;
+    color: var(--body-color-light);
+    text-align: right;
+    font-weight: 300;
+    letter-spacing: 1px;
+
+    @include mobile {
+    margin: 0 10px;
+    color: var(--body-link-color);
+    }
+    }
+}
+
+.navbar-toggler {
+    @extend .navbar-toggler;
+    color: var(--text-color);
+    border-color: var(--text-color);
+}
+
+.navbar-toggler-icon {
+    @extend .navbar-toggler-icon;
+    background-image: escape-svg(url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'><path stroke='#000000' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/></svg>"));
+}
+
+.wrapper-footer {
+    margin-top: 50px;
+    border-top: 1px solid var(--card-bg-dark);
+    border-bottom: 1px solid var(--card-bg-dark);
+    background-color: var(--card-bg);
+}
+
+footer {
+    padding: 20px 0;
+    text-align: center;
+}

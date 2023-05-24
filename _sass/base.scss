@@ -1,0 +1,146 @@
+:root {
+    --body-bg: #222;
+    --body-color-dark: #fff;
+    --body-color: #eee;
+    --body-color-light: #ccc;
+    --body-color-lighter: #aaa;
+    --body-link-color: #55aaff;
+    --body-link-color-dark: #99ccff;
+    --card-bg: #333;
+    --card-bg-dark: #555;
+}
+
+html {
+    font-size: 100%;
+}
+
+body {
+    background-color: var(--body-bg);
+    color: var(--body-color-light) !important;
+    font: 18px/1.4 $helvetica;
+}
+
+.container, .container {
+    margin: 0 auto;
+    max-width: 96rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    width: 100%;
+
+    @include mobile-large {
+    max-width: 64rem;
+    }
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: $helveticaNeue;
+    color: var(--body-color);
+    font-weight: bold;
+
+    line-height: 1.7;
+    margin: 0.25em 0 5px 0;
+    padding: 0;
+
+    @include mobile {
+    line-height: 1.4;
+    }
+}
+
+h1 {
+    font-size: 30px;
+    a {
+    color: inherit;
+    }
+}
+
+h2 {
+    font-size: 24px;
+}
+
+h3 {
+    font-size: 22px;
+    margin: 0;
+}
+
+h4 {
+    font-size: 18px;
+    margin: 0;
+    font-weight: normal;
+    color: var(--body-color-lighter);
+}
+
+p {
+    margin: 5px 0;
+}
+
+a {
+    color: var(--body-link-color);
+    text-decoration: none;
+    cursor: pointer;
+    
+    &:hover, &:active {
+    color: var(--body-link-color-dark);
+    }
+}
+
+ul, ol {
+    margin: 15px 0;
+    padding-left: 30px;
+}
+
+ul {
+    list-style-type: disc;
+}
+
+ol {
+    list-style-type: decimal;
+}
+
+ol ul, ul ol, ul ul, ol ol {
+    margin: 0;
+}
+
+ul ul, ol ul {
+    list-style-type: circle;
+}
+
+em, i {
+    font-style: italic;
+}
+
+strong, b {
+    font-weight: bold;
+}
+
+img {
+    max-width: 100%;
+}
+
+// Fixes images in popup boxes from Google Translate
+.gmnoprint img {
+    max-width: none;
+}
+
+.date {
+    font-style: italic;
+    color: var(--body-color-lighter);
+}
+
+::-moz-selection {
+    color: var(--body-color-dark);
+    background: var(--card-bg-dark);
+}
+::selection {
+    color: var(--body-color-dark);
+    background: var(--card-bg-dark);
+}
+
+.clearfix:before,
+.clearfix:after {
+    content: " ";
+    display: table;
+}
+
+.clearfix:after {
+    clear: both;
+}
