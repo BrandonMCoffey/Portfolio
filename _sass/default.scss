@@ -1,6 +1,13 @@
-.wrapper-masthead {
+.wrapper-masthead, .wrapper-masthead-static {
     margin-bottom: 25px;
     border-bottom: 1px solid var(--card-bg);
+}
+
+.wrapper-masthead-static {
+    background-color: var(--body-bg);
+    box-shadow: 0 0 32px var(--body-bg);
+    position:fixed;
+    width: 100%;
 }
 
 .masthead, .masthead-full {

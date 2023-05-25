@@ -1,0 +1,63 @@
+---
+layout: recipe-default
+---
+
+<article class="page">
+    <div class="recipe-content">
+        <h4>{{ page.author }}</h4>
+        <h1>{{ page.title }}</h1>
+        {% assign totaltime = page.preptime | plus: page.resttime | plus: page.cooktime %}
+        {% assign hours = totaltime | divided_by: 60 %} {% assign minutes = totaltime | modulo: 60 %}
+        <p>
+            Total Time:
+            {% if hours == 1 %}1 hour{% endif %}{% if hours > 1 %}{{ hours }} hours{% endif %}
+            {% if minutes == 1 %}1 minute{% endif %}{% if minutes > 1 %}{{ minutes }} minutes{% endif %}
+        </p>
+        {% if page.preptime > 0 %}
+        {% assign totaltime = page.preptime %}
+        {% assign hours = totaltime | divided_by: 60 %} {% assign minutes = totaltime | modulo: 60 %}
+        <p>
+            Prep Time:
+            {% if hours == 1 %}1 hour{% endif %}{% if hours > 1 %}{{ hours }} hours{% endif %}
+            {% if minutes == 1 %}1 minute{% endif %}{% if minutes > 1 %}{{ minutes }} minutes{% endif %}
+        </p>
+        {% endif %}
+        {% if page.resttime > 0 %}
+        {% assign totaltime = page.resttime %}
+        {% assign hours = totaltime | divided_by: 60 %} {% assign minutes = totaltime | modulo: 60 %}
+        <p>
+            Rest Time:
+            {% if hours == 1 %}1 hour{% endif %}{% if hours > 1 %}{{ hours }} hours{% endif %}
+            {% if minutes == 1 %}1 minute{% endif %}{% if minutes > 1 %}{{ minutes }} minutes{% endif %}
+        </p>
+        {% endif %}
+        {% if page.cooktime > 0 %}
+        {% assign totaltime = page.cooktime %}
+        {% assign hours = totaltime | divided_by: 60 %} {% assign minutes = totaltime | modulo: 60 %}
+        <p>
+            Cook Time:
+            {% if hours == 1 %}1 hour{% endif %}{% if hours > 1 %}{{ hours }} hours{% endif %}
+            {% if minutes == 1 %}1 minute{% endif %}{% if minutes > 1 %}{{ minutes }} minutes{% endif %}
+        </p>
+        {% endif %}
+        <br>
+        <img class="small" src="{{ site.url }}/content/recipe-images/{{ page.thumbnail }}"
+            onerror="this.src='{{ site.url }}/content/recipe-images/default.jpg'" />
+        <br>
+        <br>
+        <h2>Ingredients</h2>
+        {% for ingredient in page.ingredients %}
+        <p>{{ ingredient }}</p>
+        {% endfor %}
+        <br>
+        <h2>Instructions</h2>
+        {% for step in page.instructions %}
+        <p>{{ forloop.index }}. {{ step }}</p>
+        {% endfor %}
+        <br>
+        {{ content }}
+        <br>
+    </div>
+    <br>
+    <br>
+</article>

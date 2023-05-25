@@ -25,6 +25,8 @@ collections:
   portfolio:
     output: true
     sort_by: priority
+  recipes:
+    output: true
 
 # Plugins
 plugins:
@@ -67,3 +69,5 @@ exclude:
   - LICENSE
   - README.md
   - CNAME
+  - recipe_convert.py
+  - recipe_data.txt

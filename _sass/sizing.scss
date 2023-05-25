@@ -19,6 +19,13 @@
     float: right;
 }
 
+.small {
+    width: 50%;
+    @include mobile {
+    width: 100%;
+    }
+}
+
 .gap01 {
     margin: 1em 0 0 0;
 }
@@ -33,6 +40,7 @@
 
 .aspect16-9 {
     aspect-ratio: 16 / 9; 
+    object-fit:contain;
 }
 
 .pdf-embed {

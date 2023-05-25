@@ -1,0 +1,35 @@
+---
+layout: recipe-default
+---
+
+<article class="gallery">
+    <h1>{{ page.title }}</h1>
+
+    <div class="entry">
+        {{ content }}
+    </div>
+
+    <br>
+
+    <div class="recipe-grid">
+        {% for recipe in site.recipes %}
+        {% if recipe.gallery %}
+        <a href="{{ site.url }}{{ recipe.url }}">
+            <div class="recipe-grid-container">
+                <img class="recipe-grid-image aspect16-9" src="{{ site.url }}/content/recipe-images/{{ recipe.thumbnail }}"
+                    onerror="this.src='{{ site.url }}/content/recipe-images/default.jpg'" alt="Recipe Image">
+                <h1 class="recipe-grid-title">{{ recipe.title }}</h1>
+                <p class="recipe-grid-text">{{ recipe.tagline }}</p>
+                {% assign totaltime = recipe.preptime | plus: recipe.resttime | plus: recipe.cooktime %}
+                {% assign hours = totaltime | divided_by: 60 %} {% assign minutes = totaltime | modulo: 60 %}
+                <p class="recipe-grid-text">
+                    {% if hours == 1 %}1 hour{% endif %}{% if hours > 1 %}{{ hours }} hours{% endif %}
+                    {% if minutes == 1 %}1 minute{% endif %}{% if minutes > 1 %}{{ minutes }} minutes{% endif %}
+                    &nbsp; | &nbsp; {{ recipe.cuisine }}
+                </p>
+            </div>
+        </a>
+        {% endif %}
+        {% endfor %}
+    </div>
+</article>
