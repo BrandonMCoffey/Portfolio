@@ -31,12 +31,24 @@ for (int i = 0; i < 4; i++)
         var orientation = Room.AddOrientation(localOrientation, (Orient)i);
         (int xOffset, int zOffset) = Room.GetOffset(orientation);
         var otherRoom = GetRoom(x + xOffset, z + zOffset);
-        if (!otherRoom) continue;
+        if (otherRoom == null)
+        {
+            continue;
+        }
+        
         if (otherRoom.HasDoorWithOrientation(Room.ReverseOrientation(orientation)))
+        {
             connections += orientation == connection ? 11 : 1;
-        else connections--;
+        }
+        else
+        {
+            connections--;
+        }
     }
-    if (connections == totalConnections) validRotations.Add((Orient)i);
+    if (connections == totalConnections)
+    {
+        validRotations.Add((Orient)i);
+    }
     else if (connections > totalConnections)
     {
         totalConnections = connections;
@@ -51,8 +63,13 @@ The door ‘connections’ value is increased or decreased depending on if a doo
 
 {% highlight csharp %}
 if (otherRoom.HasDoorWithOrientation(Room.ReverseOrientation(orientation)))
+{
     connections += orientation == connection ? 11 : 1;
-else connections--;
+}
+else
+{
+    connections--;
+}
 {% endhighlight %}
 
 Room Generation and Door Connections:

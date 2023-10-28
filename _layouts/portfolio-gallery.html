@@ -12,7 +12,8 @@ layout: portfolio-default
   <br>
 
   <div class="portfolio-grid">
-    {% for project in site.portfolio %}
+    {% assign projects = site.portfolio | sort: "priority" %}
+    {% for project in projects %}
     {% if project.gallery %}
     <a href="{{ site.url }}{{ project.url }}">
       <div class="portfolio-grid-container" {% if project.bordercolor %}style="border: 1px solid #{{ project.bordercolor }}" {% endif %}>

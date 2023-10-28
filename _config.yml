@@ -24,7 +24,6 @@ footer-links:
 collections:
   portfolio:
     output: true
-    sort_by: priority
 
 # Plugins
 plugins:
