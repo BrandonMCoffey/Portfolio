@@ -5,7 +5,7 @@ gallery: false
 priority: 1
 
 title: Game Lab Projects
-tagline: PorfolioPiece
+tagline: Collection of Four Projects from the UTD Game Lab
 description: A Portfolio Piece
 thumbnail: image.jpg
 tags: 

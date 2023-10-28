@@ -1,13 +1,13 @@
 ---
 layout: portfolio-page
 permalink: /portfolio/multicultural-mural/
-gallery: false
-priority: 1
+gallery: true
+priority: 8
 
 title: Multi-cultural Mural
 tagline: Augmented Reality Mural
 description: An Augmented Reality Piece to display the Multi-cultural Mural in Santa Fe, New Mexico, where it used to exist
-thumbnail: image.jpg
+thumbnail: mural-thumbnail.png
 tags: 
 role: Programmer
 year: 2023
