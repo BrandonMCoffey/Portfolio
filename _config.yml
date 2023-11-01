@@ -22,9 +22,8 @@ footer-links:
 
 # Collections (Custom Pages)
 collections:
-  portfolio:
+  projects:
     output: true
-    sort_by: priority
 
 # Plugins
 plugins:
