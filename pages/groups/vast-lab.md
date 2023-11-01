@@ -1,7 +1,7 @@
 ---
 layout: portfolio-gallery
 title: VAST Lab
-permalink: /vast-lab/
+permalink: /vast-lab
 filter: vastlab
 ---
 

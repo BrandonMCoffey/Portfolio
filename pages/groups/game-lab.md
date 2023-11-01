@@ -1,7 +1,7 @@
 ---
 layout: portfolio-gallery
 title: Game Lab
-permalink: /game-lab/
+permalink: /game-lab
 filter: gamelab
 ---
 
