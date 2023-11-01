@@ -20,11 +20,9 @@ year: 2022
 
 <iframe class="full aspect16-9" src="https://www.youtube.com/embed/sdNzyZh9RNU?autoplay=1&mute=1&loop=1&list=PLRNKKzTiLuHQo_nG3suXDMp9r3IJNDwYE" allowfullscreen></iframe>
 
-As Programming Lead of this fun and whacky car game, my goal was to keep development fun and enjoyable. I encouraged creative ideas and kept the team excited about the game by letting fun and whacky ideas come to life and bring that in as part of the final game. I communicated consistently with the design, art, and sound leads to make sure there were minimal hiccups and frustrations, and kept the development process enjoyable for a lot of people, consistely showing off what the programmers were up to and having laughs with other people on the team.
+Tobor Quest is a whacky time trial game where the player drives a food delivery robot to its destination as quickly as possible. The game was designed and developed at the [UTD Game Lab]({{site.url}}/game-lab/) over the course of three months.
 
-<br>
-
-[View other Game Lab games]({{site.url}}/game-lab/){: target="_blank"}
+As Programming Lead, my goal was to keep development fun and enjoyable. I encouraged creative ideas and kept the team excited about the game by letting fun and whacky ideas come to life and bring that in as part of the final game. I communicated consistently with the design, art, and sound leads to make sure there were minimal hiccups and frustrations, and kept the development process enjoyable for a lot of people, consistely showing off features and ideas from the programmers and having laughs with other people on the team.
 
 <br>
 

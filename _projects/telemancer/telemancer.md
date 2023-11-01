@@ -11,7 +11,7 @@ description: Journey into a fantasy world to solve ancient puzzles and unlock th
 thumbnail: telemancer-thumbnail.jpg
 tags: 
 role: Programmer
-year: 2023
+year: 2021
 ---
 
 # Telemancer: September's Story

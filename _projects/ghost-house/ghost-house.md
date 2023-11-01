@@ -10,8 +10,8 @@ tagline: Point and Click Narrative
 description: A Portfolio Piece
 thumbnail: ghost-house-icon.jpg
 tags: 
-role: Programmer
-year: 2023
+role: Lead Programmer
+year: 2022
 ---
 
 # Ghost House

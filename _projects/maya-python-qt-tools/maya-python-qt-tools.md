@@ -7,7 +7,7 @@ filters:
 title: Maya Python QT Tools
 tagline: Various Projects
 description: 
-thumbnail: rig_transplant.png
+thumbnail: kitty-city-example.png
 tags: Maya
 role: Python and Maya
 year: 2023
@@ -15,19 +15,31 @@ year: 2023
 
 # Maya Python QT Tools
 
-[Image of Maya Rig side-by-side with Unreal Import]
-To allow animators I worked with to export their Maya animations with custom rigs directly into Unreal Engine, I designed a tool to 
+<br>
 
-[Image of Stacker Tool]
-With python and Qt, I built a simple interface to select objects and stack them on each other based on their bounding box sizes.
+### Maya to Unity/Unreal Rig Exporter
+
+When exporting rigs and animations done in Autodesk Maya to Unreal Engine or Unity, any custom deform nodes or constraints are unable to normally be exported. This became apparent with my experience in [Death Bloom]({{site.url}}/projects/death-bloom/) and [Kitty City]({{site.url}}/projects/kitty-city/), when animators used custom rigs that they were used to, as they were not used to building rigs for game development. So, I created a tool, called CreateCompatibilityRig, which does the following:
+- Allows the user to specificy components of the source rig
+- Duplicates the entire joint structure and skinned mesh
+- Creates position and rotation constraints from the source joints to the new joints
+
+![](kitty-city-example.png){: class="full" }
+<p style="text-align:center"><i>Left: Source Maya Rig. Middle: Duplicated Joint Structure. Right: Output Mesh Compatible with Unity</i></p>
+
+<br>
+
+![](tool.png)
+
+Below is the code for the tool, which can be loaded into Maya and run with the 'run()' function. This opens a QT window, which is Maya's GUI interface, and all of the user interaction is through buttons and text fields.
 
 {% highlight python %}
 def run():
-    rigCreator = RigTransplant()
+    rigCreator = CreateCompatibilityRig()
     rigCreator.init_gui()
 
 
-class RigTransplant:
+class CreateCompatibilityRig:
     def __init__(self):
         self.windowName = 'unrealRigCreator'
         self.sourceJointsField = None
@@ -96,4 +108,7 @@ class RigTransplant:
                 cmds.scaleConstraint(sj[x], dj[x])
 {% endhighlight %}
 
-![](rig_transplant.png){: class="full" }
+{% comment %}
+[Image of Stacker Tool]
+With python and Qt, I built a simple interface to select objects and stack them on each other based on their bounding box sizes.
+{% endcomment %} 

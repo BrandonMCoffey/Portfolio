@@ -9,6 +9,7 @@ layout: portfolio-default
     <a {% if page.filter=="gallery" %} class="filter-button-selected" {% else %} class="filter-button" {% endif %} href="{{ site.url }}/projects/">Portfolio</a>
     <a {% if page.filter=="gamelab" %} class="filter-button-selected" {% else %} class="filter-button" {% endif %} href="{{ site.url }}/game-lab/">Game Lab</a>
     <a {% if page.filter=="vastlab" %} class="filter-button-selected" {% else %} class="filter-button" {% endif %} href="{{ site.url }}/vast-lab/">VAST Lab</a>
+    <a {% if page.filter=="milab" %} class="filter-button-selected" {% else %} class="filter-button" {% endif %} href="{{ site.url }}/mi-lab/">MI Lab</a>
     <a {% if page.filter=="any" %} class="filter-button-selected" {% else %} class="filter-button" {% endif %} href="{{ site.url }}/projects-all/">All</a>
   </div>
   {% endunless %}
@@ -22,8 +23,8 @@ layout: portfolio-default
   <div class="portfolio-grid">
     {% assign projects = site.projects | sort: "priority" %}
     {% for project in projects %}
-    {% if page.filter == "any" or project.filters contains page.filter %}
     {% unless project.hidden %}
+    {% if page.filter == "any" or project.filters contains page.filter %}
     <a href="{{ site.url }}{{ project.url }}">
       <div class="portfolio-grid-container" {% if project.bordercolor %}style="border: 1px solid #{{ project.bordercolor }}" {% endif %}>
         <img class="portfolio-grid-image" src="{{ site.url }}{{ project.url }}{{ project.thumbnail }}" alt="Project Image">
@@ -33,8 +34,8 @@ layout: portfolio-default
         <p class="portfolio-grid-year">{{ project.year }}</p>
       </div>
     </a>
-    {% endunless %}
     {% endif %}
+    {% endunless %}
     {% endfor %}
   </div>
 

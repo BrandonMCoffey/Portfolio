@@ -1,31 +1,22 @@
 ---
 layout: portfolio-page
-permalink: /projects/vr-projects/
+permalink: /projects/meta-twin/
 priority: 7
 filters:
 - gallery
+- milab
 
-title: VR Projects
-tagline: Various Projects
-description: A collection of Virtual Reality projects made in Unity with Oculus, MRTK, and UltraHaptic tools.
+title: Metatwin
+tagline: Digital Twins for Metaverse Collaboration
+description: A collection of Digital Twin projects for VR made in Unity with Oculus, MRTK, and UltraHaptic tools.
 thumbnail: atec-lab.jpg
 bordercolor: 505050
-tags: Unity Oculus Ultrahaptics
+tags: Unity Meta
 role: Programmer and Technical Artist
 year: 2022
 ---
 
 # VR Projects
-
-<br>
-
-###  Wind Visualization
-#### Oculus, Unity, and Ultrahaptics
-<iframe class="full aspect16-9" src="https://www.youtube.com/embed/PFHeb2d0LdI?autoplay=1&mute=1&loop=1&list=PLRNKKzTiLuHSRl2BjtAkN8wA_fSlHWb3t" allowfullscreen></iframe>
-
-For a research project I worked with a CS Graduate student to bring air tunnel wind data to a real-time visualization in VR with mid-air haptic feedback.
-
-[View Data Abstraction for Visual and Haptic Representations in Flow Visualization](https://dl.acm.org/doi/10.1145/3562939.3565651){: target="_blank"}
 
 <br>
 
