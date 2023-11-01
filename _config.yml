@@ -22,7 +22,7 @@ footer-links:
 
 # Collections (Custom Pages)
 collections:
-  portfolio:
+  projects:
     output: true
 
 # Plugins

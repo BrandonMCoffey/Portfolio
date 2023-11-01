@@ -44,3 +44,12 @@
     height:700px;
     }
 }
+
+.pdf-embed-short {
+    width:100%;
+    height:800px;
+
+    @include mobile {
+    height:600px;
+    }
+}
