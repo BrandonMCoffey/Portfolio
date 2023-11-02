@@ -15,11 +15,27 @@ year: 2021
 
 # Coffey Utils
 
+Coffey Utils is a package for Unity development that focuses on adding inspector attributes and generic resuable systems. Below are some examples of the package.
+
+[The package is available publicly on GitHub](https://github.com/BrandonMCoffey/CoffeyUtils/).
+
 <br>
 
 ### Attributes
 
+There are many attributes that come with the package, which are both intuitive and versitile.
+
 ![](attributes-demo.png)
+
+The most important one is a button attribute, which can be placed before any function to expose a button in the inspector that will run the function. This is useful for testing features and, in my opinion, should be a default feature within the Unity engine.
+
+The other attributes focus on controlling the inspector view, primarily to make the process simple for a designer. Fields can be set as read only, optional, or only shown if a specified boolean variable is set.
+
+There are also some aesthetic features such as highlighting a cell, or dynamically highlighting cells if, for instance, a required field has not been set, so it highlights red until a value is set.
+
+<br>
+
+The above image demonstrates these features, set up using the code below:
 
 {% highlight csharp %}
 [Header("Read Only")]
@@ -80,4 +96,15 @@ private void RedButton() { }
 
 ### Sound System
 
+A versitile sound system for sound effects and music is optionally included with the Coffey Utils package. This allows a designer to create scriptable objects to contain audio clips as the following:
+- A basic sound effect (SFX) with settings similar to an audio source's settings.
+- A randomized sound effect that randomly chooses an audio clip and has randomizable settings.
+- A music track that has settings for fading in and out and either looping or playing another music track instead of looping.
+
 ![](sound-system.png){: class="full"}
+
+<br>
+
+With these various scriptable objects, they can be played from a script with the Play() function or from a unity event in the inspector such as from a UI button.
+
+![](unity-event.png)
