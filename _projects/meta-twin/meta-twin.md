@@ -1,12 +1,12 @@
 ---
 layout: portfolio-page
 permalink: /projects/meta-twin/
-priority: 7
+priority: 8
 filters:
 - gallery
 - milab
 
-title: Metatwin
+title: MetaTwin
 tagline: Digital Twins for Metaverse Collaboration
 description: A collection of Digital Twin projects for VR made in Unity with Oculus, MRTK, and UltraHaptic tools.
 thumbnail: atec-lab.jpg

@@ -1,7 +1,7 @@
 ---
 layout: portfolio-page
 permalink: /projects/house-on-the-hill/
-priority: 5
+priority: 7
 filters:
 - gallery
 

@@ -1,7 +1,7 @@
 ---
 layout: portfolio-page
 permalink: /projects/level-design/
-priority: 10
+priority: 16
 filters:
 
 title: Level Design Projects

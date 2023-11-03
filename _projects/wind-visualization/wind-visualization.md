@@ -9,7 +9,7 @@ filters:
 title: Wind Visualization
 tagline: Wind Tunnel Real Time VR Viewer
 description: A VR real-time viewer for wind tunnel data
-thumbnail: image.jpg
+thumbnail: wind-visualization-small.png
 tags: Unity Meta Ultrahaptics
 role: Programmer
 year: 2022

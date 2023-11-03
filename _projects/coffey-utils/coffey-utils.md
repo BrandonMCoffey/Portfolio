@@ -1,8 +1,9 @@
 ---
 layout: portfolio-page
 permalink: /projects/coffey-utils/
-priority: 6
+priority: 9
 filters:
+- gallery
 
 title: Coffey Utils
 tagline: Unity Package for Custom Attributes and Inspector Tools

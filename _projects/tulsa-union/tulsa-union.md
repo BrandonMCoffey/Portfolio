@@ -1,9 +1,8 @@
 ---
 layout: portfolio-page
 permalink: /projects/tulsa-union/
-priority: 3
+priority: 4
 filters:
-- featured
 - gallery
 - vastlab
 
