@@ -19,6 +19,6 @@ year: 2022
 
 <iframe class="full aspect16-9" src="https://www.youtube.com/embed/PFHeb2d0LdI?autoplay=1&mute=1&loop=1&list=PLRNKKzTiLuHSRl2BjtAkN8wA_fSlHWb3t" allowfullscreen></iframe>
 
-For a research project I worked with a CS Graduate student to bring air tunnel wind data to a real-time visualization in VR with mid-air haptic feedback.
+For a research project at the [MI Lab]({{site.url}}/mi-lab/) alongside CS Graduate students, I designed a system to bring air tunnel wind data to a real-time visualization. This was built in Unity for use in VR with mid-air haptic feedback using UltraLeap haptic devices.
 
 [View Data Abstraction for Visual and Haptic Representations in Flow Visualization](https://dl.acm.org/doi/10.1145/3562939.3565651){: target="_blank"}
