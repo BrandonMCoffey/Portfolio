@@ -15,8 +15,6 @@ role: Maya, Nuke, and Houdini
 year: 2023
 ---
 
-# Lighting and Rendering
-
 <br>
 
 ###  Bedroom Lighting

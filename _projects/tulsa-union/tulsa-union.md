@@ -15,8 +15,6 @@ role: Programmer
 year: 2023
 ---
 
-# Tulsa Union's Tuttle Stadium
-
 <iframe class="full aspect16-9" src="https://www.youtube.com/embed/sDWqWFVe_N8?autoplay=1&mute=1&loop=1&list=PLRNKKzTiLuHR3Q5TOn7e0LvNBLOGiivCd" allowfullscreen></iframe>
 
 Tulsa Union's Tuttle Stadium is a Metaverse space created by the [VAST Lab]({{site.url}}/vast-lab/){: target="_blank"} and hosted on [Spatial.io](https://www.spatial.io/){: target="_blank"}. I was the lead developer for the project and implemented the majority of the minigames and other functionality. 

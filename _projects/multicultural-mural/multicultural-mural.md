@@ -15,8 +15,6 @@ role: Programmer
 year: 2023
 ---
 
-# Multi-cultural Mural
-
 <iframe class="full aspect16-9" src="https://www.youtube.com/embed/V4Q-cZQh33c?autoplay=1&mute=1&loop=1&list=PLRNKKzTiLuHSUuXXtITI_tQJI0cNOAdWA" allowfullscreen></iframe>
 
 The original Multi-cultural Mural was created in 1980 that honored the contributions made by different cultures to the history of New Mexico. The mural no longer exists, but at the same location there is a QR code that allows viewers to visualize the Multi-cultural through an augmented reality application on a smart device.

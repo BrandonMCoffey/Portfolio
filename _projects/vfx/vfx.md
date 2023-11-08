@@ -15,8 +15,6 @@ role: Nuke and Houdini
 year: 2023
 ---
 
-# Visual FX
-
 <br>
 
 ### Spiderman: No Way Home VFX Recreation

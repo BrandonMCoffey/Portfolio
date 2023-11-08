@@ -14,8 +14,6 @@ role: Solo Project
 year: 2021
 ---
 
-# Coffey Utils
-
 Coffey Utils is a package for Unity development that focuses on adding inspector attributes and generic resuable systems. Below are some examples of the package.
 
 [The package is available publicly on GitHub](https://github.com/BrandonMCoffey/CoffeyUtils/).

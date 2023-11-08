@@ -15,8 +15,6 @@ role: Programmer
 year: 2022
 ---
 
-# Wind Visualization
-
 <iframe class="full aspect16-9" src="https://www.youtube.com/embed/PFHeb2d0LdI?autoplay=1&mute=1&loop=1&list=PLRNKKzTiLuHSRl2BjtAkN8wA_fSlHWb3t" allowfullscreen></iframe>
 
 For a research project at the [MI Lab]({{site.url}}/mi-lab/) alongside CS Graduate students, I designed a system to bring air tunnel wind data to a real-time visualization in Unity for use in VR.

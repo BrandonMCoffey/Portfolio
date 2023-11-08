@@ -15,8 +15,6 @@ role: Programmer
 year: 2023
 ---
 
-# House on the Hill
-
 House on the Hill is a digital first person adaptation of the board game: Betrayal at House on the Hill by Avalon Hill. The game can be downloaded from Itch.io in the link below, along with a dedicated server to host the multiplayer aspects of the game (It is also playable single-player but intended for multiplayer).
 
 <iframe frameborder="0" src="https://itch.io/embed/2061249?dark=true" width="552" height="167">

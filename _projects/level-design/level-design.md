@@ -13,8 +13,6 @@ role: Programmer
 year: 2023
 ---
 
-# Level Design Projects
-
 <br>
 
 ###  Horror House

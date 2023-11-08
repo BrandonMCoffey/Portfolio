@@ -17,8 +17,6 @@ role: Programmer
 year: 2023
 ---
 
-# Death Bloom
-
 <iframe class="full aspect16-9" src="https://www.youtube.com/embed/2myu7wgIIP8?autoplay=1&mute=1&loop=1&list=PLRNKKzTiLuHTvUxQyooEYBcjeP0ZtC-N6" allowfullscreen></iframe>
 
 Death Bloom is a first person horror puzzler made by a team of 40+ students at the University of Texas at Dallas within the [Game Lab]({{site.url}}/game-lab/) program over the course of three months. For the game, I worked as a Programmer on various level mechanics and the core player animation blueprint.

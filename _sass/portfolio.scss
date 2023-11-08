@@ -97,6 +97,19 @@
     visibility: visible;
 }
 
+.portfolio-icons-container {
+    position: relative;
+    float: right;
+    margin-top: 6px;
+}
+
+.portfolio-icon {
+    width: 48px;
+    padding-left: 10px;
+    text-align: right;
+    vertical-align: middle;
+}
+
 .portfolio-content {
     display: block;
     margin: 0 auto;

@@ -13,8 +13,6 @@ role: Python and Maya
 year: 2023
 ---
 
-# Maya Python QT Tools
-
 <br>
 
 ### Maya to Unity/Unreal Rig Exporter

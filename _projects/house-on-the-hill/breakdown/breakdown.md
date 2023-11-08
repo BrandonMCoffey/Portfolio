@@ -6,8 +6,6 @@ description: A breakdown of House on the Hill, a First Person Multiplayer Explor
 hidden: true
 ---
 
-# House on the Hill Breakdown
-
 [Back to House on the Hill Game Page](/projects/house-on-the-hill/)
 
 <br>
