@@ -10,11 +10,8 @@ tagline: Terraforming Mars Digital Adaptation
 description: A digital adaptation of the board game, Terraforming Mars.
 thumbnail: terraforming-mars.jpg
 tags: Unity
-role: Solo Project
 year: 2021
 ---
-
-# Terraforming Mars
 
 <iframe class="full aspect16-9" src="https://www.youtube.com/embed/sdNzyZh9RNU?autoplay=1&mute=1&loop=1&list=PLRNKKzTiLuHQa6ldwk-a0kdxk1QzkeKlO" allowfullscreen></iframe>
 Terraforming Mars is a board game by Jacob Fryxelius, and I created a digital version of the game in Unity. I sought to make the game and primary mechanics in a mostly intuitive way. I adapted the cards to engrain them in the system itself rather than keeping them as cards and added an AI enemy to play against.

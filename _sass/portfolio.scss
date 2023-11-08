@@ -62,6 +62,54 @@
     margin: 0.25em 1rem 0 1rem;
 }
 
+.portfolio-grid-icons-container {
+    position: relative;
+    float: right;
+}
+
+.portfolio-grid-icons {
+    position:absolute;
+    opacity: 75%;
+    width: 32px;
+    height:200px;
+    transform: translate(-24px, -192px) scaleY(-1);
+    text-align: right;
+}
+
+.portfolio-grid-icon {
+    width: 32px;
+    transform: scaleY(-1);
+}
+
+.portfolio-grid-icon-tag {
+    color: var(--body-color-dark);
+    transform: scaleY(-1) translate(40px, 40px);
+    border: 1px solid var(--card-bg-dark);
+    border-radius: 0rem 0.375rem 0.375rem 0rem;
+    position: absolute;
+    visibility: hidden;
+    width: auto;
+    background-color: var(--body-bg);
+    padding: 0px 5px;
+}
+
+.portfolio-grid-icon:hover + .portfolio-grid-icon-tag {
+    visibility: visible;
+}
+
+.portfolio-icons-container {
+    position: relative;
+    float: right;
+    margin-top: 6px;
+}
+
+.portfolio-icon {
+    width: 48px;
+    padding-left: 10px;
+    text-align: right;
+    vertical-align: middle;
+}
+
 .portfolio-content {
     display: block;
     margin: 0 auto;

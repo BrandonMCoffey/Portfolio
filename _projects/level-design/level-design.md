@@ -9,11 +9,8 @@ tagline: Various Projects
 description: A Collection of Level Design Projects
 thumbnail: horror-house.png
 tags: Unreal
-role: Programmer
 year: 2023
 ---
-
-# Level Design Projects
 
 <br>
 

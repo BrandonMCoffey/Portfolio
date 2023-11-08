@@ -8,27 +8,23 @@ filters:
 
 title: Multi-cultural Mural
 tagline: Augmented Reality Mural
-description: An Augmented Reality Piece to display the Multi-cultural Mural in Santa Fe, New Mexico, where it used to exist
+description: An Augmented Reality Piece to display the Multi-cultural Mural in Santa Fe, New Mexico, where it used to exist.
 thumbnail: mural-thumbnail.png
-tags: 
-role: Programmer
+tags: 8thWall
 year: 2023
 ---
 
-# Multi-cultural Mural
-
 <iframe class="full aspect16-9" src="https://www.youtube.com/embed/V4Q-cZQh33c?autoplay=1&mute=1&loop=1&list=PLRNKKzTiLuHSUuXXtITI_tQJI0cNOAdWA" allowfullscreen></iframe>
 
-The original Multi-cultural Mural was created in 1980 by artists Gilberto Guzman, Zara Kriegstein, and a team of volunteers that included Frederico Vigil, Cassandra Harris, Rosemary Stearns, and David Bradley. Multi-cultural honored the contributions made by different cultures to the history of New Mexico. Painted on the east wall of the State Records Center and Archives, the mural measured 110 x 18 feet and was repainted in 1993 by Guzman to repair damage from the elements.
-
-Now, a QR code on a plaque at the same location will allow viewers to visualize the 1993 version of Multi-cultural on the side of the Vladem Contemporary through an augmented reality application on a smart device.
+The original Multi-cultural Mural was created in 1980 that honored the contributions made by different cultures to the history of New Mexico. The mural no longer exists, but at the same location there is a QR code that allows viewers to visualize the Multi-cultural through an augmented reality application on a smart device.
 
 <br>
 
-[View Project on 8th Wall](https://www.8thwall.com/vastlab/guzman-multicultural){: target="_blank"}
+I was the primary developer on the project at the [VAST Lab]({{site.url}}/vast-lab/) and helped to preserve the mural in a digital form. The augmented reality application was designed using [8th wall](https://www.8thwall.com/){: target="_blank"} for easy access on a website. Once camera permissions are enabled, it uses computer vision and location services to display the image only at the actual location.
 
 <br>
 
-Original Mural
+![](mural-thumbnail.png){: style="width:56.2%" }
+![](mural-original.jpg){: style="width:42.2%" }
 
-<a href="mural-original.jpg" target="_blank">![](mural-original.jpg){: class="half gap01" }</a>
+<p style="text-align:center"><i>Left: Augmented Reality Mural. Right: Original Mural</i></p>

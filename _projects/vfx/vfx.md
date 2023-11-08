@@ -7,15 +7,12 @@ filters:
 
 title: Visual FX
 tagline: Various Projects
-description: Various VFX Projects done in Houdini, and Nuke
+description: Various VFX Projects done in Houdini and Nuke
 thumbnail: no-way-home-vfx.jpg
-bordercolor: 595551
-tags: Maya Nuke Houdini Unreal
-role: Nuke and Houdini
+tags: Houdini Nuke 
 year: 2023
+bordercolor: 595551
 ---
-
-# Visual FX
 
 <br>
 
@@ -29,6 +26,6 @@ For a Visual FX project I re-created a shot from Spider-Man: No Way Home, attemp
 
 ### Prestige Shot Recreation
 #### Houdini VFX and Nuke Comp
-<a href="nuke-prestige-comp.jpg" target="_blank">![](nuke-prestige-comp.jpg){: class="full" }</a>
+![](nuke-prestige-comp.jpg){: class="full" }
 
 On an earlier VFX project, I replicated a shot from the movie Prestige, setting up a basic scene and the lightning. In the Houdini render, there were very little to no reflections on the ground, so in Nuke I added a custom pass of reflections by adding the lighting in multiple times, transforming it, and blurring it slightly to give the look of lightning reflecting off of the floor.
