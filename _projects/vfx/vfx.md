@@ -7,12 +7,11 @@ filters:
 
 title: Visual FX
 tagline: Various Projects
-description: Various VFX Projects done in Houdini, and Nuke
+description: Various VFX Projects done in Houdini and Nuke
 thumbnail: no-way-home-vfx.jpg
-bordercolor: 595551
-tags: Houdini Nuke Maya 
-role: Nuke and Houdini
+tags: Houdini Nuke 
 year: 2023
+bordercolor: 595551
 ---
 
 <br>

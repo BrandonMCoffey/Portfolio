@@ -8,10 +8,9 @@ filters:
 
 title: Tulsa Union
 tagline: Metaverse Football Stadium
-description: A Portfolio Piece
+description: A metaverse football stadium hosted on Spatial.io to watch football games and play minigames.
 thumbnail: tulsa-union-icon.png
 tags: Unity Spatial
-role: Programmer
 year: 2023
 ---
 

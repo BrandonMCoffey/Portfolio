@@ -9,10 +9,9 @@ title: Lighting and Rendering
 tagline: Various Projects
 description: Various Lighting and Rendering Projects done in Maya, Houdini, and Nuke
 thumbnail: bedroom-lighting.jpg
-bordercolor: 595551
 tags: Houdini Nuke Maya
-role: Maya, Nuke, and Houdini
 year: 2023
+bordercolor: 595551
 ---
 
 <br>

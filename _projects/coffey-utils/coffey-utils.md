@@ -6,12 +6,11 @@ filters:
 - gallery
 
 title: Coffey Utils
-tagline: Unity Package for Custom Attributes and Inspector Tools
-description: A digital adaptation of the board game, Terraforming Mars.
+tagline: Inspector Attributes and Reusable Tools
+description: A Unity Package for Custom Attributes and Inspector Tools
 thumbnail: sound-system.png
 tags: Unity
-role: Solo Project
-year: 2021
+year: 2023
 ---
 
 Coffey Utils is a package for Unity development that focuses on adding inspector attributes and generic resuable systems. Below are some examples of the package.

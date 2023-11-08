@@ -8,10 +8,9 @@ filters:
 
 title: Multi-cultural Mural
 tagline: Augmented Reality Mural
-description: An Augmented Reality Piece to display the Multi-cultural Mural in Santa Fe, New Mexico, where it used to exist
+description: An Augmented Reality Piece to display the Multi-cultural Mural in Santa Fe, New Mexico, where it used to exist.
 thumbnail: mural-thumbnail.png
 tags: 8thWall
-role: Programmer
 year: 2023
 ---
 

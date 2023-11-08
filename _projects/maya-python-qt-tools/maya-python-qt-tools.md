@@ -6,10 +6,9 @@ filters:
 
 title: Maya Python QT Tools
 tagline: Various Projects
-description: 
+description: Various Tools and Code Snippets for use in Autodesk Maya to automate processes.
 thumbnail: kitty-city-example.png
 tags: Maya Python
-role: Python and Maya
 year: 2023
 ---
 

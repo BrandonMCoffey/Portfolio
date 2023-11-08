@@ -10,10 +10,9 @@ title: MetaTwin
 tagline: Digital Twins for Metaverse Collaboration
 description: A collection of Digital Twin projects for VR made in Unity with Oculus, MRTK, and UltraHaptic tools.
 thumbnail: atec-lab.jpg
-bordercolor: 505050
 tags: Unity Meta
-role: Programmer and Technical Artist
 year: 2022
+bordercolor: 505050
 ---
 
 <iframe class="full aspect16-9" src="https://www.youtube.com/embed/opzd9oXuIao?autoplay=1&mute=1&loop=1&list=PLRNKKzTiLuHS1DhjKuSDYt4chYslvZ-Yb" allowfullscreen></iframe>

@@ -11,10 +11,9 @@ title: Death Bloom
 tagline: First Person Horror Puzzle Game
 description: A First Person Horror Puzzle Game made in Unreal Engine with a team of 40+ students at UTD.
 thumbnail: level-02.jpg
-bordercolor: 505059
 tags: Unreal
-role: Programmer
 year: 2023
+bordercolor: 505059
 ---
 
 <iframe class="full aspect16-9" src="https://www.youtube.com/embed/2myu7wgIIP8?autoplay=1&mute=1&loop=1&list=PLRNKKzTiLuHTvUxQyooEYBcjeP0ZtC-N6" allowfullscreen></iframe>

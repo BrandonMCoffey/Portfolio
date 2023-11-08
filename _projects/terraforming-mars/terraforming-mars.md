@@ -10,7 +10,6 @@ tagline: Terraforming Mars Digital Adaptation
 description: A digital adaptation of the board game, Terraforming Mars.
 thumbnail: terraforming-mars.jpg
 tags: Unity
-role: Solo Project
 year: 2021
 ---
 

@@ -11,7 +11,6 @@ tagline: Wind Tunnel Real Time VR Viewer
 description: A VR real-time viewer for wind tunnel data
 thumbnail: wind-visualization.png
 tags: Unity Meta Ultraleap
-role: Programmer
 year: 2022
 ---
 

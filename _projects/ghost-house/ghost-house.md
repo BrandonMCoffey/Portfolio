@@ -7,10 +7,9 @@ filters:
 
 title: Ghost House
 tagline: Point and Click Narrative
-description: A Portfolio Piece
+description: Lead Programmer of a Point and Click Narrative where you play as a Ghost and interact with the family living there.
 thumbnail: ghost-house-icon.jpg
 tags: Unity
-role: Lead Programmer
 year: 2022
 ---
 

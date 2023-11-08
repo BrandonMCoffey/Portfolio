@@ -12,7 +12,6 @@ tagline: Augmented Reality Cats
 description: A Portfolio Piece
 thumbnail: kitty-city-icon-16-9.png
 tags: Unity Meta Maya
-role: Programmer
 year: 2023
 ---
 
