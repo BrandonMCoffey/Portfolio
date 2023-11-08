@@ -9,7 +9,7 @@ title: Telemancer
 tagline: First Person Platformer Adventure
 description: Journey into a fantasy world to solve ancient puzzles and unlock the secrets of teleportation magic.
 thumbnail: telemancer-thumbnail.jpg
-tags: 
+tags: Unity
 role: Programmer
 year: 2021
 ---

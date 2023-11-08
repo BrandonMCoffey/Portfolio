@@ -10,7 +10,7 @@ title: Multi-cultural Mural
 tagline: Augmented Reality Mural
 description: An Augmented Reality Piece to display the Multi-cultural Mural in Santa Fe, New Mexico, where it used to exist
 thumbnail: mural-thumbnail.png
-tags: 
+tags: 8thWall
 role: Programmer
 year: 2023
 ---
@@ -23,7 +23,7 @@ The original Multi-cultural Mural was created in 1980 that honored the contribut
 
 <br>
 
-I was the primary developer on the project at the [VAST Lab]({{site.url}}/vast-lab/) and helped to preserve the mural in a digital form. The augmented reality application was designed using [8th wall](https://www.8thwall.com/vastlab/guzman-multicultural){: target="_blank"} for easy access on a website. Once camera permissions are enabled, it uses computer vision and location services to display the image only at the actual location.
+I was the primary developer on the project at the [VAST Lab]({{site.url}}/vast-lab/) and helped to preserve the mural in a digital form. The augmented reality application was designed using [8th wall](https://www.8thwall.com/){: target="_blank"} for easy access on a website. Once camera permissions are enabled, it uses computer vision and location services to display the image only at the actual location.
 
 <br>
 

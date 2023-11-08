@@ -10,7 +10,7 @@ tagline: Various Projects
 description: Various VFX Projects done in Houdini, and Nuke
 thumbnail: no-way-home-vfx.jpg
 bordercolor: 595551
-tags: Maya Nuke Houdini Unreal
+tags: Houdini Nuke Maya 
 role: Nuke and Houdini
 year: 2023
 ---

@@ -31,6 +31,14 @@ layout: portfolio-default
         <h1 class="portfolio-grid-title">{{ project.title }}</h1>
         <p class="portfolio-grid-text">{{ project.tagline }}</p>
         <p class="portfolio-grid-year">{{ project.year }}</p>
+        <div class="portfolio-grid-icons-container">
+          <div class="portfolio-grid-icons">
+            {% for tag in project.tags %}
+            <img class="portfolio-grid-icon" src="{{site.url}}/content/icons/{{tag}}.png">
+            <p class="portfolio-grid-icon-tag">{{tag}}</p>
+            {% endfor %}
+          </div>
+        </div>
       </div>
     </a>
     {% endif %}

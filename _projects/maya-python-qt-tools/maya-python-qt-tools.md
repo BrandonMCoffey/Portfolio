@@ -8,7 +8,7 @@ title: Maya Python QT Tools
 tagline: Various Projects
 description: 
 thumbnail: kitty-city-example.png
-tags: Maya
+tags: Maya Python
 role: Python and Maya
 year: 2023
 ---
