@@ -11,7 +11,7 @@ description: A First Person Multiplayer Exploration Game that is a recreation of
 thumbnail: start-room.jpg
 bordercolor: 505050
 tags: Unity
-role: Programmer - Unity
+role: Programmer
 year: 2023
 ---
 

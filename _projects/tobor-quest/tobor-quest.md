@@ -13,7 +13,7 @@ description: A Whacky Car Platforming Game developed by a team of 40+ students a
 thumbnail: tobor-quest.jpg
 bordercolor: 595050
 tags: Unity
-role: Lead Programmer - Unity
+role: Lead Programmer
 year: 2022
 ---
 

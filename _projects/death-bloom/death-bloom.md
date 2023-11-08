@@ -13,7 +13,7 @@ description: A First Person Horror Puzzle Game made in Unreal Engine with a team
 thumbnail: level-02.jpg
 bordercolor: 505059
 tags: Unreal
-role: Programmer - Unreal Engine 5
+role: Programmer
 year: 2023
 ---
 
