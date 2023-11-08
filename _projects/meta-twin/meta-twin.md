@@ -26,9 +26,9 @@ For a Metaverse-style project I modeled the CS lab I worked at and integrated Me
 
 <br>
 
-Model of the [MI Lab]({{site.url}}/mi-lab/) main room:
+Model of the [MI Lab]({{site.url}}/mi-lab/){: target="_blank"} main room:
 
-<a href="mi-lab.jpg" target="_blank">![](mi-lab.jpg){: class="full" }</a>
+![](mi-lab.jpg){: class="full" }
 
 <br>
 
@@ -36,4 +36,4 @@ Additionally, for a similar project, I modeled a computer lab at the ATEC buildi
 
 [View Side by Side with Actual Lab](https://www.linkedin.com/posts/activity-6980256837178720256-yti5){: target="_blank"}
 
-<a href="atec-lab.jpg" target="_blank">![](atec-lab.jpg){: class="full" }</a>
+![](atec-lab.jpg){: class="full" }

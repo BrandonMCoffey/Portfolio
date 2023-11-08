@@ -75,7 +75,7 @@ else
 
 Room Generation and Door Connections:
 
-<a href="room-generation.jpg" target="_blank">![](room-generation.jpg){: class="full" }</a>
+![](room-generation.jpg){: class="full" }
 
 <br>
 
@@ -130,6 +130,6 @@ void GenerateDoor(Orient worldOrient, bool create)
 
 ### Scriptable Objects
 
-<a href="scriptable-objects.jpg" target="_blank">![](scriptable-objects.jpg){: class="full" }</a>
+![](scriptable-objects.jpg){: class="full" }
 
 Character Data and Item Data was written in the form of scriptable objects for easy manipulation and better understanding of what the values actually did.
