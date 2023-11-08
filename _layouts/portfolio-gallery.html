@@ -7,10 +7,9 @@ layout: portfolio-default
   <div style="text-align: center;margin-top:10px;font-size: 12px">
     Filters:
     <a {% if page.filter=="gallery" %} class="filter-button-selected" {% else %} class="filter-button" {% endif %} href="{{ site.url }}/projects/">Portfolio</a>
-    <a {% if page.filter=="gamelab" %} class="filter-button-selected" {% else %} class="filter-button" {% endif %} href="{{ site.url }}/game-lab/">Game Lab</a>
     <a {% if page.filter=="vastlab" %} class="filter-button-selected" {% else %} class="filter-button" {% endif %} href="{{ site.url }}/vast-lab/">VAST Lab</a>
     <a {% if page.filter=="milab" %} class="filter-button-selected" {% else %} class="filter-button" {% endif %} href="{{ site.url }}/mi-lab/">MI Lab</a>
-    <a {% if page.filter=="any" %} class="filter-button-selected" {% else %} class="filter-button" {% endif %} href="{{ site.url }}/projects-all/">All</a>
+    <a {% if page.filter=="gamelab" %} class="filter-button-selected" {% else %} class="filter-button" {% endif %} href="{{ site.url }}/game-lab/">Game Lab</a>
   </div>
   {% endunless %}
 

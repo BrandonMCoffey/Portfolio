@@ -1,13 +1,17 @@
 ---
-layout: portfolio-gallery
+layout: portfolio-home
 title: Home
 permalink: /
 hide-filter-buttons: true
 filter: featured
 ---
 
+Hello! I'm Brandon, a freelance programmer and technical artist who specializes in AR/VR, game development, 3D graphics, and interactive media.
+
 <br>
 
-![]({{site.url}}/content/profile-picture.png){: style="max-width:240px"}
+In 2023 I graduated from the University of Texas at Dallas in the [ATEC program](https://aht.utdallas.edu/degrees/undergraduate-degrees/arts-technology-and-emerging-communication/) with a focus in Animation and Games. During my time at UTD, I was constantly being introduced to different software packages, artistic techniques, design practices, coding skills, and more. I loved learning about every type of development, especially those involving experimental or cutting edge technology, which is how I started working at the [MI Lab]({{site.url}}/mi-lab/) and the [VAST Lab]({{site.url}}/vast-lab/) as a VR programmer.
 
-Brandon Coffey is a freelance programmer and technical artist who specializes in game development, AR/VR, and 3D graphics. As a 2023 graduate from the University of Texas at Dallas, he has worked on award winning projects that have been featured in the New York Times. He enjoys exploring cutting edge technology and working in various tech stacks to develop a variety of experiences, games, and other interactive media.
+<br>
+
+Check out my [GitHub](https://github.com/BrandonMCoffey) for some of my public coding projects and games, and the rest of my [portfolio]({{site.url}}/projects/) for everything I have worked on.
