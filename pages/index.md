@@ -15,3 +15,4 @@ In 2023 I graduated from the University of Texas at Dallas in the [ATEC program]
 <br>
 
 Check out my [GitHub](https://github.com/BrandonMCoffey) for some of my public coding projects and games, and the rest of my [portfolio]({{site.url}}/projects/) for everything I have worked on.
+
