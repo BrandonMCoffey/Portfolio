@@ -1,6 +1,8 @@
 #
 # Config for Site
 #
+# bundle exec jekyll serve
+#
 
 # Name and Description of Site
 title: Portfolio - Brandon Coffey

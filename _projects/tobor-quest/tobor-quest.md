@@ -1,9 +1,8 @@
 ---
 layout: portfolio-page
 permalink: /projects/tobor-quest/
-priority: 3
+priority: 5
 filters:
-- featured
 - gallery
 - gamelab
 

@@ -3,7 +3,6 @@ layout: portfolio-page
 permalink: /projects/multicultural-mural/
 priority: 12
 filters:
-- gallery
 - vastlab
 
 title: Multi-cultural Mural

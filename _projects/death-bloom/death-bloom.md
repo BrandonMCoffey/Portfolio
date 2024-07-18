@@ -1,7 +1,7 @@
 ---
 layout: portfolio-page
 permalink: /projects/death-bloom/
-priority: 1
+priority: 3
 filters:
 - featured
 - gallery

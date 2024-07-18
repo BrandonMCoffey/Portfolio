@@ -1,9 +1,8 @@
 ---
 layout: portfolio-page
 permalink: /projects/kitty-city/
-priority: 2
+priority: 4
 filters:
-- featured
 - gallery
 - vastlab
 
@@ -17,7 +16,7 @@ year: 2023
 
 <iframe class="full aspect16-9" src="https://www.youtube.com/embed/nRpLaVBkLVs?autoplay=1&mute=1&loop=1&list=PLRNKKzTiLuHQl-WUGmUibhqL_UkyWO1yo" allowfullscreen></iframe>
 
-Kitty City is an Augmented Reality Project hosted by the [New Mexico Museum of Art - Vladem Contemporary](https://www.nmartmuseum.org/vladem-contemporary/){: target="_blank"} that is based on [Judy Chicago's Kitty City](https://judychicago.com/gallery/kitty-city/kc-artwork-2/). I was the lead developer on the project at the [VAST Lab]({{site.url}}/vast-lab/){: target="_blank"}, and worked on bringing the virtual cat models and animations into Unity for augmented reality on the Meta Quest Pro.
+Kitty City is an Augmented Reality Experience hosted by the [New Mexico Museum of Art - Vladem Contemporary](https://www.nmartmuseum.org/vladem-contemporary/){: target="_blank"} that is based on [Judy Chicago's Kitty City](https://judychicago.com/gallery/kitty-city/kc-artwork-2/){: target="_blank"}. I was the lead developer on the project at the [VAST Lab]({{site.url}}/vast-lab/){: target="_blank"}, and worked on bringing the virtual cat models and animations into Unity for augmented reality on the Meta Quest Pro.
 
 <br>
 

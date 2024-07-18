@@ -3,7 +3,6 @@ layout: portfolio-page
 permalink: /projects/house-on-the-hill/
 priority: 7
 filters:
-- gallery
 
 title: House on the Hill
 tagline: Multiplayer Exploration Game
