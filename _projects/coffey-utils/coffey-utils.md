@@ -1,7 +1,7 @@
 ---
 layout: portfolio-page
 permalink: /projects/coffey-utils/
-priority: 9
+priority: 31
 filters:
 - gallery
 

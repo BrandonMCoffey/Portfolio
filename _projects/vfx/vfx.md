@@ -1,7 +1,7 @@
 ---
 layout: portfolio-page
 permalink: /projects/vfx/
-priority: 11
+priority: 33
 filters:
 - gallery
 

@@ -1,7 +1,7 @@
 ---
 layout: portfolio-page
 permalink: /projects/meta-twin/
-priority: 8
+priority: 23
 filters:
 - gallery
 - milab

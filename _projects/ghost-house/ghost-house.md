@@ -1,7 +1,7 @@
 ---
 layout: portfolio-page
 permalink: /projects/ghost-house/
-priority: 14
+priority: 50
 filters:
 - gamelab
 

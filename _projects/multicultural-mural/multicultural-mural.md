@@ -1,7 +1,7 @@
 ---
 layout: portfolio-page
 permalink: /projects/multicultural-mural/
-priority: 12
+priority: 50
 filters:
 - vastlab
 

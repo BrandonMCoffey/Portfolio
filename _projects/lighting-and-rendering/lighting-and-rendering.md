@@ -1,7 +1,7 @@
 ---
 layout: portfolio-page
 permalink: /projects/lighting-and-rendering/
-priority: 10
+priority: 32
 filters:
 - gallery
 

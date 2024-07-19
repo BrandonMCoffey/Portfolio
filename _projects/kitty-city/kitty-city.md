@@ -1,7 +1,7 @@
 ---
 layout: portfolio-page
 permalink: /projects/kitty-city/
-priority: 4
+priority: 11
 filters:
 - gallery
 - vastlab

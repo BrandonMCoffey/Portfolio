@@ -1,7 +1,7 @@
 ---
 layout: portfolio-page
 permalink: /projects/terraforming-mars/
-priority: 5
+priority: 21
 filters:
 - gallery
 

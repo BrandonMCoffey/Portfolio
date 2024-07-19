@@ -1,7 +1,7 @@
 ---
 layout: portfolio-page
 permalink: /projects/wind-visualization/
-priority: 6
+priority: 22
 filters:
 - gallery
 - milab

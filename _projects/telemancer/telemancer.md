@@ -1,7 +1,7 @@
 ---
 layout: portfolio-page
 permalink: /projects/telemancer/
-priority: 15
+priority: 50
 filters:
 - gamelab
 
