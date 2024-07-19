@@ -4,6 +4,7 @@ permalink: /projects/vfx/
 priority: 33
 filters:
 - gallery
+- personal
 
 title: Visual FX
 tagline: Various Projects

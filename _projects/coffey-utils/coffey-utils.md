@@ -4,6 +4,7 @@ permalink: /projects/coffey-utils/
 priority: 31
 filters:
 - gallery
+- personal
 
 title: Coffey Utils
 tagline: Inspector Attributes and Reusable Tools

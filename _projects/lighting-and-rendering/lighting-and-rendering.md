@@ -4,6 +4,7 @@ permalink: /projects/lighting-and-rendering/
 priority: 32
 filters:
 - gallery
+- personal
 
 title: Lighting and Rendering
 tagline: Various Projects

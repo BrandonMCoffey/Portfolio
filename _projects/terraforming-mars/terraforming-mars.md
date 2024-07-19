@@ -4,6 +4,7 @@ permalink: /projects/terraforming-mars/
 priority: 21
 filters:
 - gallery
+- personal
 
 title: Terraforming Mars
 tagline: Terraforming Mars Digital Adaptation

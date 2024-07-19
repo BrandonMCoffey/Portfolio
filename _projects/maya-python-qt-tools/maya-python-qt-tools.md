@@ -3,6 +3,7 @@ layout: portfolio-page
 permalink: /projects/maya-python-qt-tools/
 priority: 50
 filters:
+- personal
 
 title: Maya Python QT Tools
 tagline: Various Projects

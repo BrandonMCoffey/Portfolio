@@ -3,6 +3,7 @@ layout: portfolio-page
 permalink: /projects/level-design/
 priority: 50
 filters:
+- personal
 
 title: Level Design Projects
 tagline: Various Projects

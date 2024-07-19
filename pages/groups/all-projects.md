@@ -1,8 +1,8 @@
 ---
 layout: portfolio-gallery
 title: All Projects
-permalink: /projects-all/
+permalink: /all-projects/
 filter: any
 ---
 
-# All Projecs
+# All Projects
