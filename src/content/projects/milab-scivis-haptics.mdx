@@ -1,0 +1,61 @@
+---
+title: "SciVis: Mid-Air Haptic & Thermo-Tactile Visualization"
+tagline: "Multi-Sensory Scientific Data Visualization Using Ultrasound Phased Arrays"
+thumbnail: "/images/projects/milab-scivis-haptics/thumbnail.png"
+role: "Graphics & VR Researcher"
+client: "Multimodal Interaction Lab (MI Lab)"
+priority: 15
+year: 2022
+status: "Released"
+filters: ["graphics", "milab", "VR"]
+tech: ["Unity", "C#", "Ultraleap Acoustic Array", "C++", "Hardware Interfacing", "Peltier Heat Modules"]
+platform: ["PC VR", "Ultraleap Acoustic Array", "Meta Quest"]
+liveUrl: "https://dl.acm.org/doi/10.1145/3489849.3489889"
+githubUrl: ""
+videoUrl: ""
+---
+
+import ImageEmbed from "../../components/projects/ImageEmbed.astro";
+import VideoEmbed from "../../components/projects/VideoEmbed.astro";
+import ProjectHighlight from "../../components/projects/ProjectHighlight.astro";
+
+<VideoEmbed videoId="eBcdxERYDcg" title="Mid-Air Ultrasound Haptics Demonstration" />
+
+<ProjectHighlight
+	title="ACM VRST 2022 Best Poster Award"
+	description="Awarded Best Poster at the 28th ACM Symposium on Virtual Reality Software and Technology (VRST '22) for pioneering multi-modal scientific visualization combining real-time streamlines with ultrasonic tactile feedback."
+/>
+
+Developed at the [Multimodal Interaction Lab (MI Lab)](/projects?filter=milab), the **SciVis Multi-Sensory Visualization Suite** explored novel paradigms for perceiving complex multi-dimensional scientific data. By pairing immersive stereoscopic VR with mid-air ultrasound radiation pressure arrays and micro-thermal feedback actuators, researchers can literally feel volumetric scalar fields, temperature gradients, and turbulent flow boundaries without wearing physical gloves or holding mechanical controllers.
+
+### Mid-Air Acoustic Focal Point Modulation
+
+The system leverages an **Ultraleap phased transducer array**, driving hundreds of ultrasonic speakers to construct focused acoustic pressure points in free space. By modulating carrier wave frequencies in real time:
+
+- Users perceive tactile textures, distinct vibration frequencies, and surface boundaries hovering in mid-air.
+- Hand-tracking cameras continuously map bare fingertips to virtual data isosurfaces, steering focal points dynamically to follow the user's hand gestures.
+
+<VideoEmbed videoId="PFHeb2d0LdI" title="Scientific Wind Tunnel Flow Visualization Showcase" />
+
+Developed at the [Multimodal Interaction Lab (MI Lab)](/projects?filter=milab) in collaboration with Computer Science researchers, this project engineered a multi-sensory scientific visualization system allowing aerodynamicists to simultaneously see, navigate, and physically "feel" complex 3D wind tunnel vector fields.
+
+### Multi-Sensory Ultrasonic Haptics
+
+Using an **Ultraleap acoustic radiation pressure phased array**, ultrasonic transducers focus acoustic focal points in mid-air. As researchers place their bare hands into the virtual flow volume in VR, ultrasound wave modulations produce tactile sensations corresponding directly to flow turbulence, velocity gradients, and aerodynamic vortices.
+
+### Thermo-Tactile Multi-Modal Fusion
+
+To visualize multi-variate datasets (such as atmospheric heat flux or thermodynamics):
+
+- Peltier thermoelectric elements were synchronized with the spatial rendering engine, applying rapid heating and cooling cycles alongside ultrasound vibrations.
+- This multi-sensory feedback significantly reduced cognitive error rates when test subjects identified critical thresholds within dense 3D scalar fields.
+
+### Peer-Reviewed ACM Publications
+
+- **ACM VRST '21**: _TangibleData: Interactive Data Visualization with Mid-Air Haptics_  
+  Proceedings of the 27th ACM Symposium on Virtual Reality Software and Technology.  
+  DOI: **[10.1145/3489849.3489889](https://dl.acm.org/doi/10.1145/3489849.3489889)**
+
+- **ACM VRST '21**: _Mid-Air Thermo-Tactile Feedback using Ultrasound Haptic Display_  
+  Proceedings of the 27th ACM Symposium on Virtual Reality Software and Technology.  
+  DOI: **[10.1145/3489849.3489889](https://dl.acm.org/doi/10.1145/3489849.3489889)**

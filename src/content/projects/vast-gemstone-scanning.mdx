@@ -1,0 +1,40 @@
+---
+title: "Digital Gemstone Scanning"
+tagline: "High-Precision 3D Scanning & Physically Based Refraction for Fine Minerals"
+thumbnail: "/images/projects/vast-gemstone-scanning/thumbnail.jpg"
+role: "Programmer & Pipeline Engineer"
+client: "Arkenstone Rare Minerals"
+priority: 16
+year: 2026
+status: "In Development"
+filters: ["vastlab", "graphics"]
+tech: ["RealityScan", "Polarized Photogrammetry", "Gaussian Splatting", "Jawset PostShot", "LichtFeld Studio"]
+platform: ["PC", "Web"]
+liveUrl: "https://gemscans.com"
+githubUrl: ""
+videoUrl: ""
+---
+
+import ProjectHighlight from "../../components/projects/ProjectHighlight.astro";
+
+<ProjectHighlight
+	title="Advanced Mineral Optics & Cross-Polarized Photogrammetry"
+	description="Engineering a specialized scanning rig and real-time shader suite capable of capturing translucent, highly refractive crystalline specimens with accurate optical dispersion and internal cleavage planes."
+/>
+
+Developed in collaboration with **Arkenstone Rare Minerals**, this project pioneers specialized technical art and computer vision workflows to digitize, reconstruct, and interactively render ultra-rare mineral specimens, gemstones, and crystalline structures in Unreal Engine 5.
+
+### The Challenge of Scanning Translucent Crystals
+
+Standard photogrammetry algorithms fail on minerals due to internal light refractions, specular caustics, and total internal reflection:
+
+- **Cross-Polarized Lighting Array**: Custom camera rigs utilizing linear polarizing filters on both strobe illumination and camera lenses to eliminate surface glare and isolate true volumetric pigmentation.
+- **Micro-Photogrammetry**: Macro-focus stacking pipelines capturing crystalline facets with sub-millimeter geometric precision.
+
+### Custom Physically Based HLSL Shading
+
+Real-time gemstone rendering demands custom optical shader calculations beyond standard PBR:
+
+- **Wavelength-Dependent Chromatic Dispersion**: Simulating Abbe number refraction splits in real-time ray-marched pixel shaders.
+- **Birefringence (Double Refraction)**: Reproducing the anisotropic optical splitting characteristic of calcite, tourmaline, and quartz crystal structures.
+- **Thin-Film Iridescence**: Implementing spectral wave interference equations for iridescent mineral veneers and peacock ore.

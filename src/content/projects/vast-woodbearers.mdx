@@ -1,0 +1,67 @@
+---
+title: "Woodbearers of Chimayo VR"
+tagline: "Immersive Virtual Reality Museum Experience Stepping Inside a Painting"
+thumbnail: "/images/projects/vast-woodbearers/painting-angle.png"
+role: "Lead Developer & Technical Artist"
+client: "New Mexico Museum of Art | Vladem Contemporary"
+priority: 1
+year: 2024
+status: "Released"
+filters: ["featured", "vastlab", "VR"]
+tech: ["Unreal Engine 5", "Blender", "Photogrammetry"]
+platform: ["PC", "PCVR"]
+liveUrl: "https://www.communicatorawards.com/winners/winners-gallery/?event=1088&award=9&type=2002&id=593204"
+githubUrl: ""
+videoUrl: "https://vimeo.com/953829269"
+---
+
+import ImageEmbed from "../../components/projects/ImageEmbed.astro";
+import ImageSlider from "../../components/projects/ImageSlider.astro";
+import VideoEmbed from "../../components/projects/VideoEmbed.astro";
+import ProjectHighlight from "../../components/projects/ProjectHighlight.astro";
+
+<VideoEmbed vimeoId="953829269" title="Woodbearers of Chimayo VR Experience Showcase" />
+
+<ProjectHighlight
+	title="Award-Winning Immersive Art Reconstruction"
+	description="Honored with the 2024 Silver Davey Award (Virtual Reality), the 2025 Communicator Award of Distinction (General-New Realities), Second Place in the 2024 UTD Research Days Art Showcase, and officially showcased at SXSW 2025 Capital Factory House in Austin, Texas."
+/>
+
+**The Woodbearers of Chimayo VR** is an immersive virtual reality museum installation developed by the [VAST Lab](/projects?filter=vastlab) for the [New Mexico Museum of Art — Vladem Contemporary](https://www.nmartmuseum.org/vladem-contemporary/). The project reconstructs Clark Hulings' masterwork _Woodbearers of Chimayo_ (1974) into a living, explorable 3D historical environment.
+
+Visitors step beyond the picture frame into 1970s Chimayó, New Mexico, observing the wood-bearing donkeys, adobe architecture of the Santuario de Chimayó, and atmospheric lighting from any vantage point.
+
+<ImageEmbed file="woodbearers/original_painting.jpg" caption="Clark Hulings' original 1974 masterwork: 'Woodbearers of Chimayo'" />
+
+### Custom Stylized Post-Processing Shader
+
+A crucial technical requirement was translating Hulings' impasto brushwork, edge dry-brushing, and warm gouache/oil color grading into a real-time post-process volume in Unreal Engine 5. Using custom HLSL scene texture sampling, Sobel edge filtering, and normal-based canvas paper texturing, the rendering seamlessly captures the tactile quality of a painted canvas:
+
+<ImageSlider
+	beforeImage="woodbearers/BuildingsNoPost.jpg"
+	afterImage="woodbearers/Buildings.jpg"
+	beforeText="Without Post-Processing"
+	afterText="With Painterly Post-Processing"
+/>
+
+<ImageSlider
+	beforeImage="woodbearers/SantuarioNoPost.jpg"
+	afterImage="woodbearers/Santuario.jpg"
+	beforeText="Without Post-Processing"
+	afterText="With Painterly Post-Processing"
+/>
+
+### Spatial Level Design & Spline Navigation
+
+The level layout guides the museum patron along accessible walking paths while ambient AI donkeys navigate natural terrain contours using dynamic spline paths.
+
+<ImageEmbed
+	file="woodbearers/TopDown.jpg"
+	caption="Top-down level architecture: white spline donkey paths, red interactive discovery points, and aqua guided tour route"
+/>
+
+### Environment Creation Timelapse
+
+Watch the speed-sculpting and architectural modeling of the Santuario de Chimayó environment:
+
+<VideoEmbed videoId="rTo3YnuqGjA" title="Woodbearers Environment Creation Timelapse" />

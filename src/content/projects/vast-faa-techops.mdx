@@ -1,0 +1,70 @@
+---
+title: "XR Technical Operations Training"
+tagline: "Augmented Reality Training & Human Factors Research for Aviation Maintenance"
+thumbnail: "/images/projects/vast-faa-techops/UPS_1.jpg"
+role: "Lead Developer & XR Researcher"
+client: "Federal Aviation Administration"
+priority: 1
+year: 2025
+status: "Ongoing"
+filters: ["featured", "vastlab", "VR"]
+tech: ["Unity", "C#", "MRTK3", "OpenXR", "Android Studio", "Java", "Autodesk Maya"]
+platform: ["Vuzix M4000", "Magic Leap 2", "Microsoft HoloLens 2", "RealWear Navigator Z1", "Meta Quest 3"]
+liveUrl: "https://news.utdallas.edu/students-teaching/vast-lab-2026/"
+githubUrl: ""
+videoUrl: "https://vimeo.com/1090585071"
+---
+
+import ImageEmbed from "../../components/projects/ImageEmbed.astro";
+import VideoEmbed from "../../components/projects/VideoEmbed.astro";
+import ProjectHighlight from "../../components/projects/ProjectHighlight.astro";
+
+<VideoEmbed vimeoId="1090585071" title="FAA Technical Operations XR Simulation Showcase" />
+
+<ProjectHighlight
+	title="$5,000,000 FAA CAMI Grant & 2026 UTD ROAR Research Award"
+	description="Lead developer and researcher on a 5-year, $5M research grant awarded by the Federal Aviation Administration Civil Aerospace Medical Institute (CAMI). Honored with the 2026 UT Dallas Recognition of Outstanding Achievements in Research (ROAR) award."
+/>
+
+The **FAA Technical Operations Extended Reality (XR) Maintenance Suite** is a safety-critical training and ergonomics research system developed at the [VAST Lab](/projects?filter=vastlab) in close partnership with the **Federal Aviation Administration (FAA)**. The platform simulates high-voltage airway facilities equipment—including Uninterruptible Power Supplies (UPS), air traffic communication towers, and navigational aid maintenance procedures—using spatial mixed reality headsets.
+
+### Human Factors & Wear Time Research
+
+Beyond technical procedural guidance, the project investigates cognitive load, physical neck/eye strain, and spatial interaction degradation across sustained XR usage in field maintenance environments:
+
+- **Ergonomic Fatigue**: Measuring cervical spine tilt angles and center-of-mass head torque during multi-hour overhead equipment inspections.
+- **Cognitive Aptitude Tailoring**: Adapting UI guidance density based on real-time task completion heuristics and eye-gaze tracking metrics.
+
+<VideoEmbed videoId="YWEq9FQKt2A" title="UT Dallas News: VR Lab's FAA Research Giving Students Vast Experiences" />
+
+### Procedural Modules & Hardware Simulation
+
+The suite trains field technicians across several high-risk operational modules:
+
+1. **Uninterruptible Power Supply (UPS) Maintenance**: Step-by-step breaker lock-out/tag-out (LOTO) protocols and internal capacitor discharge sequencing.
+2. **Digital Multimeter Calibration**: Realistic probe interactions, voltage testing, and live multimeter circuit measurements.
+3. **Air Traffic Control Tower Infrastructure**: High-altitude navigation beacon maintenance and forklift safety maneuvers.
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-6">
+	<ImageEmbed file="faa-techops/MainMenu_1.jpg" caption="Spatial UI menu for selecting FAA technical operation modules" />
+	<ImageEmbed file="faa-techops/Multimeter_1.jpg" caption="High-fidelity interactive digital multimeter inspection" />
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-6">
+	<ImageEmbed file="faa-techops/Multimeter_2.jpg" caption="Live circuit board voltage testing with dual spatial probes" />
+	<ImageEmbed file="faa-techops/UPS_2.jpg" caption="UPS battery terminal wiring inspection in HoloLens 2 passthrough" />
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-6">
+	<ImageEmbed file="faa-techops/UPS_3.jpg" caption="Component tag-out and breaker safety interlock verification" />
+	<ImageEmbed file="faa-techops/Forklift_1.jpg" caption="Warehouse logistics and spatial forklift maneuvering module" />
+	<ImageEmbed file="faa-techops/Forklift_2.jpg" caption="Forklift pre-operational inspection and maintenance cockpit" />
+</div>
+
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 my-6">
+	<ImageEmbed file="faa-techops/AirTraffic_1.jpg" caption="Tower radar equipment calibration" />
+	<ImageEmbed file="faa-techops/AirTraffic_2.jpg" caption="Antenna array alignment and signal telemetry" />
+	<ImageEmbed file="faa-techops/AirTraffic_3.jpg" caption="Ground communications transceiver setup" />
+	<ImageEmbed file="faa-techops/AirTraffic_4.jpg" caption="Instrument landing system diagnostic tests" />
+	<ImageEmbed file="faa-techops/AirTraffic_5.jpg" caption="Air traffic communication facility simulation" />
+</div>
