@@ -16,6 +16,7 @@ videoUrl: "https://vimeo.com/1110751546"
 
 import ImageEmbed from "../../components/projects/ImageEmbed.astro";
 import VideoEmbed from "../../components/projects/VideoEmbed.astro";
+import CodeSnippet from "../../components/projects/CodeSnippet.astro";
 import ProjectHighlight from "../../components/projects/ProjectHighlight.astro";
 
 <VideoEmbed vimeoId="1110751546" title="UTD Vivarium Digital Twin Architectural Walkthrough" />
@@ -32,38 +33,29 @@ Developed at the [VAST Lab](/projects?filter=vastlab) in partnership with the **
 Biomedical research vivariums require rigorous bio-containment protocols, directional airflow systems, sterilizers, and specialized airlocks. Every corridor, sanitization station, animal housing rack, and surgical preparation suite was reconstructed from architectural CAD schematics with millimeter accuracy.
 
 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-6">
-	<ImageEmbed file="vivarium/Image01.jpg" caption="Corridor airlock and sanitary containment entryways" />
-	<ImageEmbed file="vivarium/Image02.jpg" caption="Specialized laboratory animal housing and ventilation racks" />
+	<ImageEmbed file="utd-vivarium/Image01.jpg" caption="Corridor airlock and sanitary containment entryways" />
+	<ImageEmbed file="utd-vivarium/Image02.jpg" caption="Specialized laboratory animal housing and ventilation racks" />
 </div>
 
 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-6">
-	<ImageEmbed file="vivarium/Image03.jpg" caption="Prep laboratory and sterile specimen analysis station" />
-	<ImageEmbed file="vivarium/Image04.jpg" caption="Autoclave and cage sanitization chamber" />
+	<ImageEmbed file="utd-vivarium/Image03.jpg" caption="Prep laboratory and sterile specimen analysis station" />
+	<ImageEmbed file="utd-vivarium/Image04.jpg" caption="Autoclave and cage sanitization chamber" />
 </div>
 
 ### Real-Time Lighting & Material Fidelity
 
 Leveraging Unreal Engine 5's **Lumen** dynamic global illumination and custom PBR materials authoring in Substance, the environment faithfully captures the harsh fluorescent illumination, antimicrobial epoxy floor reflections, and stainless steel surface roughness characteristic of sterile cleanrooms.
 
-<div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-6">
-	<ImageEmbed file="vivarium/Image05.jpg" caption="High-reflectance epoxy floor rendering and stainless steel equipment" />
-	<ImageEmbed file="vivarium/Image06.jpg" caption="Biosafety cabinet and specimen preparation bay" />
-</div>
-
-<div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-6">
-	<ImageEmbed file="vivarium/Image07.jpg" caption="Secondary containment hallway showing cleanroom lighting" />
-	<ImageEmbed file="vivarium/Image08.jpg" caption="Autoclave decontamination loading area" />
-</div>
-
-<div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-6">
-	<ImageEmbed file="vivarium/Image09.jpg" caption="Facility waste management and disposal airlock" />
-	<ImageEmbed file="vivarium/Image10.jpg" caption="Observation hallway with observation windows" />
-</div>
-
-<div class="grid grid-cols-1 md:grid-cols-3 gap-4 my-6">
-	<ImageEmbed file="vivarium/Image11.jpg" caption="Animal holding room with positive pressure ventilation" />
-	<ImageEmbed file="vivarium/Image12.jpg" caption="Sanitization chemical transfer station" />
-	<ImageEmbed file="vivarium/Image13.jpg" caption="Clean corridor and gowning transition room" />
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 my-6">
+	<ImageEmbed file="utd-vivarium/Image05.jpg" caption="High-reflectance epoxy floor rendering and stainless steel equipment" />
+	<ImageEmbed file="utd-vivarium/Image06.jpg" caption="Biosafety cabinet and specimen preparation bay" />
+	<ImageEmbed file="utd-vivarium/Image07.jpg" caption="Secondary containment hallway showing cleanroom lighting" />
+	<ImageEmbed file="utd-vivarium/Image08.jpg" caption="Autoclave decontamination loading area" />
+	<ImageEmbed file="utd-vivarium/Image09.jpg" caption="Facility waste management and disposal airlock" />
+	<ImageEmbed file="utd-vivarium/Image10.jpg" caption="Observation hallway with observation windows" />
+	<ImageEmbed file="utd-vivarium/Image11.jpg" caption="Animal holding room with positive pressure ventilation" />
+	<ImageEmbed file="utd-vivarium/Image12.jpg" caption="Sanitization chemical transfer station" />
+	<ImageEmbed file="utd-vivarium/Image13.jpg" caption="Clean corridor and gowning transition room" />
 </div>
 
 ### Interactive Guided Training & Tour Expansion
