@@ -1,9 +1,113 @@
 ---
-// A component to create a styled "callout" or highlight block
+interface Props {
+  /** Main heading or title of the highlight */
+  title?: string;
+  /** Detailed narrative or description of the achievement */
+  description?: string;
+  /** Optional custom badge text (defaults to 'Project Highlight' when title is provided) */
+  badge?: string;
+  /** Optional link URL (e.g. Davey Award gallery, DOI paper, or press announcement) */
+  linkUrl?: string;
+  /** Optional link display text */
+  linkText?: string;
+  /** Additional CSS class names */
+  class?: string;
+  className?: string;
+}
+
+const { title, description, badge, linkUrl, linkText = "Learn More", class: extraClass = "", className = "" } = Astro.props;
+
+const customClasses = extraClass || className;
+const hasTitle = Boolean(title && title.trim());
+const hasDescription = Boolean(description && description.trim());
+const showBadge = badge !== undefined ? Boolean(badge) : hasTitle;
+const badgeLabel = badge || "Project Highlight";
 ---
 
-<div class="highlight-wrapper my-8 p-6 border-l-4 rounded-r-lg bg-slate-100 border-green-500 dark:bg-slate-800">
-  <div class="prose prose-slate dark:prose-invert max-w-none">
-    <slot />
+<div
+  class:list={[
+    "highlight-wrapper not-prose my-8 relative overflow-hidden rounded-2xl",
+    "border border-emerald-500/30 dark:border-emerald-500/20",
+    "border-l-4 border-l-emerald-600 dark:border-l-emerald-400",
+    "bg-gradient-to-br from-emerald-500/10 via-white/80 to-transparent dark:from-emerald-950/40 dark:via-slate-900/70 dark:to-slate-900/30",
+    "p-6 sm:p-7 backdrop-blur-md shadow-md shadow-emerald-500/5",
+    "transition-all duration-300 hover:border-emerald-500/50 hover:shadow-lg hover:shadow-emerald-500/10",
+    customClasses,
+  ]}
+  role="region"
+  aria-label={title || "Project Highlight"}
+>
+  <!-- Ambient background glow -->
+  <div
+    class="pointer-events-none absolute -top-12 -right-12 h-36 w-36 rounded-full bg-emerald-500/10 dark:bg-emerald-500/15 blur-2xl"
+    aria-hidden="true"
+  >
+  </div>
+
+  <div class="relative z-10 flex flex-col gap-2.5">
+    {
+      showBadge && (
+        <div class="flex items-center gap-2">
+          <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-mono font-bold uppercase tracking-wider bg-emerald-100/90 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border border-emerald-500/20 shadow-xs">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400 shrink-0"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <circle cx="12" cy="8" r="6" />
+              <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11" />
+            </svg>
+            <span>{badgeLabel}</span>
+          </span>
+        </div>
+      )
+    }
+
+    {hasTitle && <h3 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white leading-snug tracking-tight m-0">{title}</h3>}
+
+    {hasDescription && <p class="text-sm sm:text-base text-slate-700 dark:text-slate-300 leading-relaxed m-0 font-normal">{description}</p>}
+
+    {
+      Astro.slots.has("default") && (
+        <div class="highlight-slot mt-2 text-sm sm:text-base text-slate-700 dark:text-slate-300 leading-relaxed prose prose-slate dark:prose-invert max-w-none prose-p:my-2 prose-a:text-emerald-600 dark:prose-a:text-emerald-400">
+          <slot />
+        </div>
+      )
+    }
+
+    {
+      linkUrl && (
+        <div class="mt-2 pt-3 border-t border-emerald-500/10 dark:border-emerald-500/15">
+          <a
+            href={linkUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-1.5 text-xs font-mono font-semibold text-emerald-600 hover:text-emerald-500 dark:text-emerald-400 dark:hover:text-emerald-300 transition-colors"
+          >
+            <span>{linkText}</span>
+            <svg
+              class="h-3.5 w-3.5"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M15 3h6v6" />
+              <path d="M10 14 21 3" />
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+            </svg>
+          </a>
+        </div>
+      )
+    }
   </div>
 </div>
