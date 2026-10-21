@@ -12,7 +12,7 @@ const projectCollection = defineCollection({
     year: z.number(),
     filters: z.array(z.string()).optional(),
     tech: z.array(z.string()),
-    status: z.enum(["Released", "In Development", "Research"]).optional(),
+    status: z.enum(["Released", "In Development", "Ongoing"]).optional(),
     client: z.string().optional(),
     platform: z.array(z.string()),
     liveUrl: z.string().url().or(z.literal("")).optional(),

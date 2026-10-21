@@ -71,7 +71,7 @@ export const mediaRecognition: MediaRecognitionItem[] = [
   {
     id: "tulsa-union-fox-2023",
     title: "Union HS partners with University of Texas, combines football and the metaverse",
-    outlet: "Fox News & USA Today HSS",
+    outlet: "Fox News",
     date: "Sep 2023",
     articleUrl:
       "https://www.fox23.com/news/union-hs-partners-with-university-of-texas-combines-football-and-the-metaverse/article_439dec42-4dd5-11ee-bcc3-236144879db4.html",
@@ -85,12 +85,12 @@ export const mediaRecognition: MediaRecognitionItem[] = [
     articleUrl: "https://www.theartnewspaper.com/2023/08/28/new-mexico-museum-expansion-vladem-contemporary",
     projectSlug: "kitty-city",
   },
-  {
+  /*{
     id: "scivis-haptics-appreciation-2023",
     title: "Certificate of Appreciation for Outstanding Accomplishments in Multi-Sensory XR",
     outlet: "Dr. Jin Ryong Kim, Multimodal Interaction Lab",
     date: "May 2023",
     articleUrl: "https://mi-lab.io/",
     projectSlug: "scivis-haptics",
-  },
+  },*/
 ];

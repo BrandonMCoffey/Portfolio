@@ -63,7 +63,7 @@ const totalShowcases = eventsAndShowcases.length;
             <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white">Brandon Coffey</h1>
             <p class="text-lg sm:text-xl text-slate-600 dark:text-slate-300 font-medium mt-2">Lead Technical Artist & Graphics / XR Researcher</p>
             <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">
-              The University of Texas at Dallas &bull; Virtual and Augmented Spaces for Technology (VAST) Lab
+              The University of Texas at Dallas &bull; VAST Lab (Virtual Reality, Augmented Reality, Simulation, Technology)
             </p>
           </div>
 
@@ -322,17 +322,6 @@ const totalShowcases = eventsAndShowcases.length;
 
                 <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white mb-3 leading-snug">{pub.title}</h3>
 
-                {pub.abstract && (
-                  <div class="mb-3.5 p-3 rounded-lg bg-slate-50/70 dark:bg-slate-800/40 border border-slate-200/50 dark:border-slate-800/50 text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-                    <span class="font-mono font-bold uppercase tracking-wider text-[10px] text-emerald-600 dark:text-emerald-400 block mb-1">
-                      Abstract
-                    </span>
-                    <p class="line-clamp-2 hover:line-clamp-none transition-all cursor-pointer" title="Click or hover to expand">
-                      {pub.abstract}
-                    </p>
-                  </div>
-                )}
-
                 <div class="flex flex-wrap items-center gap-2 pt-2 border-t border-slate-100 dark:border-slate-800/60 text-xs font-mono">
                   {pub.doi && (
                     <a
@@ -415,7 +404,7 @@ const totalShowcases = eventsAndShowcases.length;
         </div>
       </section>
 
-      <!-- 3. GRANTS & SPONSORED RESEARCH -->
+      <!-- 3. GRANTS & SPONSORED RESEARCH
       <section id="grants" class="mb-14 scroll-mt-28">
         <div class="flex items-center gap-3 mb-6">
           <div class="p-2 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
@@ -462,7 +451,7 @@ const totalShowcases = eventsAndShowcases.length;
             ))
           }
         </div>
-      </section>
+      </section> -->
 
       <!-- 4. HONORS & AWARDS -->
       <section id="awards" class="mb-14 scroll-mt-28">
@@ -484,10 +473,10 @@ const totalShowcases = eventsAndShowcases.length;
               <div class="p-4 rounded-xl border border-slate-200/80 dark:border-slate-800/80 bg-white/70 dark:bg-slate-900/60 backdrop-blur-md shadow-xs flex flex-col justify-between transition-all hover:border-emerald-500/40">
                 <div>
                   <div class="flex items-center justify-between gap-2 mb-2">
+                    <span class="text-[11px] font-mono text-slate-500">{award.organization}</span>
                     <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-100 dark:bg-amber-950/80 text-amber-800 dark:text-amber-300 border border-amber-500/30">
                       {award.year}
                     </span>
-                    <span class="text-[11px] font-mono text-slate-500">{award.organization}</span>
                   </div>
 
                   <h3 class="text-sm font-bold text-slate-900 dark:text-white mb-1.5 leading-snug">{award.title}</h3>
@@ -542,9 +531,7 @@ const totalShowcases = eventsAndShowcases.length;
           </div>
           <div>
             <h2 class="text-2xl font-bold text-slate-900 dark:text-white">Press & Media Recognition</h2>
-            <p class="text-xs text-slate-500 font-mono">
-              11 Features across The New York Times, The Art Newspaper, Fox News, USA Today & University Outlets
-            </p>
+            <p class="text-xs text-slate-500 font-mono">11 Features across The New York Times, Fox News, & University Outlets</p>
           </div>
         </div>
 
@@ -555,7 +542,9 @@ const totalShowcases = eventsAndShowcases.length;
                 <div>
                   <div class="flex items-center justify-between gap-2 mb-1.5">
                     <span class="text-xs font-mono font-bold text-emerald-600 dark:text-emerald-400">{media.outlet}</span>
-                    <span class="text-[11px] font-mono text-slate-500">{media.date}</span>
+                    <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-100 dark:bg-amber-950/80 text-amber-800 dark:text-amber-300 border border-amber-500/30">
+                      {media.date}
+                    </span>
                   </div>
 
                   <h3 class="text-sm font-bold text-slate-900 dark:text-white mb-2 leading-snug">{media.title}</h3>
@@ -635,7 +624,7 @@ const totalShowcases = eventsAndShowcases.length;
           </div>
           <div>
             <h2 class="text-2xl font-bold text-slate-900 dark:text-white">Conferences & Public Exhibitions</h2>
-            <p class="text-xs text-slate-500 font-mono">11 Showcases including GDC, SXSW, Vladem Contemporary, and IEEE ISEMV</p>
+            <p class="text-xs text-slate-500 font-mono">11 Showcases including GDC, SXSW, and IEEE ISEMV</p>
           </div>
         </div>
 
@@ -668,14 +657,16 @@ const totalShowcases = eventsAndShowcases.length;
                   </p>
                 </div>
 
-                <span class="text-xs font-mono font-semibold text-emerald-600 dark:text-emerald-400 whitespace-nowrap">{event.date}</span>
+                <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-100 dark:bg-amber-950/80 text-amber-800 dark:text-amber-300 border border-amber-500/30">
+                  {event.date}
+                </span>
               </div>
             ))
           }
         </div>
       </section>
 
-      <!-- 7. VIP LAB TOURS & PROPOSALS -->
+      <!-- 7. VIP LAB TOURS & PROPOSALS
       <section id="tours" class="mb-14 scroll-mt-28">
         <div class="flex items-center gap-3 mb-6">
           <div class="p-2 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
@@ -698,14 +689,16 @@ const totalShowcases = eventsAndShowcases.length;
                   <span class="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
                     {tour.type}
                   </span>
-                  <span class="text-[10px] font-mono text-slate-500">{tour.date}</span>
+                  <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-100 dark:bg-amber-950/80 text-amber-800 dark:text-amber-300 border border-amber-500/30">
+                    {tour.date}
+                  </span>
                 </div>
                 <p class="font-semibold text-slate-900 dark:text-white mt-1">{tour.guest}</p>
               </div>
             ))
           }
         </div>
-      </section>
+      </section> -->
 
       <!-- 8. TEACHING EXPERIENCE & SERVICE -->
       <section id="teaching" class="mb-14 scroll-mt-28">
@@ -729,7 +722,9 @@ const totalShowcases = eventsAndShowcases.length;
                   <h3 class="text-base font-bold text-slate-900 dark:text-white">
                     {item.role} &mdash; <span class="text-emerald-600 dark:text-emerald-400">{item.courseOrEvent}</span>
                   </h3>
-                  <span class="text-xs font-mono font-semibold text-slate-500">{item.term}</span>
+                  <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-100 dark:bg-amber-950/80 text-amber-800 dark:text-amber-300 border border-amber-500/30">
+                    {item.term}
+                  </span>
                 </div>
                 <p class="text-xs font-mono text-slate-600 dark:text-slate-400">{item.institution}</p>
               </div>

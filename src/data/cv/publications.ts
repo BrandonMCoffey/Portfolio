@@ -2,7 +2,7 @@
 import type { PublicationItem } from "./types";
 
 export const publications: PublicationItem[] = [
-  {
+  /*{
     id: "faa-comfort-wear-2026",
     title: "Defining Comfortable Wear Time in Augmented Reality: Ergonomic and Cognitive Trade-offs in Safety-Critical Maintenance Simulations",
     venue: "Peer-Reviewed Academic Publication (In Press)",
@@ -10,9 +10,9 @@ export const publications: PublicationItem[] = [
     roles: "Author, Developer",
     projectSlug: "faa-techops",
     abstract:
-      "ABSTRACT HERE: This research investigates physical and cognitive wear-time limits for head-mounted augmented reality displays deployed in mission-critical aviation technical maintenance. By measuring eye strain, neck fatigue, and task completion fidelity across extended multi-hour training modules, we propose ergonomic operational thresholds and design guidelines to minimize technician discomfort during complex maintenance simulations.",
-  },
-  {
+      "This research investigates physical and cognitive wear-time limits for head-mounted augmented reality displays deployed in mission-critical aviation technical maintenance. By measuring eye strain, neck fatigue, and task completion fidelity across extended multi-hour training modules, we propose ergonomic operational thresholds and design guidelines to minimize technician discomfort during complex maintenance simulations.",
+  },*/
+  /*{
     id: "ackerman-chi-2027",
     title: "Ackerman: Digital Twin for Online Interactions, Learning, and Dialogue",
     venue: "ACM CHI 2027",
@@ -20,8 +20,8 @@ export const publications: PublicationItem[] = [
     roles: "Author, Developer",
     projectSlug: "ackerman-digital-twin",
     abstract:
-      "ABSTRACT HERE: Digital twins of cultural and educational institutions offer novel affordances for remote learning, community engagement, and historical preservation. This paper presents the Ackerman Center Digital Twin, exploring interactive pedagogical techniques, multi-user synchronous dialogues, and spatial audio architectures designed to connect distributed audiences with sensitive historical exhibits and human narratives.",
-  },
+      "Digital twins of cultural and educational institutions offer novel affordances for remote learning, community engagement, and historical preservation. This paper presents the Ackerman Center Digital Twin, exploring interactive pedagogical techniques, multi-user synchronous dialogues, and spatial audio architectures designed to connect distributed audiences with sensitive historical exhibits and human narratives.",
+  },*/
   {
     id: "isap-xr-training-2025",
     title: "Enhancing Human Performance in Aviation Technical Operations Extended Reality (XR) Training Systems Tailored to Human Aptitudes",
@@ -32,7 +32,7 @@ export const publications: PublicationItem[] = [
     doi: "https://doi.org/10.5399/osu/1188",
     extraUrl: "https://corescholar.libraries.wright.edu/isap_2025/49/",
     abstract:
-      "ABSTRACT HERE: Aviation maintenance training requires rigorous spatial and procedural comprehension. We evaluate an extended reality (XR) procedural simulator calibrated against individual operator spatial aptitudes. Findings indicate that adaptive spatial scaffolding accelerates task mastery, mitigates cognitive overload, and reduces error rates in safety-critical aircraft systems maintenance.",
+      "Aviation maintenance training requires rigorous spatial and procedural comprehension. We evaluate an extended reality (XR) procedural simulator calibrated against individual operator spatial aptitudes. Findings indicate that adaptive spatial scaffolding accelerates task mastery, mitigates cognitive overload, and reduces error rates in safety-critical aircraft systems maintenance.",
   },
   {
     id: "isap-ar-headset-discomfort-2025",
@@ -43,7 +43,7 @@ export const publications: PublicationItem[] = [
     projectSlug: "faa-techops",
     doi: "https://doi.org/10.5399/osu/1188",
     abstract:
-      "ABSTRACT HERE: Extended deployment of optical see-through AR displays in field technical operations introduces distinct ergonomic hurdles. This empirical study tracks the temporal onset of focal fatigue, craniofacial pressure, and postural adjustments across technicians during technical procedures, yielding actionable recommendations for device weight distribution and procedural pacing.",
+      "Extended deployment of optical see-through AR displays in field technical operations introduces distinct ergonomic hurdles. This empirical study tracks the temporal onset of focal fatigue, craniofacial pressure, and postural adjustments across technicians during technical procedures, yielding actionable recommendations for device weight distribution and procedural pacing.",
   },
   {
     id: "iccgv-football-metaverse-2025",
@@ -55,7 +55,7 @@ export const publications: PublicationItem[] = [
     projectSlug: "tulsa-union",
     doi: "https://doi.org/10.1117/12.3065862",
     abstract:
-      "ABSTRACT HERE: Immersive web-accessible metaverse platforms offer distributed sports fan bases shared spatial experiences beyond conventional broadcast television. We analyze the architectural pipeline, WebGL optimization, and interactive affordances of a virtual high school football stadium, evaluating user engagement, social presence, and community cohesion among distributed supporters.",
+      "Immersive web-accessible metaverse platforms offer distributed sports fan bases shared spatial experiences beyond conventional broadcast television. We analyze the architectural pipeline, WebGL optimization, and interactive affordances of a virtual high school football stadium, evaluating user engagement, social presence, and community cohesion among distributed supporters.",
   },
   {
     id: "ieee-vrw-woodbearers-2025",
@@ -66,7 +66,7 @@ export const publications: PublicationItem[] = [
     projectSlug: "woodbearers",
     doi: "https://doi.org/10.1109/vrw66409.2025.00476",
     abstract:
-      "ABSTRACT HERE: Combining photogrammetric reconstruction, real-time Unreal Engine 5 rendering, and cultural documentation, this project translates the 1970s masterwork 'Woodbearers of Chimayo' into an immersive six-degrees-of-freedom historical environment. We detail our asset optimization pipeline, dynamic lighting model, and qualitative visitor feedback during museum exhibitions.",
+      "Combining photogrammetric reconstruction, real-time Unreal Engine 5 rendering, and cultural documentation, this project translates the 1970s masterwork 'Woodbearers of Chimayo' into an immersive six-degrees-of-freedom historical environment. We detail our asset optimization pipeline, dynamic lighting model, and qualitative visitor feedback during museum exhibitions.",
   },
   {
     id: "springer-kitty-city-2024",
@@ -77,7 +77,7 @@ export const publications: PublicationItem[] = [
     projectSlug: "kitty-city",
     doi: "https://doi.org/10.1007/978-3-031-56521-2_5",
     abstract:
-      "ABSTRACT HERE: Contemporary art museums increasingly leverage augmented reality to bring fragile or non-extant collections to the public. This paper examines the interactive AR pipeline built for Judy Chicago's 'Kitty City' at the New Mexico Museum of Art Vladem Contemporary, highlighting the balance between historical curatorial integrity and real-time mobile graphics performance.",
+      "Contemporary art museums increasingly leverage augmented reality to bring fragile or non-extant collections to the public. This paper examines the interactive AR pipeline built for Judy Chicago's 'Kitty City' at the New Mexico Museum of Art Vladem Contemporary, highlighting the balance between historical curatorial integrity and real-time mobile graphics performance.",
   },
   {
     id: "ieee-isemv-digital-twin-2024",
@@ -87,9 +87,8 @@ export const publications: PublicationItem[] = [
     roles: "Author, Developer",
     projectSlug: "utd-campus",
     doi: "https://doi.org/10.1109/ISEMV63338.2024.00018",
-    paperUrl: "https://conferences.computer.org/isemvpub24/pdfs/ISEMV2024-KNvAo7ysCYErdqKkFx0BH/560500a017/560500a017.pdf",
     abstract:
-      "ABSTRACT HERE: Creating an interactive, multi-building academic campus digital twin requires harmonizing GIS geospatial data, architectural CAD drawings, and real-time game engine rendering. We present our end-to-end pipeline in Unreal Engine 5, demonstrating cross-platform streaming, interactive wayfinding, and virtual orientation capabilities for prospective students and researchers.",
+      "Creating an interactive, multi-building academic campus digital twin requires harmonizing GIS geospatial data, architectural CAD drawings, and real-time game engine rendering. We present our end-to-end pipeline in Unreal Engine 5, demonstrating cross-platform streaming, interactive wayfinding, and virtual orientation capabilities for prospective students and researchers.",
   },
   {
     id: "acm-vrst-metatwin-2022",
@@ -100,7 +99,7 @@ export const publications: PublicationItem[] = [
     projectSlug: "meta-twin",
     doi: "https://doi.org/10.1145/3562939.3565647",
     abstract:
-      "ABSTRACT HERE: MetaTwin explores real-time bidirectional synchronization between physical IoT sensor arrays and interactive virtual reality representations. We demonstrate latency-compensated spatial state replication, spatial telepresence, and user feedback modalities connecting real-world robotics with virtual counterparts.",
+      "MetaTwin explores real-time bidirectional synchronization between physical IoT sensor arrays and interactive virtual reality representations. We demonstrate latency-compensated spatial state replication, spatial telepresence, and user feedback modalities connecting real-world robotics with virtual counterparts.",
   },
   {
     id: "acm-vrst-flow-vis-2022",
@@ -111,7 +110,7 @@ export const publications: PublicationItem[] = [
     projectSlug: "wind-visualization",
     doi: "https://doi.org/10.1145/3562939.3565651",
     abstract:
-      "ABSTRACT HERE: Visualizing complex multi-dimensional fluid dynamics in three dimensions often overwhelms human perceptual bandwidth. By abstracting vector fields into congruent visual particle streams and focused ultrasound haptic sensations, this work demonstrates improved comprehension and feature discovery in wind flow simulations.",
+      "Visualizing complex multi-dimensional fluid dynamics in three dimensions often overwhelms human perceptual bandwidth. By abstracting vector fields into congruent visual particle streams and focused ultrasound haptic sensations, this work demonstrates improved comprehension and feature discovery in wind flow simulations.",
   },
   {
     id: "acm-vrst-tangible-data-2021",
@@ -122,7 +121,7 @@ export const publications: PublicationItem[] = [
     projectSlug: "scivis-haptics",
     doi: "https://dl.acm.org/doi/10.1145/3489849.3489889",
     abstract:
-      "ABSTRACT HERE: Mid-air haptics allow users to perceive touch sensations without physical controllers or wearables. We present TangibleData, an interactive scientific visualization workbench that couples volumetric data rendering with ultrasonic acoustic radiation pressure to provide tactile cues for volumetric boundaries and gradients.",
+      "Mid-air haptics allow users to perceive touch sensations without physical controllers or wearables. We present TangibleData, an interactive scientific visualization workbench that couples volumetric data rendering with ultrasonic acoustic radiation pressure to provide tactile cues for volumetric boundaries and gradients.",
   },
   {
     id: "acm-vrst-thermo-tactile-2021",
@@ -133,6 +132,6 @@ export const publications: PublicationItem[] = [
     projectSlug: "scivis-haptics",
     doi: "https://dl.acm.org/doi/10.1145/3489849.3489889",
     abstract:
-      "ABSTRACT HERE: Integrating thermal feedback with tactile feedback enhances immersion and environmental realism. This paper explores a novel multimodal display combining ultrasound focal point pressure with non-contact radiant thermal stimulation, evaluating human sensory perception thresholds and cross-modal sensory reinforcement.",
+      "Integrating thermal feedback with tactile feedback enhances immersion and environmental realism. This paper explores a novel multimodal display combining ultrasound focal point pressure with non-contact radiant thermal stimulation, evaluating human sensory perception thresholds and cross-modal sensory reinforcement.",
   },
 ];

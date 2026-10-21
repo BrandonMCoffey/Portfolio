@@ -226,12 +226,6 @@ const isInteractiveLiveDemo = Boolean(liveUrl && (
 								<svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
 							</a>
 						)}
-						<a
-							href="/cv#media"
-							class="ml-auto inline-flex items-center gap-1 text-slate-500 hover:text-emerald-600 dark:hover:text-emerald-400 font-semibold transition-colors"
-						>
-							&larr; View all media coverage in CV
-						</a>
 					</div>
 				</div>
 			)}
@@ -296,7 +290,7 @@ const isInteractiveLiveDemo = Boolean(liveUrl && (
 					<!-- Tech Stack (With Clickable Tech Links) -->
 					<div>
 						<span class="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 block mb-1.5">
-							Engine & Tech Stack
+							Software & Tech Stack
 						</span>
 						<div class="flex flex-wrap gap-1.5">
 							{tech.map((t: string) => {
@@ -524,13 +518,6 @@ const isInteractiveLiveDemo = Boolean(liveUrl && (
 						</div>
 					</aside>
 				)}
-			</div>
-
-			<!-- Bottom CTAs -->
-			<div class="mt-16 pt-8 border-t border-slate-200/80 dark:border-slate-800/80 flex flex-wrap gap-4 justify-center">
-				{isInteractiveLiveDemo && <a href={liveUrl} class="btn btn-primary" target="_blank" rel="noopener noreferrer">Interactive Live Demo</a>}
-				{githubUrl && <a href={githubUrl} class="btn btn-secondary" target="_blank" rel="noopener noreferrer">View on GitHub</a>}
-				{videoUrl && <a href={videoUrl} class="btn btn-secondary" target="_blank" rel="noopener noreferrer">Watch Video</a>}
 			</div>
 
 			<!-- Previous & Next Project Navigation Cards -->
