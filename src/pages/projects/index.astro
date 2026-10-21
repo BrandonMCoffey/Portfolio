@@ -1,0 +1,448 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ProjectCard from "../../components/projects/ProjectCard.astro";
+
+const projects = await getCollection("projects");
+// Sort by priority initially
+projects.sort((a, b) => a.data.priority - b.data.priority);
+
+// Pre-calculate filter counts for friendly labels
+const filterDefinitions = [
+  { id: "all", label: "All Projects", count: projects.length },
+  { id: "featured", label: "Featured", count: projects.filter((p) => p.data.filters?.includes("featured")).length },
+  { id: "game", label: "Games", count: projects.filter((p) => p.data.filters?.includes("game")).length },
+  { id: "VR", label: "VR / AR / XR", count: projects.filter((p) => p.data.filters?.includes("VR") || p.data.filters?.includes("AR")).length },
+  { id: "graphics", label: "Graphics & VFX", count: projects.filter((p) => p.data.filters?.includes("graphics")).length },
+  { id: "utility", label: "Tools & Utilities", count: projects.filter((p) => p.data.filters?.includes("utility")).length },
+  { id: "vastlab", label: "VAST Lab", count: projects.filter((p) => p.data.filters?.includes("vastlab")).length },
+  { id: "gamelab", label: "Game Lab", count: projects.filter((p) => p.data.filters?.includes("gamelab")).length },
+  { id: "milab", label: "MI Lab", count: projects.filter((p) => p.data.filters?.includes("milab")).length },
+];
+
+const popularTech = ["Unreal", "Unity", "C#", "Python", "Maya", "Houdini", "Blender"];
+---
+
+<BaseLayout
+  title="All Projects | Brandon Coffey"
+  description="Comprehensive archive of 20+ real-time graphics, XR experiences, engine tools, and game systems developed by Brandon Coffey."
+>
+  <div class="relative overflow-hidden py-16 sm:py-20">
+    <!-- Background grid pattern -->
+    <div
+      class="pointer-events-none absolute inset-0 bg-grid-pattern opacity-40 [mask-image:radial-gradient(ellipse_at_center,black_40%,transparent_80%)]"
+    >
+    </div>
+
+    <div class="container relative mx-auto px-4 max-w-6xl">
+      <!-- Header -->
+      <div class="text-center mb-12">
+        <div
+          class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-800 dark:text-emerald-300 border border-emerald-500/20 mb-3"
+        >
+          <span>Portfolio Archive</span>
+          <span>&bull;</span>
+          <span id="header-project-count">{projects.length} Works</span>
+        </div>
+        <h1 class="mb-4 text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white">Projects & Case Studies</h1>
+        <p class="text-base sm:text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+          Explore real-time simulations, virtual reality exhibits, custom editor tools, and gameplay systems. Filter by lab, medium, or tech stack.
+        </p>
+      </div>
+
+      <!-- Search & Control Panel -->
+      <div
+        class="mb-10 space-y-4 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white/70 dark:bg-slate-900/60 backdrop-blur-md p-5 sm:p-6 shadow-sm"
+      >
+        <!-- Top row: Search input & Sort selector -->
+        <div class="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center justify-between">
+          <div class="relative flex-1 max-w-xl">
+            <svg
+              class="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="2"
+              stroke="currentColor"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+              ></path>
+            </svg>
+            <input
+              type="search"
+              id="project-search-input"
+              placeholder="Search by title, role, tech stack, or keywords..."
+              class="w-full pl-10 pr-9 py-2.5 rounded-xl border border-slate-200/90 dark:border-slate-700/80 bg-white dark:bg-slate-950/80 text-sm text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all"
+            />
+            <button
+              id="search-clear-btn"
+              type="button"
+              class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 text-xs font-bold p-1"
+              aria-label="Clear search query"
+            >
+              &times;
+            </button>
+          </div>
+
+          <!-- Sort Select -->
+          <div class="flex items-center gap-2 self-end sm:self-auto text-xs font-semibold text-slate-600 dark:text-slate-400">
+            <label for="project-sort-select" class="whitespace-nowrap">Sort:</label>
+            <select
+              id="project-sort-select"
+              class="py-2 px-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-800 dark:text-slate-200 text-xs font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500"
+            >
+              <option value="priority_asc">Default</option>
+              <option value="year_desc">Year (Newest First)</option>
+              <option value="year_asc">Year (Oldest First)</option>
+              <option value="title_asc">Title (A &rarr; Z)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Category Filters -->
+        <div class="pt-3 border-t border-slate-200/60 dark:border-slate-800/60">
+          <div class="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
+            <span class="text-xs font-mono uppercase tracking-wider text-slate-400 dark:text-slate-500 mr-1 hidden sm:inline">Category:</span>
+            {
+              filterDefinitions.map((f) => (
+                <button
+                  type="button"
+                  data-category-filter={f.id}
+                  class:list={[
+                    "category-filter-btn shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer",
+                    f.id === "all"
+                      ? "active bg-emerald-600 text-white shadow-xs"
+                      : "bg-slate-100/90 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700",
+                  ]}
+                >
+                  <span>{f.label}</span>
+                  <span class="filter-count text-[10px] opacity-75 font-mono">({f.count})</span>
+                </button>
+              ))
+            }
+          </div>
+        </div>
+
+        <!-- Tech Stack Quick Filter Chips -->
+        <div class="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none text-xs">
+          <span class="text-[11px] font-mono uppercase tracking-wider text-slate-400 dark:text-slate-500 mr-1 hidden sm:inline">Tech:</span>
+          {
+            popularTech.map((tech) => (
+              <button
+                type="button"
+                data-tech-filter={tech}
+                class="tech-filter-chip shrink-0 px-2.5 py-1 rounded-md text-[11px] font-mono font-medium border border-slate-200/80 dark:border-slate-700/80 bg-white/60 dark:bg-slate-900/40 text-slate-600 dark:text-slate-400 hover:border-emerald-500/50 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors cursor-pointer"
+              >
+                +{tech}
+              </button>
+            ))
+          }
+        </div>
+      </div>
+
+      <!-- Live Results Counter Bar -->
+      <div class="flex items-center justify-between mb-6 px-1 text-xs text-slate-500 dark:text-slate-400 font-mono">
+        <div>
+          Showing <span id="visible-project-count" class="font-bold text-slate-800 dark:text-slate-200">{projects.length}</span> of {projects.length} projects
+        </div>
+        <button id="reset-all-btn" class="hidden text-emerald-600 dark:text-emerald-400 hover:underline cursor-pointer font-sans font-semibold">
+          Reset filters
+        </button>
+      </div>
+
+      <!-- Cards Grid -->
+      <div id="project-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {
+          projects.map((project) => (
+            <div
+              class="project-item-card h-full"
+              data-title={project.data.title.toLowerCase()}
+              data-tagline={project.data.tagline.toLowerCase()}
+              data-role={(project.data.role || "").toLowerCase()}
+              data-year={project.data.year}
+              data-priority={project.data.priority}
+              data-tech={(project.data.tech || []).join(" ").toLowerCase()}
+              data-platform={(project.data.platform || []).join(" ").toLowerCase()}
+              data-filters={(project.data.filters || []).join(" ").toLowerCase()}
+            >
+              <ProjectCard project={project} />
+            </div>
+          ))
+        }
+      </div>
+
+      <!-- Zero Results Placeholder -->
+      <div id="no-projects-found" class="hidden py-16 text-center rounded-2xl border border-dashed border-slate-300 dark:border-slate-700 p-8 my-8">
+        <p class="text-4xl mb-3">🔍</p>
+        <h3 class="text-lg font-bold text-slate-800 dark:text-slate-200 mb-2">No projects matched your criteria</h3>
+        <p class="text-sm text-slate-500 dark:text-slate-400 max-w-md mx-auto mb-6">
+          Try clearing your search terms or selecting a different category or tech stack filter.
+        </p>
+        <button id="clear-search-btn" class="btn btn-secondary text-xs px-4 py-2"> Clear All Filters </button>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  function initProjectExplorer() {
+    const searchInput = document.getElementById("project-search-input") as HTMLInputElement | null;
+    const clearSearchBtn = document.getElementById("search-clear-btn");
+    const sortSelect = document.getElementById("project-sort-select") as HTMLSelectElement | null;
+    const categoryBtns = document.querySelectorAll<HTMLButtonElement>(".category-filter-btn");
+    const techChips = document.querySelectorAll<HTMLButtonElement>(".tech-filter-chip");
+    const projectCards = document.querySelectorAll<HTMLElement>(".project-item-card");
+    const visibleCountSpan = document.getElementById("visible-project-count");
+    const resetAllBtn = document.getElementById("reset-all-btn");
+    const noResults = document.getElementById("no-projects-found");
+    const clearAllBtn = document.getElementById("clear-search-btn");
+    const grid = document.getElementById("project-grid");
+
+    if (!grid || grid.dataset.hasListener) return;
+    grid.dataset.hasListener = "true";
+
+    let activeCategory = "all";
+    let activeTech = "";
+    let currentSearch = "";
+    let currentSort = "priority_asc";
+
+    // Parse initial filter from URL query param (e.g. ?filter=vastlab)
+    const urlParams = new URLSearchParams(window.location.search);
+    const initialFilter = urlParams.get("filter");
+    if (initialFilter) {
+      const matchingBtn = document.querySelector<HTMLButtonElement>(`.category-filter-btn[data-category-filter="${initialFilter.toLowerCase()}"]`);
+      if (matchingBtn) {
+        activeCategory = initialFilter.toLowerCase();
+        categoryBtns.forEach((b) => {
+          const isTarget = b.dataset.categoryFilter === activeCategory;
+          b.classList.toggle("active", isTarget);
+          b.classList.toggle("bg-emerald-600", isTarget);
+          b.classList.toggle("text-white", isTarget);
+        });
+      }
+    }
+
+    const updateUrl = () => {
+      const params = new URLSearchParams();
+      if (activeCategory !== "all") {
+        params.set("filter", activeCategory);
+      }
+      if (currentSearch) {
+        params.set("q", currentSearch);
+      }
+      const queryString = params.toString();
+      const newUrl = queryString ? `${window.location.pathname}?${queryString}` : window.location.pathname;
+      window.history.replaceState({}, "", newUrl);
+    };
+
+    const filterAndSortCards = () => {
+      let visibleCount = 0;
+      const cardsArray = Array.from(projectCards);
+
+      cardsArray.forEach((card) => {
+        const title = card.dataset.title || "";
+        const tagline = card.dataset.tagline || "";
+        const role = card.dataset.role || "";
+        const tech = card.dataset.tech || "";
+        const platform = card.dataset.platform || "";
+        const filters = card.dataset.filters || "";
+
+        // Category Match
+        let matchesCategory = false;
+        if (activeCategory === "all") {
+          matchesCategory = true;
+        } else if (activeCategory === "vr") {
+          matchesCategory = filters.includes("vr") || filters.includes("ar");
+        } else {
+          matchesCategory = filters.includes(activeCategory.toLowerCase());
+        }
+
+        // Tech Chip Match (Single-Select)
+        let matchesTech = true;
+        if (activeTech) {
+          matchesTech = tech.includes(activeTech);
+        }
+
+        // Search Query Match
+        let matchesSearch = true;
+        if (currentSearch) {
+          const query = currentSearch.toLowerCase();
+          matchesSearch =
+            title.includes(query) ||
+            tagline.includes(query) ||
+            role.includes(query) ||
+            tech.includes(query) ||
+            platform.includes(query) ||
+            filters.includes(query);
+        }
+
+        const isVisible = matchesCategory && matchesTech && matchesSearch;
+        if (isVisible) {
+          card.style.display = "";
+          visibleCount++;
+        } else {
+          card.style.display = "none";
+        }
+      });
+
+      // Sort visible elements in the DOM
+      cardsArray.sort((a, b) => {
+        const prioA = Number(a.dataset.priority || "99");
+        const prioB = Number(b.dataset.priority || "99");
+        const yearA = Number(a.dataset.year || "0");
+        const yearB = Number(b.dataset.year || "0");
+        const titleA = a.dataset.title || "";
+        const titleB = b.dataset.title || "";
+
+        switch (currentSort) {
+          case "year_desc":
+            return yearB - yearA;
+          case "year_asc":
+            return yearA - yearB;
+          case "title_asc":
+            return titleA.localeCompare(titleB);
+          case "priority_asc":
+          default:
+            return prioA - prioB;
+        }
+      });
+
+      cardsArray.forEach((card) => grid.appendChild(card));
+
+      // Update counters & UI states
+      if (visibleCountSpan) visibleCountSpan.textContent = String(visibleCount);
+      if (noResults) noResults.classList.toggle("hidden", visibleCount > 0);
+      if (resetAllBtn) {
+        const isFiltered = activeCategory !== "all" || activeTech !== "" || currentSearch.length > 0;
+        resetAllBtn.classList.toggle("hidden", !isFiltered);
+      }
+
+      updateUrl();
+    };
+
+    // Category Button Clicks
+    categoryBtns.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const cat = btn.dataset.categoryFilter || "all";
+        activeCategory = cat;
+        categoryBtns.forEach((b) => {
+          const isActive = b === btn;
+          b.classList.toggle("active", isActive);
+          b.classList.toggle("bg-emerald-600", isActive);
+          b.classList.toggle("text-white", isActive);
+          b.classList.toggle("bg-slate-100/90", !isActive);
+          b.classList.toggle("dark:bg-slate-800/80", !isActive);
+          b.classList.toggle("text-slate-700", !isActive);
+          b.classList.toggle("dark:text-slate-300", !isActive);
+        });
+        filterAndSortCards();
+      });
+    });
+
+    // Tech Chip Clicks (Single-select: clicking active clears it)
+    techChips.forEach((chip) => {
+      chip.addEventListener("click", () => {
+        const clickedTech = (chip.dataset.techFilter || "").toLowerCase();
+        if (activeTech === clickedTech) {
+          activeTech = ""; // Clear filter
+        } else {
+          activeTech = clickedTech; // Single active
+        }
+
+        // Update chip visual states
+        techChips.forEach((c) => {
+          const isChipActive = activeTech !== "" && (c.dataset.techFilter || "").toLowerCase() === activeTech;
+          if (isChipActive) {
+            c.classList.add("bg-emerald-600", "text-white", "border-emerald-600", "font-bold", "shadow-xs", "ring-2", "ring-emerald-500/30");
+            c.classList.remove(
+              "bg-white/60",
+              "dark:bg-slate-900/40",
+              "text-slate-600",
+              "dark:text-slate-400",
+              "border-slate-200/80",
+              "dark:border-slate-700/80",
+            );
+          } else {
+            c.classList.remove("bg-emerald-600", "text-white", "border-emerald-600", "font-bold", "shadow-xs", "ring-2", "ring-emerald-500/30");
+            c.classList.add(
+              "bg-white/60",
+              "dark:bg-slate-900/40",
+              "text-slate-600",
+              "dark:text-slate-400",
+              "border-slate-200/80",
+              "dark:border-slate-700/80",
+            );
+          }
+        });
+
+        filterAndSortCards();
+      });
+    });
+
+    // Search Input
+    searchInput?.addEventListener("input", () => {
+      currentSearch = searchInput.value.trim();
+      if (clearSearchBtn) clearSearchBtn.classList.toggle("hidden", !currentSearch);
+      filterAndSortCards();
+    });
+
+    clearSearchBtn?.addEventListener("click", () => {
+      if (searchInput) {
+        searchInput.value = "";
+        currentSearch = "";
+        clearSearchBtn.classList.add("hidden");
+        filterAndSortCards();
+      }
+    });
+
+    // Sort Select
+    sortSelect?.addEventListener("change", () => {
+      currentSort = sortSelect.value;
+      filterAndSortCards();
+    });
+
+    // Reset Handlers
+    const resetFilters = () => {
+      activeCategory = "all";
+      activeTech = "";
+      currentSearch = "";
+      if (searchInput) searchInput.value = "";
+      if (clearSearchBtn) clearSearchBtn.classList.add("hidden");
+
+      categoryBtns.forEach((b) => {
+        const isAll = b.dataset.categoryFilter === "all";
+        b.classList.toggle("active", isAll);
+        b.classList.toggle("bg-emerald-600", isAll);
+        b.classList.toggle("text-white", isAll);
+        b.classList.toggle("bg-slate-100/90", !isAll);
+        b.classList.toggle("dark:bg-slate-800/80", !isAll);
+        b.classList.toggle("text-slate-700", !isAll);
+        b.classList.toggle("dark:text-slate-300", !isAll);
+      });
+
+      techChips.forEach((c) => {
+        c.classList.remove("bg-emerald-600", "text-white", "border-emerald-600", "font-bold", "shadow-xs", "ring-2", "ring-emerald-500/30");
+        c.classList.add(
+          "bg-white/60",
+          "dark:bg-slate-900/40",
+          "text-slate-600",
+          "dark:text-slate-400",
+          "border-slate-200/80",
+          "dark:border-slate-700/80",
+        );
+      });
+
+      filterAndSortCards();
+    };
+
+    resetAllBtn?.addEventListener("click", resetFilters);
+    clearAllBtn?.addEventListener("click", resetFilters);
+
+    // Initial filter execution (handles ?filter= param if present)
+    if (initialFilter) {
+      filterAndSortCards();
+    }
+  }
+
+  document.addEventListener("astro:page-load", initProjectExplorer);
+</script>

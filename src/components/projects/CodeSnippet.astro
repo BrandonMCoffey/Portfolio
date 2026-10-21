@@ -1,0 +1,107 @@
+---
+interface Props {
+  title: string;
+  lang: string;
+}
+
+const { title, lang } = Astro.props;
+---
+
+<div
+  class="code-snippet-wrapper my-6 rounded-xl border border-slate-200/80 dark:border-slate-800/80 bg-white/70 dark:bg-slate-900/60 backdrop-blur-xs overflow-hidden shadow-xs"
+>
+  <div
+    class="header flex justify-between items-center px-4 py-2.5 border-b border-slate-200/60 dark:border-slate-800/60 bg-slate-100/60 dark:bg-slate-800/40"
+  >
+    <div class="flex items-center gap-2">
+      <span class="h-2.5 w-2.5 rounded-full bg-slate-300 dark:bg-slate-700"></span>
+      <p class="font-mono text-xs font-semibold text-slate-700 dark:text-slate-300">{title}</p>
+    </div>
+    <div class="flex items-center gap-3">
+      <span class="lang-tag uppercase text-[11px] font-mono font-bold text-slate-500 dark:text-slate-400">{lang}</span>
+      <button
+        class="copy-code-btn inline-flex items-center gap-1 text-xs font-medium text-slate-600 hover:text-emerald-600 dark:text-slate-400 dark:hover:text-emerald-400 transition-colors"
+        title="Copy code to clipboard"
+      >
+        <svg class="copy-icon h-3.5 w-3.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 0 1-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 0 1 1.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 0 0-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 0 1-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H9.75"
+          ></path>
+        </svg>
+        <span class="copy-text">Copy</span>
+      </button>
+      <button class="expand-btn text-xs font-semibold text-emerald-600 dark:text-emerald-400 hover:underline cursor-pointer">Show More</button>
+    </div>
+  </div>
+  <div class="code-content relative">
+    <slot />
+    <div class="fade-overlay pointer-events-none absolute bottom-0 left-0 w-full h-12 bg-gradient-to-t from-white dark:from-slate-900 to-transparent">
+    </div>
+  </div>
+</div>
+
+<script>
+  function initCodeSnippets() {
+    document.querySelectorAll(".code-snippet-wrapper").forEach((wrapper) => {
+      if ((wrapper as HTMLElement).dataset.hasListener) return;
+      (wrapper as HTMLElement).dataset.hasListener = "true";
+
+      const expandBtn = wrapper.querySelector(".expand-btn") as HTMLButtonElement | null;
+      const copyBtn = wrapper.querySelector(".copy-code-btn") as HTMLButtonElement | null;
+      const fadeOverlay = wrapper.querySelector(".fade-overlay") as HTMLElement | null;
+
+      expandBtn?.addEventListener("click", () => {
+        const isOpen = wrapper.classList.toggle("is-open");
+        if (expandBtn) {
+          expandBtn.textContent = isOpen ? "Show Less" : "Show More";
+        }
+        if (fadeOverlay) {
+          fadeOverlay.style.display = isOpen ? "none" : "block";
+        }
+      });
+
+      copyBtn?.addEventListener("click", async () => {
+        const pre = wrapper.querySelector("pre");
+        const codeText = pre?.textContent || "";
+        if (!codeText) return;
+
+        try {
+          await navigator.clipboard.writeText(codeText);
+          const copyText = copyBtn.querySelector(".copy-text");
+          if (copyText) copyText.textContent = "Copied!";
+          setTimeout(() => {
+            if (copyText) copyText.textContent = "Copy";
+          }, 2000);
+        } catch (_) {}
+      });
+    });
+  }
+
+  document.addEventListener("astro:page-load", initCodeSnippets);
+</script>
+
+<style>
+  .code-content :global(pre) {
+    margin-top: 0;
+    margin-bottom: 0;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-width: 0;
+  }
+  .code-content {
+    max-height: 90px;
+    overflow: hidden;
+    transition: max-height 0.4s ease-in-out;
+  }
+  .fade-overlay {
+    transition: opacity 0.4s ease;
+  }
+  .is-open .code-content {
+    max-height: 2000px;
+  }
+  .is-open .fade-overlay {
+    opacity: 0;
+  }
+</style>

@@ -1,0 +1,211 @@
+[
+  {
+    "id": "chocolate-cookies",
+    "title": "Chocolate Cookies",
+    "description": "Deliciously rich and chewy chocolate cookies, loaded with chocolate chips.",
+    "thumbnail": "/images/cookbook/jackie-family/chocolate-cookies.jpg",
+    "author": "Chris Garza",
+    "date": "2025-08-07",
+    "collections": ["Jackie Family"],
+    "category": "Dessert",
+    "cuisines": ["American"],
+    "diets": [],
+    "cookware": ["Baking Sheet", "Large Bowl", "Wire Rack"],
+    "time": { "prep": 15, "cook": 10, "rest": 5 },
+    "servings": 24,
+    "ingredients": [
+      { "item": "unsalted butter", "quantity": 0.5, "unit": "cup", "note": "softened" },
+      { "item": "white sugar", "quantity": 0.5, "unit": "cup" },
+      { "item": "brown sugar", "quantity": 0.5, "unit": "cup" },
+      { "item": "large egg", "quantity": 1, "unit": "count" },
+      { "item": "vanilla extract", "quantity": 1, "unit": "tsp" },
+      { "item": "all-purpose flour", "quantity": 1, "unit": "cup" },
+      { "item": "unsweetened cocoa powder", "quantity": 0.33, "unit": "cup" },
+      { "item": "baking soda", "quantity": 0.5, "unit": "tsp" },
+      { "item": "salt", "quantity": 0.25, "unit": "tsp" },
+      { "item": "chocolate chips", "quantity": 1, "unit": "cup", "note": "optional, but delicious" }
+    ],
+    "instructions": [
+      "Preheat oven to 350°F (175°C). Line a baking sheet with parchment paper.",
+      "In a large bowl, cream together softened butter, white sugar, and brown sugar until light and fluffy.",
+      "Beat in the egg and vanilla extract.",
+      "In a separate bowl, whisk together flour, cocoa powder, baking soda, and salt.",
+      "Gradually add the dry ingredients to the wet ingredients, mixing until just combined.",
+      "Fold in chocolate chips if using.",
+      "Drop spoonfuls of dough onto the prepared baking sheet (about 1.5-inch balls).",
+      "Bake for 8–10 minutes, until the edges are set. The cookies will continue to cook on the sheet.",
+      "Let the cookies cool for a few minutes on the baking sheet, then transfer to a wire rack."
+    ],
+    "tips": []
+  },
+  {
+    "id": "cilantro-crema",
+    "title": "Cilantro Crema",
+    "description": "",
+    "thumbnail": "/images/cookbook/jackie-family/cilantro-crema.jpg",
+    "author": "Jackie's Mimaw",
+    "date": "2025-08-31",
+    "collections": ["Jackie Family"],
+    "category": "Sauce",
+    "cuisines": ["Tex-Mex", "Mexican"],
+    "diets": [],
+    "cookware": ["Skillet", "Blender"],
+    "time": { "prep": 10, "cook": 10, "rest": 0 },
+    "servings": 2,
+    "ingredients": [
+      { "item": "sour cream", "quantity": 1, "unit": "cup", "note": "" },
+      { "item": "cilantro", "quantity": 1, "unit": "bunch", "note": "" },
+      { "item": "jalapeno", "quantity": 1, "unit": "", "note": "" },
+      { "item": "lime", "quantity": 1, "unit": "to taste", "note": "" },
+      { "item": "garlic", "quantity": 1, "unit": "clove", "note": "" }
+    ],
+    "instructions": [
+      "Sear peppers on a cast iron skillet or in a toaster oven. Cut and remove seeds.",
+      "Add all ingredients to a blender or food processor and blend until creamy and smooth."
+    ],
+    "tips": ["If you want a spicy version, add a serrano."]
+  },
+  {
+    "id": "migas-and-bacon",
+    "title": "Migas and Bacon",
+    "description": "A simple Tex-Mex breakfast dish featuring fried tortilla strips scrambled with eggs, served alongside crispy bacon.",
+    "thumbnail": "/images/cookbook/jackie-family/migas-and-bacon.jpg",
+    "author": "Jackie's Mimaw",
+    "date": "2025-08-31",
+    "collections": ["Jackie Family"],
+    "category": "Breakfast",
+    "cuisines": ["Tex-Mex", "Mexican"],
+    "diets": [],
+    "cookware": ["Skillet", "Bowl"],
+    "time": { "prep": 10, "cook": 15, "rest": 0 },
+    "servings": 2,
+    "ingredients": [
+      { "item": "oil", "quantity": 0, "unit": "to taste", "note": "" },
+      { "item": "bacon", "quantity": 4, "unit": "slice", "note": "" },
+      { "item": "corn tortillas", "quantity": 4, "unit": "", "note": "" },
+      { "item": "salt", "quantity": 0, "unit": "to taste", "note": "" },
+      { "item": "eggs", "quantity": 4, "unit": "", "note": "" },
+      { "item": "pepper", "quantity": 0, "unit": "to taste", "note": "" },
+      { "item": "butter", "quantity": 2, "unit": "tbsp", "note": "" }
+    ],
+    "instructions": [
+      "Cut bacon slices in half, cut tortillas into squares, and whisk eggs with pepper in a separate bowl.",
+      "Heat oil in a skillet over medium heat.",
+      "Add bacon and cook until dark or lightly blackened, keeping the skillet covered.",
+      "Remove bacon to a paper towel-lined plate.",
+      "Add tortilla squares to the skillet and stir, increasing heat slightly.",
+      "Once sizzling, reduce heat, remove tortillas to a plate, and lightly salt.",
+      "Add butter to the pan and let it melt.",
+      "Add the egg mixture and cook on medium-low heat, covered.",
+      "When the eggs are mostly cooked, stir in the tortilla squares and serve with bacon."
+    ],
+    "tips": []
+  },
+  {
+    "id": "cinnamon-sugar-bunuelos",
+    "title": "Mexican Buñuelos",
+    "description": "Crispy golden fried dough discs tossed in aromatic cinnamon and sugar—a beloved festive Mexican treat.",
+    "thumbnail": "/images/cookbook/jackie-family/buenuellos.jpg",
+    "author": "Jackie's Family",
+    "date": "2025-08-31",
+    "collections": ["Jackie Family"],
+    "category": "Dessert",
+    "cuisines": ["Mexican"],
+    "diets": ["Vegetarian"],
+    "cookware": ["Deep Skillet", "Rolling Pin", "Tongs"],
+    "time": { "prep": 25, "cook": 20, "rest": 30 },
+    "servings": 12,
+    "ingredients": [
+      { "item": "all-purpose flour", "quantity": 2, "unit": "cup", "note": "" },
+      { "item": "baking powder", "quantity": 1, "unit": "tsp", "note": "" },
+      { "item": "salt", "quantity": 0.5, "unit": "tsp", "note": "" },
+      { "item": "granulated sugar", "quantity": 1, "unit": "tbsp", "note": "for dough" },
+      { "item": "warm water", "quantity": 0.75, "unit": "cup", "note": "" },
+      { "item": "vegetable oil", "quantity": 0.25, "unit": "cup", "note": "for dough" },
+      { "item": "oil for frying", "quantity": 2, "unit": "cup", "note": "" },
+      { "item": "sugar", "quantity": 1, "unit": "cup", "note": "for coating" },
+      { "item": "ground cinnamon", "quantity": 1.5, "unit": "tbsp", "note": "for coating" }
+    ],
+    "instructions": [
+      "In a bowl, mix flour, baking powder, salt, and 1 tbsp sugar. Add warm water and oil, kneading until smooth and soft (about 5 minutes).",
+      "Divide into 12 balls, cover with a towel, and let rest for 30 minutes.",
+      "Roll each ball into a very thin circular disc on a lightly floured surface.",
+      "Heat frying oil in a deep skillet over medium-high heat (375°F / 190°C).",
+      "Fry discs one at a time for about 60 seconds per side until crispy and golden brown.",
+      "Drain on paper towels for a few seconds, then immediately dredge both sides in the cinnamon-sugar mixture."
+    ],
+    "tips": ["The thinner you roll the dough discs, the crispier and airier the buñuelos will be."]
+  },
+  {
+    "id": "smoked-sausage-and-okra-skillet",
+    "title": "Smoked Sausage & Okra Skillet",
+    "description": "Sizzling smoked sausage slices sautéed with fresh sliced okra, onions, and bold Creole seasoning.",
+    "thumbnail": "/images/cookbook/jackie-family/sausage-okra.JPG",
+    "author": "Jackie's Family",
+    "date": "2025-08-31",
+    "collections": ["Jackie Family"],
+    "category": "Main Course",
+    "cuisines": ["Southern", "American"],
+    "diets": [],
+    "cookware": ["Large Cast Iron Skillet", "Wooden Spoon"],
+    "time": { "prep": 15, "cook": 25, "rest": 0 },
+    "servings": 4,
+    "ingredients": [
+      { "item": "smoked sausage or andouille", "quantity": 1, "unit": "lb", "note": "sliced into coins" },
+      { "item": "fresh okra", "quantity": 1, "unit": "lb", "note": "sliced ½ inch thick" },
+      { "item": "yellow onion", "quantity": 1, "unit": "medium", "note": "diced" },
+      { "item": "garlic cloves", "quantity": 3, "unit": "", "note": "minced" },
+      { "item": "olive oil", "quantity": 2, "unit": "tbsp", "note": "" },
+      { "item": "cajun or creole seasoning", "quantity": 1, "unit": "tbsp", "note": "" },
+      { "item": "diced tomatoes", "quantity": 14.5, "unit": "oz", "note": "canned, drained" }
+    ],
+    "instructions": [
+      "Heat 1 tbsp olive oil in a cast iron skillet over medium-high heat.",
+      "Add sliced smoked sausage and cook until nicely browned on both sides (about 5-6 minutes). Remove sausage from skillet.",
+      "Add remaining oil, diced onion, and okra to the hot skillet.",
+      "Cook okra and onions for 8 to 10 minutes until okra edges are tender-crisp and browned.",
+      "Stir in minced garlic, Creole seasoning, and diced tomatoes. Cook for 3 minutes.",
+      "Return browned sausage back to the skillet and toss everything together to heat through.",
+      "Serve hot over steamed white rice or with cornbread."
+    ],
+    "tips": ["Cooking okra over high heat without overcrowding reduces slime and yields a crispy, caramelized texture."]
+  },
+  {
+    "id": "traditional-pork-tamales",
+    "title": "Traditional Pork Tamales",
+    "description": "Savory shredded pork slow-cooked in a red chile sauce, enclosed in tender corn masa and steamed in corn husks.",
+    "thumbnail": "/images/cookbook/jackie-family/tamales.jpg",
+    "author": "Jackie's Family",
+    "date": "2025-08-31",
+    "collections": ["Jackie Family"],
+    "category": "Main Course",
+    "cuisines": ["Mexican"],
+    "diets": [],
+    "cookware": ["Large Tamale Steamer", "Stand Mixer", "Tongs"],
+    "time": { "prep": 60, "cook": 90, "rest": 15 },
+    "servings": 24,
+    "ingredients": [
+      { "item": "dried corn husks", "quantity": 30, "unit": "", "note": "soaked in warm water" },
+      { "item": "masa harina for tamales", "quantity": 4, "unit": "cup", "note": "" },
+      { "item": "pork or chicken broth", "quantity": 3, "unit": "cup", "note": "warm" },
+      { "item": "lard or vegetable shortening", "quantity": 1, "unit": "cup", "note": "" },
+      { "item": "baking powder", "quantity": 1, "unit": "tsp", "note": "" },
+      { "item": "salt", "quantity": 1.5, "unit": "tsp", "note": "" },
+      { "item": "cooked shredded pork in red chile", "quantity": 3, "unit": "cup", "note": "" }
+    ],
+    "instructions": [
+      "Soak corn husks in hot water for at least 30 minutes until pliable. Pat dry.",
+      "Beat lard in a stand mixer on medium-high until light, fluffy, and white (about 5 minutes).",
+      "Gradually add masa harina, baking powder, and salt. Slowly pour in warm broth while beating until a smooth, spreadable paste forms.",
+      "Spread about 3 tablespoons of masa onto the smooth side of each husk, leaving the top third and side edges clear.",
+      "Spoon 2 tablespoons of shredded red chile pork down the center of the masa.",
+      "Fold one side over the meat, fold the other side over, then fold the narrow bottom tip upwards.",
+      "Stand tamales upright (open end up) in a steamer pot filled with water below the steamer rack.",
+      "Cover and steam over medium-low heat for 60 to 90 minutes, until the husk peels cleanly away from the masa.",
+      "Let rest for 15 minutes before unwrapping and serving."
+    ],
+    "tips": [
+      "Test the masa: drop a small ½ tsp ball into a cup of cold water. If it floats to the top, your masa is light enough and ready to spread!"
+    ]
+  }
+]

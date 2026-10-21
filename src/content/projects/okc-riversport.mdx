@@ -1,0 +1,39 @@
+---
+title: "OKC Riversport XR Simulation"
+tagline: "Interactive Whitewater & Athletic Training Simulation"
+thumbnail: "/images/projects/okc-riversport/thumbnail.jpg"
+role: "Lead XR Developer & Physics Programmer"
+client: "OKC Riversport"
+priority: 18
+year: 2025
+status: "In Development"
+filters: ["vastlab", "VR"]
+tech: ["Unreal Engine 5", "Real-Time Fluid Dynamics", "VR", "Custom Physics", "Haptic Paddling"]
+platform: ["PC VR", "Meta Quest 3"]
+liveUrl: ""
+githubUrl: ""
+videoUrl: ""
+---
+
+import ProjectHighlight from "../../components/projects/ProjectHighlight.astro";
+
+<ProjectHighlight
+  title="Olympic Whitewater Training & Public Athletic Simulation"
+  description="Prototyping an interactive virtual reality kayak and paddle sports simulation in collaboration with OKC Riversport, an official U.S. Olympic and Paralympic Training Site."
+/>
+
+The **OKC Riversport XR Simulation** is an interactive virtual reality training experience developed at the [VAST Lab](/projects?filter=vastlab) in partnership with **OKC Riversport** in Oklahoma City. The system brings the adrenaline, hydraulic forces, and navigational challenges of Class II–IV artificial whitewater channels into an immersive headset simulation.
+
+### Hydrodynamic Simulation & Kayak Buoyancy
+
+Accurately capturing kayak behavior in turbulent rapids required custom physics modeling:
+
+- **Buoyancy Raymarching**: Submerged hull volume sampling to calculate dynamic buoyant center-of-mass forces across moving wave crests and hydraulic holes.
+- **Eddy & Current Vectors**: Directional vector fields mapping river eddies, boils, and downstream surge velocities.
+
+### Physics-Based Paddle Propulsion
+
+Using tracked VR motion controllers with custom paddle peripheral attachments:
+
+- Fluid drag equations calculate resistive paddle blade thrust based on blade immersion angle and sweep velocity.
+- Real-time resistance curves provide natural haptic cues, training athletes on effective forward strokes, draw strokes, and roll maneuvers without water risk.

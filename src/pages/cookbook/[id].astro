@@ -1,0 +1,219 @@
+---
+import Layout from "../../layouts/RecipeLayout.astro";
+import ActionButtons from "../../components/cookbook/ActionButtons.jsx";
+import RecipeInteractiveView from "../../components/cookbook/RecipeInteractiveView.jsx";
+import RecipeCard from "../../components/cookbook/RecipeCard";
+import type { Recipe } from "../../types";
+import { formatTime } from "../../utils/formatters.js";
+
+export async function getStaticPaths() {
+  const allJsonFiles = await import.meta.glob("/src/content/cookbook/*.json");
+  const allRecipes = (
+    await Promise.all(Object.values(allJsonFiles).map(async (getJson) => ((await getJson()) as { default: Recipe[] }).default))
+  ).flat() as Recipe[];
+
+  return allRecipes.map((recipe) => ({
+    params: { id: recipe.id },
+    props: { recipe, allRecipes },
+  }));
+}
+
+const { recipe: currentRecipe, allRecipes } = Astro.props;
+const totalTime = (currentRecipe.time.prep || 0) + (currentRecipe.time.cook || 0) + (currentRecipe.time.rest || 0);
+const baseServings = typeof currentRecipe.servings === "number" ? currentRecipe.servings : parseInt(String(currentRecipe.servings)) || 4;
+
+const MAX_RECOMMENDATIONS = 3;
+
+const recommendations = allRecipes
+  .map((otherRecipe) => {
+    if (currentRecipe.id === otherRecipe.id) {
+      return { recipe: otherRecipe, score: -1 };
+    }
+
+    const complementaryCategories: Record<string, string[]> = {
+      "Main Course": ["Side Dish", "Appetizer", "Dessert", "Bread", "Salad"],
+      Soup: ["Bread", "Side Dish", "Salad"],
+      Breakfast: ["Side Dish", "Dessert"],
+    };
+
+    const matchingCuisines = currentRecipe.cuisines?.filter((c) => otherRecipe.cuisines?.includes(c)) || [];
+    const complementRule = complementaryCategories[currentRecipe.category];
+    const matchingDiets = currentRecipe.diets?.filter((d) => otherRecipe.diets?.includes(d)) || [];
+
+    let score = 0;
+    if (complementRule?.includes(otherRecipe.category)) {
+      score += 3;
+    }
+    if (currentRecipe.category === otherRecipe.category) {
+      score += 1;
+    }
+    if (currentRecipe.author === otherRecipe.author) {
+      score += 2;
+    }
+    score += matchingCuisines.length * 5;
+    score += matchingDiets.length * 1;
+    score += Math.floor(Math.random() * 4);
+
+    return { recipe: otherRecipe, score };
+  })
+  .filter((item) => item.score > 0)
+  .sort((a, b) => b.score - a.score)
+  .map((item) => item.recipe)
+  .slice(0, MAX_RECOMMENDATIONS);
+
+if (recommendations.length < MAX_RECOMMENDATIONS) {
+  const existingIds = new Set([currentRecipe.id, ...recommendations.map((r) => r.id)]);
+  const fallbacks = allRecipes
+    .filter((r) => !existingIds.has(r.id))
+    .sort(() => 0.5 - Math.random())
+    .slice(0, MAX_RECOMMENDATIONS - recommendations.length);
+  recommendations.push(...fallbacks);
+}
+---
+
+<Layout title={currentRecipe.title}>
+  <article class="max-w-4xl mx-auto py-2 sm:py-4">
+    <!-- Breadcrumb -->
+    <nav class="mb-6 flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 print:hidden">
+      <a href="/cookbook" class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors flex items-center gap-1 font-medium">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+        </svg>
+        All Recipes
+      </a>
+      <span class="text-slate-300 dark:text-slate-600">/</span>
+      <span class="text-slate-700 dark:text-slate-300 font-medium truncate">{currentRecipe.title}</span>
+    </nav>
+
+    <!-- Header Section -->
+    <header class="mb-6">
+      <div class="flex flex-wrap items-center gap-2 mb-2">
+        <span
+          class="px-2.5 py-0.5 rounded-full text-xs font-mono font-semibold bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800"
+        >
+          {currentRecipe.category}
+        </span>
+        {
+          currentRecipe.author && (
+            <span class="text-xs font-mono text-slate-500 dark:text-slate-400">
+              by <strong class="text-slate-700 dark:text-slate-300">{currentRecipe.author}</strong>
+            </span>
+          )
+        }
+      </div>
+
+      <h1 class="text-3xl sm:text-5xl font-black tracking-tight text-slate-900 dark:text-white mb-3">
+        {currentRecipe.title}
+      </h1>
+      <p class="text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed max-w-3xl">
+        {currentRecipe.description}
+      </p>
+    </header>
+
+    <!-- Hero Image with Fallback -->
+    <div
+      class="relative w-full h-72 sm:h-96 rounded-2xl overflow-hidden mb-6 shadow-md border border-slate-200/60 dark:border-slate-800/60 bg-slate-100 dark:bg-slate-900"
+    >
+      <img
+        src={currentRecipe.thumbnail}
+        alt={`Image of ${currentRecipe.title}`}
+        class="w-full h-full object-cover"
+        onerror="this.src='/images/default.jpg'; this.onerror=null;"
+      />
+    </div>
+
+    <!-- Active and Favorite Action Buttons -->
+    <ActionButtons recipeId={currentRecipe.id} client:load />
+
+    <!-- Metadata & Timing Glassmorphic Bar -->
+    <div class="my-8 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white/70 dark:bg-slate-900/60 backdrop-blur-md p-6 shadow-xs">
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center divide-y sm:divide-y-0 sm:divide-x divide-slate-200 dark:divide-slate-800">
+        <div class="pt-2 sm:pt-0">
+          <span class="text-xs font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400">Prep Time</span>
+          <p class="text-lg font-bold text-slate-900 dark:text-white mt-1">
+            {currentRecipe.time.prep > 0 ? formatTime(currentRecipe.time.prep) : "—"}
+          </p>
+        </div>
+        <div class="pt-2 sm:pt-0">
+          <span class="text-xs font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400">Cook Time</span>
+          <p class="text-lg font-bold text-slate-900 dark:text-white mt-1">
+            {currentRecipe.time.cook > 0 ? formatTime(currentRecipe.time.cook) : "—"}
+          </p>
+        </div>
+        <div class="pt-2 sm:pt-0">
+          <span class="text-xs font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400">Total Time</span>
+          <p class="text-lg font-bold text-emerald-600 dark:text-emerald-400 mt-1">{formatTime(totalTime)}</p>
+        </div>
+        <div class="pt-2 sm:pt-0">
+          <span class="text-xs font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400">Base Servings</span>
+          <p class="text-lg font-bold text-slate-900 dark:text-white mt-1">{baseServings}</p>
+        </div>
+      </div>
+
+      {
+        ((currentRecipe.cuisines && currentRecipe.cuisines.length > 0) ||
+          (currentRecipe.diets && currentRecipe.diets.length > 0) ||
+          (currentRecipe.cookware && currentRecipe.cookware.length > 0)) && (
+          <div class="mt-6 pt-5 border-t border-slate-200/60 dark:border-slate-800/60 flex flex-wrap items-center justify-center gap-2">
+            {currentRecipe.cuisines?.map((c) => (
+              <span class="px-2.5 py-1 rounded-lg text-xs font-medium bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 border border-emerald-200/60 dark:border-emerald-800/60">
+                {c}
+              </span>
+            ))}
+            {currentRecipe.diets?.map((d) => (
+              <span class="px-2.5 py-1 rounded-lg text-xs font-medium bg-teal-50 dark:bg-teal-950/40 text-teal-700 dark:text-teal-300 border border-teal-200/60 dark:border-teal-800/60">
+                {d}
+              </span>
+            ))}
+            {currentRecipe.cookware?.map((cw) => (
+              <span class="px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700">
+                {cw}
+              </span>
+            ))}
+          </div>
+        )
+      }
+    </div>
+
+    <!-- Scalable Ingredients & Interactive Step-by-Step Instructions -->
+    <div class="my-10">
+      <RecipeInteractiveView
+        ingredients={currentRecipe.ingredients}
+        instructions={currentRecipe.instructions}
+        baseServings={baseServings}
+        recipeTitle={currentRecipe.title}
+        client:load
+      />
+    </div>
+
+    <!-- Chef's Tips & Notes -->
+    {
+      currentRecipe.tips && currentRecipe.tips.length > 0 && (
+        <div class="mt-10 rounded-2xl border border-amber-200/80 dark:border-amber-900/60 bg-amber-50/60 dark:bg-amber-950/20 p-6">
+          <h2 class="text-lg font-bold text-amber-900 dark:text-amber-200 mb-3 flex items-center gap-2">
+            <span>💡</span> Chef's Tips & Notes
+          </h2>
+          <ul class="space-y-2 text-sm text-amber-950 dark:text-amber-200/90 list-disc list-inside">
+            {currentRecipe.tips.map((tip) => (
+              <li class="leading-relaxed">{tip}</li>
+            ))}
+          </ul>
+        </div>
+      )
+    }
+
+    <!-- Related Recipes -->
+    {
+      recommendations.length > 0 && (
+        <div class="mt-16 pt-8 border-t border-slate-200 dark:border-slate-800 print:hidden">
+          <h2 class="text-2xl font-bold mb-6 text-slate-900 dark:text-white">You Might Also Like</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {recommendations.map((recipe) => (
+              <RecipeCard key={recipe.id} recipe={recipe} />
+            ))}
+          </div>
+        </div>
+      )
+    }
+  </article>
+</Layout>

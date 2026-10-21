@@ -1,0 +1,103 @@
+---
+import SectionWrapper from "./SectionWrapper.astro";
+
+const skillCategories = [
+  {
+    title: "Languages & Shading",
+    icon: "💻",
+    skills: ["C++", "C#", "HLSL / GLSL", "Python (PyMel/Qt)", "Java", "TypeScript", "SQL"],
+  },
+  {
+    title: "Engines & Graphics APIs",
+    icon: "🎮",
+    skills: ["Unreal Engine 5", "Unity", "MRTK3 / OpenXR", "Vulkan", "OpenGL", "WebXR"],
+  },
+  {
+    title: "DCC & Pipeline Tools",
+    icon: "🎨",
+    skills: ["Autodesk Maya", "Houdini", "Blender", "Nuke", "Substance Painter", "Git / Perforce"],
+  },
+  {
+    title: "Specializations & Systems",
+    icon: "⚡",
+    skills: [
+      "Custom Shader Graph / Material Nodes",
+      "Digital Twins & IoT Sync",
+      "Ultrasound Haptics",
+      "Performance Optimization",
+      "Editor Scripting",
+    ],
+  },
+];
+---
+
+<SectionWrapper id="about" title="About & Technical Skills">
+  <div class="max-w-6xl mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+      <!-- Bio & Background (5 cols) -->
+      <div class="lg:col-span-5 space-y-5 text-slate-600 dark:text-slate-300">
+        <div
+          class="card-static p-6 sm:p-7 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white/80 dark:bg-slate-900/70 backdrop-blur-md"
+        >
+          <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-4">Bridging Art & Systems</h3>
+          <div class="space-y-4 text-sm sm:text-base leading-relaxed">
+            <p>
+              I am a Lead Technical Artist and Graphics/XR Programmer who thrives at the intersection of aesthetic fidelity and robust systems
+              architecture. Whether developing real-time shaders in HLSL, crafting custom Maya rigging tools in Python, or profiling rendering passes
+              for standalone VR headsets, I build solutions that empower teams and delight users.
+            </p>
+            <p>
+              Currently pursuing an <strong class="text-slate-900 dark:text-white font-semibold">MFA in Game Development</strong> at The University of Texas
+              at Dallas, following a B.A. in Arts, Technology, and Emerging Communication with a Computer Science minor.
+            </p>
+            <p>
+              My work has been recognized with <span class="text-emerald-600 dark:text-emerald-400 font-semibold"
+                >5× Davey Awards (1 Gold, 4 Silver)</span
+              >, the <span class="text-emerald-600 dark:text-emerald-400 font-semibold">2026 Tech Titans Finalist</span> honors, the <span
+                class="text-emerald-600 dark:text-emerald-400 font-semibold">2026 UTD ROAR Research Award</span
+              >, and featured in <em class="text-slate-800 dark:text-slate-200 font-medium">The New York Times</em>, <em
+                class="text-slate-800 dark:text-slate-200 font-medium">Fox News</em
+              >, and 12 peer-reviewed IEEE/ACM publications.
+            </p>
+          </div>
+
+          <div class="mt-6 pt-5 border-t border-slate-200/60 dark:border-slate-800/60 flex flex-wrap items-center gap-3">
+            <a href="mailto:business@brandoncoffey.com" class="btn btn-primary text-xs px-4 py-2"> Contact Me </a>
+            <a href="/cv" class="btn btn-secondary text-xs px-4 py-2 font-semibold"> Curriculum Vitae → </a>
+            <a
+              href="https://www.linkedin.com/in/brandon-coffey-36a802191"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn-secondary text-xs px-4 py-2"
+            >
+              LinkedIn Profile
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Technical Proficiency Bento Grid (7 cols) -->
+      <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {
+          skillCategories.map((cat) => (
+            <div class="card-static p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white/80 dark:bg-slate-900/70 backdrop-blur-md hover:border-emerald-500/40 transition-colors">
+              <div class="flex items-center gap-2 mb-3">
+                <span class="text-xl" role="img" aria-hidden="true">
+                  {cat.icon}
+                </span>
+                <h4 class="text-sm font-bold text-slate-900 dark:text-white">{cat.title}</h4>
+              </div>
+              <div class="flex flex-wrap gap-1.5">
+                {cat.skills.map((skill) => (
+                  <span class="inline-flex items-center rounded-lg px-2.5 py-1 text-xs font-mono font-medium bg-slate-100/90 text-slate-700 dark:bg-slate-800/80 dark:text-slate-300 border border-slate-200/50 dark:border-slate-700/50">
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</SectionWrapper>

@@ -1,0 +1,35 @@
+---
+import { getCollection, render, type CollectionEntry } from "astro:content";
+import ProjectLayout from "../../../layouts/ProjectLayout.astro";
+import { mediaRecognition, type MediaRecognitionItem } from "../../../data/cvData";
+
+export async function getStaticPaths() {
+  const allProjects = await getCollection("projects");
+  const projectMap = new Map<string, CollectionEntry<"projects">>();
+  allProjects.forEach((p) => projectMap.set(p.id, p));
+
+  // Filter media items that have a valid projectSlug matching a project in the collection
+  const validMedia = mediaRecognition.filter((m) => m.projectSlug && projectMap.has(m.projectSlug));
+
+  return validMedia.map((media: MediaRecognitionItem) => {
+    const project = projectMap.get(media.projectSlug!)!;
+    return {
+      params: { id: media.id },
+      props: { media, project },
+    };
+  });
+}
+
+const { media, project } = Astro.props;
+const { Content, headings } = await render(project);
+---
+
+<ProjectLayout
+  project={project.data}
+  slug={project.id}
+  headings={headings}
+  mediaSpotlight={media}
+  backLink={{ href: "/cv#media", label: "Back to Curriculum Vitae" }}
+>
+  <Content />
+</ProjectLayout>

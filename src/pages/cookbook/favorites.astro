@@ -1,0 +1,19 @@
+---
+import Layout from "../../layouts/RecipeLayout.astro";
+import FavoritesList from "../../components/cookbook/FavoritesList.jsx";
+import ActiveRecipeSidebar from "../../components/cookbook/ActiveRecipeSidebar.jsx";
+import type { Recipe } from "../../types";
+
+const allJsonFiles = await import.meta.glob("/src/content/cookbook/*.json");
+const allRecipes = (
+  await Promise.all(Object.values(allJsonFiles).map(async (getJson) => ((await getJson()) as { default: Recipe[] }).default))
+).flat() as Recipe[];
+---
+
+<Layout title="Favorites">
+  <div class="space-y-8">
+    <FavoritesList allRecipes={allRecipes} client:load />
+
+    <ActiveRecipeSidebar allRecipes={allRecipes} client:load />
+  </div>
+</Layout>

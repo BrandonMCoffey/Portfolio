@@ -1,0 +1,209 @@
+---
+import Layout from "../../layouts/RecipeLayout.astro";
+import type { Recipe } from "../../types";
+
+const allJsonModules = await import.meta.glob("/src/content/cookbook/*.json");
+const allRecipes = (
+  await Promise.all(Object.values(allJsonModules).map(async (getJson) => ((await getJson()) as { default: Recipe[] }).default))
+).flat() as Recipe[];
+
+const allImageFiles = await import.meta.glob("/public/images/**/*.{jpg,png,jpeg,webp}");
+const existingImagePaths = new Set(Object.keys(allImageFiles).map((path) => path.replace("/public", "")));
+
+const categoryMap = new Map<string, string[]>();
+const cuisineMap = new Map<string, string[]>();
+const dietMap = new Map<string, string[]>();
+const cookwareMap = new Map<string, string[]>();
+const ingredientMap = new Map<string, string[]>();
+
+const addToMap = (map: Map<string, string[]>, key: string, id: string) => {
+  if (!map.has(key)) {
+    map.set(key, []);
+  }
+  map.get(key)?.push(id);
+};
+
+for (const recipe of allRecipes) {
+  if (recipe.category) {
+    addToMap(categoryMap, recipe.category, recipe.id);
+  }
+  recipe.cuisines?.forEach((cuisine) => addToMap(cuisineMap, cuisine, recipe.id));
+  recipe.diets?.forEach((diet) => addToMap(dietMap, diet, recipe.id));
+  recipe.cookware?.forEach((item) => addToMap(cookwareMap, item, recipe.id));
+  recipe.ingredients?.forEach((ing) => {
+    const key = `${ing.item} (${ing.unit})`;
+    addToMap(ingredientMap, key, recipe.id);
+  });
+}
+
+const fileDiagnostics = await Promise.all(
+  Object.entries(allJsonModules).map(async ([filePath, getJson]) => {
+    const recipesInFile = ((await getJson()) as { default: Recipe[] }).default;
+    const fileName = filePath.split("/").pop()?.replace(".json", "") || "";
+
+    const missingThumbnails = recipesInFile
+      .filter((r) => r.thumbnail && !existingImagePaths.has(r.thumbnail))
+      .map((r) => ({ id: r.id, path: r.thumbnail }))
+      .sort((a, b) => a.id.localeCompare(b.id));
+
+    const imageFolder = `/images/cookbook/${fileName}/`;
+    const imagesInFolder = [...existingImagePaths].filter((p) => p.startsWith(imageFolder));
+    const usedThumbnailsInFile = new Set(recipesInFile.map((r) => r.thumbnail));
+    const unusedImages = imagesInFolder.filter((p) => !usedThumbnailsInFile.has(p));
+
+    return {
+      fileName: `${fileName}.json`,
+      missingThumbnails,
+      unusedImages,
+    };
+  }),
+);
+
+const sortedMapEntries = (map: Map<string, string[]>) => Array.from(map.entries()).sort((a, b) => a[0].localeCompare(b[0]));
+---
+
+<Layout title="Site Data">
+  <div class="max-w-4xl mx-auto py-4">
+    <h1 class="text-4xl font-bold mb-8">Site Data & Diagnostics</h1>
+
+    <section class="space-y-6">
+      <h2 class="text-3xl font-semibold border-b pb-2">Aggregated Data</h2>
+
+      <div>
+        <h3 class="text-2xl font-semibold mb-2">Categories</h3>
+        <ul class="list-disc list-inside space-y-1 text-sm">
+          {
+            sortedMapEntries(categoryMap).map(([name, ids]) => (
+              <li>
+                <>
+                  <strong>
+                    {name} ({ids.length}):
+                  </strong>
+                  <br />
+                  <p class="text-muted">{ids.join(", ")}</p>
+                </>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-2xl font-semibold mb-2">Cuisines</h3>
+        <ul class="list-disc list-inside space-y-1 text-sm">
+          {
+            sortedMapEntries(cuisineMap).map(([name, ids]) => (
+              <li>
+                <>
+                  <strong>
+                    {name} ({ids.length}):
+                  </strong>
+                  <br />
+                  <p class="text-muted">{ids.join(", ")}</p>
+                </>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-2xl font-semibold mb-2">Diets</h3>
+        <ul class="list-disc list-inside space-y-1 text-sm">
+          {
+            sortedMapEntries(dietMap).map(([name, ids]) => (
+              <li>
+                <>
+                  <strong>
+                    {name} ({ids.length}):
+                  </strong>
+                  <br />
+                  <p class="text-muted">{ids.join(", ")}</p>
+                </>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-2xl font-semibold mb-2">Cookware</h3>
+        <ul class="list-disc list-inside space-y-1 text-sm">
+          {
+            sortedMapEntries(cookwareMap).map(([name, ids]) => (
+              <li>
+                <>
+                  <strong>
+                    {name} ({ids.length}):
+                  </strong>
+                  <br />
+                  <p class="text-muted">{ids.join(", ")}</p>
+                </>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-2xl font-semibold mb-2">Ingredients</h3>
+        <ul class="list-disc list-inside space-y-1 text-sm">
+          {
+            sortedMapEntries(ingredientMap).map(([name, ids]) => (
+              <li>
+                <>
+                  <strong>
+                    {name} ({ids.length}):
+                  </strong>
+                  <p class="text-muted">{ids.join(", ")}</p>
+                </>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </section>
+
+    <section class="mt-12 space-y-6">
+      <h2 class="text-3xl font-semibold border-b pb-2">File Diagnostics</h2>
+      {
+        fileDiagnostics.map((diag) => (
+          <div class="p-4 border rounded-lg bg-white dark:bg-slate-800 dark:border-slate-700">
+            <h3 class="text-2xl font-semibold">{diag.fileName}</h3>
+
+            <h4 class="text-xl font-semibold mt-4 mb-2">Missing Thumbnails</h4>
+            {diag.missingThumbnails.length > 0 ? (
+              <ul class="list-disc list-inside text-sm text-red-600 dark:text-red-400">
+                {diag.missingThumbnails.map((m) => (
+                  <li>
+                    {m.id}{" "}
+                    <i class="text-muted">
+                      (path: <code>{m.path.slice(16)}</code>)
+                    </i>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p class="text-sm text-slate-500">All recipe thumbnails in this file exist.</p>
+            )}
+
+            <h4 class="text-xl font-semibold mt-4 mb-2">
+              Unused Images in <code>/public/images/{diag.fileName.replace(".json", "")}/</code>
+            </h4>
+            {diag.unusedImages.length > 0 ? (
+              <ul class="list-disc list-inside text-sm text-yellow-600 dark:text-yellow-400">
+                {diag.unusedImages.map((path) => (
+                  <li>
+                    <code>{path}</code>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p class="text-sm text-slate-500">All images in this folder are being used.</p>
+            )}
+          </div>
+        ))
+      }
+    </section>
+  </div>
+</Layout>

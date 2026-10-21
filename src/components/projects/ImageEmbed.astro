@@ -1,0 +1,160 @@
+---
+interface Props {
+  file: string;
+  alt?: string;
+  file2?: string;
+  alt2?: string;
+  caption?: string;
+}
+
+const { file, alt = "", file2, alt2 = "", caption } = Astro.props;
+
+const imagePath = `/images/projects/${file}`;
+const defaultImagePath = "/images/default.jpg";
+
+const gridCols = file2 ? "grid-cols-1 sm:grid-cols-2" : "grid-cols-1";
+---
+
+<figure class="my-8">
+  <div class={`grid ${gridCols} gap-4`}>
+    <div class="relative group rounded-xl overflow-hidden border border-slate-200/80 dark:border-slate-800/80 shadow-md">
+      <img
+        src={imagePath}
+        alt={alt}
+        class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-102"
+        loading="lazy"
+        decoding="async"
+        onerror={`this.onerror=null; this.src='${defaultImagePath}';`}
+      />
+      <button
+        class="open-lightbox-btn absolute bottom-3 right-3 h-10 w-10 bg-slate-900/60 hover:bg-slate-900 text-white backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110 cursor-pointer"
+        title="View image fullscreen"
+        data-src={imagePath}
+        data-alt={alt}
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5"
+          ><path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m4.5 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15"
+          ></path></svg
+        >
+      </button>
+    </div>
+    {
+      file2 && (
+        <div class="relative group rounded-xl overflow-hidden border border-slate-200/80 dark:border-slate-800/80 shadow-md">
+          <img
+            src={`/images/projects/${file2}`}
+            alt={alt2}
+            class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-102"
+            loading="lazy"
+            decoding="async"
+            onerror={`this.onerror=null; this.src='${defaultImagePath}';`}
+          />
+          <button
+            class="open-lightbox-btn absolute bottom-3 right-3 h-10 w-10 bg-slate-900/60 hover:bg-slate-900 text-white backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110 cursor-pointer"
+            title="View image fullscreen"
+            data-src={`/images/projects/${file2}`}
+            data-alt={alt2}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m4.5 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15"
+              />
+            </svg>
+          </button>
+        </div>
+      )
+    }
+  </div>
+  {caption && <figcaption class="mt-2.5 text-center text-xs font-mono text-slate-500 dark:text-slate-400 italic">{caption}</figcaption>}
+</figure>
+
+<script>
+  function createLightbox() {
+    if (document.getElementById("image-lightbox")) return;
+
+    const lightboxHTML = `
+      <div id="image-lightbox" class="lightbox-overlay">
+        <div class="lightbox-content">
+          <img class="lightbox-image" src="" alt="">
+          <button class="lightbox-btn lightbox-fullscreen-btn" title="Enter fullscreen">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m4.5 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" /></svg>
+          </button>
+          <button class="lightbox-btn lightbox-close-btn" title="Close (Esc)">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" /></svg>
+          </button>
+        </div>
+      </div>
+    `;
+    document.body.insertAdjacentHTML("beforeend", lightboxHTML);
+
+    const lightbox = document.getElementById("image-lightbox");
+    const lightboxImage = lightbox?.querySelector(".lightbox-image") as HTMLImageElement | null;
+    const closeBtn = lightbox?.querySelector(".lightbox-close-btn");
+    const fullscreenBtn = lightbox?.querySelector(".lightbox-fullscreen-btn");
+
+    if (!lightbox || !lightboxImage || !closeBtn || !fullscreenBtn) {
+      return;
+    }
+
+    const closeLightbox = () => {
+      document.body.classList.remove("lightbox-open");
+      if (document.fullscreenElement) {
+        document.exitFullscreen();
+      }
+    };
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        closeLightbox();
+      }
+    };
+
+    closeBtn.addEventListener("click", closeLightbox);
+    lightbox.addEventListener("click", (e) => {
+      if (e.target === lightbox) {
+        closeLightbox();
+      }
+    });
+
+    fullscreenBtn.addEventListener("click", () => {
+      if (!document.fullscreenElement) {
+        lightboxImage.requestFullscreen();
+      } else {
+        document.exitFullscreen();
+      }
+    });
+
+    document.addEventListener("open-lightbox", (e: Event) => {
+      const { src, alt } = (e as CustomEvent).detail;
+      lightboxImage.src = src;
+      lightboxImage.alt = alt;
+      document.body.classList.add("lightbox-open");
+      document.addEventListener("keydown", handleKeyDown, { once: true });
+    });
+  }
+
+  function setupLightboxTriggers() {
+    createLightbox();
+
+    document.querySelectorAll(".open-lightbox-btn").forEach((button) => {
+      if ((button as HTMLElement).dataset.hasListener) return;
+      (button as HTMLElement).dataset.hasListener = "true";
+
+      button.addEventListener("click", (e: Event) => {
+        const currentButton = e.currentTarget as HTMLButtonElement | null;
+        if (!currentButton) return;
+
+        const { src, alt } = currentButton.dataset;
+        const openEvent = new CustomEvent("open-lightbox", { detail: { src, alt } });
+        document.dispatchEvent(openEvent);
+      });
+    });
+  }
+
+  document.addEventListener("astro:page-load", setupLightboxTriggers);
+</script>

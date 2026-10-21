@@ -1,0 +1,50 @@
+---
+import Layout from "../../layouts/RecipeLayout.astro";
+import RecipeFilter from "../../components/cookbook/RecipeFilter.jsx";
+import ActiveRecipeSidebar from "../../components/cookbook/ActiveRecipeSidebar.jsx";
+import type { Recipe } from "../../types";
+
+const allJsonFiles = await import.meta.glob("/src/content/cookbook/*.json");
+const allRecipes = (
+  await Promise.all(Object.values(allJsonFiles).map(async (getJson) => ((await getJson()) as { default: Recipe[] }).default))
+).flat() as Recipe[];
+
+const categoryCounts: Record<string, number> = {};
+const cuisineCounts: Record<string, number> = {};
+const dietCounts: Record<string, number> = {};
+
+allRecipes.forEach((recipe) => {
+  if (recipe.category) {
+    categoryCounts[recipe.category] = (categoryCounts[recipe.category] || 0) + 1;
+  }
+  recipe.cuisines?.forEach((cuisine) => {
+    cuisineCounts[cuisine] = (cuisineCounts[cuisine] || 0) + 1;
+  });
+  recipe.diets?.forEach((diet) => {
+    dietCounts[diet] = (dietCounts[diet] || 0) + 1;
+  });
+});
+
+type TagCount = {
+  name: string;
+  count: number;
+};
+
+const toSortedArray = (countsObj: Record<string, number>): TagCount[] => {
+  return Object.entries(countsObj)
+    .map(([name, count]) => ({ name, count }))
+    .sort((a, b) => b.count - a.count);
+};
+
+const sortedCategories = toSortedArray(categoryCounts);
+const sortedCuisines = toSortedArray(cuisineCounts);
+const sortedDiets = toSortedArray(dietCounts);
+---
+
+<Layout title="All Recipes">
+  <div class="space-y-8">
+    <RecipeFilter allRecipes={allRecipes} categories={sortedCategories} cuisines={sortedCuisines} diets={sortedDiets} client:load />
+
+    <ActiveRecipeSidebar allRecipes={allRecipes} client:load />
+  </div>
+</Layout>

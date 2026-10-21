@@ -1,0 +1,21 @@
+---
+import Layout from "../../layouts/RecipeLayout.astro";
+import ShoppingList from "../../components/cookbook/ShoppingList.jsx";
+import ActiveList from "../../components/cookbook/ActiveList.jsx";
+import type { Recipe } from "../../types";
+
+const allJsonFiles = await import.meta.glob("/src/content/cookbook/*.json");
+const allRecipes = (
+  await Promise.all(Object.values(allJsonFiles).map(async (getJson) => ((await getJson()) as { default: Recipe[] }).default))
+).flat() as Recipe[];
+---
+
+<Layout title="Shopping List">
+  <div class="max-w-4xl mx-auto py-2 sm:py-6 space-y-16">
+    <ShoppingList allRecipes={allRecipes} client:load />
+
+    <section class="border-t border-slate-200/80 dark:border-slate-800/80 pt-12 print:hidden">
+      <ActiveList allRecipes={allRecipes} hideShoppingListLink={true} client:load />
+    </section>
+  </div>
+</Layout>

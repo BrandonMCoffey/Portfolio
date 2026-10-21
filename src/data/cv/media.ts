@@ -1,0 +1,96 @@
+// src/data/cv/media.ts
+import type { MediaRecognitionItem } from "./types";
+
+export const mediaRecognition: MediaRecognitionItem[] = [
+  {
+    id: "faa-utd-news-2026",
+    title: "VR Lab's FAA Research Giving Students Vast Experiences",
+    outlet: "UT Dallas News & Bass School",
+    date: "Jul 2026",
+    articleUrl: "https://news.utdallas.edu/students-teaching/vast-lab-2026/",
+    videoUrl: "https://www.youtube.com/watch?v=YWEq9FQKt2A",
+    projectSlug: "faa-techops",
+  },
+  {
+    id: "ackerman-feature-2025",
+    title: "The VASTLab's Digital Twin of the Ackerman Center for Holocaust Studies",
+    outlet: "Ackerman Center for Holocaust Studies",
+    date: "Sep 2025",
+    articleUrl: "https://ackerman.utdallas.edu/news-events/digital-twin-news/",
+    videoUrl: "https://www.youtube.com/watch?v=au2MXfeQGIM",
+    podcastUrl: "https://podbay.fm/p/ackerman-center-podcast-958718/e/1759513727",
+    projectSlug: "ackerman-digital-twin",
+  },
+  {
+    id: "utd-research-blog-vast-lab-2025",
+    title: "Where Virtual Meets Reality: Inside UT Dallas' Groundbreaking VAST VR Lab",
+    outlet: "UT Dallas Research Blog",
+    date: "Mar 2025",
+    articleUrl: "https://research.utdallas.edu/blog/where-virtual-meets-reality-inside-ut-dallas-groundbreaking-vast-vr-lab",
+  },
+  {
+    id: "faa-bass-news-2025",
+    title: "FAA and UT Dallas VAST VR Lab Collaborate on Pioneering Extended Reality Research for Aerospace Maintenance",
+    outlet: "Bass School News",
+    date: "Feb 2025",
+    articleUrl:
+      "https://bass.utdallas.edu/news/faa-and-university-of-texas-at-dallas-vast-vr-lab-collaborate-on-pioneering-extended-reality-xr-research-for-aerospace-maintenance/",
+    projectSlug: "faa-techops",
+  },
+  {
+    id: "woodbearers-research-days-2024",
+    title: "Graduate Students Showcase Range of Research, Art at Competition",
+    outlet: "UT Dallas News",
+    date: "Dec 2024",
+    articleUrl: "https://news.utdallas.edu/students-teaching/research-days-2024/",
+    projectSlug: "woodbearers",
+  },
+  {
+    id: "utd-campus-metaverse-news-2024",
+    title: "VAST Lab's Metaverse Arts And Technology Building Garnering National Attention",
+    outlet: "Bass School News",
+    date: "May 2024",
+    articleUrl: "https://bass.utdallas.edu/news/vast-labs-metaverse-arts-and-technology-building-garners-national-attention/",
+    projectSlug: "utd-campus",
+  },
+  {
+    id: "vast-lab-davey-awards-2023",
+    title: "UT Dallas Virtual Reality Research Lab Wins Four Prestigious Davey Awards",
+    outlet: "Bass School News",
+    date: "Nov 2023",
+    articleUrl: "https://bass.utdallas.edu/news/ut-dallas-virtual-reality-research-lab-wins-four-prestigious-davey-awards/",
+  },
+  {
+    id: "kitty-city-nyt-2023",
+    title: "In Santa Fe, a New Museum Brings the Local Art Scene Up to Date",
+    outlet: "The New York Times",
+    date: "Oct 2023",
+    articleUrl: "https://www.nytimes.com/2023/10/19/arts/design/santa-fe-museum-vladem.html",
+    projectSlug: "kitty-city",
+  },
+  {
+    id: "tulsa-union-fox-2023",
+    title: "Union HS partners with University of Texas, combines football and the metaverse",
+    outlet: "Fox News & USA Today HSS",
+    date: "Sep 2023",
+    articleUrl:
+      "https://www.fox23.com/news/union-hs-partners-with-university-of-texas-combines-football-and-the-metaverse/article_439dec42-4dd5-11ee-bcc3-236144879db4.html",
+    projectSlug: "tulsa-union",
+  },
+  {
+    id: "kitty-city-art-newspaper-2023",
+    title: "New Mexico Museum of Art adds $20.2m contemporary art outpost",
+    outlet: "The Art Newspaper",
+    date: "Aug 2023",
+    articleUrl: "https://www.theartnewspaper.com/2023/08/28/new-mexico-museum-expansion-vladem-contemporary",
+    projectSlug: "kitty-city",
+  },
+  {
+    id: "scivis-haptics-appreciation-2023",
+    title: "Certificate of Appreciation for Outstanding Accomplishments in Multi-Sensory XR",
+    outlet: "Dr. Jin Ryong Kim, Multimodal Interaction Lab",
+    date: "May 2023",
+    articleUrl: "https://mi-lab.io/",
+    projectSlug: "scivis-haptics",
+  },
+];

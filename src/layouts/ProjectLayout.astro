@@ -1,0 +1,578 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import type { CollectionEntry } from 'astro:content';
+import { publications, mediaRecognition, type PublicationItem, type MediaRecognitionItem } from '../data/cvData';
+import { getTechLink } from '../data/techLinks';
+
+interface Heading {
+	depth: number;
+	slug: string;
+	text: string;
+}
+
+interface Props {
+	project: CollectionEntry<'projects'>['data'];
+	slug?: string;
+	headings?: Heading[];
+	prevProject?: CollectionEntry<'projects'>;
+	nextProject?: CollectionEntry<'projects'>;
+	academicSpotlight?: PublicationItem;
+	mediaSpotlight?: MediaRecognitionItem;
+	backLink?: { href: string; label: string };
+}
+
+const {
+	project,
+	slug = '',
+	headings = [],
+	prevProject,
+	nextProject,
+	academicSpotlight,
+	mediaSpotlight,
+	backLink = { href: '/projects', label: 'Back to All Projects' }
+} = Astro.props;
+
+const { title, tagline, role, tech, platform, liveUrl, githubUrl, videoUrl, year, thumbnail, status, client } = project;
+
+// Filter headings for table of contents (depth 2 or 3)
+const tocHeadings = headings.filter(h => h.depth === 2 || h.depth === 3);
+const hasToc = tocHeadings.length >= 2;
+
+// Check related publications and media for this project
+const projectPublications = publications.filter(p => p.projectSlug === slug);
+const projectMedia = mediaRecognition.filter(m => m.projectSlug === slug);
+
+// Determine if liveUrl is a genuine interactive demo (e.g. spatial.io, vercel, github.io)
+const isInteractiveLiveDemo = Boolean(liveUrl && (
+	liveUrl.includes('spatial.io') ||
+	liveUrl.includes('github.io') ||
+	liveUrl.includes('vercel.app') ||
+	liveUrl.includes('itch.io')
+));
+---
+
+<BaseLayout title={`${title} | Brandon Coffey`} description={tagline}>
+	<div class="relative overflow-x-clip py-10 sm:py-16">
+		<!-- Subtle ambient background glow -->
+		<div class="pointer-events-none absolute top-10 left-1/2 -translate-x-1/2 h-80 w-80 rounded-full bg-emerald-500/10 dark:bg-emerald-500/15 blur-3xl"></div>
+
+		<div class="container relative mx-auto px-4 max-w-5xl">
+			<!-- Breadcrumb Navigation Bar -->
+			<nav class="flex flex-wrap items-center justify-between gap-3 py-3 px-4 mb-8 rounded-xl border border-slate-200/60 dark:border-slate-800/60 bg-white/60 dark:bg-slate-900/40 backdrop-blur-md text-xs font-mono text-slate-500 dark:text-slate-400">
+				<a
+					href={backLink.href}
+					class="inline-flex items-center gap-1.5 font-semibold text-emerald-600 hover:text-emerald-500 dark:text-emerald-400 dark:hover:text-emerald-300 transition-colors"
+				>
+					<svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" /></svg>
+					<span>{backLink.label}</span>
+				</a>
+
+				<div class="flex items-center gap-2">
+					{status && (
+						<span class={`px-2 py-0.5 rounded text-[11px] font-mono font-bold ${
+							status === 'Released'
+								? 'bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border border-emerald-500/30'
+								: 'bg-amber-100 dark:bg-amber-950/80 text-amber-800 dark:text-amber-300 border border-amber-500/30'
+						}`}>
+							{status}
+						</span>
+					)}
+					{year && (
+						<span class="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 font-bold text-slate-700 dark:text-slate-300">
+							{year}
+						</span>
+					)}
+					<span class="hidden sm:inline">&bull;</span>
+					<span class="hidden sm:inline font-sans text-slate-700 dark:text-slate-300 font-semibold">{role}</span>
+				</div>
+			</nav>
+
+			<!-- Academic Paper Spotlight Hero (When on Academic CV Route) -->
+			{academicSpotlight && (
+				<div class="mb-10 rounded-2xl border-2 border-emerald-500/30 bg-gradient-to-br from-emerald-500/10 via-teal-500/5 to-transparent dark:from-emerald-950/40 dark:via-slate-900/40 p-6 sm:p-8 backdrop-blur-md shadow-lg shadow-emerald-500/5">
+					<div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+						<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-bold bg-emerald-600 text-white shadow-xs">
+							<span>📄 Peer-Reviewed Academic Publication</span>
+						</span>
+						<span class="text-xs font-mono text-slate-500 dark:text-slate-400">
+							Date: <strong>{academicSpotlight.date}</strong> &bull; Roles: <strong>{academicSpotlight.roles}</strong>
+						</span>
+					</div>
+
+					<span class="text-xs font-mono font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 block mb-1.5">
+						{academicSpotlight.venue}
+					</span>
+
+					<h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white mb-4 leading-snug">
+						{academicSpotlight.title}
+					</h2>
+
+					<!-- Publication Abstract Block -->
+					{academicSpotlight.abstract && (
+						<div class="mb-6 rounded-xl border border-emerald-500/20 bg-white/70 dark:bg-slate-900/70 p-5 sm:p-6 backdrop-blur-md shadow-xs">
+							<div class="flex items-center gap-2 mb-2.5 text-xs font-mono font-bold tracking-wider uppercase text-emerald-700 dark:text-emerald-400">
+								<svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+								<span>Publication Abstract</span>
+							</div>
+							<p class="text-sm sm:text-base text-slate-700 dark:text-slate-200 leading-relaxed font-serif sm:font-sans">
+								{academicSpotlight.abstract}
+							</p>
+						</div>
+					)}
+
+					<p class="text-sm text-slate-600 dark:text-slate-300 mb-6 leading-relaxed">
+						This academic research publication is directly connected to the <strong>{title}</strong> technical case study documented below. Explore the formal publication records, citations, and official PDF repository below:
+					</p>
+
+					<div class="flex flex-wrap items-center gap-3 pt-4 border-t border-emerald-500/20 text-xs font-mono">
+						{academicSpotlight.doi && (
+							<a
+								href={academicSpotlight.doi}
+								target="_blank"
+								rel="noopener noreferrer"
+								class="btn btn-primary px-3.5 py-2 text-xs flex items-center gap-1.5 shadow-sm"
+							>
+								<span>View Official DOI</span>
+								<svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+							</a>
+						)}
+						{academicSpotlight.paperUrl && (
+							<a
+								href={academicSpotlight.paperUrl}
+								target="_blank"
+								rel="noopener noreferrer"
+								class="btn btn-secondary px-3.5 py-2 text-xs flex items-center gap-1.5"
+							>
+								<span>Download Official PDF</span>
+								<svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+							</a>
+						)}
+						{academicSpotlight.extraUrl && (
+							<a
+								href={academicSpotlight.extraUrl}
+								target="_blank"
+								rel="noopener noreferrer"
+								class="btn btn-secondary px-3.5 py-2 text-xs flex items-center gap-1.5"
+							>
+								<span>Archive / Repository</span>
+								<svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+							</a>
+						)}
+						<a
+							href="/cv#publications"
+							class="ml-auto inline-flex items-center gap-1 text-slate-500 hover:text-emerald-600 dark:hover:text-emerald-400 font-semibold transition-colors"
+						>
+							&larr; View all publications in CV
+						</a>
+					</div>
+				</div>
+			)}
+
+			<!-- Press & Media Spotlight Hero (When on Media CV Route) -->
+			{mediaSpotlight && (
+				<div class="mb-10 rounded-2xl border-2 border-emerald-500/30 bg-gradient-to-br from-emerald-500/10 via-cyan-500/5 to-transparent dark:from-emerald-950/40 dark:via-slate-900/40 p-6 sm:p-8 backdrop-blur-md shadow-lg shadow-emerald-500/5">
+					<div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+						<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-bold bg-emerald-600 text-white shadow-xs">
+							<span>📰 Press & Media Spotlight</span>
+						</span>
+						<span class="text-xs font-mono text-slate-500 dark:text-slate-400">
+							Published: <strong>{mediaSpotlight.date}</strong>
+						</span>
+					</div>
+
+					<span class="text-xs font-mono font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 block mb-1.5">
+						Featured in {mediaSpotlight.outlet}
+					</span>
+
+					<h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white mb-4 leading-snug">
+						"{mediaSpotlight.title}"
+					</h2>
+
+					<p class="text-sm text-slate-600 dark:text-slate-300 mb-6 leading-relaxed">
+						This media coverage spotlights the technical art, visual fidelity, and research of the <strong>{title}</strong> project. Read the original article, watch video features, or listen to the podcast below:
+					</p>
+
+					<div class="flex flex-wrap items-center gap-3 pt-4 border-t border-emerald-500/20 text-xs font-mono">
+						{mediaSpotlight.articleUrl && (
+							<a
+								href={mediaSpotlight.articleUrl}
+								target="_blank"
+								rel="noopener noreferrer"
+								class="btn btn-primary px-3.5 py-2 text-xs flex items-center gap-1.5 shadow-sm"
+							>
+								<span>Read Original Article</span>
+								<svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+							</a>
+						)}
+						{mediaSpotlight.videoUrl && (
+							<a
+								href={mediaSpotlight.videoUrl}
+								target="_blank"
+								rel="noopener noreferrer"
+								class="btn btn-secondary px-3.5 py-2 text-xs flex items-center gap-1.5"
+							>
+								<span>Watch Video Coverage</span>
+								<svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+							</a>
+						)}
+						{mediaSpotlight.podcastUrl && (
+							<a
+								href={mediaSpotlight.podcastUrl}
+								target="_blank"
+								rel="noopener noreferrer"
+								class="btn btn-secondary px-3.5 py-2 text-xs flex items-center gap-1.5"
+							>
+								<span>Listen to Podcast</span>
+								<svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
+							</a>
+						)}
+						<a
+							href="/cv#media"
+							class="ml-auto inline-flex items-center gap-1 text-slate-500 hover:text-emerald-600 dark:hover:text-emerald-400 font-semibold transition-colors"
+						>
+							&larr; View all media coverage in CV
+						</a>
+					</div>
+				</div>
+			)}
+
+			<!-- Hero Title & Tagline -->
+			<div class="text-center mb-10">
+				<h1 class="mb-3 text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+					{title}
+				</h1>
+				<p class="text-base sm:text-xl text-slate-600 dark:text-slate-400 italic font-normal max-w-2xl mx-auto">
+					{tagline}
+				</p>
+			</div>
+
+			<!-- Featured Image with View Transition -->
+			{thumbnail && (
+				<div class="mb-10 rounded-2xl overflow-hidden border border-slate-200/80 dark:border-slate-800/80 shadow-xl bg-slate-100 dark:bg-slate-800">
+					<img
+						src={thumbnail}
+						alt={`Key art for ${title}`}
+						transition:name={`project-img-${slug}`}
+						class="w-full aspect-video object-cover"
+						loading="eager"
+						decoding="async"
+					/>
+				</div>
+			)}
+
+			<!-- Modern Metadata Bento Bar -->
+			<div class="mb-12 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white/80 dark:bg-slate-900/70 backdrop-blur-md p-6 shadow-sm">
+				<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+					<!-- Role -->
+					<div>
+						<span class="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 block mb-1.5">
+							Role & Leadership
+						</span>
+						<p class="text-sm font-semibold text-slate-900 dark:text-white">
+							{role}
+						</p>
+						{client && (
+							<p class="text-xs text-emerald-600 dark:text-emerald-400 font-mono mt-0.5 font-semibold">
+								Client: {client}
+							</p>
+						)}
+						{year && <p class="text-xs text-slate-500 font-mono mt-0.5">Year: {year}</p>}
+					</div>
+
+					<!-- Platform -->
+					<div>
+						<span class="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 block mb-1.5">
+							Target Platforms
+						</span>
+						<div class="flex flex-wrap gap-1.5">
+							{platform.map((p: string) => (
+								<span class="inline-flex items-center rounded-md px-2 py-0.5 text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+									{p}
+								</span>
+							))}
+						</div>
+					</div>
+
+					<!-- Tech Stack (With Clickable Tech Links) -->
+					<div>
+						<span class="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 block mb-1.5">
+							Engine & Tech Stack
+						</span>
+						<div class="flex flex-wrap gap-1.5">
+							{tech.map((t: string) => {
+								const link = getTechLink(t);
+								if (link) {
+									return (
+										<a
+											href={link}
+											target="_blank"
+											rel="noopener noreferrer"
+											class="inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-xs font-semibold bg-emerald-100/80 hover:bg-emerald-200 text-emerald-800 dark:bg-emerald-950/70 dark:text-emerald-300 dark:hover:bg-emerald-900/80 dark:border dark:border-emerald-800/50 transition-all hover:scale-105 group"
+											title={`Learn more about ${t} (official website)`}
+										>
+											<span>{t}</span>
+											<svg class="h-2.5 w-2.5 opacity-60 group-hover:opacity-100" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+										</a>
+									);
+								}
+								return (
+									<span class="inline-flex items-center rounded-md px-2 py-0.5 text-xs font-semibold bg-emerald-100/70 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300 dark:border dark:border-emerald-800/40">
+										{t}
+									</span>
+								);
+							})}
+						</div>
+					</div>
+
+					<!-- Action CTAs -->
+					<div class="flex flex-col justify-center gap-2">
+						<span class="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 block mb-0.5">
+							Project Links
+						</span>
+						<div class="flex flex-wrap gap-2">
+							{isInteractiveLiveDemo && (
+								<a href={liveUrl} class="btn btn-primary text-xs px-3 py-1.5 flex-1 text-center" target="_blank" rel="noopener noreferrer">
+									Live 3D Demo &rarr;
+								</a>
+							)}
+							{githubUrl && (
+								<a href={githubUrl} class="btn btn-secondary text-xs px-3 py-1.5 flex-1 text-center" target="_blank" rel="noopener noreferrer">
+									GitHub
+								</a>
+							)}
+							{videoUrl && (
+								<a href={videoUrl} class="btn btn-secondary text-xs px-3 py-1.5 flex-1 text-center" target="_blank" rel="noopener noreferrer">
+									Watch Video
+								</a>
+							)}
+							{!isInteractiveLiveDemo && !githubUrl && !videoUrl && (
+								<span class="text-xs text-slate-400 italic">Research & Production</span>
+							)}
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Main Article & Optional TOC Sidebar Grid -->
+			<div class:list={[hasToc ? "lg:grid lg:grid-cols-12 lg:gap-12 items-start" : "max-w-3xl mx-auto"]}>
+				<!-- Article Content -->
+				<article class:list={[
+					"prose prose-slate dark:prose-invert max-w-none",
+					hasToc ? "lg:col-span-8" : "",
+					"prose-headings:font-bold prose-headings:tracking-tight",
+					"prose-h2:text-2xl prose-h2:border-b prose-h2:border-slate-200/80 dark:prose-h2:border-slate-800/80 prose-h2:pb-2.5 prose-h2:mt-10",
+					"prose-h3:text-xl prose-h3:border-b prose-h3:border-slate-200/60 dark:prose-h3:border-slate-800/60 prose-h3:pb-2 prose-h3:mt-8 prose-h3:mb-3",
+					"prose-a:text-emerald-600 dark:prose-a:text-emerald-400 prose-a:font-semibold hover:prose-a:underline",
+					"prose-img:rounded-xl prose-img:shadow-md",
+					"prose-p:leading-relaxed prose-p:text-slate-700 dark:prose-p:text-slate-300"
+				]}>
+					<slot />
+
+					<!-- Academic Publications Section (If present for this project) -->
+					{projectPublications.length > 0 && (
+						<section class="mt-14 pt-8 border-t border-slate-200/80 dark:border-slate-800/80 not-prose">
+							<div class="flex items-center gap-3 mb-6">
+								<div class="p-2 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
+									<svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/></svg>
+								</div>
+								<div>
+									<h3 class="text-xl font-bold text-slate-900 dark:text-white">Academic Publications</h3>
+									<p class="text-xs text-slate-500 font-mono">Peer-reviewed symposium and journal publications covering this work</p>
+								</div>
+							</div>
+
+							<div class="space-y-4">
+								{projectPublications.map(pub => (
+									<div class="p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white/70 dark:bg-slate-900/60 backdrop-blur-md">
+										<div class="flex flex-wrap items-center gap-2 mb-2">
+											<span class="px-2 py-0.5 rounded text-[11px] font-mono font-bold bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border border-emerald-500/20">
+												{pub.venue}
+											</span>
+											<span class="text-xs font-mono text-slate-500">&bull; {pub.date}</span>
+											<span class="text-xs font-mono text-slate-500">&bull; Roles: <strong class="text-slate-700 dark:text-slate-300">{pub.roles}</strong></span>
+										</div>
+
+										<h4 class="text-base font-bold text-slate-900 dark:text-white mb-3">
+											{pub.title}
+										</h4>
+
+										{pub.abstract && (
+											<div class="mb-3.5 p-3 rounded-lg bg-slate-50/80 dark:bg-slate-800/40 border border-slate-200/60 dark:border-slate-800/60 text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+												<span class="font-mono font-bold uppercase tracking-wider text-[10px] text-emerald-600 dark:text-emerald-400 block mb-1">
+													Abstract Preview
+												</span>
+												<p class="line-clamp-3 hover:line-clamp-none transition-all">{pub.abstract}</p>
+											</div>
+										)}
+
+										<div class="flex flex-wrap items-center gap-2 pt-2 border-t border-slate-100 dark:border-slate-800/60 text-xs font-mono">
+											{pub.doi && (
+												<a
+													href={pub.doi}
+													target="_blank"
+													rel="noopener noreferrer"
+													class="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400"
+												>
+													<span>DOI Citation</span>
+													<svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+												</a>
+											)}
+											{pub.paperUrl && (
+												<a
+													href={pub.paperUrl}
+													target="_blank"
+													rel="noopener noreferrer"
+													class="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400"
+												>
+													<span>Official PDF</span>
+													<svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+												</a>
+											)}
+											<!-- Button that takes the user to the CV publication case study page -->
+											<a
+												href={`/cv/publications/${pub.id}`}
+												class="inline-flex items-center gap-1.5 ml-auto px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-emerald-600 text-white hover:bg-emerald-500 shadow-xs hover:scale-105 transition-all"
+											>
+												<span>CV Academic Case Study</span>
+												<svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" /></svg>
+											</a>
+										</div>
+									</div>
+								))}
+							</div>
+						</section>
+					)}
+
+					<!-- Press & Media Recognition Section (If present for this project) -->
+					{projectMedia.length > 0 && (
+						<section class="mt-10 pt-8 border-t border-slate-200/80 dark:border-slate-800/80 not-prose">
+							<div class="flex items-center gap-3 mb-6">
+								<div class="p-2 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
+									<svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg>
+								</div>
+								<div>
+									<h3 class="text-xl font-bold text-slate-900 dark:text-white">Press & Media Recognition</h3>
+									<p class="text-xs text-slate-500 font-mono">Articles, video features, and media coverage celebrating this project</p>
+								</div>
+							</div>
+
+							<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+								{projectMedia.map(media => (
+									<div class="p-4 rounded-xl border border-slate-200/80 dark:border-slate-800/80 bg-white/70 dark:bg-slate-900/60 backdrop-blur-md flex flex-col justify-between">
+										<div>
+											<div class="flex items-center justify-between gap-2 mb-1.5 text-xs font-mono">
+												<span class="font-bold text-emerald-600 dark:text-emerald-400">{media.outlet}</span>
+												<span class="text-slate-500">{media.date}</span>
+											</div>
+											<h4 class="text-sm font-bold text-slate-900 dark:text-white mb-2 leading-snug">{media.title}</h4>
+										</div>
+
+										<div class="mt-3 pt-2 border-t border-slate-100 dark:border-slate-800/60 flex flex-wrap items-center gap-2 text-[11px] font-mono">
+											{media.articleUrl && (
+												<a href={media.articleUrl} target="_blank" rel="noopener noreferrer" class="text-emerald-600 dark:text-emerald-400 hover:underline inline-flex items-center gap-1">
+													<span>Read Article</span>
+													<svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+												</a>
+											)}
+											{media.videoUrl && (
+												<a href={media.videoUrl} target="_blank" rel="noopener noreferrer" class="text-emerald-600 dark:text-emerald-400 hover:underline inline-flex items-center gap-1">
+													<span>Watch Video</span>
+													<svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+												</a>
+											)}
+											{media.podcastUrl && (
+												<a href={media.podcastUrl} target="_blank" rel="noopener noreferrer" class="text-emerald-600 dark:text-emerald-400 hover:underline inline-flex items-center gap-1">
+													<span>Podcast</span>
+													<svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
+												</a>
+											)}
+											<a
+												href={`/cv/media/${media.id}`}
+												class="text-slate-500 hover:text-emerald-600 dark:hover:text-emerald-400 font-semibold ml-auto"
+											>
+												Media Spotlight &rarr;
+											</a>
+										</div>
+									</div>
+								))}
+							</div>
+						</section>
+					)}
+				</article>
+
+				<!-- Sticky Table of Contents (Desktop Sidebar) -->
+				{hasToc && (
+					<aside class="hidden lg:block lg:col-span-4 sticky top-24 self-start max-h-[calc(100vh-8rem)] overflow-y-auto">
+						<div class="rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white/70 dark:bg-slate-900/60 backdrop-blur-md p-5 shadow-xs">
+							<h4 class="text-xs font-mono font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-3 flex items-center gap-1.5">
+								<svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" /></svg>
+								<span>Contents</span>
+							</h4>
+							<nav class="space-y-1.5 text-xs">
+								{tocHeadings.map(h => (
+									<a
+										href={`#${h.slug}`}
+										class:list={[
+											"block py-1 text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors truncate",
+											h.depth === 3 ? "pl-3" : "font-semibold text-slate-800 dark:text-slate-200"
+										]}
+									>
+										{h.text}
+									</a>
+								))}
+							</nav>
+						</div>
+					</aside>
+				)}
+			</div>
+
+			<!-- Bottom CTAs -->
+			<div class="mt-16 pt-8 border-t border-slate-200/80 dark:border-slate-800/80 flex flex-wrap gap-4 justify-center">
+				{isInteractiveLiveDemo && <a href={liveUrl} class="btn btn-primary" target="_blank" rel="noopener noreferrer">Interactive Live Demo</a>}
+				{githubUrl && <a href={githubUrl} class="btn btn-secondary" target="_blank" rel="noopener noreferrer">View on GitHub</a>}
+				{videoUrl && <a href={videoUrl} class="btn btn-secondary" target="_blank" rel="noopener noreferrer">Watch Video</a>}
+			</div>
+
+			<!-- Previous & Next Project Navigation Cards -->
+			{(prevProject || nextProject) && (
+				<div class="mt-12 pt-8 border-t border-slate-200/60 dark:border-slate-800/60">
+					<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+						{prevProject && (
+							<a
+								href={`/projects/${prevProject.id || (prevProject as any).slug}`}
+								class="group p-4 rounded-xl border border-slate-200/80 dark:border-slate-800/80 bg-white/60 dark:bg-slate-900/50 hover:border-emerald-500/40 hover:bg-white dark:hover:bg-slate-900 transition-all flex items-center gap-3.5"
+							>
+								<div class="h-8 w-8 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-300 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 group-hover:-translate-x-0.5 transition-transform shrink-0">
+									&larr;
+								</div>
+								<div class="overflow-hidden">
+									<span class="text-[11px] font-mono text-slate-400 dark:text-slate-500 block">Previous Project</span>
+									<span class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors truncate block">
+										{prevProject.data.title}
+									</span>
+								</div>
+							</a>
+						)}
+
+						{nextProject && (
+							<a
+								href={`/projects/${nextProject.id || (nextProject as any).slug}`}
+								class="group p-4 rounded-xl border border-slate-200/80 dark:border-slate-800/80 bg-white/60 dark:bg-slate-900/50 hover:border-emerald-500/40 hover:bg-white dark:hover:bg-slate-900 transition-all flex items-center justify-end gap-3.5 text-right sm:ml-auto w-full"
+							>
+								<div class="overflow-hidden">
+									<span class="text-[11px] font-mono text-slate-400 dark:text-slate-500 block">Next Project</span>
+									<span class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors truncate block">
+										{nextProject.data.title}
+									</span>
+								</div>
+								<div class="h-8 w-8 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-300 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 group-hover:translate-x-0.5 transition-transform shrink-0">
+									&rarr;
+								</div>
+							</a>
+						)}
+					</div>
+				</div>
+			)}
+		</div>
+	</div>
+</BaseLayout>

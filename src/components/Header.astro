@@ -1,0 +1,192 @@
+---
+import ThemeToggle from "./ThemeToggle.astro";
+
+const { pathname: currentPath } = Astro.url;
+const isHomepage = currentPath === "/";
+const isProjectsPage = currentPath.startsWith("/projects");
+const isCvPage = currentPath.startsWith("/cv");
+
+const navLinks = [
+  { id: "home", href: "home", text: "Home", isPage: false, pageHref: "/" },
+  { id: "projects", href: "projects", text: "Projects", isPage: true, pageHref: "/projects" },
+  { id: "cv", href: "cv", text: "CV & Research", isPage: true, pageHref: "/cv" },
+  { id: "experience", href: "experience", text: "Experience", isPage: false, pageHref: "/#experience" },
+  { id: "about", href: "about", text: "About", isPage: false, pageHref: "/#about" },
+  { id: "contact", href: "contact", text: "Contact", isPage: false, pageHref: "/#contact" },
+];
+---
+
+<header
+  class="sticky top-0 z-50 backdrop-blur-md bg-white/80 dark:bg-slate-950/80 border-b border-slate-200/60 dark:border-slate-800/60 transition-colors duration-300"
+>
+  <div class="container mx-auto px-4 max-w-6xl">
+    <div class="flex items-center justify-between h-16">
+      <!-- Logo / Brand -->
+      <a href={isHomepage ? "#home" : "/"} class="group flex items-center gap-2.5 font-bold text-slate-900 dark:text-white transition-colors">
+        <span
+          class="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-600 text-white font-mono text-sm font-semibold shadow-sm shadow-emerald-600/30 group-hover:scale-105 transition-transform"
+        >
+          BC
+        </span>
+        <div class="flex flex-col">
+          <span class="text-base font-bold leading-tight group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+            Brandon Coffey
+          </span>
+          <span class="text-[10px] uppercase font-mono tracking-wider text-slate-500 dark:text-slate-400 hidden sm:block"> Technical Artist </span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation Links -->
+      <nav class="hidden md:flex items-center gap-1.5 lg:gap-2">
+        {
+          navLinks.map((link) => {
+            const isActive = (isProjectsPage && link.id === "projects") || (isCvPage && link.id === "cv");
+            const linkHref = link.isPage ? link.pageHref : isHomepage ? `#${link.href}` : `/#${link.href}`;
+            return (
+              <a
+                href={linkHref}
+                data-nav-section={link.id}
+                class:list={[
+                  "nav-link px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200",
+                  isActive
+                    ? "text-emerald-600 dark:text-emerald-400 font-semibold bg-emerald-500/10 dark:bg-emerald-500/15"
+                    : "text-slate-600 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-slate-100/70 dark:hover:bg-slate-800/60",
+                ]}
+              >
+                {link.text}
+              </a>
+            );
+          })
+        }
+      </nav>
+
+      <!-- Action Controls: Theme Toggle, Mobile Menu -->
+      <div class="flex items-center gap-3">
+        <ThemeToggle />
+
+        <!-- Mobile Hamburger Button -->
+        <button
+          id="portfolio-menu-btn"
+          type="button"
+          class="hamburger md:hidden p-1.5 rounded-lg text-slate-700 dark:text-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+          aria-label="Toggle navigation menu"
+          aria-expanded="false"
+          aria-controls="portfolio-mobile-menu"
+        >
+          <span class="hamburger-top"></span>
+          <span class="hamburger-middle"></span>
+          <span class="hamburger-bottom"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Menu Drawer -->
+  <div
+    id="portfolio-mobile-menu"
+    class="hidden md:hidden border-t border-slate-200/60 dark:border-slate-800/60 bg-white/95 dark:bg-slate-950/95 backdrop-blur-xl transition-all duration-300"
+  >
+    <div class="container mx-auto px-4 py-4 space-y-1">
+      {
+        navLinks.map((link) => {
+          const linkHref = link.isPage ? link.pageHref : isHomepage ? `#${link.href}` : `/#${link.href}`;
+          return (
+            <a
+              href={linkHref}
+              data-mobile-nav={link.id}
+              class="mobile-nav-link block px-3 py-2.5 rounded-lg text-base font-medium text-slate-700 dark:text-slate-200 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors"
+            >
+              {link.text}
+            </a>
+          );
+        })
+      }
+    </div>
+  </div>
+</header>
+
+<script>
+  function setupPortfolioNav() {
+    const btn = document.getElementById("portfolio-menu-btn");
+    const menu = document.getElementById("portfolio-mobile-menu");
+    const isHome = window.location.pathname === "/" || window.location.pathname === "";
+    const isProjects = window.location.pathname.startsWith("/projects");
+
+    if (!btn || !menu || btn.dataset.hasListener) return;
+    btn.dataset.hasListener = "true";
+
+    const toggleMenu = () => {
+      const isOpen = btn.classList.toggle("open");
+      menu.classList.toggle("hidden", !isOpen);
+      btn.setAttribute("aria-expanded", String(isOpen));
+    };
+
+    const closeMenu = () => {
+      btn.classList.remove("open");
+      menu.classList.add("hidden");
+      btn.setAttribute("aria-expanded", "false");
+    };
+
+    btn.addEventListener("click", toggleMenu);
+
+    const mobileLinks = menu.querySelectorAll(".mobile-nav-link");
+    mobileLinks.forEach((link) => {
+      link.addEventListener("click", closeMenu);
+    });
+
+    // Close on Escape
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && !menu.classList.contains("hidden")) {
+        closeMenu();
+      }
+    });
+
+    // Scroll-spy on Homepage
+    if (isHome) {
+      const sections = document.querySelectorAll("section[id]");
+      const desktopNavLinks = document.querySelectorAll<HTMLAnchorElement>(".nav-link[data-nav-section]");
+
+      if (sections.length > 0 && desktopNavLinks.length > 0) {
+        const observerOptions = {
+          root: null,
+          rootMargin: "-20% 0px -60% 0px",
+          threshold: 0,
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const id = entry.target.getAttribute("id");
+              desktopNavLinks.forEach((link) => {
+                const matches = link.dataset.navSection === id;
+                link.classList.toggle("text-emerald-600", matches);
+                link.classList.toggle("dark:text-emerald-400", matches);
+                link.classList.toggle("font-semibold", matches);
+                link.classList.toggle("bg-emerald-500/10", matches);
+                link.classList.toggle("dark:bg-emerald-500/15", matches);
+                link.classList.toggle("text-slate-600", !matches);
+                link.classList.toggle("dark:text-slate-300", !matches);
+              });
+            }
+          });
+        }, observerOptions);
+
+        sections.forEach((sec) => observer.observe(sec));
+      }
+    } else if (isProjects) {
+      const projectsNavLink = document.querySelector<HTMLAnchorElement>('.nav-link[data-nav-section="projects"]');
+      if (projectsNavLink) {
+        projectsNavLink.classList.add("text-emerald-600", "dark:text-emerald-400", "font-semibold", "bg-emerald-500/10", "dark:bg-emerald-500/15");
+        projectsNavLink.classList.remove("text-slate-600", "dark:text-slate-300");
+      }
+    } else if (window.location.pathname.startsWith("/cv")) {
+      const cvNavLink = document.querySelector<HTMLAnchorElement>('.nav-link[data-nav-section="cv"]');
+      if (cvNavLink) {
+        cvNavLink.classList.add("text-emerald-600", "dark:text-emerald-400", "font-semibold", "bg-emerald-500/10", "dark:bg-emerald-500/15");
+        cvNavLink.classList.remove("text-slate-600", "dark:text-slate-300");
+      }
+    }
+  }
+
+  document.addEventListener("astro:page-load", setupPortfolioNav);
+</script>

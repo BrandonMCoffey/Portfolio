@@ -1,0 +1,35 @@
+---
+import { getCollection, render, type CollectionEntry } from "astro:content";
+import ProjectLayout from "../../../layouts/ProjectLayout.astro";
+import { publications, type PublicationItem } from "../../../data/cvData";
+
+export async function getStaticPaths() {
+  const allProjects = await getCollection("projects");
+  const projectMap = new Map<string, CollectionEntry<"projects">>();
+  allProjects.forEach((p) => projectMap.set(p.id, p));
+
+  // Filter publications that have a valid projectSlug matching a project in the collection
+  const validPubs = publications.filter((pub) => pub.projectSlug && projectMap.has(pub.projectSlug));
+
+  return validPubs.map((pub: PublicationItem) => {
+    const project = projectMap.get(pub.projectSlug!)!;
+    return {
+      params: { id: pub.id },
+      props: { publication: pub, project },
+    };
+  });
+}
+
+const { publication, project } = Astro.props;
+const { Content, headings } = await render(project);
+---
+
+<ProjectLayout
+  project={project.data}
+  slug={project.id}
+  headings={headings}
+  academicSpotlight={publication}
+  backLink={{ href: "/cv#publications", label: "Back to Curriculum Vitae" }}
+>
+  <Content />
+</ProjectLayout>

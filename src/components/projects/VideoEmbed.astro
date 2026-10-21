@@ -1,0 +1,75 @@
+---
+interface Props {
+  videoId?: string;
+  vimeoId?: string;
+  playlistId?: string;
+  autoplay?: boolean;
+  title?: string;
+}
+
+const { videoId, vimeoId, playlistId, autoplay = false, title } = Astro.props;
+
+let videoSrc = "";
+let computedTitle = title || "Embedded video";
+
+if (vimeoId) {
+  const autoParam = autoplay ? "autoplay=1&muted=1&loop=1" : "autoplay=0";
+  videoSrc = `https://player.vimeo.com/video/${vimeoId}?${autoParam}&title=0&byline=0&portrait=0`;
+  if (!title) computedTitle = `Embedded Vimeo video: ${vimeoId}`;
+} else if (videoId) {
+  const autoParam = autoplay ? "autoplay=1&mute=1&loop=1" : "autoplay=0";
+  const playlistParam = playlistId ? `&list=${playlistId}` : `&playlist=${videoId}`;
+  videoSrc = `https://www.youtube.com/embed/${videoId}?${autoParam}&playsinline=1${playlistParam}`;
+  if (!title) computedTitle = `Embedded YouTube video: ${videoId}`;
+}
+---
+
+<div class="lazy-video-embed my-8 rounded-2xl overflow-hidden shadow-lg border border-slate-200/80 dark:border-slate-800/80 bg-slate-950">
+  <div class="aspect-video relative w-full">
+    <iframe
+      title={computedTitle}
+      data-src={videoSrc}
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen
+      class="w-full h-full"></iframe>
+  </div>
+</div>
+
+<script>
+  function initVideoEmbeds() {
+    const lazyVideos = document.querySelectorAll<HTMLElement>(".lazy-video-embed");
+
+    if ("IntersectionObserver" in window) {
+      const videoObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const videoContainer = entry.target as HTMLElement;
+            const iframe = videoContainer.querySelector<HTMLIFrameElement>("iframe");
+            if (iframe && iframe.dataset.src && !iframe.src) {
+              iframe.src = iframe.dataset.src;
+            }
+            observer.unobserve(videoContainer);
+          }
+        });
+      });
+
+      lazyVideos.forEach((video) => {
+        if (!video.dataset.hasObserver) {
+          video.dataset.hasObserver = "true";
+          videoObserver.observe(video);
+        }
+      });
+    } else {
+      // Fallback for browsers without IntersectionObserver support
+      lazyVideos.forEach((videoContainer) => {
+        const iframe = videoContainer.querySelector<HTMLIFrameElement>("iframe");
+        if (iframe && iframe.dataset.src && !iframe.src) {
+          iframe.src = iframe.dataset.src;
+        }
+      });
+    }
+  }
+
+  document.addEventListener("astro:page-load", initVideoEmbeds);
+</script>

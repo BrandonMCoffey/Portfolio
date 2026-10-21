@@ -1,0 +1,266 @@
+---
+import ThemeToggle from "../ThemeToggle.astro";
+
+const { pathname: currentPath } = Astro.url;
+const isAllRecipes = currentPath === "/cookbook" || currentPath === "/cookbook/";
+const isFavorites = currentPath === "/cookbook/favorites" || currentPath === "/cookbook/favorites/";
+const isShoppingList = currentPath === "/cookbook/shopping-list" || currentPath === "/cookbook/shopping-list/";
+---
+
+<header
+  class="sticky top-0 z-40 backdrop-blur-md bg-white/80 dark:bg-slate-950/80 border-b border-slate-200/60 dark:border-slate-800/60 shadow-xs transition-colors duration-300"
+>
+  <div class="container mx-auto px-4 max-w-6xl">
+    <div class="flex items-center justify-between h-16">
+      <!-- Left: Cookbook Brand -->
+      <div class="flex items-center gap-4">
+        <a href="/cookbook" class="group flex items-center gap-2.5 font-bold text-slate-900 dark:text-white transition-colors">
+          <span
+            class="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-600 text-white shadow-sm shadow-emerald-600/30 group-hover:scale-105 transition-transform"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-4 w-4"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"></path>
+              <path d="M7 2v20"></path>
+              <path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"></path>
+            </svg>
+          </span>
+          <div class="flex flex-col">
+            <span class="text-base font-bold leading-tight group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+              Coffey Cookbook
+            </span>
+            <span class="text-[10px] uppercase font-mono tracking-wider text-slate-500 dark:text-slate-400 hidden sm:block"> Culinary Archive </span>
+          </div>
+        </a>
+      </div>
+
+      <!-- Center: Cookbook Nav Links -->
+      <nav class="hidden md:flex items-center gap-1.5 lg:gap-2">
+        <a
+          href="/cookbook"
+          class:list={[
+            "px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200",
+            isAllRecipes
+              ? "text-emerald-600 dark:text-emerald-400 font-semibold bg-emerald-500/10 dark:bg-emerald-500/15"
+              : "text-slate-600 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-slate-100/70 dark:hover:bg-slate-800/60",
+          ]}
+        >
+          All Recipes
+        </a>
+        <a
+          href="/cookbook/favorites"
+          class:list={[
+            "px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 flex items-center gap-1.5",
+            isFavorites
+              ? "text-emerald-600 dark:text-emerald-400 font-semibold bg-emerald-500/10 dark:bg-emerald-500/15"
+              : "text-slate-600 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-slate-100/70 dark:hover:bg-slate-800/60",
+          ]}
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-pink-500" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z"
+            ></path>
+          </svg>
+          Favorites
+        </a>
+        <a
+          href="/cookbook/shopping-list"
+          class:list={[
+            "px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 flex items-center gap-1.5",
+            isShoppingList
+              ? "text-emerald-600 dark:text-emerald-400 font-semibold bg-emerald-500/10 dark:bg-emerald-500/15"
+              : "text-slate-600 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-slate-100/70 dark:hover:bg-slate-800/60",
+          ]}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-3.5 w-3.5"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="8" cy="21" r="1"></circle>
+            <circle cx="19" cy="21" r="1"></circle>
+            <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path>
+          </svg>
+          <span>Shopping List</span>
+          <span
+            id="cookbook-header-badge"
+            class="hidden ml-1 px-1.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-600 text-white min-w-5 text-center leading-none"
+          >
+            0
+          </span>
+        </a>
+      </nav>
+
+      <!-- Right: Controls -->
+      <div class="flex items-center gap-3">
+        <ThemeToggle />
+
+        <!-- Mobile Hamburger Button -->
+        <button
+          id="cookbook-menu-btn"
+          type="button"
+          class="hamburger md:hidden p-1.5 rounded-lg text-slate-700 dark:text-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+          aria-label="Toggle cookbook menu"
+          aria-expanded="false"
+          aria-controls="cookbook-mobile-menu"
+        >
+          <span class="hamburger-top"></span>
+          <span class="hamburger-middle"></span>
+          <span class="hamburger-bottom"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Menu Drawer -->
+  <div
+    id="cookbook-mobile-menu"
+    class="hidden md:hidden border-t border-slate-200/60 dark:border-slate-800/60 bg-white/95 dark:bg-slate-950/95 backdrop-blur-xl transition-all duration-300"
+  >
+    <div class="container mx-auto px-4 py-4 space-y-1">
+      <a
+        href="/cookbook"
+        class:list={[
+          "block px-3 py-2.5 rounded-lg text-base font-medium transition-colors",
+          isAllRecipes
+            ? "text-emerald-600 dark:text-emerald-400 font-semibold bg-emerald-500/10"
+            : "text-slate-700 dark:text-slate-200 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-slate-100 dark:hover:bg-slate-900",
+        ]}
+      >
+        All Recipes
+      </a>
+      <a
+        href="/cookbook/favorites"
+        class:list={[
+          "flex items-center justify-between px-3 py-2.5 rounded-lg text-base font-medium transition-colors",
+          isFavorites
+            ? "text-emerald-600 dark:text-emerald-400 font-semibold bg-emerald-500/10"
+            : "text-slate-700 dark:text-slate-200 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-slate-100 dark:hover:bg-slate-900",
+        ]}
+      >
+        <span class="flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-pink-500" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z"
+            ></path>
+          </svg>
+          Favorites
+        </span>
+      </a>
+      <a
+        href="/cookbook/shopping-list"
+        class:list={[
+          "flex items-center justify-between px-3 py-2.5 rounded-lg text-base font-medium transition-colors",
+          isShoppingList
+            ? "text-emerald-600 dark:text-emerald-400 font-semibold bg-emerald-500/10"
+            : "text-slate-700 dark:text-slate-200 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-slate-100 dark:hover:bg-slate-900",
+        ]}
+      >
+        <span class="flex items-center gap-2">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-4 w-4"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="8" cy="21" r="1"></circle>
+            <circle cx="19" cy="21" r="1"></circle>
+            <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path>
+          </svg>
+          Shopping List
+        </span>
+        <span id="cookbook-mobile-badge" class="hidden px-2 py-0.5 rounded-full text-xs font-bold bg-emerald-600 text-white"> 0 </span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<script>
+  function setupCookbookNav() {
+    const btn = document.getElementById("cookbook-menu-btn");
+    const menu = document.getElementById("cookbook-mobile-menu");
+    const desktopBadge = document.getElementById("cookbook-header-badge");
+    const mobileBadge = document.getElementById("cookbook-mobile-badge");
+
+    if (!btn || !menu || btn.dataset.hasListener) return;
+    btn.dataset.hasListener = "true";
+
+    const toggleMenu = () => {
+      const isOpen = btn.classList.toggle("open");
+      menu.classList.toggle("hidden", !isOpen);
+      btn.setAttribute("aria-expanded", String(isOpen));
+    };
+
+    const closeMenu = () => {
+      btn.classList.remove("open");
+      menu.classList.add("hidden");
+      btn.setAttribute("aria-expanded", "false");
+    };
+
+    btn.addEventListener("click", toggleMenu);
+
+    // Close on mobile link clicks
+    const links = menu.querySelectorAll("a");
+    links.forEach((l) => l.addEventListener("click", closeMenu));
+
+    // Close on Escape
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && !menu.classList.contains("hidden")) {
+        closeMenu();
+      }
+    });
+
+    // Update Shopping List Active Badge
+    const updateBadge = () => {
+      try {
+        const active = JSON.parse(localStorage.getItem("active_recipes") || "[]");
+        const count = Array.isArray(active) ? active.length : 0;
+        [desktopBadge, mobileBadge].forEach((b) => {
+          if (!b) return;
+          if (count > 0) {
+            b.textContent = String(count);
+            b.classList.remove("hidden");
+          } else {
+            b.classList.add("hidden");
+          }
+        });
+      } catch (_) {}
+    };
+
+    updateBadge();
+    if ((window as any).__cookbookBadgeHandler) {
+      window.removeEventListener("storage", (window as any).__cookbookBadgeHandler);
+      window.removeEventListener("storageupdate", (window as any).__cookbookBadgeHandler);
+    }
+    (window as any).__cookbookBadgeHandler = updateBadge;
+    window.addEventListener("storage", updateBadge);
+    window.addEventListener("storageupdate", updateBadge);
+  }
+
+  document.addEventListener("astro:before-swap", () => {
+    if ((window as any).__cookbookBadgeHandler) {
+      window.removeEventListener("storage", (window as any).__cookbookBadgeHandler);
+      window.removeEventListener("storageupdate", (window as any).__cookbookBadgeHandler);
+      (window as any).__cookbookBadgeHandler = null;
+    }
+  });
+
+  document.addEventListener("astro:page-load", setupCookbookNav);
+</script>

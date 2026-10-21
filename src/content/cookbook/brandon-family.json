@@ -1,0 +1,226 @@
+[
+  {
+    "id": "baked-ziti",
+    "title": "Baked Ziti",
+    "description": "A classic layered pasta bake with ground beef, mozzarella, and a rich marinara sauce.",
+    "thumbnail": "/images/cookbook/brandon-family/baked-ziti.jpg",
+    "author": "Brandon",
+    "date": "2025-07-17",
+    "collections": ["Brandon Family", "College Cookbook"],
+    "category": "Main Course",
+    "cuisines": ["Italian", "American"],
+    "diets": [],
+    "cookware": ["Large Skillet", "Large Pot", "9x13 Baking Dish"],
+    "time": { "prep": 15, "cook": 30, "rest": 0 },
+    "servings": 8,
+    "ingredients": [
+      { "item": "ziti pasta", "quantity": 1, "unit": "lb", "note": "2lb for larger recipe" },
+      { "item": "ground beef", "quantity": 1, "unit": "lb", "note": "lean preferred" },
+      { "item": "onion", "quantity": 1, "unit": "", "note": "" },
+      { "item": "spaghetti sauce", "quantity": 52, "unit": "oz", "note": "marinara preferred" },
+      { "item": "mozzarella cheese, shredded", "quantity": 12, "unit": "oz", "note": "" },
+      { "item": "sour cream", "quantity": 1, "unit": "cup", "note": "optional" },
+      { "item": "parmesan cheese", "quantity": 0, "unit": "to taste", "note": "" }
+    ],
+    "instructions": [
+      "Dice the onion and butter a 9x13 inch baking dish.",
+      "Preheat the oven to 350°F (175°C).",
+      "In a large skillet, brown the diced onion and ground beef over medium heat.",
+      "Add spaghetti sauce and simmer 15 minutes.",
+      "Meanwhile, bring a large pot of lightly salted water to a boil.",
+      "Add ziti pasta and cook until al dente, about 8 minutes. Drain.",
+      "Layer as follows: ½ of the ziti, ½ mozzarella cheese, sour cream, ½ sauce mixture, remaining ziti, ½ mozzarella cheese, remaining sauce mixture.",
+      "Top with Parmesan cheese.",
+      "Bake for 30 minutes or until the cheeses are melted."
+    ],
+    "tips": [
+      "For a larger meal, use 2 lbs of pasta, but this will require an additional 7x9 inch baking dish.",
+      "Use other cheeses, such as Provolone, in addition to Mozzarella and Parmesan.",
+      "Serve with extra Parmesan cheese and a shredder."
+    ]
+  },
+  {
+    "id": "christmas-crack",
+    "title": "Christmas Crack",
+    "description": "An addictive holiday treat made with saltine crackers, homemade toffee, and melted chocolate.",
+    "thumbnail": "/images/cookbook/brandon-family/christmas-crack.jpg",
+    "author": "Brandon",
+    "date": "2025-07-17",
+    "collections": ["Brandon Family", "College Cookbook"],
+    "category": "Dessert",
+    "cuisines": ["American"],
+    "diets": [],
+    "cookware": ["Baking Sheet", "Medium Saucepan"],
+    "time": { "prep": 10, "cook": 6, "rest": 30 },
+    "servings": 20,
+    "ingredients": [
+      { "item": "saltine crackers", "quantity": 40, "unit": "", "note": "" },
+      { "item": "salted butter", "quantity": 1, "unit": "cup", "note": "" },
+      { "item": "light brown sugar", "quantity": 1, "unit": "cup", "note": "" },
+      { "item": "pure vanilla extract", "quantity": 1, "unit": "tsp", "note": "" },
+      { "item": "milk chocolate chips", "quantity": 12, "unit": "oz", "note": "" },
+      { "item": "nuts or sprinkles", "quantity": 0, "unit": "to taste", "note": "" }
+    ],
+    "instructions": [
+      "Line the cookie sheet with nonstick aluminum foil or use regular foil and spray generously with nonstick cooking spray. Prepare toppings such as chopped nuts or sprinkles.",
+      "Preheat the oven to 400°F.",
+      "Cover the cookie sheet with one layer of saltine crackers.",
+      "In a medium saucepan over medium high heat, bring butter and brown sugar to a boil, stirring continuously for about two minutes (it should be bubbly).",
+      "Remove from heat, stir in one teaspoon pure vanilla extract.",
+      "Pour toffee mixture over crackers, then bake for 6 minutes.",
+      "Remove from the oven, sprinkle tops of warm crackers with milk chocolate chips.",
+      "Allow chocolate to soften for a minute or two, then spread chocolate evenly on top of crackers.",
+      "Add sprinkles or chopped nuts to the top.",
+      "Allow to cool, then break up into bite size pieces."
+    ],
+    "tips": [
+      "You can speed the cooling process by popping the tray into the freezer.",
+      "You can also use white chocolate chips instead of milk chocolate chips."
+    ]
+  },
+  {
+    "id": "banana-bread-classic",
+    "title": "Classic Banana Bread",
+    "description": "Rich and moist homemade banana bread baked to golden-brown perfection with sweet ripe bananas and cinnamon.",
+    "thumbnail": "/images/cookbook/brandon-family/banana-muffins-or-banana-bread.jpg",
+    "author": "Brandon Family",
+    "date": "2025-08-31",
+    "collections": ["Brandon Family"],
+    "category": "Bread",
+    "cuisines": ["American"],
+    "diets": ["Vegetarian"],
+    "cookware": ["Loaf Pan", "Mixing Bowls", "Fork"],
+    "time": { "prep": 15, "cook": 60, "rest": 15 },
+    "servings": 10,
+    "ingredients": [
+      { "item": "ripe bananas, mashed", "quantity": 3, "unit": "medium", "note": "" },
+      { "item": "melted butter", "quantity": 0.333, "unit": "cup", "note": "" },
+      { "item": "sugar", "quantity": 0.75, "unit": "cup", "note": "" },
+      { "item": "egg, beaten", "quantity": 1, "unit": "large", "note": "" },
+      { "item": "vanilla extract", "quantity": 1, "unit": "tsp", "note": "" },
+      { "item": "baking soda", "quantity": 1, "unit": "tsp", "note": "" },
+      { "item": "salt", "quantity": 0.25, "unit": "tsp", "note": "" },
+      { "item": "all-purpose flour", "quantity": 1.5, "unit": "cup", "note": "" }
+    ],
+    "instructions": [
+      "Preheat the oven to 350°F (175°C) and grease an 8x4 inch loaf pan.",
+      "In a mixing bowl, mash the ripe bananas with a fork until completely smooth.",
+      "Stir the melted butter into the mashed bananas.",
+      "Mix in the sugar, beaten egg, and vanilla extract.",
+      "Sprinkle the baking soda and salt over the mixture and stir in.",
+      "Add the flour last, mixing just until incorporated. Do not overmix.",
+      "Pour the batter into your prepared loaf pan.",
+      "Bake for 50 to 60 minutes, or until a toothpick inserted into the center comes out clean.",
+      "Cool on a wire rack for 15 minutes before slicing."
+    ],
+    "tips": [
+      "The riper and more speckled the bananas, the more naturally sweet and flavorful the loaf.",
+      "Optional: fold in ½ cup of chopped toasted walnuts or dark chocolate chips."
+    ]
+  },
+  {
+    "id": "honey-beer-bread",
+    "title": "Honey Beer Bread",
+    "description": "Hearty, crusty homemade beer bread requiring zero yeast proofing—tender on the inside with a golden buttery crust.",
+    "thumbnail": "/images/cookbook/brandon-family/beer-bread.jpg",
+    "author": "Brandon Family",
+    "date": "2025-08-31",
+    "collections": ["Brandon Family"],
+    "category": "Bread",
+    "cuisines": ["American"],
+    "diets": ["Vegetarian"],
+    "cookware": ["9x5 Loaf Pan", "Large Mixing Bowl", "Saucepan"],
+    "time": { "prep": 10, "cook": 50, "rest": 10 },
+    "servings": 8,
+    "ingredients": [
+      { "item": "all-purpose flour", "quantity": 3, "unit": "cup", "note": "sifted" },
+      { "item": "baking powder", "quantity": 1, "unit": "tbsp", "note": "" },
+      { "item": "salt", "quantity": 1, "unit": "tsp", "note": "" },
+      { "item": "honey", "quantity": 0.25, "unit": "cup", "note": "" },
+      { "item": "beer", "quantity": 12, "unit": "oz", "note": "ale or lager, room temp" },
+      { "item": "butter, melted", "quantity": 0.25, "unit": "cup", "note": "poured over top" }
+    ],
+    "instructions": [
+      "Preheat oven to 375°F (190°C). Grease a standard 9x5 inch loaf pan.",
+      "In a large bowl, whisk together the flour, baking powder, and salt.",
+      "Stir in the honey and slowly pour in the beer. Stir gently until just combined (batter will be thick and sticky).",
+      "Spread the batter evenly into the prepared loaf pan.",
+      "Pour the melted butter evenly over the top of the batter.",
+      "Bake for 45 to 55 minutes until the crust is golden brown and a toothpick inserted in the center comes out clean.",
+      "Cool in pan for 10 minutes before turning out onto a wire rack."
+    ],
+    "tips": [
+      "Different beer styles alter the profile: light lagers give a mild yeast flavor, while ambers and stouts give deep, rich malty undertones."
+    ]
+  },
+  {
+    "id": "pecan-toffee-christmas-crack",
+    "title": "Pecan Toffee Christmas Crack",
+    "description": "Holiday cracker toffee layered with toasted pecans, crisp caramelized brown sugar butter, and decadent melted chocolate.",
+    "thumbnail": "/images/cookbook/brandon-family/christmas-crack-2.jpg",
+    "author": "Brandon Family",
+    "date": "2025-08-31",
+    "collections": ["Brandon Family"],
+    "category": "Dessert",
+    "cuisines": ["American"],
+    "diets": ["Vegetarian"],
+    "cookware": ["Rimmed Baking Sheet", "Saucepan", "Silicone Spatula"],
+    "time": { "prep": 10, "cook": 8, "rest": 45 },
+    "servings": 24,
+    "ingredients": [
+      { "item": "club crackers or saltines", "quantity": 40, "unit": "", "note": "" },
+      { "item": "butter", "quantity": 1, "unit": "cup", "note": "" },
+      { "item": "dark brown sugar", "quantity": 1, "unit": "cup", "note": "" },
+      { "item": "semi-sweet chocolate chips", "quantity": 2, "unit": "cup", "note": "" },
+      { "item": "pecans, finely chopped", "quantity": 0.75, "unit": "cup", "note": "toasted" },
+      { "item": "flaky sea salt", "quantity": 0.5, "unit": "tsp", "note": "" }
+    ],
+    "instructions": [
+      "Preheat oven to 375°F. Line a large rimmed cookie sheet with parchment paper.",
+      "Arrange crackers in a single tight layer across the baking sheet.",
+      "In a heavy saucepan, melt butter and dark brown sugar over medium heat. Bring to a rolling boil and cook without stirring for exactly 3 minutes.",
+      "Carefully pour hot toffee over crackers and spread gently with a spatula.",
+      "Bake in oven for 5 to 7 minutes until bubbling vigorously across the entire pan.",
+      "Remove and immediately scatter chocolate chips across the surface. Let sit for 2 minutes to melt, then spread into an even chocolate layer.",
+      "Top with chopped toasted pecans and a sprinkle of flaky sea salt.",
+      "Chill in refrigerator for 45 minutes until set, then break into shards."
+    ],
+    "tips": ["Store in an airtight container in the freezer for up to 3 weeks for an icy, crisp sweet treat."]
+  },
+  {
+    "id": "creamy-roasted-tomato-soup",
+    "title": "Creamy Roasted Tomato Soup",
+    "description": "Velvety roasted tomato soup infused with garlic, fresh basil, and a touch of heavy cream. Pairs impeccably with grilled cheese.",
+    "thumbnail": "/images/cookbook/brandon-family/tomato-soup.jpg",
+    "author": "Brandon Family",
+    "date": "2025-08-31",
+    "collections": ["Brandon Family"],
+    "category": "Soup",
+    "cuisines": ["American"],
+    "diets": ["Vegetarian"],
+    "cookware": ["Baking Sheet", "Dutch Oven", "Immersion Blender"],
+    "time": { "prep": 15, "cook": 40, "rest": 0 },
+    "servings": 6,
+    "ingredients": [
+      { "item": "roma tomatoes, halved", "quantity": 3, "unit": "lb", "note": "" },
+      { "item": "garlic cloves", "quantity": 6, "unit": "", "note": "peeled" },
+      { "item": "yellow onion, quartered", "quantity": 1, "unit": "", "note": "" },
+      { "item": "olive oil", "quantity": 3, "unit": "tbsp", "note": "" },
+      { "item": "vegetable broth", "quantity": 3, "unit": "cup", "note": "" },
+      { "item": "heavy cream", "quantity": 0.5, "unit": "cup", "note": "" },
+      { "item": "fresh basil leaves", "quantity": 0.5, "unit": "cup", "note": "" },
+      { "item": "salt and black pepper", "quantity": 1, "unit": "tsp", "note": "to taste" }
+    ],
+    "instructions": [
+      "Preheat oven to 400°F (200°C).",
+      "Arrange tomatoes, garlic cloves, and onion on a large baking sheet. Drizzle with olive oil, salt, and pepper.",
+      "Roast for 35 to 40 minutes until tomatoes are tender and slightly charred on edges.",
+      "Transfer roasted vegetables and juices into a Dutch oven.",
+      "Add vegetable broth and fresh basil leaves. Bring to a simmer over medium heat for 10 minutes.",
+      "Use an immersion blender to puree the soup until completely smooth and velvety.",
+      "Stir in heavy cream and season with additional salt and freshly cracked pepper to taste.",
+      "Ladle hot into bowls and garnish with extra basil and a drizzle of olive oil."
+    ],
+    "tips": ["Roasting the tomatoes concentrates the natural sugars and creates an incomparably deeper flavor than canned tomatoes."]
+  }
+]
