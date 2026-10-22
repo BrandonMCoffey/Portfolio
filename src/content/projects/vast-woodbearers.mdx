@@ -1,7 +1,7 @@
 ---
 title: "Woodbearers of Chimayo VR"
 tagline: "Immersive Virtual Reality Museum Experience Stepping Inside a Painting"
-thumbnail: "/images/projects/vast-woodbearers/painting-angle.png"
+thumbnail: "painting-angle.png"
 role: "Lead Developer & Technical Artist"
 client: "New Mexico Museum of Art | Vladem Contemporary"
 priority: 1
@@ -15,12 +15,6 @@ githubUrl: ""
 videoUrl: "https://vimeo.com/953829269"
 ---
 
-import ImageEmbed from "../../components/projects/ImageEmbed.astro";
-import ImageSlider from "../../components/projects/ImageSlider.astro";
-import VideoEmbed from "../../components/projects/VideoEmbed.astro";
-import CodeSnippet from "../../components/projects/CodeSnippet.astro";
-import ProjectHighlight from "../../components/projects/ProjectHighlight.astro";
-
 <VideoEmbed vimeoId="953829269" title="Woodbearers of Chimayo VR Experience Showcase" />
 
 <ProjectHighlight
@@ -32,22 +26,22 @@ import ProjectHighlight from "../../components/projects/ProjectHighlight.astro";
 
 Visitors step beyond the picture frame into 1970s Chimayó, New Mexico, observing the wood-bearing donkeys, adobe architecture of the Santuario de Chimayó, and atmospheric lighting from any vantage point.
 
-<ImageEmbed file="vast-woodbearers/original_painting.jpg" caption="Clark Hulings' original 1974 masterwork: 'Woodbearers of Chimayo'" />
+<ImageEmbed file="original_painting.jpg" caption="Clark Hulings' original 1974 masterwork: 'Woodbearers of Chimayo'" />
 
 ### Custom Stylized Post-Processing Shader
 
 A crucial technical requirement was translating Hulings' impasto brushwork, edge dry-brushing, and warm gouache/oil color grading into a real-time post-process volume in Unreal Engine 5. Using custom HLSL scene texture sampling, Sobel edge filtering, and normal-based canvas paper texturing, the rendering seamlessly captures the tactile quality of a painted canvas:
 
 <ImageSlider
-	beforeImage="vast-woodbearers/BuildingsNoPost.jpg"
-	afterImage="vast-woodbearers/Buildings.jpg"
+	beforeImage="BuildingsNoPost.jpg"
+	afterImage="Buildings.jpg"
 	beforeText="Without Post-Processing"
 	afterText="With Painterly Post-Processing"
 />
 
 <ImageSlider
-	beforeImage="vast-woodbearers/SantuarioNoPost.jpg"
-	afterImage="vast-woodbearers/Santuario.jpg"
+	beforeImage="SantuarioNoPost.jpg"
+	afterImage="Santuario.jpg"
 	beforeText="Without Post-Processing"
 	afterText="With Painterly Post-Processing"
 />
@@ -57,7 +51,7 @@ A crucial technical requirement was translating Hulings' impasto brushwork, edge
 The level layout guides the museum patron along accessible walking paths while ambient AI donkeys navigate natural terrain contours using dynamic spline paths.
 
 <ImageEmbed
-	file="vast-woodbearers/TopDown.jpg"
+	file="TopDown.jpg"
 	caption="Top-down level architecture: white spline donkey paths, red interactive discovery points, and aqua guided tour route"
 />
 

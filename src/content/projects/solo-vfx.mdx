@@ -1,7 +1,7 @@
 ---
 title: "Visual FX"
 tagline: "A Collection of VFX Projects"
-thumbnail: "/images/projects/solo-vfx/no-way-home-vfx.jpg"
+thumbnail: "no-way-home-vfx.jpg"
 role: "Sole Technical Artist"
 priority: 33
 year: 2023
@@ -12,11 +12,6 @@ liveUrl: ""
 githubUrl: ""
 videoUrl: ""
 ---
-
-import ImageEmbed from "../../components/projects/ImageEmbed.astro";
-import VideoEmbed from "../../components/projects/VideoEmbed.astro";
-import CodeSnippet from "../../components/projects/CodeSnippet.astro";
-import ProjectHighlight from "../../components/projects/ProjectHighlight.astro";
 
 <br />
 
@@ -35,8 +30,8 @@ For a Visual FX project I re-created a shot from Spider-Man: No Way Home, attemp
 #### Houdini VFX and Nuke comp
 
 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-6">
-	<ImageEmbed file="solo-vfx/prestige-vfx.jpg" caption="Houdini lighting and procedural electric arc simulation" />
-	<ImageEmbed file="solo-vfx/nuke-prestige-comp.jpg" caption="Final Nuke composition with customized ground reflection passes" />
+	<ImageEmbed file="prestige-vfx.jpg" caption="Houdini lighting and procedural electric arc simulation" />
+	<ImageEmbed file="nuke-prestige-comp.jpg" caption="Final Nuke composition with customized ground reflection passes" />
 </div>
 
 On an earlier VFX project, I replicated a shot from the movie Prestige, setting up a basic scene and the lightning. In the Houdini render, there were very little to no reflections on the ground, so in Nuke I added a custom pass of reflections by adding the lighting in multiple times, transforming it, and blurring it slightly to give the look of lightning reflecting off of the floor.

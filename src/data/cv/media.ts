@@ -9,7 +9,7 @@ export const mediaRecognition: MediaRecognitionItem[] = [
     date: "Jul 2026",
     articleUrl: "https://news.utdallas.edu/students-teaching/vast-lab-2026/",
     videoUrl: "https://www.youtube.com/watch?v=YWEq9FQKt2A",
-    projectSlug: "faa-techops",
+    projectSlug: "vast-faa-techops",
   },
   {
     id: "ackerman-feature-2025",
@@ -19,7 +19,7 @@ export const mediaRecognition: MediaRecognitionItem[] = [
     articleUrl: "https://ackerman.utdallas.edu/news-events/digital-twin-news/",
     videoUrl: "https://www.youtube.com/watch?v=au2MXfeQGIM",
     podcastUrl: "https://podbay.fm/p/ackerman-center-podcast-958718/e/1759513727",
-    projectSlug: "ackerman-digital-twin",
+    projectSlug: "utd-ackerman-center",
   },
   {
     id: "utd-research-blog-vast-lab-2025",
@@ -35,7 +35,7 @@ export const mediaRecognition: MediaRecognitionItem[] = [
     date: "Feb 2025",
     articleUrl:
       "https://bass.utdallas.edu/news/faa-and-university-of-texas-at-dallas-vast-vr-lab-collaborate-on-pioneering-extended-reality-xr-research-for-aerospace-maintenance/",
-    projectSlug: "faa-techops",
+    projectSlug: "vast-faa-techops",
   },
   {
     id: "woodbearers-research-days-2024",
@@ -43,7 +43,7 @@ export const mediaRecognition: MediaRecognitionItem[] = [
     outlet: "UT Dallas News",
     date: "Dec 2024",
     articleUrl: "https://news.utdallas.edu/students-teaching/research-days-2024/",
-    projectSlug: "woodbearers",
+    projectSlug: "vast-woodbearers",
   },
   {
     id: "utd-campus-metaverse-news-2024",
@@ -51,7 +51,7 @@ export const mediaRecognition: MediaRecognitionItem[] = [
     outlet: "Bass School News",
     date: "May 2024",
     articleUrl: "https://bass.utdallas.edu/news/vast-labs-metaverse-arts-and-technology-building-garners-national-attention/",
-    projectSlug: "utd-campus",
+    projectSlug: "utd-atc-building",
   },
   {
     id: "vast-lab-davey-awards-2023",
@@ -66,7 +66,7 @@ export const mediaRecognition: MediaRecognitionItem[] = [
     outlet: "The New York Times",
     date: "Oct 2023",
     articleUrl: "https://www.nytimes.com/2023/10/19/arts/design/santa-fe-museum-vladem.html",
-    projectSlug: "kitty-city",
+    projectSlug: "vast-kitty-city",
   },
   {
     id: "tulsa-union-fox-2023",
@@ -75,7 +75,7 @@ export const mediaRecognition: MediaRecognitionItem[] = [
     date: "Sep 2023",
     articleUrl:
       "https://www.fox23.com/news/union-hs-partners-with-university-of-texas-combines-football-and-the-metaverse/article_439dec42-4dd5-11ee-bcc3-236144879db4.html",
-    projectSlug: "tulsa-union",
+    projectSlug: "vast-tulsa-union",
   },
   {
     id: "kitty-city-art-newspaper-2023",
@@ -83,7 +83,7 @@ export const mediaRecognition: MediaRecognitionItem[] = [
     outlet: "The Art Newspaper",
     date: "Aug 2023",
     articleUrl: "https://www.theartnewspaper.com/2023/08/28/new-mexico-museum-expansion-vladem-contemporary",
-    projectSlug: "kitty-city",
+    projectSlug: "vast-kitty-city",
   },
   /*{
     id: "scivis-haptics-appreciation-2023",
@@ -91,6 +91,6 @@ export const mediaRecognition: MediaRecognitionItem[] = [
     outlet: "Dr. Jin Ryong Kim, Multimodal Interaction Lab",
     date: "May 2023",
     articleUrl: "https://mi-lab.io/",
-    projectSlug: "scivis-haptics",
+    projectSlug: "milab-scivis-haptics",
   },*/
 ];

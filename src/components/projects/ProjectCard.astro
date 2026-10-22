@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from "astro:content";
+import { resolveProjectThumbnail } from "../../utils/projectImages";
 
 interface Props {
   project: CollectionEntry<"projects">;
@@ -8,6 +9,7 @@ interface Props {
 const { project } = Astro.props;
 const slug = project.id || (project as any).slug;
 const { title, thumbnail, platform = [], tech = [], tagline, role, year, status, client, liveUrl, githubUrl, videoUrl } = project.data;
+const thumbnailSrc = resolveProjectThumbnail(slug, thumbnail);
 ---
 
 <a
@@ -22,7 +24,7 @@ const { title, thumbnail, platform = [], tech = [], tagline, role, year, status,
   <!-- Thumbnail Container with Year Badge and Shared Transition -->
   <div class="relative aspect-video w-full overflow-hidden bg-slate-100 dark:bg-slate-800">
     <img
-      src={thumbnail}
+      src={thumbnailSrc}
       alt={`Thumbnail for ${title}`}
       class="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500"
       loading="lazy"
@@ -43,13 +45,13 @@ const { title, thumbnail, platform = [], tech = [], tagline, role, year, status,
       {
         status && (
           <span
-            class={`px-2 py-0.5 rounded-md text-[10px] font-mono font-bold backdrop-blur-xs border shadow-md ${
+            class={
               status === "Released"
-                ? "bg-emerald-950/80 text-emerald-300 border-emerald-500/40"
+                ? "pill-status-released"
                 : status === "In Development"
-                  ? "bg-amber-950/80 text-amber-300 border-amber-500/40"
-                  : "bg-cyan-950/80 text-cyan-300 border-cyan-500/40"
-            }`}
+                  ? "pill-status-dev"
+                  : "pill-status-ongoing"
+            }
           >
             {status}
           </span>
@@ -100,14 +102,14 @@ const { title, thumbnail, platform = [], tech = [], tagline, role, year, status,
       <div class="flex flex-wrap gap-1.5 mb-2.5">
         {
           tech.map((t: string) => (
-            <span class="inline-flex items-center rounded-full px-2 py-0.5 text-[11px] font-semibold bg-emerald-100/70 text-emerald-800 dark:bg-emerald-950/50 dark:text-emerald-300 dark:border dark:border-emerald-800/40">
+            <span class="pill-tech text-[11px] rounded-full px-2 py-0.5">
               {t}
             </span>
           ))
         }
         {
           platform.map((p: string) => (
-            <span class="inline-flex items-center rounded-full px-2 py-0.5 text-[11px] font-semibold bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300">
+            <span class="pill-platform text-[11px] rounded-full px-2 py-0.5">
               {p}
             </span>
           ))

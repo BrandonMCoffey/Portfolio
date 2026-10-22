@@ -1,7 +1,7 @@
 ---
 title: "Maya Python QT Tools"
 tagline: "Various Lighting and Rendering Projects"
-thumbnail: "/images/projects/solo-maya-python-qt-tools/kitty-city-example.png"
+thumbnail: "kitty-city-example.png"
 role: "Sole Programmer & Designer"
 priority: 50
 year: 2023
@@ -13,11 +13,6 @@ githubUrl: ""
 videoUrl: ""
 ---
 
-import ImageEmbed from "../../components/projects/ImageEmbed.astro";
-import VideoEmbed from "../../components/projects/VideoEmbed.astro";
-import CodeSnippet from "../../components/projects/CodeSnippet.astro";
-import ProjectHighlight from "../../components/projects/ProjectHighlight.astro";
-
 <br />
 
 ### Maya to Unity/Unreal Rig Exporter
@@ -28,7 +23,7 @@ When exporting rigs and animations done in Autodesk Maya to Unreal Engine or Uni
 - Duplicates the entire joint structure and skinned mesh
 - Creates position and rotation constraints from the source joints to the new joints
 
-<ImageEmbed file="solo-maya-python-qt-tools/kitty-city-example.png" />
+<ImageEmbed file="kitty-city-example.png" />
 
 <p style="text-align:center">
 	<i>Left: Source Maya Rig. Middle: Duplicated Joint Structure. Right: Output Mesh Compatible with Unity</i>
@@ -36,7 +31,7 @@ When exporting rigs and animations done in Autodesk Maya to Unreal Engine or Uni
 
 <br />
 
-<ImageEmbed file="solo-maya-python-qt-tools/tool.png" />
+<ImageEmbed file="tool.png" />
 
 Below is the code for the tool, which can be loaded into Maya and run with the 'run()' function. This opens a QT window, which is Maya's GUI interface, and all of the user interaction is through buttons and text fields.
 

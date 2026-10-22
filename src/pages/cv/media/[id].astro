@@ -2,6 +2,7 @@
 import { getCollection, render, type CollectionEntry } from "astro:content";
 import ProjectLayout from "../../../layouts/ProjectLayout.astro";
 import { mediaRecognition, type MediaRecognitionItem } from "../../../data/cvData";
+import { mdxComponents } from "../../../components/projects/mdxComponents";
 
 export async function getStaticPaths() {
   const allProjects = await getCollection("projects");
@@ -31,5 +32,5 @@ const { Content, headings } = await render(project);
   mediaSpotlight={media}
   backLink={{ href: "/cv#media", label: "Back to Curriculum Vitae" }}
 >
-  <Content />
+  <Content components={mdxComponents} />
 </ProjectLayout>

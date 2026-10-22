@@ -51,9 +51,7 @@ const popularTech = ["Unreal", "Unity", "C#", "Python", "Maya", "Houdini", "Blen
       </div>
 
       <!-- Search & Control Panel -->
-      <div
-        class="mb-10 space-y-4 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white/70 dark:bg-slate-900/60 backdrop-blur-md p-5 sm:p-6 shadow-sm"
-      >
+      <div class="surface-panel mb-10 space-y-4 p-5 sm:p-6 shadow-sm">
         <!-- Top row: Search input & Sort selector -->
         <div class="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center justify-between">
           <div class="relative flex-1 max-w-xl">
@@ -107,13 +105,8 @@ const popularTech = ["Unreal", "Unity", "C#", "Python", "Maya", "Houdini", "Blen
               filterDefinitions.map((f) => (
                 <button
                   type="button"
-                  data-category-filter={f.id}
-                  class:list={[
-                    "category-filter-btn shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer",
-                    f.id === "all"
-                      ? "active bg-emerald-600 text-white shadow-xs"
-                      : "bg-slate-100/90 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700",
-                  ]}
+                  data-category-filter={f.id.toLowerCase()}
+                  class:list={["category-filter-btn filter-pill shrink-0", f.id.toLowerCase() === "all" ? "active" : ""]}
                 >
                   <span>{f.label}</span>
                   <span class="filter-count text-[10px] opacity-75 font-mono">({f.count})</span>
@@ -206,19 +199,72 @@ const popularTech = ["Unreal", "Unity", "C#", "Python", "Maya", "Houdini", "Blen
     let currentSearch = "";
     let currentSort = "priority_asc";
 
-    // Parse initial filter from URL query param (e.g. ?filter=vastlab)
+    const updateCategoryPillStyles = (activeCat: string) => {
+      const normCat = activeCat.toLowerCase();
+      categoryBtns.forEach((b) => {
+        const btnCat = (b.dataset.categoryFilter || "").toLowerCase();
+        const isTarget = btnCat === normCat;
+        b.classList.toggle("active", isTarget);
+        b.classList.toggle("bg-emerald-600", isTarget);
+        b.classList.toggle("text-white", isTarget);
+        b.classList.toggle("shadow-xs", isTarget);
+        b.classList.toggle("bg-slate-100/90", !isTarget);
+        b.classList.toggle("dark:bg-slate-800/80", !isTarget);
+        b.classList.toggle("text-slate-700", !isTarget);
+        b.classList.toggle("dark:text-slate-300", !isTarget);
+      });
+    };
+
+    const updateTechChipStyles = (techFilter: string) => {
+      const normTech = techFilter.toLowerCase();
+      techChips.forEach((c) => {
+        const isChipActive = normTech !== "" && (c.dataset.techFilter || "").toLowerCase() === normTech;
+        c.classList.toggle("active", isChipActive);
+        c.classList.toggle("bg-emerald-600", isChipActive);
+        c.classList.toggle("text-white", isChipActive);
+        c.classList.toggle("border-emerald-600", isChipActive);
+        c.classList.toggle("font-bold", isChipActive);
+        c.classList.toggle("shadow-xs", isChipActive);
+        c.classList.toggle("ring-2", isChipActive);
+        c.classList.toggle("ring-emerald-500/30", isChipActive);
+        c.classList.toggle("bg-white/60", !isChipActive);
+        c.classList.toggle("dark:bg-slate-900/40", !isChipActive);
+        c.classList.toggle("text-slate-600", !isChipActive);
+        c.classList.toggle("dark:text-slate-400", !isChipActive);
+        c.classList.toggle("border-slate-200/80", !isChipActive);
+        c.classList.toggle("dark:border-slate-700/80", !isChipActive);
+      });
+    };
+
+    // Parse initial URL query parameters (e.g. ?filter=vastlab, ?tech=unreal, ?q=mesh)
     const urlParams = new URLSearchParams(window.location.search);
     const initialFilter = urlParams.get("filter");
+    const initialTech = urlParams.get("tech");
+    const initialSearch = urlParams.get("q");
+
     if (initialFilter) {
-      const matchingBtn = document.querySelector<HTMLButtonElement>(`.category-filter-btn[data-category-filter="${initialFilter.toLowerCase()}"]`);
+      const normFilter = initialFilter.toLowerCase();
+      const matchingBtn = Array.from(categoryBtns).find((b) => (b.dataset.categoryFilter || "").toLowerCase() === normFilter);
       if (matchingBtn) {
-        activeCategory = initialFilter.toLowerCase();
-        categoryBtns.forEach((b) => {
-          const isTarget = b.dataset.categoryFilter === activeCategory;
-          b.classList.toggle("active", isTarget);
-          b.classList.toggle("bg-emerald-600", isTarget);
-          b.classList.toggle("text-white", isTarget);
-        });
+        activeCategory = normFilter;
+        updateCategoryPillStyles(activeCategory);
+      }
+    }
+
+    if (initialTech) {
+      const normTech = initialTech.toLowerCase();
+      const matchingChip = Array.from(techChips).find((c) => (c.dataset.techFilter || "").toLowerCase() === normTech);
+      if (matchingChip) {
+        activeTech = normTech;
+        updateTechChipStyles(activeTech);
+      }
+    }
+
+    if (initialSearch) {
+      currentSearch = initialSearch;
+      if (searchInput) {
+        searchInput.value = initialSearch;
+        if (clearSearchBtn) clearSearchBtn.classList.remove("hidden");
       }
     }
 
@@ -226,6 +272,9 @@ const popularTech = ["Unreal", "Unity", "C#", "Python", "Maya", "Houdini", "Blen
       const params = new URLSearchParams();
       if (activeCategory !== "all") {
         params.set("filter", activeCategory);
+      }
+      if (activeTech) {
+        params.set("tech", activeTech);
       }
       if (currentSearch) {
         params.set("q", currentSearch);
@@ -323,18 +372,9 @@ const popularTech = ["Unreal", "Unity", "C#", "Python", "Maya", "Houdini", "Blen
     // Category Button Clicks
     categoryBtns.forEach((btn) => {
       btn.addEventListener("click", () => {
-        const cat = btn.dataset.categoryFilter || "all";
+        const cat = (btn.dataset.categoryFilter || "all").toLowerCase();
         activeCategory = cat;
-        categoryBtns.forEach((b) => {
-          const isActive = b === btn;
-          b.classList.toggle("active", isActive);
-          b.classList.toggle("bg-emerald-600", isActive);
-          b.classList.toggle("text-white", isActive);
-          b.classList.toggle("bg-slate-100/90", !isActive);
-          b.classList.toggle("dark:bg-slate-800/80", !isActive);
-          b.classList.toggle("text-slate-700", !isActive);
-          b.classList.toggle("dark:text-slate-300", !isActive);
-        });
+        updateCategoryPillStyles(activeCategory);
         filterAndSortCards();
       });
     });
@@ -348,33 +388,7 @@ const popularTech = ["Unreal", "Unity", "C#", "Python", "Maya", "Houdini", "Blen
         } else {
           activeTech = clickedTech; // Single active
         }
-
-        // Update chip visual states
-        techChips.forEach((c) => {
-          const isChipActive = activeTech !== "" && (c.dataset.techFilter || "").toLowerCase() === activeTech;
-          if (isChipActive) {
-            c.classList.add("bg-emerald-600", "text-white", "border-emerald-600", "font-bold", "shadow-xs", "ring-2", "ring-emerald-500/30");
-            c.classList.remove(
-              "bg-white/60",
-              "dark:bg-slate-900/40",
-              "text-slate-600",
-              "dark:text-slate-400",
-              "border-slate-200/80",
-              "dark:border-slate-700/80",
-            );
-          } else {
-            c.classList.remove("bg-emerald-600", "text-white", "border-emerald-600", "font-bold", "shadow-xs", "ring-2", "ring-emerald-500/30");
-            c.classList.add(
-              "bg-white/60",
-              "dark:bg-slate-900/40",
-              "text-slate-600",
-              "dark:text-slate-400",
-              "border-slate-200/80",
-              "dark:border-slate-700/80",
-            );
-          }
-        });
-
+        updateTechChipStyles(activeTech);
         filterAndSortCards();
       });
     });
@@ -409,37 +423,16 @@ const popularTech = ["Unreal", "Unity", "C#", "Python", "Maya", "Houdini", "Blen
       if (searchInput) searchInput.value = "";
       if (clearSearchBtn) clearSearchBtn.classList.add("hidden");
 
-      categoryBtns.forEach((b) => {
-        const isAll = b.dataset.categoryFilter === "all";
-        b.classList.toggle("active", isAll);
-        b.classList.toggle("bg-emerald-600", isAll);
-        b.classList.toggle("text-white", isAll);
-        b.classList.toggle("bg-slate-100/90", !isAll);
-        b.classList.toggle("dark:bg-slate-800/80", !isAll);
-        b.classList.toggle("text-slate-700", !isAll);
-        b.classList.toggle("dark:text-slate-300", !isAll);
-      });
-
-      techChips.forEach((c) => {
-        c.classList.remove("bg-emerald-600", "text-white", "border-emerald-600", "font-bold", "shadow-xs", "ring-2", "ring-emerald-500/30");
-        c.classList.add(
-          "bg-white/60",
-          "dark:bg-slate-900/40",
-          "text-slate-600",
-          "dark:text-slate-400",
-          "border-slate-200/80",
-          "dark:border-slate-700/80",
-        );
-      });
-
+      updateCategoryPillStyles("all");
+      updateTechChipStyles("");
       filterAndSortCards();
     };
 
     resetAllBtn?.addEventListener("click", resetFilters);
     clearAllBtn?.addEventListener("click", resetFilters);
 
-    // Initial filter execution (handles ?filter= param if present)
-    if (initialFilter) {
+    // Initial filter execution (handles ?filter=, ?tech=, ?q= param if present)
+    if (initialFilter || initialTech || initialSearch) {
       filterAndSortCards();
     }
   }

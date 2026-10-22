@@ -1,4 +1,6 @@
 ---
+import { resolveProjectImage } from "../../utils/projectImages";
+
 interface Props {
   beforeImage: string;
   afterImage: string;
@@ -9,12 +11,12 @@ interface Props {
 
 const { beforeImage, afterImage, alt, beforeText = "Before", afterText = "After" } = Astro.props;
 
-const beforePath = `/images/projects/${beforeImage}`;
-const afterPath = `/images/projects/${afterImage}`;
+const beforePath = resolveProjectImage(beforeImage, Astro.url.pathname);
+const afterPath = resolveProjectImage(afterImage, Astro.url.pathname);
 ---
 
 <div
-  class="image-slider-wrapper my-8 aspect-video rounded-xl overflow-hidden select-none relative cursor-ew-resize border border-slate-200/80 dark:border-slate-800/80 shadow-lg"
+  class="image-slider-wrapper not-prose my-8 aspect-video rounded-xl overflow-hidden select-none relative cursor-ew-resize border border-slate-200/80 dark:border-slate-800/80 shadow-lg"
   data-testid="image-slider"
   tabindex="0"
   role="slider"
@@ -23,19 +25,21 @@ const afterPath = `/images/projects/${afterImage}`;
   aria-valuemin="0"
   aria-valuemax="100"
 >
-  <!-- After Image (Background) -->
-  <img src={afterPath} alt={alt} class="slider-image" loading="lazy" draggable="false" />
-  <div class="slider-badge slider-badge-after">
-    <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-slate-900/75 text-white backdrop-blur-xs shadow-md">
-      {afterText}
-    </span>
+  <!-- After Image -->
+  <img src={afterPath} alt={alt} class="slider-image m-0 block" loading="lazy" draggable="false" />
+  <div class="slider-clipped-after" style="clip-path: inset(0 0 0 50%);">
+    <div class="slider-badge slider-badge-after">
+      <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-slate-900/75 text-white backdrop-blur-xs shadow-md whitespace-nowrap">
+        {afterText}
+      </span>
+    </div>
   </div>
 
-  <!-- Before Image (Clipped Foreground) -->
-  <div class="slider-clipped-image" style="width: 50%;">
-    <img src={beforePath} alt={alt} class="slider-image slider-image-before" loading="lazy" draggable="false" />
+  <!-- Before Image -->
+  <div class="slider-clipped-image" style="clip-path: inset(0 50% 0 0);">
+    <img src={beforePath} alt={alt} class="slider-image slider-image-before m-0 block" loading="lazy" draggable="false" />
     <div class="slider-badge slider-badge-before">
-      <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-slate-900/75 text-white backdrop-blur-xs shadow-md">
+      <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-slate-900/75 text-white backdrop-blur-xs shadow-md whitespace-nowrap">
         {beforeText}
       </span>
     </div>
@@ -61,16 +65,31 @@ const afterPath = `/images/projects/${afterImage}`;
     height: 100%;
     object-fit: cover;
     pointer-events: none;
+    margin: 0;
+    display: block;
   }
   .slider-image-before {
-    object-position: left center;
+    object-position: center;
   }
   .slider-clipped-image {
     position: absolute;
     top: 0;
     left: 0;
+    width: 100%;
     height: 100%;
     overflow: hidden;
+    clip-path: inset(0 50% 0 0);
+    pointer-events: none;
+  }
+  .slider-clipped-after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    clip-path: inset(0 0 0 50%);
+    pointer-events: none;
   }
   .slider-line {
     position: absolute;
@@ -110,6 +129,7 @@ const afterPath = `/images/projects/${afterImage}`;
     bottom: 0.75rem;
     pointer-events: none;
     z-index: 10;
+    white-space: nowrap;
   }
   .slider-badge-before {
     left: 0.75rem;
@@ -129,11 +149,13 @@ const afterPath = `/images/projects/${afterImage}`;
       let currentPercent = 50;
 
       const clippedImage = wrapper.querySelector<HTMLElement>(".slider-clipped-image");
+      const clippedAfter = wrapper.querySelector<HTMLElement>(".slider-clipped-after");
       const sliderLine = wrapper.querySelector<HTMLElement>(".slider-line");
 
       const setPercentage = (pct: number) => {
         currentPercent = Math.max(0, Math.min(100, pct));
-        if (clippedImage) clippedImage.style.width = `${currentPercent}%`;
+        if (clippedImage) clippedImage.style.clipPath = `inset(0 ${100 - currentPercent}% 0 0)`;
+        if (clippedAfter) clippedAfter.style.clipPath = `inset(0 0 0 ${currentPercent}%)`;
         if (sliderLine) sliderLine.style.left = `${currentPercent}%`;
         wrapper.setAttribute("aria-valuenow", String(Math.round(currentPercent)));
       };

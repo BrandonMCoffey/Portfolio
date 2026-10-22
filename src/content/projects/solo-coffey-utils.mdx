@@ -1,7 +1,7 @@
 ---
 title: "Coffey Utils"
 tagline: "Custom Unity Tools and Inspector Attributes"
-thumbnail: "/images/projects/solo-coffey-utils/sound-system.png"
+thumbnail: "sound-system.png"
 role: "Sole Programmer & Designer"
 priority: 31
 year: 2023
@@ -14,11 +14,6 @@ githubUrl: "https://github.com/BrandonMCoffey/CoffeyUtils"
 videoUrl: ""
 ---
 
-import ImageEmbed from "../../components/projects/ImageEmbed.astro";
-import VideoEmbed from "../../components/projects/VideoEmbed.astro";
-import CodeSnippet from "../../components/projects/CodeSnippet.astro";
-import ProjectHighlight from "../../components/projects/ProjectHighlight.astro";
-
 Coffey Utils is a package for Unity development that focuses on adding inspector attributes and generic resuable systems. Below are some examples of the package.
 
 [The package is available publicly on GitHub](https://github.com/BrandonMCoffey/CoffeyUtils/).
@@ -29,7 +24,7 @@ Coffey Utils is a package for Unity development that focuses on adding inspector
 
 There are many attributes that come with the package, which are both intuitive and versitile.
 
-<ImageEmbed file="solo-coffey-utils/attributes-demo.png" />
+<ImageEmbed file="attributes-demo.png" />
 
 The most important one is a button attribute, which can be placed before any function to expose a button in the inspector that will run the function. This is useful for testing features and, in my opinion, should be a default feature within the Unity engine.
 
@@ -108,11 +103,11 @@ A versitile sound system for sound effects and music is optionally included with
 - A randomized sound effect that randomly chooses an audio clip and has randomizable settings.
 - A music track that has settings for fading in and out and either looping or playing another music track instead of looping.
 
-<ImageEmbed file="solo-coffey-utils/sound-system.png" />
+<ImageEmbed file="sound-system.png" />
 
 <br />
 
 With these various scriptable objects, they can be played from a script with the Play() function or from a unity event in the inspector such as from a UI button.
 
-<ImageEmbed file="solo-coffey-utils/unity-event.png" />
+<ImageEmbed file="unity-event.png" />
 ```

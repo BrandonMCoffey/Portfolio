@@ -3,6 +3,7 @@ import BaseLayout from './BaseLayout.astro';
 import type { CollectionEntry } from 'astro:content';
 import { publications, mediaRecognition, type PublicationItem, type MediaRecognitionItem } from '../data/cvData';
 import { getTechLink } from '../data/techLinks';
+import { resolveProjectThumbnail } from '../utils/projectImages';
 
 interface Heading {
 	depth: number;
@@ -33,6 +34,7 @@ const {
 } = Astro.props;
 
 const { title, tagline, role, tech, platform, liveUrl, githubUrl, videoUrl, year, thumbnail, status, client } = project;
+const thumbnailSrc = resolveProjectThumbnail(slug, thumbnail);
 
 // Filter headings for table of contents (depth 2 or 3)
 const tocHeadings = headings.filter(h => h.depth === 2 || h.depth === 3);
@@ -241,10 +243,10 @@ const isInteractiveLiveDemo = Boolean(liveUrl && (
 			</div>
 
 			<!-- Featured Image with View Transition -->
-			{thumbnail && (
+			{thumbnailSrc && (
 				<div class="mb-10 rounded-2xl overflow-hidden border border-slate-200/80 dark:border-slate-800/80 shadow-xl bg-slate-100 dark:bg-slate-800">
 					<img
-						src={thumbnail}
+						src={thumbnailSrc}
 						alt={`Key art for ${title}`}
 						transition:name={`project-img-${slug}`}
 						class="w-full aspect-video object-cover"
@@ -255,7 +257,7 @@ const isInteractiveLiveDemo = Boolean(liveUrl && (
 			)}
 
 			<!-- Modern Metadata Bento Bar -->
-			<div class="mb-12 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white/80 dark:bg-slate-900/70 backdrop-blur-md p-6 shadow-sm">
+			<div class="surface-card mb-12 p-6 shadow-sm">
 				<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
 					<!-- Role -->
 					<div>
@@ -280,7 +282,7 @@ const isInteractiveLiveDemo = Boolean(liveUrl && (
 						</span>
 						<div class="flex flex-wrap gap-1.5">
 							{platform.map((p: string) => (
-								<span class="inline-flex items-center rounded-md px-2 py-0.5 text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+								<span class="pill-platform">
 									{p}
 								</span>
 							))}
@@ -310,7 +312,7 @@ const isInteractiveLiveDemo = Boolean(liveUrl && (
 									);
 								}
 								return (
-									<span class="inline-flex items-center rounded-md px-2 py-0.5 text-xs font-semibold bg-emerald-100/70 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300 dark:border dark:border-emerald-800/40">
+									<span class="pill-tech">
 										{t}
 									</span>
 								);

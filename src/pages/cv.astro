@@ -240,7 +240,7 @@ const totalShowcases = eventsAndShowcases.length;
         <div class="space-y-4">
           {
             education.map((item) => (
-              <div class="p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white/70 dark:bg-slate-900/60 backdrop-blur-md shadow-xs">
+              <div class="surface-panel p-5">
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-1">
                   <h3 class="text-base font-bold text-slate-900 dark:text-white">{item.degree}</h3>
                   <span class="text-xs font-mono font-semibold text-emerald-600 dark:text-emerald-400">{item.period}</span>
@@ -274,30 +274,30 @@ const totalShowcases = eventsAndShowcases.length;
             <button
               type="button"
               data-pub-filter="all"
-              class="pub-filter-btn px-2.5 py-1 rounded-md bg-emerald-600 text-white font-semibold cursor-pointer">All (12)</button
+              class="pub-filter-btn filter-pill active cursor-pointer">All (12)</button
             >
             <button
               type="button"
               data-pub-filter="ACM"
-              class="pub-filter-btn px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 cursor-pointer"
+              class="pub-filter-btn filter-pill cursor-pointer"
               >ACM</button
             >
             <button
               type="button"
               data-pub-filter="IEEE"
-              class="pub-filter-btn px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 cursor-pointer"
+              class="pub-filter-btn filter-pill cursor-pointer"
               >IEEE</button
             >
             <button
               type="button"
               data-pub-filter="ISAP"
-              class="pub-filter-btn px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 cursor-pointer"
+              class="pub-filter-btn filter-pill cursor-pointer"
               >ISAP</button
             >
             <button
               type="button"
               data-pub-filter="Springer"
-              class="pub-filter-btn px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 cursor-pointer"
+              class="pub-filter-btn filter-pill cursor-pointer"
               >Springer</button
             >
           </div>
@@ -307,7 +307,7 @@ const totalShowcases = eventsAndShowcases.length;
           {
             publications.map((pub, idx) => (
               <article
-                class="pub-card p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white/70 dark:bg-slate-900/60 backdrop-blur-md shadow-xs transition-all hover:border-emerald-500/40"
+                class="pub-card surface-panel p-5 transition-all hover:border-emerald-500/40"
                 data-venue={pub.venue}
               >
                 <div class="flex flex-wrap items-center gap-2 mb-2">
@@ -421,15 +421,15 @@ const totalShowcases = eventsAndShowcases.length;
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           {
             grants.map((grant) => (
-              <div class="p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white/70 dark:bg-slate-900/60 backdrop-blur-md shadow-xs flex flex-col justify-between">
+              <div class="surface-panel p-5 flex flex-col justify-between">
                 <div>
                   <div class="flex items-center justify-between gap-2 mb-2">
                     <span
-                      class={`px-2 py-0.5 rounded text-[11px] font-mono font-bold ${
+                      class={
                         grant.status === "Approved"
-                          ? "bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border border-emerald-500/30"
-                          : "bg-amber-100 dark:bg-amber-950/80 text-amber-800 dark:text-amber-300 border border-amber-500/30"
-                      }`}
+                          ? "pill-status-released"
+                          : "pill-status-dev"
+                      }
                     >
                       {grant.status}
                     </span>
@@ -470,11 +470,11 @@ const totalShowcases = eventsAndShowcases.length;
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {
             awards.map((award) => (
-              <div class="p-4 rounded-xl border border-slate-200/80 dark:border-slate-800/80 bg-white/70 dark:bg-slate-900/60 backdrop-blur-md shadow-xs flex flex-col justify-between transition-all hover:border-emerald-500/40">
+              <div class="surface-panel p-4 flex flex-col justify-between transition-all hover:border-emerald-500/40">
                 <div>
                   <div class="flex items-center justify-between gap-2 mb-2">
                     <span class="text-[11px] font-mono text-slate-500">{award.organization}</span>
-                    <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-100 dark:bg-amber-950/80 text-amber-800 dark:text-amber-300 border border-amber-500/30">
+                    <span class="pill-date">
                       {award.year}
                     </span>
                   </div>
@@ -538,11 +538,11 @@ const totalShowcases = eventsAndShowcases.length;
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {
             mediaRecognition.map((media) => (
-              <div class="p-4 rounded-xl border border-slate-200/80 dark:border-slate-800/80 bg-white/70 dark:bg-slate-900/60 backdrop-blur-md shadow-xs flex flex-col justify-between">
+              <div class="surface-panel p-4 flex flex-col justify-between">
                 <div>
                   <div class="flex items-center justify-between gap-2 mb-1.5">
                     <span class="text-xs font-mono font-bold text-emerald-600 dark:text-emerald-400">{media.outlet}</span>
-                    <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-100 dark:bg-amber-950/80 text-amber-800 dark:text-amber-300 border border-amber-500/30">
+                    <span class="pill-date">
                       {media.date}
                     </span>
                   </div>
@@ -657,7 +657,7 @@ const totalShowcases = eventsAndShowcases.length;
                   </p>
                 </div>
 
-                <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-100 dark:bg-amber-950/80 text-amber-800 dark:text-amber-300 border border-amber-500/30">
+                <span class="pill-date">
                   {event.date}
                 </span>
               </div>
@@ -689,7 +689,7 @@ const totalShowcases = eventsAndShowcases.length;
                   <span class="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
                     {tour.type}
                   </span>
-                  <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-100 dark:bg-amber-950/80 text-amber-800 dark:text-amber-300 border border-amber-500/30">
+                  <span class="pill-date">
                     {tour.date}
                   </span>
                 </div>
@@ -717,12 +717,12 @@ const totalShowcases = eventsAndShowcases.length;
         <div class="space-y-4">
           {
             teachingExperience.map((item) => (
-              <div class="p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white/70 dark:bg-slate-900/60 backdrop-blur-md shadow-xs">
+              <div class="surface-panel p-5">
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-1">
                   <h3 class="text-base font-bold text-slate-900 dark:text-white">
                     {item.role} &mdash; <span class="text-emerald-600 dark:text-emerald-400">{item.courseOrEvent}</span>
                   </h3>
-                  <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-100 dark:bg-amber-950/80 text-amber-800 dark:text-amber-300 border border-amber-500/30">
+                  <span class="pill-date">
                     {item.term}
                   </span>
                 </div>
@@ -789,6 +789,47 @@ const totalShowcases = eventsAndShowcases.length;
       const resetBtn = document.getElementById("pub-reset-btn");
       const resetContainer = document.getElementById("pub-reset-container");
 
+      const applyPubFilter = (targetVenue: string, updateUrlState: boolean = true) => {
+        const normTarget = targetVenue.toLowerCase();
+
+        // Update button styles
+        filterBtns.forEach((b) => {
+          const btnFilter = (b.dataset.pubFilter || "").toLowerCase();
+          const isActive = btnFilter === normTarget || (normTarget === "all" && btnFilter === "all");
+          b.classList.toggle("active", isActive);
+          b.classList.toggle("bg-emerald-600", isActive);
+          b.classList.toggle("text-white", isActive);
+          b.classList.toggle("bg-slate-100", !isActive);
+          b.classList.toggle("dark:bg-slate-800", !isActive);
+          b.classList.toggle("text-slate-700", !isActive);
+          b.classList.toggle("dark:text-slate-300", !isActive);
+        });
+
+        // Filter cards
+        pubCards.forEach((card) => {
+          const venue = (card.dataset.venue || "").toLowerCase();
+          const matches = normTarget === "all" || venue.includes(normTarget);
+          card.style.display = matches ? "block" : "none";
+        });
+
+        // Toggle "Show All Publications" reset button
+        if (resetContainer) {
+          resetContainer.classList.toggle("hidden", normTarget === "all");
+        }
+
+        // Update URL query params via replaceState
+        if (updateUrlState) {
+          const currentUrl = new URL(window.location.href);
+          if (normTarget === "all") {
+            currentUrl.searchParams.delete("venue");
+            currentUrl.searchParams.delete("filter");
+          } else {
+            currentUrl.searchParams.set("venue", targetVenue);
+          }
+          window.history.replaceState({}, "", currentUrl.toString());
+        }
+      };
+
       if (filterBtns.length > 0 && pubCards.length > 0) {
         filterBtns.forEach((btn) => {
           if (btn.dataset.hasFilterListener) return;
@@ -796,41 +837,29 @@ const totalShowcases = eventsAndShowcases.length;
 
           btn.addEventListener("click", () => {
             const target = btn.dataset.pubFilter || "all";
-
-            // Update button styles
-            filterBtns.forEach((b) => {
-              const isActive = b === btn;
-              b.classList.toggle("bg-emerald-600", isActive);
-              b.classList.toggle("text-white", isActive);
-              b.classList.toggle("bg-slate-100", !isActive);
-              b.classList.toggle("dark:bg-slate-800", !isActive);
-              b.classList.toggle("text-slate-700", !isActive);
-              b.classList.toggle("dark:text-slate-300", !isActive);
-            });
-
-            // Filter cards
-            pubCards.forEach((card) => {
-              const venue = card.dataset.venue || "";
-              const matches = target === "all" || venue.includes(target);
-              card.style.display = matches ? "block" : "none";
-            });
-
-            // Toggle "Show All Publications" reset button
-            if (resetContainer) {
-              resetContainer.classList.toggle("hidden", target === "all");
-            }
+            applyPubFilter(target, true);
           });
         });
+
+        // Parse ?venue= or ?filter= from window.location.search on load
+        const urlParams = new URLSearchParams(window.location.search);
+        const initialVenue = urlParams.get("venue") || urlParams.get("filter");
+        if (initialVenue) {
+          const normInitial = initialVenue.toLowerCase();
+          const matchedBtn = Array.from(filterBtns).find(
+            (b) => (b.dataset.pubFilter || "").toLowerCase() === normInitial
+          );
+          if (matchedBtn) {
+            applyPubFilter(matchedBtn.dataset.pubFilter || "all", false);
+          }
+        }
       }
 
       // Show all publications reset button listener
       if (resetBtn && !resetBtn.dataset.hasResetListener) {
         resetBtn.dataset.hasResetListener = "true";
         resetBtn.addEventListener("click", () => {
-          const allBtn = document.querySelector<HTMLButtonElement>('.pub-filter-btn[data-pub-filter="all"]');
-          if (allBtn) {
-            allBtn.click();
-          }
+          applyPubFilter("all", true);
         });
       }
     }

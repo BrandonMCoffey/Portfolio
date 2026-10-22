@@ -1,7 +1,7 @@
 ---
 title: "Tulsa Union Metaverse Football Stadium"
 tagline: "Interactive Virtual Football Stadium & Fan Engagement Metaverse"
-thumbnail: "/images/projects/vast-tulsa-union/tulsa-union-icon.png"
+thumbnail: "tulsa-union-icon.png"
 role: "Lead Programmer & Technical Artist"
 priority: 20
 year: 2023
@@ -13,11 +13,6 @@ liveUrl: "https://www.spatial.io/s/Tulsa-Unions-Tuttle-Stadium-64bac1f432b4ffa68
 githubUrl: ""
 videoUrl: "https://vimeo.com/952096446"
 ---
-
-import ImageEmbed from "../../components/projects/ImageEmbed.astro";
-import VideoEmbed from "../../components/projects/VideoEmbed.astro";
-import CodeSnippet from "../../components/projects/CodeSnippet.astro";
-import ProjectHighlight from "../../components/projects/ProjectHighlight.astro";
 
 <VideoEmbed vimeoId="952096446" title="Tulsa Union Tuttle Stadium Metaverse Showcase" />
 
@@ -37,13 +32,13 @@ import ProjectHighlight from "../../components/projects/ProjectHighlight.astro";
 
 The stadium environment (modeled by [Chris Gauthier](https://www.artstation.com/chrisgauthier)) features a hybrid lighting architecture: baked occlusion maps for complex stadium seating, faked volumetric light shafts using geometry cones, and dynamic directional lights synchronized to actual Tulsa, Oklahoma real-time sunset/sunrise intervals.
 
-<ImageEmbed file="tulsa-union/stadium-environment.png" caption="Stadium environment with customized atmospheric lighting and dynamic field assets" />
+<ImageEmbed file="stadium-environment.png" caption="Stadium environment with customized atmospheric lighting and dynamic field assets" />
 
 ### Networked Minigame Logic
 
 To maximize accessibility across web browsers, game mechanics were architected with state machines managing automated match lifecycles, networked score replication, and dynamic LED jumbotron high scoreboards.
 
 <ImageEmbed
-	file="tulsa-union/game-manager-script.png"
+	file="game-manager-script.png"
 	caption="Visual scripting architecture managing game rounds, player collision, and synchronized scoreboards"
 />

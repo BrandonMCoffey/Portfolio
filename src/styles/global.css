@@ -25,6 +25,61 @@
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
+:root {
+  /* Page & surface backgrounds */
+  --bg-page: #f8fafc;
+  --bg-surface: rgba(255, 255, 255, 0.8);
+  --bg-surface-glass: rgba(255, 255, 255, 0.7);
+  --bg-surface-muted: rgba(241, 245, 249, 0.8);
+
+  /* Text hierarchy */
+  --text-primary: #0f172a;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
+
+  /* Borders */
+  --border-subtle: rgba(226, 232, 240, 0.8);
+  --border-card: rgba(226, 232, 240, 0.8);
+  --border-accent: rgba(16, 185, 129, 0.3);
+
+  /* Accent colors */
+  --accent-primary: #059669;
+  --accent-primary-hover: #10b981;
+  --accent-badge-bg: rgba(209, 250, 229, 0.8);
+  --accent-badge-text: #065f46;
+
+  /* Layout spacing tokens */
+  --section-py: 4rem;
+  --section-py-sm: 2.5rem;
+  --container-gap: 1.5rem;
+  --card-padding: 1.5rem;
+}
+
+:where(.dark),
+.dark {
+  /* Page & surface backgrounds */
+  --bg-page: #020617;
+  --bg-surface: rgba(15, 23, 42, 0.7);
+  --bg-surface-glass: rgba(15, 23, 42, 0.6);
+  --bg-surface-muted: rgba(15, 23, 42, 0.6);
+
+  /* Text hierarchy */
+  --text-primary: #ffffff;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+
+  /* Borders */
+  --border-subtle: rgba(30, 41, 59, 0.8);
+  --border-card: rgba(30, 41, 59, 0.8);
+  --border-accent: rgba(16, 185, 129, 0.3);
+
+  /* Accent colors */
+  --accent-primary: #10b981;
+  --accent-primary-hover: #34d399;
+  --accent-badge-bg: rgba(6, 78, 59, 0.7);
+  --accent-badge-text: #6ee7b7;
+}
+
 @layer base {
   body {
     @apply bg-slate-50 text-slate-800 font-sans transition-colors duration-300 dark:bg-slate-950 dark:text-slate-200;
@@ -138,6 +193,38 @@
   }
   .badge-emerald {
     @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold bg-emerald-100/80 text-emerald-800 dark:bg-emerald-950/70 dark:text-emerald-300 dark:border dark:border-emerald-800/50;
+  }
+
+  /* Unified Semantic Pill & Surface Tokens */
+  .pill-date {
+    @apply inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-100 dark:bg-amber-950/80 text-amber-800 dark:text-amber-300 border border-amber-500/30;
+  }
+  .pill-status-released {
+    @apply inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-mono font-bold bg-emerald-950/80 text-emerald-300 border border-emerald-500/40 backdrop-blur-xs shadow-md;
+  }
+  .pill-status-dev {
+    @apply inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-mono font-bold bg-amber-950/80 text-amber-300 border border-amber-500/40 backdrop-blur-xs shadow-md;
+  }
+  .pill-status-ongoing {
+    @apply inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-mono font-bold bg-cyan-950/80 text-cyan-300 border border-cyan-500/40 backdrop-blur-xs shadow-md;
+  }
+  .pill-tech {
+    @apply inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-medium bg-emerald-50 text-emerald-700 border border-emerald-200/50 dark:bg-emerald-950/50 dark:text-emerald-300 dark:border-emerald-800/50;
+  }
+  .pill-platform {
+    @apply inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-medium bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400;
+  }
+  .filter-pill {
+    @apply inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer select-none bg-slate-100/90 text-slate-700 hover:bg-slate-200 dark:bg-slate-800/80 dark:text-slate-300 dark:hover:bg-slate-700;
+  }
+  .filter-pill.active {
+    @apply bg-emerald-600 text-white shadow-xs dark:bg-emerald-600 dark:text-white hover:bg-emerald-500 dark:hover:bg-emerald-500;
+  }
+  .surface-card {
+    @apply rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white/80 dark:bg-slate-900/70 backdrop-blur-md shadow-xs;
+  }
+  .surface-panel {
+    @apply rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white/70 dark:bg-slate-900/60 backdrop-blur-md shadow-xs;
   }
 
   /* Other Components */
