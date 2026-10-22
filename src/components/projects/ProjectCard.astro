@@ -8,7 +8,7 @@ interface Props {
 
 const { project } = Astro.props;
 const slug = project.id || (project as any).slug;
-const { title, thumbnail, platform = [], tech = [], tagline, role, year, status, client, liveUrl, githubUrl, videoUrl } = project.data;
+const { priority, title, thumbnail, platform = [], tech = [], tagline, role, year, status, client, liveUrl, githubUrl, videoUrl } = project.data;
 const thumbnailSrc = resolveProjectThumbnail(slug, thumbnail);
 ---
 
@@ -44,15 +44,7 @@ const thumbnailSrc = resolveProjectThumbnail(slug, thumbnail);
       }
       {
         status && (
-          <span
-            class={
-              status === "Released"
-                ? "pill-status-released"
-                : status === "In Development"
-                  ? "pill-status-dev"
-                  : "pill-status-ongoing"
-            }
-          >
+          <span class={status === "Released" ? "pill-status-released" : status === "In Development" ? "pill-status-dev" : "pill-status-ongoing"}>
             {status}
           </span>
         )
@@ -100,26 +92,15 @@ const thumbnailSrc = resolveProjectThumbnail(slug, thumbnail);
     <div>
       <!-- Tech & Platform Badges -->
       <div class="flex flex-wrap gap-1.5 mb-2.5">
-        {
-          tech.map((t: string) => (
-            <span class="pill-tech text-[11px] rounded-full px-2 py-0.5">
-              {t}
-            </span>
-          ))
-        }
-        {
-          platform.map((p: string) => (
-            <span class="pill-platform text-[11px] rounded-full px-2 py-0.5">
-              {p}
-            </span>
-          ))
-        }
+        {tech.map((t: string) => <span class="pill-tech text-[11px] rounded-full px-2 py-0.5">{t}</span>)}
+        {platform.map((p: string) => <span class="pill-platform text-[11px] rounded-full px-2 py-0.5">{p}</span>)}
       </div>
 
       <!-- Title & Role -->
       <h3
         class="text-lg font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors mb-1 line-clamp-1"
       >
+        <!-- {priority}{" "} -->
         {title}
       </h3>
       {
