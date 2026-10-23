@@ -334,20 +334,28 @@ body.lightbox-open {
 /* Print Stylesheet */
 @media print {
   @page {
-    margin: 1.5cm;
+    margin: 1.2cm;
     size: auto;
   }
 
-  body {
+  html,
+  html.dark,
+  body,
+  .dark body {
     background: #ffffff !important;
+    background-color: #ffffff !important;
     color: #0f172a !important;
-    font-size: 11pt !important;
-    line-height: 1.5 !important;
+    font-size: 10pt !important;
+    line-height: 1.45 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
 
-  header,
-  footer,
-  nav,
+  .site-header,
+  .site-footer,
+  nav.site-nav,
+  header.site-header,
+  footer.site-footer,
   .scroll-to-top,
   .print\:hidden,
   button,
@@ -366,16 +374,24 @@ body.lightbox-open {
     background: transparent !important;
   }
 
+  h1,
+  h2,
+  h3,
+  h4 {
+    page-break-after: avoid !important;
+    break-after: avoid !important;
+    color: #0f172a !important;
+  }
+
   h1 {
     font-size: 22pt !important;
     margin-bottom: 0.5rem !important;
-    color: #000000 !important;
   }
 
   img {
-    max-height: 220px !important;
+    max-height: 200px !important;
     object-fit: cover !important;
-    border-radius: 8px !important;
+    border-radius: 6px !important;
     box-shadow: none !important;
     border: 1px solid #e2e8f0 !important;
   }
@@ -383,7 +399,10 @@ body.lightbox-open {
   li,
   label,
   .well,
-  blockquote {
+  blockquote,
+  .surface-panel,
+  .surface-card,
+  article {
     break-inside: avoid !important;
     page-break-inside: avoid !important;
   }

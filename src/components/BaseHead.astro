@@ -26,24 +26,37 @@ const { title, description, image = FallbackImage } = Astro.props;
 
 <!-- Light Dark Theme Initialization & View Transition Swap Handler -->
 <script is:inline>
-  function applyTheme() {
-    const theme = (() => {
-      if (typeof localStorage !== "undefined" && localStorage.getItem("theme")) {
-        return localStorage.getItem("theme");
-      }
-      if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-        return "dark";
-      }
-      return "light";
-    })();
+  function getTheme() {
+    if (typeof localStorage !== "undefined" && localStorage.getItem("theme")) {
+      return localStorage.getItem("theme");
+    }
+    if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+      return "dark";
+    }
+    return "light";
+  }
+
+  function applyTheme(doc = document) {
+    const theme = getTheme();
     if (theme === "dark") {
-      document.documentElement.classList.add("dark");
+      doc.documentElement.classList.add("dark");
     } else {
-      document.documentElement.classList.remove("dark");
+      doc.documentElement.classList.remove("dark");
     }
   }
+
+  // Initial theme application
   applyTheme();
-  document.addEventListener("astro:after-swap", applyTheme);
+
+  // Apply to incoming document before view transitions swap to prevent white flash
+  document.addEventListener("astro:before-swap", (event) => {
+    applyTheme(event.newDocument);
+  });
+
+  // Re-verify theme after swap
+  document.addEventListener("astro:after-swap", () => {
+    applyTheme(document);
+  });
 </script>
 
 <!-- Astro View Transitions -->

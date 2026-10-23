@@ -10,7 +10,6 @@ projects.sort((a, b) => a.data.priority - b.data.priority);
 // Pre-calculate filter counts for friendly labels
 const filterDefinitions = [
   { id: "all", label: "All Projects", count: projects.length },
-  { id: "featured", label: "Featured", count: projects.filter((p) => p.data.filters?.includes("featured")).length },
   { id: "game", label: "Games", count: projects.filter((p) => p.data.filters?.includes("game")).length },
   { id: "VR", label: "VR / AR / XR", count: projects.filter((p) => p.data.filters?.includes("VR") || p.data.filters?.includes("AR")).length },
   { id: "graphics", label: "Graphics & VFX", count: projects.filter((p) => p.data.filters?.includes("graphics")).length },

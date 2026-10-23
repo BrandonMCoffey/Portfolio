@@ -92,71 +92,62 @@ const experiences: Experience[] = [
 		</p>
 	</div>
 
-	<div class="relative max-w-4xl mx-auto">
-		<!-- Vertical Timeline Spine -->
-		<div class="absolute left-4 sm:left-6 top-3 bottom-3 w-0.5 bg-gradient-to-b from-emerald-500 via-teal-500 to-slate-300 dark:to-slate-800" aria-hidden="true"></div>
-
-		<div class="space-y-10">
+	<div class="max-w-4xl mx-auto">
+		<div class="space-y-8">
 			{experiences.map((exp: Experience) => (
-				<div class="relative pl-12 sm:pl-16">
-					<!-- Timeline node -->
-					<div class="absolute left-4 sm:left-6 top-6 z-10 -translate-x-1/2 flex items-center justify-center h-5 w-5 rounded-full bg-emerald-500 border-4 border-slate-50 dark:border-slate-950 shadow-xs shadow-emerald-500/50"></div>
-
-					<!-- Experience Card -->
-					<div class="surface-card p-6 sm:p-7 hover:border-emerald-500/40 transition-colors">
-						<!-- Top metadata header -->
-						<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 mb-4 border-b border-slate-200/60 dark:border-slate-800/60">
-							<div>
-								<span class="inline-block px-2 py-0.5 rounded text-[11px] font-mono font-bold uppercase tracking-wider bg-emerald-100 text-emerald-800 dark:bg-emerald-950/70 dark:text-emerald-300 mb-1.5">
-									{exp.company}
-								</span>
-								<h3 class="text-xl font-bold text-slate-900 dark:text-white leading-tight">
-									{exp.role}
-								</h3>
-							</div>
-							<div class="text-left sm:text-right">
-								<time class="text-xs font-mono font-semibold text-slate-500 dark:text-slate-400 block">{exp.time}</time>
-								<span class="text-xs text-slate-400 dark:text-slate-500">{exp.location}</span>
-							</div>
+				<div class="surface-card p-6 sm:p-7 hover:border-emerald-500/40 transition-colors">
+					<!-- Top metadata header -->
+					<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 mb-4 border-b border-slate-200/60 dark:border-slate-800/60">
+						<div>
+							<span class="inline-block px-2 py-0.5 rounded text-[11px] font-mono font-bold uppercase tracking-wider bg-emerald-100 text-emerald-800 dark:bg-emerald-950/70 dark:text-emerald-300 mb-1.5">
+								{exp.company}
+							</span>
+							<h3 class="text-xl font-bold text-slate-900 dark:text-white leading-tight">
+								{exp.role}
+							</h3>
 						</div>
-
-						<!-- Description -->
-						<p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 mb-4 leading-relaxed">
-							{exp.description}
-						</p>
-
-						<!-- Key takeaways / achievements -->
-						<ul class="space-y-2 mb-5">
-							{exp.takeaways.map((item: string) => (
-								<li class="flex items-start text-xs sm:text-sm text-slate-700 dark:text-slate-300">
-									<svg class="h-4 w-4 text-emerald-600 dark:text-emerald-400 shrink-0 mr-2 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
-										<path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
-									</svg>
-									<span>{item}</span>
-								</li>
-							))}
-						</ul>
-
-						<!-- Awards & Lab Link Footer -->
-						<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-4 border-t border-slate-200/60 dark:border-slate-800/60">
-							{exp.awards && exp.awards.length > 0 ? (
-								<div class="flex flex-wrap items-center gap-1.5">
-									{exp.awards.map((award: string) => (
-										<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-50 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300 border border-amber-300/40 dark:border-amber-700/40">
-											<span>🏅</span>
-											<span>{award}</span>
-										</span>
-									))}
-								</div>
-							) : <div></div>}
-
-							<a
-								href={exp.filterLink}
-								class="inline-flex items-center text-xs font-semibold text-emerald-600 hover:text-emerald-500 dark:text-emerald-400 dark:hover:text-emerald-300 transition-colors"
-							>
-								{exp.filterText}
-							</a>
+						<div class="text-left sm:text-right">
+							<time class="text-xs font-mono font-semibold text-slate-500 dark:text-slate-400 block">{exp.time}</time>
+							<span class="text-xs text-slate-400 dark:text-slate-500">{exp.location}</span>
 						</div>
+					</div>
+
+					<!-- Description -->
+					<p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 mb-4 leading-relaxed">
+						{exp.description}
+					</p>
+
+					<!-- Key takeaways / achievements -->
+					<ul class="space-y-2 mb-5">
+						{exp.takeaways.map((item: string) => (
+							<li class="flex items-start text-xs sm:text-sm text-slate-700 dark:text-slate-300">
+								<svg class="h-4 w-4 text-emerald-600 dark:text-emerald-400 shrink-0 mr-2 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
+									<path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
+								</svg>
+								<span>{item}</span>
+							</li>
+						))}
+					</ul>
+
+					<!-- Awards & Lab Link Footer -->
+					<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-4 border-t border-slate-200/60 dark:border-slate-800/60">
+						{exp.awards && exp.awards.length > 0 ? (
+							<div class="flex flex-wrap items-center gap-1.5">
+								{exp.awards.map((award: string) => (
+									<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-50 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300 border border-amber-300/40 dark:border-amber-700/40">
+										<span>🏅</span>
+										<span>{award}</span>
+									</span>
+								))}
+							</div>
+						) : <div></div>}
+
+						<a
+							href={exp.filterLink}
+							class="inline-flex items-center text-xs font-semibold text-emerald-600 hover:text-emerald-500 dark:text-emerald-400 dark:hover:text-emerald-300 transition-colors"
+						>
+							{exp.filterText}
+						</a>
 					</div>
 				</div>
 			))}

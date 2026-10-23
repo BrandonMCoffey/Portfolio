@@ -54,7 +54,7 @@ const totalShowcases = eventsAndShowcases.length;
       </div>
 
       <!-- CV Header -->
-      <header class="mb-12 pb-8 border-b border-slate-200/80 dark:border-slate-800/80">
+      <header class="cv-header mb-12 pb-8 border-b border-slate-200/80 dark:border-slate-800/80">
         <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div>
             <span class="text-xs font-mono font-bold uppercase tracking-widest text-emerald-600 dark:text-emerald-400 mb-2 block">
@@ -82,6 +82,20 @@ const totalShowcases = eventsAndShowcases.length;
                 ><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg
               >
               <span>business@brandoncoffey.com</span>
+            </a>
+            <a
+              href="https://orcid.org/0000-0000-0000-0000"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors flex items-center gap-1.5"
+            >
+              <svg class="h-3.5 w-3.5 text-[#A6CE39] fill-current" viewBox="0 0 256 256">
+                <path d="M256 128c0 70.7-57.3 128-128 128S0 198.7 0 128 57.3 0 128 0s128 57.3 128 128z" fill="#A6CE39"></path>
+                <path
+                  d="M86.3 186.2H70.9V79.1h15.4v107.1zM78.6 65.3c-5.7 0-10.3-4.6-10.3-10.3s4.6-10.3 10.3-10.3 10.3 4.6 10.3 10.3-4.6 10.3-10.3 10.3zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.5-13.7-39.7-43.7-39.7h-23.7v79.4z"
+                  fill="#FFF"></path>
+              </svg>
+              <span>orcid.org/0000-0000-0000-0000</span>
             </a>
             <a
               href="https://www.linkedin.com/in/brandon-coffey-36a802191"
@@ -124,7 +138,7 @@ const totalShowcases = eventsAndShowcases.length;
         </div>
 
         <!-- High-Impact CV Metrics Bar (Clickable Jump Buttons) -->
-        <div class="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4 print:grid-cols-4">
+        <div class="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4 print:hidden">
           <!-- 1. Peer-Reviewed Papers Button -->
           <a
             href="#publications"
@@ -264,52 +278,42 @@ const totalShowcases = eventsAndShowcases.length;
               >
             </div>
             <div>
-              <h2 class="text-2xl font-bold text-slate-900 dark:text-white">Peer-Reviewed Publications</h2>
-              <p class="text-xs text-slate-500 font-mono">12 published or in-press academic papers across ACM, IEEE, ISAP, and Springer</p>
+              <div class="flex items-center gap-3 flex-wrap">
+                <h2 class="text-2xl font-bold text-slate-900 dark:text-white">Peer-Reviewed Publications</h2>
+                <a
+                  href="https://orcid.org/0000-0000-0000-0000"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-mono font-medium bg-[#A6CE39]/15 text-[#4d6614] dark:text-[#a6ce39] border border-[#A6CE39]/30 hover:bg-[#A6CE39]/25 transition-colors"
+                  title="ORCID Profile"
+                >
+                  <svg class="h-3.5 w-3.5 fill-[#A6CE39]" viewBox="0 0 256 256">
+                    <path d="M256 128c0 70.7-57.3 128-128 128S0 198.7 0 128 57.3 0 128 0s128 57.3 128 128z" fill="#A6CE39"></path>
+                    <path
+                      d="M86.3 186.2H70.9V79.1h15.4v107.1zM78.6 65.3c-5.7 0-10.3-4.6-10.3-10.3s4.6-10.3 10.3-10.3 10.3 4.6 10.3 10.3-4.6 10.3-10.3 10.3zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.5-13.7-39.7-43.7-39.7h-23.7v79.4z"
+                      fill="#FFF"></path>
+                  </svg>
+                  <span>ORCID: 0000-0000-0000-0000</span>
+                </a>
+              </div>
+              <p class="text-xs text-slate-500 font-mono mt-0.5">12 published or in-press academic papers across ACM, IEEE, ISAP, and Springer</p>
             </div>
           </div>
 
           <!-- Venue Quick Filter (Client Side) -->
           <div id="pub-filter-container" class="flex items-center gap-1.5 flex-wrap print:hidden text-xs font-mono">
-            <button
-              type="button"
-              data-pub-filter="all"
-              class="pub-filter-btn filter-pill active cursor-pointer">All (12)</button
-            >
-            <button
-              type="button"
-              data-pub-filter="ACM"
-              class="pub-filter-btn filter-pill cursor-pointer"
-              >ACM</button
-            >
-            <button
-              type="button"
-              data-pub-filter="IEEE"
-              class="pub-filter-btn filter-pill cursor-pointer"
-              >IEEE</button
-            >
-            <button
-              type="button"
-              data-pub-filter="ISAP"
-              class="pub-filter-btn filter-pill cursor-pointer"
-              >ISAP</button
-            >
-            <button
-              type="button"
-              data-pub-filter="Springer"
-              class="pub-filter-btn filter-pill cursor-pointer"
-              >Springer</button
-            >
+            <button type="button" data-pub-filter="all" class="pub-filter-btn filter-pill active cursor-pointer">All (12)</button>
+            <button type="button" data-pub-filter="ACM" class="pub-filter-btn filter-pill cursor-pointer">ACM</button>
+            <button type="button" data-pub-filter="IEEE" class="pub-filter-btn filter-pill cursor-pointer">IEEE</button>
+            <button type="button" data-pub-filter="ISAP" class="pub-filter-btn filter-pill cursor-pointer">ISAP</button>
+            <button type="button" data-pub-filter="Springer" class="pub-filter-btn filter-pill cursor-pointer">Springer</button>
           </div>
         </div>
 
         <div class="space-y-4" id="publications-list">
           {
             publications.map((pub, idx) => (
-              <article
-                class="pub-card surface-panel p-5 transition-all hover:border-emerald-500/40"
-                data-venue={pub.venue}
-              >
+              <article class="pub-card surface-panel p-5 transition-all hover:border-emerald-500/40" data-venue={pub.venue}>
                 <div class="flex flex-wrap items-center gap-2 mb-2">
                   <span class="px-2 py-0.5 rounded text-[11px] font-mono font-bold bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border border-emerald-500/20">
                     [{idx + 1}] {pub.venue}
@@ -474,9 +478,7 @@ const totalShowcases = eventsAndShowcases.length;
                 <div>
                   <div class="flex items-center justify-between gap-2 mb-2">
                     <span class="text-[11px] font-mono text-slate-500">{award.organization}</span>
-                    <span class="pill-date">
-                      {award.year}
-                    </span>
+                    <span class="pill-date">{award.year}</span>
                   </div>
 
                   <h3 class="text-sm font-bold text-slate-900 dark:text-white mb-1.5 leading-snug">{award.title}</h3>
@@ -542,9 +544,7 @@ const totalShowcases = eventsAndShowcases.length;
                 <div>
                   <div class="flex items-center justify-between gap-2 mb-1.5">
                     <span class="text-xs font-mono font-bold text-emerald-600 dark:text-emerald-400">{media.outlet}</span>
-                    <span class="pill-date">
-                      {media.date}
-                    </span>
+                    <span class="pill-date">{media.date}</span>
                   </div>
 
                   <h3 class="text-sm font-bold text-slate-900 dark:text-white mb-2 leading-snug">{media.title}</h3>
@@ -631,7 +631,7 @@ const totalShowcases = eventsAndShowcases.length;
         <div class="space-y-3">
           {
             eventsAndShowcases.map((event) => (
-              <div class="p-4 rounded-xl border border-slate-200/80 dark:border-slate-800/80 bg-white/70 dark:bg-slate-900/60 backdrop-blur-md flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div class="p-4 rounded-xl border border-slate-200/80 dark:border-slate-800/80 bg-white/70 dark:bg-slate-900/60 backdrop-blur-md flex items-start justify-between gap-4">
                 <div>
                   <div class="flex items-center gap-2 mb-1">
                     <h3 class="text-sm font-bold text-slate-900 dark:text-white">{event.title}</h3>
@@ -657,9 +657,7 @@ const totalShowcases = eventsAndShowcases.length;
                   </p>
                 </div>
 
-                <span class="pill-date">
-                  {event.date}
-                </span>
+                <span class="pill-date shrink-0 self-start">{event.date}</span>
               </div>
             ))
           }
@@ -722,9 +720,7 @@ const totalShowcases = eventsAndShowcases.length;
                   <h3 class="text-base font-bold text-slate-900 dark:text-white">
                     {item.role} &mdash; <span class="text-emerald-600 dark:text-emerald-400">{item.courseOrEvent}</span>
                   </h3>
-                  <span class="pill-date">
-                    {item.term}
-                  </span>
+                  <span class="pill-date">{item.term}</span>
                 </div>
                 <p class="text-xs font-mono text-slate-600 dark:text-slate-400">{item.institution}</p>
               </div>
@@ -738,36 +734,94 @@ const totalShowcases = eventsAndShowcases.length;
   <!-- Print Stylesheet & Interactivity Script -->
   <style>
     @media print {
-      :global(header),
-      :global(footer),
+      :global(.site-header),
+      :global(.site-footer),
       :global(#scroll-to-top),
+      :global(.scroll-to-top),
       .print\:hidden {
         display: none !important;
       }
 
-      body {
+      :global(html),
+      :global(body) {
         background: #ffffff !important;
-        color: #000000 !important;
-        font-size: 11pt;
+        background-color: #ffffff !important;
+        color: #0f172a !important;
+        font-size: 10pt !important;
+        line-height: 1.4 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
       }
 
-      a {
-        text-decoration: underline !important;
-        color: #000000 !important;
+      /* Explicitly display CV Header in print */
+      .cv-header {
+        display: block !important;
+        margin-bottom: 1.5rem !important;
+        padding-bottom: 1rem !important;
+        border-bottom: 2px solid #cbd5e1 !important;
       }
 
-      .pub-card,
+      /* Clean light mode overrides across the printed document */
+      :global(.surface-panel),
+      :global(.surface-card),
       article,
-      section {
-        break-inside: avoid;
-        page-break-inside: avoid;
+      .pub-card {
+        background: #ffffff !important;
+        background-color: #ffffff !important;
+        border: 1px solid #e2e8f0 !important;
+        border-radius: 8px !important;
+        box-shadow: none !important;
+        backdrop-filter: none !important;
+        break-inside: avoid !important;
+        page-break-inside: avoid !important;
+        margin-bottom: 0.75rem !important;
+        padding: 0.75rem 1rem !important;
       }
 
-      h1,
-      h2,
-      h3 {
-        color: #000000 !important;
-        page-break-after: avoid;
+      :global(h1) {
+        font-size: 24pt !important;
+        color: #0f172a !important;
+        margin-bottom: 0.25rem !important;
+      }
+
+      :global(h2) {
+        font-size: 14pt !important;
+        color: #0f172a !important;
+        page-break-after: avoid !important;
+        break-after: avoid !important;
+        margin-bottom: 0.5rem !important;
+      }
+
+      :global(h3) {
+        font-size: 11pt !important;
+        color: #0f172a !important;
+        page-break-after: avoid !important;
+        break-after: avoid !important;
+      }
+
+      :global(p),
+      :global(span),
+      :global(li),
+      :global(time) {
+        color: #334155 !important;
+      }
+
+      :global(.pill-date) {
+        background: #f1f5f9 !important;
+        color: #334155 !important;
+        border: 1px solid #cbd5e1 !important;
+        font-size: 8.5pt !important;
+        padding: 0.1rem 0.4rem !important;
+      }
+
+      :global(a) {
+        color: #047857 !important;
+        text-decoration: none !important;
+      }
+
+      section {
+        break-inside: auto;
+        margin-bottom: 1.75rem !important;
       }
     }
   </style>
@@ -780,6 +834,25 @@ const totalShowcases = eventsAndShowcases.length;
         printBtn.dataset.hasListener = "true";
         printBtn.addEventListener("click", () => {
           window.print();
+        });
+      }
+
+      // Handle beforeprint and afterprint to ensure clean light mode while printing
+      if (!(window as any).__cvPrintListenersAttached) {
+        (window as any).__cvPrintListenersAttached = true;
+        let wasDarkBeforePrint = false;
+
+        window.addEventListener("beforeprint", () => {
+          wasDarkBeforePrint = document.documentElement.classList.contains("dark");
+          if (wasDarkBeforePrint) {
+            document.documentElement.classList.remove("dark");
+          }
+        });
+
+        window.addEventListener("afterprint", () => {
+          if (wasDarkBeforePrint) {
+            document.documentElement.classList.add("dark");
+          }
         });
       }
 
@@ -846,9 +919,7 @@ const totalShowcases = eventsAndShowcases.length;
         const initialVenue = urlParams.get("venue") || urlParams.get("filter");
         if (initialVenue) {
           const normInitial = initialVenue.toLowerCase();
-          const matchedBtn = Array.from(filterBtns).find(
-            (b) => (b.dataset.pubFilter || "").toLowerCase() === normInitial
-          );
+          const matchedBtn = Array.from(filterBtns).find((b) => (b.dataset.pubFilter || "").toLowerCase() === normInitial);
           if (matchedBtn) {
             applyPubFilter(matchedBtn.dataset.pubFilter || "all", false);
           }

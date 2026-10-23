@@ -14,10 +14,17 @@ const navLinks = [
   { id: "about", href: "about", text: "About", isPage: false, pageHref: "/#about" },
   { id: "contact", href: "contact", text: "Contact", isPage: false, pageHref: "/#contact" },
 ];
+
+const getNavHref = (link: (typeof navLinks)[number]) => {
+  if (link.id === "home") {
+    return isHomepage ? "#home" : "/";
+  }
+  return link.isPage ? link.pageHref : isHomepage ? `#${link.href}` : `/#${link.href}`;
+};
 ---
 
 <header
-  class="sticky top-0 z-50 backdrop-blur-md bg-white/80 dark:bg-slate-950/80 border-b border-slate-200/60 dark:border-slate-800/60 transition-colors duration-300"
+  class="site-header sticky top-0 z-50 backdrop-blur-md bg-white/80 dark:bg-slate-950/80 border-b border-slate-200/60 dark:border-slate-800/60 transition-colors duration-300"
 >
   <div class="container mx-auto px-4 max-w-6xl">
     <div class="flex items-center justify-between h-16">
@@ -37,11 +44,11 @@ const navLinks = [
       </a>
 
       <!-- Desktop Navigation Links -->
-      <nav class="hidden md:flex items-center gap-1.5 lg:gap-2">
+      <nav class="site-nav hidden md:flex items-center gap-1.5 lg:gap-2">
         {
           navLinks.map((link) => {
             const isActive = (isProjectsPage && link.id === "projects") || (isCvPage && link.id === "cv");
-            const linkHref = link.isPage ? link.pageHref : isHomepage ? `#${link.href}` : `/#${link.href}`;
+            const linkHref = getNavHref(link);
             return (
               <a
                 href={linkHref}
@@ -89,7 +96,7 @@ const navLinks = [
     <div class="container mx-auto px-4 py-4 space-y-1">
       {
         navLinks.map((link) => {
-          const linkHref = link.isPage ? link.pageHref : isHomepage ? `#${link.href}` : `/#${link.href}`;
+          const linkHref = getNavHref(link);
           return (
             <a
               href={linkHref}
