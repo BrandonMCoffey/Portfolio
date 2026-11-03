@@ -26,12 +26,14 @@ When exporting rigs and animations done in Autodesk Maya to Unreal Engine or Uni
 <ImageEmbed file="kitty-city-example.png" />
 
 <p style="text-align:center">
-  <i>Left: Source Maya Rig. Middle: Duplicated Joint Structure. Right: Output Mesh Compatible with Unity</i>
+	<i>Left: Source Maya Rig. Middle: Duplicated Joint Structure. Right: Output Mesh Compatible with Unity</i>
 </p>
 
 <br />
 
-<ImageEmbed file="tool.png" />
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+	<ImageEmbed file="tool.png" />
+</div>
 
 Below is the code for the tool, which can be loaded into Maya and run with the 'run()' function. This opens a QT window, which is Maya's GUI interface, and all of the user interaction is through buttons and text fields.
 
@@ -116,4 +118,3 @@ self.destinationJoints = None
 [Image of Stacker Tool]
 With python and Qt, I built a simple interface to select objects and stack them on each other based on their bounding box sizes.
 */}
-```
