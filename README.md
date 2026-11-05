@@ -2,13 +2,15 @@
 
 https://brandoncoffey.com
 
-### Brandon and Jackie | Cookbook
+### Brandon Coffey | Cookbook
 
 https://brandoncoffey.com/cookbook
 
 ### Development
 
+```
 clone repo
 download node js
 npm install
 npm run dev
+```
