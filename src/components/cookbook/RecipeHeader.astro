@@ -1,10 +1,11 @@
 ---
 import ThemeToggle from "../ThemeToggle.astro";
+import { COOKBOOK_SITE } from "../../data/site";
 
 const { pathname: currentPath } = Astro.url;
-const isAllRecipes = currentPath === "/cookbook" || currentPath === "/cookbook/";
-const isFavorites = currentPath === "/cookbook/favorites" || currentPath === "/cookbook/favorites/";
-const isShoppingList = currentPath === "/cookbook/shopping-list" || currentPath === "/cookbook/shopping-list/";
+const isAllRecipes = currentPath === COOKBOOK_SITE.navLinks.allRecipes.href || currentPath === `${COOKBOOK_SITE.navLinks.allRecipes.href}/`;
+const isFavorites = currentPath === COOKBOOK_SITE.navLinks.favorites.href || currentPath === `${COOKBOOK_SITE.navLinks.favorites.href}/`;
+const isShoppingList = currentPath === COOKBOOK_SITE.navLinks.shoppingList.href || currentPath === `${COOKBOOK_SITE.navLinks.shoppingList.href}/`;
 ---
 
 <header
@@ -35,9 +36,11 @@ const isShoppingList = currentPath === "/cookbook/shopping-list" || currentPath 
           </span>
           <div class="flex flex-col">
             <span class="text-base font-bold leading-tight group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
-              Coffey Cookbook
+              {COOKBOOK_SITE.brandName}
             </span>
-            <span class="text-[10px] uppercase font-mono tracking-wider text-slate-500 dark:text-slate-400 hidden sm:block"> Culinary Archive </span>
+            <span class="text-[10px] uppercase font-mono tracking-wider text-slate-500 dark:text-slate-400 hidden sm:block">
+              {COOKBOOK_SITE.subtitle}
+            </span>
           </div>
         </a>
       </div>
@@ -45,7 +48,7 @@ const isShoppingList = currentPath === "/cookbook/shopping-list" || currentPath 
       <!-- Center: Cookbook Nav Links -->
       <nav class="hidden md:flex items-center gap-1.5 lg:gap-2">
         <a
-          href="/cookbook"
+          href={COOKBOOK_SITE.navLinks.allRecipes.href}
           class:list={[
             "px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200",
             isAllRecipes
@@ -53,10 +56,10 @@ const isShoppingList = currentPath === "/cookbook/shopping-list" || currentPath 
               : "text-slate-600 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-slate-100/70 dark:hover:bg-slate-800/60",
           ]}
         >
-          All Recipes
+          {COOKBOOK_SITE.navLinks.allRecipes.label}
         </a>
         <a
-          href="/cookbook/favorites"
+          href={COOKBOOK_SITE.navLinks.favorites.href}
           class:list={[
             "px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 flex items-center gap-1.5",
             isFavorites
@@ -69,10 +72,10 @@ const isShoppingList = currentPath === "/cookbook/shopping-list" || currentPath 
               d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z"
             ></path>
           </svg>
-          Favorites
+          {COOKBOOK_SITE.navLinks.favorites.label}
         </a>
         <a
-          href="/cookbook/shopping-list"
+          href={COOKBOOK_SITE.navLinks.shoppingList.href}
           class:list={[
             "px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 flex items-center gap-1.5",
             isShoppingList
@@ -94,7 +97,7 @@ const isShoppingList = currentPath === "/cookbook/shopping-list" || currentPath 
             <circle cx="19" cy="21" r="1"></circle>
             <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path>
           </svg>
-          <span>Shopping List</span>
+          <span>{COOKBOOK_SITE.navLinks.shoppingList.label}</span>
           <span
             id="cookbook-header-badge"
             class="hidden ml-1 px-1.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-600 text-white min-w-5 text-center leading-none"
@@ -113,7 +116,7 @@ const isShoppingList = currentPath === "/cookbook/shopping-list" || currentPath 
           id="cookbook-menu-btn"
           type="button"
           class="hamburger md:hidden p-1.5 rounded-lg text-slate-700 dark:text-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-          aria-label="Toggle cookbook menu"
+          aria-label={COOKBOOK_SITE.menuToggleAriaLabel}
           aria-expanded="false"
           aria-controls="cookbook-mobile-menu"
         >
@@ -132,7 +135,7 @@ const isShoppingList = currentPath === "/cookbook/shopping-list" || currentPath 
   >
     <div class="container mx-auto px-4 py-4 space-y-1">
       <a
-        href="/cookbook"
+        href={COOKBOOK_SITE.navLinks.allRecipes.href}
         class:list={[
           "block px-3 py-2.5 rounded-lg text-base font-medium transition-colors",
           isAllRecipes
@@ -140,10 +143,10 @@ const isShoppingList = currentPath === "/cookbook/shopping-list" || currentPath 
             : "text-slate-700 dark:text-slate-200 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-slate-100 dark:hover:bg-slate-900",
         ]}
       >
-        All Recipes
+        {COOKBOOK_SITE.navLinks.allRecipes.label}
       </a>
       <a
-        href="/cookbook/favorites"
+        href={COOKBOOK_SITE.navLinks.favorites.href}
         class:list={[
           "flex items-center justify-between px-3 py-2.5 rounded-lg text-base font-medium transition-colors",
           isFavorites
@@ -157,11 +160,11 @@ const isShoppingList = currentPath === "/cookbook/shopping-list" || currentPath 
               d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z"
             ></path>
           </svg>
-          Favorites
+          {COOKBOOK_SITE.navLinks.favorites.label}
         </span>
       </a>
       <a
-        href="/cookbook/shopping-list"
+        href={COOKBOOK_SITE.navLinks.shoppingList.href}
         class:list={[
           "flex items-center justify-between px-3 py-2.5 rounded-lg text-base font-medium transition-colors",
           isShoppingList
@@ -184,7 +187,7 @@ const isShoppingList = currentPath === "/cookbook/shopping-list" || currentPath 
             <circle cx="19" cy="21" r="1"></circle>
             <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path>
           </svg>
-          Shopping List
+          {COOKBOOK_SITE.navLinks.shoppingList.label}
         </span>
         <span id="cookbook-mobile-badge" class="hidden px-2 py-0.5 rounded-full text-xs font-bold bg-emerald-600 text-white"> 0 </span>
       </a>
@@ -193,6 +196,8 @@ const isShoppingList = currentPath === "/cookbook/shopping-list" || currentPath 
 </header>
 
 <script>
+  import { COOKBOOK_STORAGE_KEYS } from "../../data/cookbook";
+
   function setupCookbookNav() {
     const btn = document.getElementById("cookbook-menu-btn");
     const menu = document.getElementById("cookbook-mobile-menu");
@@ -230,7 +235,7 @@ const isShoppingList = currentPath === "/cookbook/shopping-list" || currentPath 
     // Update Shopping List Active Badge
     const updateBadge = () => {
       try {
-        const active = JSON.parse(localStorage.getItem("active_recipes") || "[]");
+        const active = JSON.parse(localStorage.getItem(COOKBOOK_STORAGE_KEYS.activeRecipes) || "[]");
         const count = Array.isArray(active) ? active.length : 0;
         [desktopBadge, mobileBadge].forEach((b) => {
           if (!b) return;

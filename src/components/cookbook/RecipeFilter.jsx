@@ -1,32 +1,16 @@
 import React, { useState, useMemo } from "react";
 import RecipeCard from "./RecipeCard";
+import {
+  COOKBOOK_CATEGORY_ORDER,
+  COOKBOOK_COLLECTIONS,
+  COOKBOOK_COMPLEXITY_TIME_DIVISOR,
+  COOKBOOK_COOKWARE_RANGES,
+  COOKBOOK_SORT_OPTIONS,
+  COOKBOOK_TIME_RANGES,
+  COOKBOOK_UI_TEXT,
+} from "../../data/cookbook";
 
-const TIME_RANGES = [
-  { label: "<30 min", maxMinutes: 30 },
-  { label: "30 min - 1 hr", minMinutes: 30, maxMinutes: 60 },
-  { label: "1-2 hr", minMinutes: 60, maxMinutes: 120 },
-  { label: "2-4 hr", minMinutes: 120, maxMinutes: 240 },
-  { label: "4+ hr", minMinutes: 240, maxMinutes: Infinity },
-];
-
-const COOKWARE_RANGES = [
-  { label: "1 Item", max: 1 },
-  { label: "2-3 Items", min: 2, max: 3 },
-  { label: "4+ Items", min: 4, max: Infinity },
-];
-
-const MANUAL_CATEGORY_ORDER = ["Breakfast", "Appetizer", "Soup", "Main Course", "Side Dish", "Dessert", "Bread", "Sauce", "Condiment"];
-
-const SORT_MODES = ["Default", "Alphabetical", "Complexity", "Random"];
-
-const COLLECTIONS = [
-  { id: "all", label: "All Collections" },
-  { id: "College Cookbook", label: "College Cookbook" },
-  { id: "Brandon Family", label: "Brandon Family" },
-  { id: "Jackie Family", label: "Jackie Family" },
-  { id: "New", label: "Jackie & Brandon" },
-  { id: "Copycat", label: "Copycat Favorites" },
-];
+const copy = COOKBOOK_UI_TEXT.filter;
 
 export default function RecipeFilter({ allRecipes, categories, cuisines, diets, base }) {
   const [searchQuery, setSearchQuery] = useState("");
@@ -81,15 +65,14 @@ export default function RecipeFilter({ allRecipes, categories, cuisines, diets, 
 
   const manuallySortedCategories = useMemo(() => {
     return [...categories].sort((a, b) => {
-      const indexA = MANUAL_CATEGORY_ORDER.indexOf(a.name);
-      const indexB = MANUAL_CATEGORY_ORDER.indexOf(b.name);
+      const indexA = COOKBOOK_CATEGORY_ORDER.indexOf(a.name);
+      const indexB = COOKBOOK_CATEGORY_ORDER.indexOf(b.name);
       if (indexA === -1) return 1;
       if (indexB === -1) return -1;
       return indexA - indexB;
     });
   }, [categories]);
 
-  // Search filter
   const searchedRecipes = useMemo(() => {
     if (!searchQuery) return allRecipes;
     const lowerCaseQuery = searchQuery.toLowerCase();
@@ -111,7 +94,6 @@ export default function RecipeFilter({ allRecipes, categories, cuisines, diets, 
     });
   }, [allRecipes, searchQuery]);
 
-  // Collection, category, cuisine, diet filter
   const baseFilters = useMemo(() => {
     let filtered = searchedRecipes;
     if (activeCollection !== "all") {
@@ -129,7 +111,6 @@ export default function RecipeFilter({ allRecipes, categories, cuisines, diets, 
     return filtered;
   }, [searchedRecipes, activeCollection, activeCategories, activeCuisines, activeDiets]);
 
-  // Range filters
   const filteredRecipes = useMemo(() => {
     let filtered = baseFilters;
     if (timeFilter) {
@@ -151,7 +132,6 @@ export default function RecipeFilter({ allRecipes, categories, cuisines, diets, 
     return filtered;
   }, [baseFilters, timeFilter, cookwareFilter]);
 
-  // Sorting
   const sortedRecipes = useMemo(() => {
     const toSort = [...filteredRecipes];
     switch (sortMode) {
@@ -164,7 +144,7 @@ export default function RecipeFilter({ allRecipes, categories, cuisines, diets, 
           const cookwareB = b.cookware?.length || 0;
           const timeA = (a.time?.prep || 0) + (a.time?.cook || 0) + (a.time?.rest || 0);
           const timeB = (b.time?.prep || 0) + (b.time?.cook || 0) + (b.time?.rest || 0);
-          return cookwareA - cookwareB + (timeA - timeB) / 120;
+          return cookwareA - cookwareB + (timeA - timeB) / COOKBOOK_COMPLEXITY_TIME_DIVISOR;
         });
         break;
       case "Random":
@@ -177,7 +157,6 @@ export default function RecipeFilter({ allRecipes, categories, cuisines, diets, 
     return toSort;
   }, [filteredRecipes, sortMode, sortDirection, randomSeed]);
 
-  // Total active filter count for badge
   const activeFiltersCount = useMemo(() => {
     let count = 0;
     if (activeCollection !== "all") count++;
@@ -212,7 +191,7 @@ export default function RecipeFilter({ allRecipes, categories, cuisines, diets, 
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search recipes, ingredients, tags..."
+              placeholder={copy.searchPlaceholder}
               className="w-full pl-10 pr-9 py-2.5 rounded-xl border border-slate-200/90 dark:border-slate-700/80 bg-white dark:bg-slate-950/80 text-sm text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all"
             />
             {searchQuery && (
@@ -220,7 +199,7 @@ export default function RecipeFilter({ allRecipes, categories, cuisines, diets, 
                 type="button"
                 onClick={() => setSearchQuery("")}
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 text-sm font-bold p-1 cursor-pointer"
-                aria-label="Clear search"
+                aria-label={copy.clearSearchAriaLabel}
               >
                 &times;
               </button>
@@ -245,7 +224,7 @@ export default function RecipeFilter({ allRecipes, categories, cuisines, diets, 
                   d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
                 />
               </svg>
-              <span>Filters</span>
+              <span>{copy.filtersButtonLabel}</span>
               {activeFiltersCount > 0 && (
                 <span className="px-1.5 py-0.2 rounded-full text-[10px] font-bold bg-white text-emerald-800">{activeFiltersCount}</span>
               )}
@@ -257,18 +236,21 @@ export default function RecipeFilter({ allRecipes, categories, cuisines, diets, 
               onChange={(e) => handleSortChange(e.target.value)}
               className="py-2 px-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-800 dark:text-slate-200 text-xs font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer"
             >
-              <option value="Default">Sort: Default</option>
-              <option value="Alphabetical">Alphabetical (A-Z)</option>
-              <option value="Complexity">Complexity</option>
-              <option value="Random">🎲 Random</option>
+              {COOKBOOK_SORT_OPTIONS.map((opt) => (
+                <option key={opt.value} value={opt.value}>
+                  {opt.label}
+                </option>
+              ))}
             </select>
           </div>
         </div>
 
         {/* Collection Filter Tabs */}
         <div className="pt-2 border-t border-slate-200/60 dark:border-slate-800/60 flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none text-xs">
-          <span className="text-[11px] font-mono uppercase tracking-wider text-slate-400 dark:text-slate-500 mr-1 hidden sm:inline">Collection:</span>
-          {COLLECTIONS.map((col) => (
+          <span className="text-[11px] font-mono uppercase tracking-wider text-slate-400 dark:text-slate-500 mr-1 hidden sm:inline">
+            {copy.collectionLabel}
+          </span>
+          {COOKBOOK_COLLECTIONS.map((col) => (
             <button
               key={col.id}
               type="button"
@@ -287,11 +269,13 @@ export default function RecipeFilter({ allRecipes, categories, cuisines, diets, 
         {/* Active Filter Chips Row (Visible whenever any filter is applied) */}
         {hasAnyFilter && (
           <div className="pt-2 border-t border-slate-200/60 dark:border-slate-800/60 flex flex-wrap items-center gap-1.5 text-xs">
-            <span className="text-[11px] font-mono uppercase tracking-wider text-slate-400 dark:text-slate-500 mr-1">Active:</span>
+            <span className="text-[11px] font-mono uppercase tracking-wider text-slate-400 dark:text-slate-500 mr-1">{copy.activeLabel}</span>
 
             {searchQuery && (
               <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/50">
-                <span>Search: "{searchQuery}"</span>
+                <span>
+                  {copy.chipPrefixes.search} "{searchQuery}"
+                </span>
                 <button type="button" onClick={() => setSearchQuery("")} className="hover:text-red-500 font-bold ml-1 cursor-pointer">
                   &times;
                 </button>
@@ -300,7 +284,9 @@ export default function RecipeFilter({ allRecipes, categories, cuisines, diets, 
 
             {activeCollection !== "all" && (
               <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/50">
-                <span>Collection: {activeCollection}</span>
+                <span>
+                  {copy.chipPrefixes.collection} {activeCollection}
+                </span>
                 <button type="button" onClick={() => setActiveCollection("all")} className="hover:text-red-500 font-bold ml-1 cursor-pointer">
                   &times;
                 </button>
@@ -312,7 +298,9 @@ export default function RecipeFilter({ allRecipes, categories, cuisines, diets, 
                 key={cat}
                 className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/50"
               >
-                <span>Category: {cat}</span>
+                <span>
+                  {copy.chipPrefixes.category} {cat}
+                </span>
                 <button
                   type="button"
                   onClick={() => handleTagToggle(activeCategories, setActiveCategories, cat)}
@@ -325,7 +313,9 @@ export default function RecipeFilter({ allRecipes, categories, cuisines, diets, 
 
             {timeFilter && (
               <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/50">
-                <span>Time: {timeFilter.label}</span>
+                <span>
+                  {copy.chipPrefixes.time} {timeFilter.label}
+                </span>
                 <button type="button" onClick={() => setTimeFilter(null)} className="hover:text-red-500 font-bold ml-1 cursor-pointer">
                   &times;
                 </button>
@@ -334,7 +324,9 @@ export default function RecipeFilter({ allRecipes, categories, cuisines, diets, 
 
             {cookwareFilter && (
               <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/50">
-                <span>Cookware: {cookwareFilter.label}</span>
+                <span>
+                  {copy.chipPrefixes.cookware} {cookwareFilter.label}
+                </span>
                 <button type="button" onClick={() => setCookwareFilter(null)} className="hover:text-red-500 font-bold ml-1 cursor-pointer">
                   &times;
                 </button>
@@ -346,7 +338,9 @@ export default function RecipeFilter({ allRecipes, categories, cuisines, diets, 
                 key={c}
                 className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/50"
               >
-                <span>Cuisine: {c}</span>
+                <span>
+                  {copy.chipPrefixes.cuisine} {c}
+                </span>
                 <button
                   type="button"
                   onClick={() => handleTagToggle(activeCuisines, setActiveCuisines, c)}
@@ -362,7 +356,9 @@ export default function RecipeFilter({ allRecipes, categories, cuisines, diets, 
                 key={d}
                 className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/50"
               >
-                <span>Diet: {d}</span>
+                <span>
+                  {copy.chipPrefixes.diet} {d}
+                </span>
                 <button
                   type="button"
                   onClick={() => handleTagToggle(activeDiets, setActiveDiets, d)}
@@ -378,7 +374,7 @@ export default function RecipeFilter({ allRecipes, categories, cuisines, diets, 
               onClick={clearAllFilters}
               className="text-xs font-semibold text-red-600 dark:text-red-400 hover:underline ml-2 cursor-pointer"
             >
-              Clear All
+              {copy.clearAllLabel}
             </button>
           </div>
         )}
@@ -388,7 +384,9 @@ export default function RecipeFilter({ allRecipes, categories, cuisines, diets, 
           <div className="pt-4 border-t border-slate-200/80 dark:border-slate-800/80 space-y-5 animate-fade-in">
             {/* Categories */}
             <div>
-              <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2">Category:</h4>
+              <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2">
+                {copy.categoryLabel}
+              </h4>
               <div className="flex flex-wrap gap-1.5">
                 {manuallySortedCategories.map((cat) => {
                   const isSelected = activeCategories.has(cat.name);
@@ -413,9 +411,11 @@ export default function RecipeFilter({ allRecipes, categories, cuisines, diets, 
             {/* Time & Cookware row */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2">Total Time:</h4>
+                <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2">
+                  {copy.totalTimeLabel}
+                </h4>
                 <div className="flex flex-wrap gap-1.5">
-                  {TIME_RANGES.map((range) => {
+                  {COOKBOOK_TIME_RANGES.map((range) => {
                     const isSelected = timeFilter?.label === range.label;
                     return (
                       <button
@@ -436,9 +436,11 @@ export default function RecipeFilter({ allRecipes, categories, cuisines, diets, 
               </div>
 
               <div>
-                <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2">Cookware Count:</h4>
+                <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2">
+                  {copy.cookwareCountLabel}
+                </h4>
                 <div className="flex flex-wrap gap-1.5">
-                  {COOKWARE_RANGES.map((range) => {
+                  {COOKBOOK_COOKWARE_RANGES.map((range) => {
                     const isSelected = cookwareFilter?.label === range.label;
                     return (
                       <button
@@ -464,7 +466,9 @@ export default function RecipeFilter({ allRecipes, categories, cuisines, diets, 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {cuisines?.length > 0 && (
                   <div>
-                    <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2">Cuisines:</h4>
+                    <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2">
+                      {copy.cuisinesLabel}
+                    </h4>
                     <div className="flex flex-wrap gap-1.5">
                       {cuisines.map((c) => (
                         <button
@@ -486,7 +490,9 @@ export default function RecipeFilter({ allRecipes, categories, cuisines, diets, 
 
                 {diets?.length > 0 && (
                   <div>
-                    <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2">Dietary:</h4>
+                    <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2">
+                      {copy.dietaryLabel}
+                    </h4>
                     <div className="flex flex-wrap gap-1.5">
                       {diets.map((d) => (
                         <button
@@ -514,11 +520,11 @@ export default function RecipeFilter({ allRecipes, categories, cuisines, diets, 
       {/* Results Count */}
       <div className="flex items-center justify-between text-xs font-mono text-slate-500 dark:text-slate-400 px-1">
         <span>
-          Showing <strong>{sortedRecipes.length}</strong> of {allRecipes.length} recipes
+          {copy.resultsShowing} <strong>{sortedRecipes.length}</strong> {copy.resultsMiddle} {allRecipes.length} {copy.resultsSuffix}
         </span>
         {sortedRecipes.length === 0 && (
           <button type="button" onClick={clearAllFilters} className="text-emerald-600 dark:text-emerald-400 hover:underline cursor-pointer">
-            Reset all filters
+            {copy.resetAllLabel}
           </button>
         )}
       </div>
@@ -526,13 +532,11 @@ export default function RecipeFilter({ allRecipes, categories, cuisines, diets, 
       {/* Recipes Grid */}
       {sortedRecipes.length === 0 ? (
         <div className="py-16 text-center rounded-2xl border border-dashed border-slate-300 dark:border-slate-800 p-8 my-8">
-          <p className="text-4xl mb-3">🍳</p>
-          <h3 className="text-lg font-bold text-slate-800 dark:text-slate-200 mb-2">No recipes match your criteria</h3>
-          <p className="text-sm text-slate-500 dark:text-slate-400 max-w-md mx-auto mb-6">
-            Try loosening your time filters or searching for different ingredients.
-          </p>
+          <p className="text-4xl mb-3">{copy.emptyEmoji}</p>
+          <h3 className="text-lg font-bold text-slate-800 dark:text-slate-200 mb-2">{copy.emptyTitle}</h3>
+          <p className="text-sm text-slate-500 dark:text-slate-400 max-w-md mx-auto mb-6">{copy.emptyDescription}</p>
           <button type="button" onClick={clearAllFilters} className="btn btn-secondary text-xs px-4 py-2">
-            Clear All Filters
+            {copy.emptyCtaLabel}
           </button>
         </div>
       ) : (

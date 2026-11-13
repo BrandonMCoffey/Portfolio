@@ -1,5 +1,3 @@
-// src/data/cv/types.ts
-
 export interface EducationItem {
   institution: string;
   degree: string;

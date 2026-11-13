@@ -1,6 +1,7 @@
 ---
 import Layout from "../../layouts/RecipeLayout.astro";
 import type { Recipe } from "../../types";
+import { COOKBOOK_UI_TEXT } from "../../data/cookbook";
 
 const allJsonModules = await import.meta.glob("/src/content/cookbook/*.json");
 const allRecipes = (
@@ -62,15 +63,15 @@ const fileDiagnostics = await Promise.all(
 const sortedMapEntries = (map: Map<string, string[]>) => Array.from(map.entries()).sort((a, b) => a[0].localeCompare(b[0]));
 ---
 
-<Layout title="Site Data">
+<Layout title={COOKBOOK_UI_TEXT.pages.dataTitle}>
   <div class="max-w-4xl mx-auto py-4">
-    <h1 class="text-4xl font-bold mb-8">Site Data & Diagnostics</h1>
+    <h1 class="text-4xl font-bold mb-8">{COOKBOOK_UI_TEXT.dataDiagnostics.pageHeading}</h1>
 
     <section class="space-y-6">
-      <h2 class="text-3xl font-semibold border-b pb-2">Aggregated Data</h2>
+      <h2 class="text-3xl font-semibold border-b pb-2">{COOKBOOK_UI_TEXT.dataDiagnostics.aggregatedHeading}</h2>
 
       <div>
-        <h3 class="text-2xl font-semibold mb-2">Categories</h3>
+        <h3 class="text-2xl font-semibold mb-2">{COOKBOOK_UI_TEXT.dataDiagnostics.categoriesHeading}</h3>
         <ul class="list-disc list-inside space-y-1 text-sm">
           {
             sortedMapEntries(categoryMap).map(([name, ids]) => (
@@ -89,7 +90,7 @@ const sortedMapEntries = (map: Map<string, string[]>) => Array.from(map.entries(
       </div>
 
       <div>
-        <h3 class="text-2xl font-semibold mb-2">Cuisines</h3>
+        <h3 class="text-2xl font-semibold mb-2">{COOKBOOK_UI_TEXT.dataDiagnostics.cuisinesHeading}</h3>
         <ul class="list-disc list-inside space-y-1 text-sm">
           {
             sortedMapEntries(cuisineMap).map(([name, ids]) => (
@@ -108,7 +109,7 @@ const sortedMapEntries = (map: Map<string, string[]>) => Array.from(map.entries(
       </div>
 
       <div>
-        <h3 class="text-2xl font-semibold mb-2">Diets</h3>
+        <h3 class="text-2xl font-semibold mb-2">{COOKBOOK_UI_TEXT.dataDiagnostics.dietsHeading}</h3>
         <ul class="list-disc list-inside space-y-1 text-sm">
           {
             sortedMapEntries(dietMap).map(([name, ids]) => (
@@ -127,7 +128,7 @@ const sortedMapEntries = (map: Map<string, string[]>) => Array.from(map.entries(
       </div>
 
       <div>
-        <h3 class="text-2xl font-semibold mb-2">Cookware</h3>
+        <h3 class="text-2xl font-semibold mb-2">{COOKBOOK_UI_TEXT.dataDiagnostics.cookwareHeading}</h3>
         <ul class="list-disc list-inside space-y-1 text-sm">
           {
             sortedMapEntries(cookwareMap).map(([name, ids]) => (
@@ -146,7 +147,7 @@ const sortedMapEntries = (map: Map<string, string[]>) => Array.from(map.entries(
       </div>
 
       <div>
-        <h3 class="text-2xl font-semibold mb-2">Ingredients</h3>
+        <h3 class="text-2xl font-semibold mb-2">{COOKBOOK_UI_TEXT.dataDiagnostics.ingredientsHeading}</h3>
         <ul class="list-disc list-inside space-y-1 text-sm">
           {
             sortedMapEntries(ingredientMap).map(([name, ids]) => (
@@ -165,30 +166,30 @@ const sortedMapEntries = (map: Map<string, string[]>) => Array.from(map.entries(
     </section>
 
     <section class="mt-12 space-y-6">
-      <h2 class="text-3xl font-semibold border-b pb-2">File Diagnostics</h2>
+      <h2 class="text-3xl font-semibold border-b pb-2">{COOKBOOK_UI_TEXT.dataDiagnostics.fileDiagnosticsHeading}</h2>
       {
         fileDiagnostics.map((diag) => (
           <div class="p-4 border rounded-lg bg-white dark:bg-slate-800 dark:border-slate-700">
             <h3 class="text-2xl font-semibold">{diag.fileName}</h3>
 
-            <h4 class="text-xl font-semibold mt-4 mb-2">Missing Thumbnails</h4>
+            <h4 class="text-xl font-semibold mt-4 mb-2">{COOKBOOK_UI_TEXT.dataDiagnostics.missingThumbnailsHeading}</h4>
             {diag.missingThumbnails.length > 0 ? (
               <ul class="list-disc list-inside text-sm text-red-600 dark:text-red-400">
                 {diag.missingThumbnails.map((m) => (
                   <li>
                     {m.id}{" "}
                     <i class="text-muted">
-                      (path: <code>{m.path.slice(16)}</code>)
+                      (path: <code>{m.path.replace(/^\/images\/cookbook\//, "")}</code>)
                     </i>
                   </li>
                 ))}
               </ul>
             ) : (
-              <p class="text-sm text-slate-500">All recipe thumbnails in this file exist.</p>
+              <p class="text-sm text-slate-500">{COOKBOOK_UI_TEXT.dataDiagnostics.allThumbnailsExist}</p>
             )}
 
             <h4 class="text-xl font-semibold mt-4 mb-2">
-              Unused Images in <code>/public/images/{diag.fileName.replace(".json", "")}/</code>
+              {COOKBOOK_UI_TEXT.dataDiagnostics.unusedImagesPrefix} <code>/public/images/{diag.fileName.replace(".json", "")}/</code>
             </h4>
             {diag.unusedImages.length > 0 ? (
               <ul class="list-disc list-inside text-sm text-yellow-600 dark:text-yellow-400">
@@ -199,7 +200,7 @@ const sortedMapEntries = (map: Map<string, string[]>) => Array.from(map.entries(
                 ))}
               </ul>
             ) : (
-              <p class="text-sm text-slate-500">All images in this folder are being used.</p>
+              <p class="text-sm text-slate-500">{COOKBOOK_UI_TEXT.dataDiagnostics.allImagesUsed}</p>
             )}
           </div>
         ))

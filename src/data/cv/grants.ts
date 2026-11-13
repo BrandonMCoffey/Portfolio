@@ -1,4 +1,3 @@
-// src/data/cv/grants.ts
 import type { GrantItem } from "./types";
 
 export const grants: GrantItem[] = [

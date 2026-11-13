@@ -1,27 +1,32 @@
 ---
+import { PROJECT_COMPONENTS_TEXT } from "../../data/projectsConfig";
+
 interface Props {
-  /** Main heading or title of the highlight */
   title?: string;
-  /** Detailed narrative or description of the achievement */
   description?: string;
-  /** Optional custom badge text (defaults to 'Project Highlight' when title is provided) */
+  // Defaults to 'Project Highlight' when title is provided.
   badge?: string;
-  /** Optional link URL (e.g. Davey Award gallery, DOI paper, or press announcement) */
   linkUrl?: string;
-  /** Optional link display text */
   linkText?: string;
-  /** Additional CSS class names */
   class?: string;
   className?: string;
 }
 
-const { title, description, badge, linkUrl, linkText = "Learn More", class: extraClass = "", className = "" } = Astro.props;
+const {
+  title,
+  description,
+  badge,
+  linkUrl,
+  linkText = PROJECT_COMPONENTS_TEXT.highlightDefaultLinkText,
+  class: extraClass = "",
+  className = "",
+} = Astro.props;
 
 const customClasses = extraClass || className;
 const hasTitle = Boolean(title && title.trim());
 const hasDescription = Boolean(description && description.trim());
 const showBadge = badge !== undefined ? Boolean(badge) : hasTitle;
-const badgeLabel = badge || "Project Highlight";
+const badgeLabel = badge || PROJECT_COMPONENTS_TEXT.highlightDefaultBadge;
 ---
 
 <div
@@ -35,7 +40,7 @@ const badgeLabel = badge || "Project Highlight";
     customClasses,
   ]}
   role="region"
-  aria-label={title || "Project Highlight"}
+  aria-label={title || PROJECT_COMPONENTS_TEXT.highlightDefaultBadge}
 >
   <!-- Ambient background glow -->
   <div

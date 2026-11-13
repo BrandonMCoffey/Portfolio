@@ -1,8 +1,3 @@
-// src/data/techLinks.ts
-/**
- * Official documentation and website links for technologies, engines, and tools
- * featured in project case studies.
- */
 export const TECH_LINKS: Record<string, string> = {
   "Unreal Engine 5": "https://www.unrealengine.com/",
   "Unreal Engine": "https://www.unrealengine.com/",
@@ -55,9 +50,7 @@ export const TECH_LINKS: Record<string, string> = {
   "Fluid Simulation": "https://dev.epicgames.com/documentation/unreal-engine/fluid-simulation-in-unreal-engine",
 };
 
-/**
- * Normalizes a tech string (case-insensitive lookup with fallback aliases)
- */
+// Case-insensitive lookup for technology documentation URLs.
 export function getTechLink(techName: string): string | undefined {
   if (!techName) return undefined;
   const trimmed = techName.trim();

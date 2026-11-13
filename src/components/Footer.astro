@@ -1,6 +1,9 @@
 ---
+import { COOKBOOK_SITE, FOOTER_CONTENT, SITE_PROFILE } from "../data/site";
+
 const today = new Date();
 const isCookbook = Astro.url.pathname.startsWith("/cookbook");
+const footerLinks = isCookbook ? FOOTER_CONTENT.cookbook.links : FOOTER_CONTENT.portfolio.links;
 ---
 
 <footer
@@ -17,9 +20,9 @@ const isCookbook = Astro.url.pathname.startsWith("/cookbook");
                 href="/cookbook"
                 class="text-lg font-bold tracking-tight text-slate-900 dark:text-white hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
               >
-                Coffey Cookbook
+                {COOKBOOK_SITE.brandName}
               </a>
-              <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Curated Culinary & Recipe Archive</p>
+              <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">{COOKBOOK_SITE.footerTagline}</p>
             </>
           ) : (
             <>
@@ -27,9 +30,9 @@ const isCookbook = Astro.url.pathname.startsWith("/cookbook");
                 href="/"
                 class="text-lg font-bold tracking-tight text-slate-900 dark:text-white hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
               >
-                Brandon Coffey
+                {SITE_PROFILE.name}
               </a>
-              <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Lead Technical Artist & Graphics / XR Programmer</p>
+              <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">{SITE_PROFILE.roleFull}</p>
             </>
           )
         }
@@ -38,47 +41,21 @@ const isCookbook = Astro.url.pathname.startsWith("/cookbook");
       <!-- Quick Links -->
       <nav class="flex flex-wrap items-center justify-center gap-6 text-sm font-medium text-slate-600 dark:text-slate-300">
         {
-          isCookbook ? (
-            <>
-              <a href="/cookbook" class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
-                All Recipes
-              </a>
-              <a href="/cookbook/favorites" class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
-                Favorites
-              </a>
-              <a href="/cookbook/shopping-list" class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
-                Shopping List
-              </a>
-              <a href="/cookbook/data" class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
-                Diagnostics
-              </a>
-            </>
-          ) : (
-            <>
-              <a href="/" class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
-                Portfolio
-              </a>
-              <a href="/projects" class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
-                All Projects
-              </a>
-              <a href="/cv" class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
-                Curriculum Vitae
-              </a>
-              <a href="/#contact" class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
-                Contact
-              </a>
-            </>
-          )
+          footerLinks.map((link) => (
+            <a href={link.href} class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
+              {link.label}
+            </a>
+          ))
         }
       </nav>
 
       <!-- Social Icons with Accessible Tooltips -->
       <div class="flex items-center gap-3">
         <a
-          href="mailto:business@brandoncoffey.com"
+          href={`mailto:${SITE_PROFILE.email}`}
           target="_blank"
           rel="noopener noreferrer"
-          aria-label="Send email to business@brandoncoffey.com"
+          aria-label={`Send email to ${SITE_PROFILE.email}`}
           class="p-2.5 rounded-lg text-slate-600 hover:text-emerald-600 hover:bg-slate-200/60 dark:text-slate-400 dark:hover:text-emerald-400 dark:hover:bg-slate-800/60 transition-all"
           title="Email"
         >
@@ -89,12 +66,12 @@ const isCookbook = Astro.url.pathname.startsWith("/cookbook");
           </svg>
         </a>
         <a
-          href="https://www.linkedin.com/in/brandon-coffey-36a802191"
+          href={SITE_PROFILE.linkedin.url}
           target="_blank"
           rel="noopener noreferrer"
-          aria-label="LinkedIn Profile"
+          aria-label={`${SITE_PROFILE.linkedin.label} Profile`}
           class="p-2.5 rounded-lg text-slate-600 hover:text-emerald-600 hover:bg-slate-200/60 dark:text-slate-400 dark:hover:text-emerald-400 dark:hover:bg-slate-800/60 transition-all"
-          title="LinkedIn"
+          title={SITE_PROFILE.linkedin.label}
         >
           <svg class="h-5 w-5" viewBox="0 0 16 16" aria-hidden="true" fill="currentColor">
             <path
@@ -103,12 +80,12 @@ const isCookbook = Astro.url.pathname.startsWith("/cookbook");
           </svg>
         </a>
         <a
-          href="https://github.com/BrandonMCoffey"
+          href={SITE_PROFILE.github.url}
           target="_blank"
           rel="noopener noreferrer"
-          aria-label="GitHub Profile"
+          aria-label={`${SITE_PROFILE.github.label} Profile`}
           class="p-2.5 rounded-lg text-slate-600 hover:text-emerald-600 hover:bg-slate-200/60 dark:text-slate-400 dark:hover:text-emerald-400 dark:hover:bg-slate-800/60 transition-all"
-          title="GitHub"
+          title={SITE_PROFILE.github.label}
         >
           <svg class="h-5 w-5" viewBox="0 0 16 16" aria-hidden="true" fill="currentColor">
             <path
@@ -121,7 +98,7 @@ const isCookbook = Astro.url.pathname.startsWith("/cookbook");
 
     <!-- Copyright -->
     <div class="pt-6 text-center text-xs text-slate-500 dark:text-slate-400">
-      &copy; {today.getFullYear()} Brandon Coffey. Crafted with Astro 7 & Tailwind CSS v4.
+      &copy; {today.getFullYear()} {SITE_PROFILE.name}. {FOOTER_CONTENT.copyrightAttribution}
     </div>
   </div>
 </footer>

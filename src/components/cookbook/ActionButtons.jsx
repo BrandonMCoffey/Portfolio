@@ -1,19 +1,22 @@
 import React from "react";
 import { useCookbookStorage, toggleInArray } from "../../utils/cookbookStore.js";
+import { COOKBOOK_STORAGE_KEYS, COOKBOOK_UI_TEXT } from "../../data/cookbook";
+
+const copy = COOKBOOK_UI_TEXT.actionButtons;
 
 export default function ActionButtons({ recipeId }) {
-  const [favorites] = useCookbookStorage("favorites", []);
-  const [activeRecipes] = useCookbookStorage("active_recipes", []);
+  const [favorites] = useCookbookStorage(COOKBOOK_STORAGE_KEYS.favorites, []);
+  const [activeRecipes] = useCookbookStorage(COOKBOOK_STORAGE_KEYS.activeRecipes, []);
 
   const isFavorited = favorites.includes(recipeId);
   const isActive = activeRecipes.includes(recipeId);
 
   const handleFavoriteClick = () => {
-    toggleInArray("favorites", recipeId);
+    toggleInArray(COOKBOOK_STORAGE_KEYS.favorites, recipeId);
   };
 
   const handleActiveClick = () => {
-    toggleInArray("active_recipes", recipeId);
+    toggleInArray(COOKBOOK_STORAGE_KEYS.activeRecipes, recipeId);
   };
 
   return (
@@ -25,18 +28,18 @@ export default function ActionButtons({ recipeId }) {
             ? "bg-pink-100 text-pink-700 dark:bg-pink-950/60 dark:text-pink-300 border border-pink-300 dark:border-pink-800"
             : "btn-secondary"
         }`}
-        aria-label={isFavorited ? "Remove from favorites" : "Add to favorites"}
+        aria-label={isFavorited ? copy.removeFavoriteAriaLabel : copy.addFavoriteAriaLabel}
       >
         <span className="text-base">{isFavorited ? "❤️" : "🤍"}</span>
-        <span className="text-sm font-semibold">{isFavorited ? "Favorited" : "Add to Favorites"}</span>
+        <span className="text-sm font-semibold">{isFavorited ? copy.favoritedLabel : copy.addFavoriteLabel}</span>
       </button>
       <button
         onClick={handleActiveClick}
         className={`btn inline-flex items-center gap-2 cursor-pointer transition-all ${isActive ? "btn-primary shadow-sm" : "btn-secondary"}`}
-        aria-label={isActive ? "Remove from active recipes" : "Add to active recipes"}
+        aria-label={isActive ? copy.removeActiveAriaLabel : copy.addActiveAriaLabel}
       >
         <span className="text-base">{isActive ? "✓" : "+"}</span>
-        <span className="text-sm font-semibold">{isActive ? "In Active Recipes" : "Add to Active Recipes"}</span>
+        <span className="text-sm font-semibold">{isActive ? copy.inActiveLabel : copy.addActiveLabel}</span>
       </button>
     </div>
   );

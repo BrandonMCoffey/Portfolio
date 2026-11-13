@@ -1,4 +1,3 @@
-// src/data/cv/teaching.ts
 import type { TeachingItem } from "./types";
 
 export const teachingExperience: TeachingItem[] = [

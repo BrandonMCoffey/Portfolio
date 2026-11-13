@@ -1,156 +1,93 @@
 ---
-import SectionWrapper from './SectionWrapper.astro';
+import { getCollection, render } from "astro:content";
+import { loadSectionContent } from "../../utils/sectionContent";
+import SectionWrapper from "./SectionWrapper.astro";
 
-interface Experience {
-	role: string;
-	company: string;
-	labBadge?: string;
-	time: string;
-	location: string;
-	description: string;
-	takeaways: string[];
-	filterLink: string;
-	filterText: string;
-	awards?: string[];
-}
+const { data: intro, Content: IntroContent } = await loadSectionContent("experience-intro");
 
-const experiences: Experience[] = [
-	{
-		role: "Lead Technical Artist & XR Programmer",
-		company: "VAST Lab (UT Dallas)",
-		labBadge: "Virtual & Augmented Systems Technologies",
-		time: "June 2023 - Present",
-		location: "Richardson, TX",
-		description: "Architecting interactive extended reality simulations, museum exhibits, and digital twin pipelines for high-profile institutions including the FAA and NM Museum of Art.",
-		takeaways: [
-			"Lead developer on $5M FAA Civil Aerospace Medical Institute grant research studying AR ergonomic tolerances in aviation maintenance.",
-			"Spearheaded award-winning immersive exhibitions for the New Mexico Museum of Art (Judy Chicago 'Kitty City' AR, 'Woodbearers' VR).",
-			"Authored automated DCC-to-engine rigging pipelines and editor tools that accelerated team delivery by over 40%."
-		],
-		awards: [
-			"5× Davey Awards (1 Gold, 4 Silver)",
-			"UTD ROAR Research Award 2026",
-			"Communicator Award 2025"
-		],
-		filterLink: "/projects?filter=vastlab",
-		filterText: "Explore VAST Lab Projects →"
-	},
-	{
-		role: "VR Programmer & Researcher",
-		company: "Multimodal Interaction Lab (MI Lab)",
-		labBadge: "Haptics & Multi-Sensory XR",
-		time: "Feb 2022 – May 2023",
-		location: "Richardson, TX",
-		description: "Engineered multi-sensory virtual reality systems integrating mid-air ultrasound haptics and thermal feedback alongside Computer Science PhD researchers.",
-		takeaways: [
-			"Built networked digital twins synchronizing physical laboratory spaces with virtual Meta Quest environments via IoT telemetry.",
-			"Implemented scientific flow data visualization in Unity using UltraLeap acoustic radiation pressure arrays.",
-			"Co-authored research papers presented at ACM VRST '21 and VRST '22."
-		],
-		awards: ["VRST 2022 Best Poster Award", "MI Lab Outstanding Accomplishments Award"],
-		filterLink: "/projects?filter=milab",
-		filterText: "Explore MI Lab Projects →"
-	},
-	{
-		role: "Graduate Teaching Assistant & Academic Outreach",
-		company: "UT Dallas — Bass School",
-		labBadge: "Pedagogy & Studio Mentorship",
-		time: "2023 – 2025",
-		location: "Richardson, TX",
-		description: "Mentoring multi-disciplinary student cohorts, delivering guest lectures on real-time rendering, and demonstrating lab research to VIP delegations.",
-		takeaways: [
-			"Graduate Teaching Assistant for Small Group Game Lab (Spring 2025), guiding student cohorts through milestone-driven agile sprints.",
-			"Delivered guest lectures on technical art pipelines, shader writing, and tool automation in Unreal Engine and Unity.",
-			"Conducted over 28 VIP lab showcases and research demonstrations for institutional partners including the Texas House & Senate, State Farm, and Perot Museum."
-		],
-		awards: ["$5M+ Grant Research Contributor"],
-		filterLink: "/cv",
-		filterText: "View Full Curriculum Vitae →"
-	},
-	{
-		role: "Lead Gameplay Programmer",
-		company: "UTD Game Lab",
-		labBadge: "Studio Game Production",
-		time: "Jan 2022 – Dec 2022",
-		location: "Richardson, TX",
-		description: "Directed programming teams in multi-disciplinary studio cohorts (40+ artists, animators, and designers) releasing polished 3D titles on strict deadlines.",
-		takeaways: [
-			"Architected modular player locomotion, procedural camera rigs, and extensible gameplay state machines in Unreal Engine and Unity.",
-			"Established multi-branch Git workflow and continuous integration practices across all developer sub-teams.",
-			"Profiled runtime bottlenecks, mitigating canvas raycasting overhead and optimizing mesh draw calls for 60fps locked targets."
-		],
-		filterLink: "/projects?filter=gamelab",
-		filterText: "Explore Game Lab Projects →"
-	}
-];
+const experienceEntries = await getCollection("experience");
+experienceEntries.sort((a, b) => a.data.order - b.data.order);
+
+const renderedExperiences = await Promise.all(
+  experienceEntries.map(async (entry) => ({
+    data: entry.data,
+    Content: (await render(entry)).Content,
+  })),
+);
 ---
 
-<SectionWrapper id="experience" title="Professional Experience">
-	<div class="max-w-3xl mx-auto text-center mb-12 -mt-4">
-		<p class="text-base sm:text-lg text-slate-600 dark:text-slate-400">
-			Track record of research grants, museum installations, and collaborative engineering.
-		</p>
-	</div>
+<SectionWrapper id="experience" title={intro.title}>
+  <div class="max-w-3xl mx-auto text-center mb-12 -mt-4">
+    <div class="text-base sm:text-lg text-slate-600 dark:text-slate-400 [&>p]:m-0">
+      <IntroContent />
+    </div>
+  </div>
 
-	<div class="max-w-4xl mx-auto">
-		<div class="space-y-8">
-			{experiences.map((exp: Experience) => (
-				<div class="surface-card p-6 sm:p-7 hover:border-emerald-500/40 transition-colors">
-					<!-- Top metadata header -->
-					<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 mb-4 border-b border-slate-200/60 dark:border-slate-800/60">
-						<div>
-							<span class="inline-block px-2 py-0.5 rounded text-[11px] font-mono font-bold uppercase tracking-wider bg-emerald-100 text-emerald-800 dark:bg-emerald-950/70 dark:text-emerald-300 mb-1.5">
-								{exp.company}
-							</span>
-							<h3 class="text-xl font-bold text-slate-900 dark:text-white leading-tight">
-								{exp.role}
-							</h3>
-						</div>
-						<div class="text-left sm:text-right">
-							<time class="text-xs font-mono font-semibold text-slate-500 dark:text-slate-400 block">{exp.time}</time>
-							<span class="text-xs text-slate-400 dark:text-slate-500">{exp.location}</span>
-						</div>
-					</div>
+  <div class="max-w-4xl mx-auto">
+    <div class="space-y-8">
+      {
+        renderedExperiences.map(({ data: exp, Content }) => (
+          <div class="surface-card p-6 sm:p-7 hover:border-emerald-500/40 transition-colors">
+            <!-- Top metadata header -->
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 mb-4 border-b border-slate-200/60 dark:border-slate-800/60">
+              <div>
+                <span class="inline-block px-2 py-0.5 rounded text-[11px] font-mono font-bold uppercase tracking-wider bg-emerald-100 text-emerald-800 dark:bg-emerald-950/70 dark:text-emerald-300 mb-1.5">
+                  {exp.company}
+                </span>
+                <h3 class="text-xl font-bold text-slate-900 dark:text-white leading-tight">{exp.role}</h3>
+              </div>
+              <div class="text-left sm:text-right">
+                <time class="text-xs font-mono font-semibold text-slate-500 dark:text-slate-400 block">{exp.time}</time>
+                <span class="text-xs text-slate-400 dark:text-slate-500">{exp.location}</span>
+              </div>
+            </div>
 
-					<!-- Description -->
-					<p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 mb-4 leading-relaxed">
-						{exp.description}
-					</p>
+            <!-- Description -->
+            <div class="text-sm sm:text-base text-slate-600 dark:text-slate-300 mb-4 leading-relaxed [&>p]:m-0">
+              <Content />
+            </div>
 
-					<!-- Key takeaways / achievements -->
-					<ul class="space-y-2 mb-5">
-						{exp.takeaways.map((item: string) => (
-							<li class="flex items-start text-xs sm:text-sm text-slate-700 dark:text-slate-300">
-								<svg class="h-4 w-4 text-emerald-600 dark:text-emerald-400 shrink-0 mr-2 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
-									<path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
-								</svg>
-								<span>{item}</span>
-							</li>
-						))}
-					</ul>
+            <!-- Key takeaways / achievements -->
+            <ul class="space-y-2 mb-5">
+              {exp.takeaways.map((item) => (
+                <li class="flex items-start text-xs sm:text-sm text-slate-700 dark:text-slate-300">
+                  <svg class="h-4 w-4 text-emerald-600 dark:text-emerald-400 shrink-0 mr-2 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
+                    <path
+                      fill-rule="evenodd"
+                      d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
 
-					<!-- Awards & Lab Link Footer -->
-					<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-4 border-t border-slate-200/60 dark:border-slate-800/60">
-						{exp.awards && exp.awards.length > 0 ? (
-							<div class="flex flex-wrap items-center gap-1.5">
-								{exp.awards.map((award: string) => (
-									<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-50 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300 border border-amber-300/40 dark:border-amber-700/40">
-										<span>🏅</span>
-										<span>{award}</span>
-									</span>
-								))}
-							</div>
-						) : <div></div>}
+            <!-- Awards & Lab Link Footer -->
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-4 border-t border-slate-200/60 dark:border-slate-800/60">
+              {exp.awards && exp.awards.length > 0 ? (
+                <div class="flex flex-wrap items-center gap-1.5">
+                  {exp.awards.map((award) => (
+                    <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-50 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300 border border-amber-300/40 dark:border-amber-700/40">
+                      <span>🏅</span>
+                      <span>{award}</span>
+                    </span>
+                  ))}
+                </div>
+              ) : (
+                <div />
+              )}
 
-						<a
-							href={exp.filterLink}
-							class="inline-flex items-center text-xs font-semibold text-emerald-600 hover:text-emerald-500 dark:text-emerald-400 dark:hover:text-emerald-300 transition-colors"
-						>
-							{exp.filterText}
-						</a>
-					</div>
-				</div>
-			))}
-		</div>
-	</div>
+              <a
+                href={exp.filterLink}
+                class="inline-flex items-center text-xs font-semibold text-emerald-600 hover:text-emerald-500 dark:text-emerald-400 dark:hover:text-emerald-300 transition-colors"
+              >
+                {exp.filterText}
+              </a>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
 </SectionWrapper>

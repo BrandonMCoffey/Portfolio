@@ -1,5 +1,8 @@
 ---
-// HeroSection.astro
+import { SITE_PROFILE } from "../../data/site";
+import { loadSectionContent, resolveCtaLink } from "../../utils/sectionContent";
+
+const { data, Content } = await loadSectionContent("hero");
 ---
 
 <section id="home" class="relative overflow-hidden py-16 sm:py-24 md:py-28">
@@ -22,26 +25,43 @@
       <div class="lg:col-span-7 text-center lg:text-left">
         <!-- Main Headline -->
         <h1 class="mb-6 tracking-tight text-4xl sm:text-5xl lg:text-5xl font-extrabold text-slate-900 dark:text-white leading-[1.1]">
-          Building High-Performance{" "}
+          {data.headlinePrefix}{" "}
           <span
             class="bg-gradient-to-r from-emerald-600 via-teal-500 to-cyan-500 dark:from-emerald-400 dark:via-teal-300 dark:to-cyan-400 bg-clip-text text-transparent"
           >
-            Real-Time Graphics
+            {data.headlineHighlight}
           </span>{" "}
-          & Immersive Worlds
+          {data.headlineSuffix}
         </h1>
 
         <!-- Value Proposition -->
-        <p class="text-lg sm:text-xl text-slate-600 dark:text-slate-300 mb-8 leading-relaxed font-normal max-w-2xl mx-auto lg:mx-0">
-          Specializing in Unreal Engine, Unity, custom shaders, and cross-platform XR pipelines. Bridging the gap between cutting-edge visual fidelity
-          and reliable systems engineering.
-        </p>
+        <div
+          class="text-lg sm:text-xl text-slate-600 dark:text-slate-300 mb-8 leading-relaxed font-normal max-w-2xl mx-auto lg:mx-0 [&>p]:m-0"
+        >
+          <Content />
+        </div>
 
         <!-- Action Buttons -->
         <div class="flex flex-wrap items-center justify-center lg:justify-start gap-3.5 mb-8">
-          <a href="/#projects" class="btn btn-primary text-sm sm:text-base px-6 py-3 shadow-md shadow-emerald-600/20"> Explore Projects </a>
-          <a href="/cv" class="btn btn-secondary text-sm sm:text-base px-6 py-3 font-semibold"> CV & Research </a>
-          <a href="/#contact" class="btn btn-secondary text-sm sm:text-base px-6 py-3"> Get In Touch </a>
+          {
+            data.ctas.map((cta) => {
+              const { href, isExternal } = resolveCtaLink(cta);
+              return (
+                <a
+                  href={href}
+                  target={isExternal ? "_blank" : undefined}
+                  rel={isExternal ? "noopener noreferrer" : undefined}
+                  class:list={[
+                    "btn text-sm sm:text-base px-6 py-3",
+                    cta.variant === "primary" ? "btn-primary shadow-md shadow-emerald-600/20" : "btn-secondary",
+                    cta.emphasize && "font-semibold",
+                  ]}
+                >
+                  {cta.label}
+                </a>
+              );
+            })
+          }
         </div>
       </div>
 
@@ -53,39 +73,38 @@
           <!-- Top profile bar -->
           <div class="flex items-center gap-4 mb-5 pb-5 border-b border-slate-200/60 dark:border-slate-800/60">
             <img
-              src="/profile-picture.png"
-              alt="Brandon Coffey"
+              src={SITE_PROFILE.avatar}
+              alt={SITE_PROFILE.name}
               class="h-16 w-16 rounded-xl object-cover ring-2 ring-emerald-500/30 shadow-md"
               loading="eager"
             />
             <div>
-              <h3 class="text-base font-bold text-slate-900 dark:text-white">Brandon Coffey</h3>
-              <p class="text-xs text-slate-500 dark:text-slate-400 font-mono">UT Dallas MFA &bull; VAST Lab</p>
+              <h3 class="text-base font-bold text-slate-900 dark:text-white">{SITE_PROFILE.name}</h3>
+              <p class="text-xs text-slate-500 dark:text-slate-400 font-mono">{SITE_PROFILE.heroSubtitle}</p>
             </div>
           </div>
 
           <!-- Primary Tech Stack -->
           <div class="dark:border-slate-800/60 gap-4 mb-5 pb-5 border-b border-slate-200/60 dark:border-slate-800/60">
-            <div class="text-[11px] font-mono uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2">Primary Toolkit:</div>
+            <div class="text-[11px] font-mono uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2">{data.toolkitLabel}</div>
             <div class="flex flex-wrap gap-1.5">
-              <span class="badge bg-slate-200/70 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300">Unreal Engine</span>
-              <span class="badge bg-slate-200/70 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300">Unity</span>
-              <span class="badge bg-slate-200/70 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300">C++</span>
-              <span class="badge bg-slate-200/70 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300">C#</span>
-              <span class="badge bg-slate-200/70 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300">Python</span>
-              <span class="badge bg-slate-200/70 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300">HLSL</span>
+              {
+                data.toolkit.map((item) => (
+                  <span class="badge bg-slate-200/70 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300">{item}</span>
+                ))
+              }
             </div>
           </div>
 
           <!-- Social Links -->
           <div class="flex items-center justify-center lg:justify-start gap-4 text-slate-500 dark:text-slate-400">
-            <span class="text-xs font-mono uppercase tracking-wider text-slate-400 dark:text-slate-500">Connect:</span>
+            <span class="text-xs font-mono uppercase tracking-wider text-slate-400 dark:text-slate-500">{data.connectLabel}</span>
             <a
-              href="https://github.com/BrandonMCoffey"
+              href={SITE_PROFILE.github.url}
               target="_blank"
               rel="noopener noreferrer"
               class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
-              title="GitHub"
+              title={SITE_PROFILE.github.label}
             >
               <svg class="h-5 w-5" viewBox="0 0 16 16" fill="currentColor"
                 ><path
@@ -94,11 +113,11 @@
               >
             </a>
             <a
-              href="https://www.linkedin.com/in/brandon-coffey-36a802191"
+              href={SITE_PROFILE.linkedin.url}
               target="_blank"
               rel="noopener noreferrer"
               class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
-              title="LinkedIn"
+              title={SITE_PROFILE.linkedin.label}
             >
               <svg class="h-5 w-5" viewBox="0 0 16 16" fill="currentColor"
                 ><path
@@ -107,7 +126,7 @@
               >
             </a>
             <a
-              href="mailto:business@brandoncoffey.com"
+              href={`mailto:${SITE_PROFILE.email}`}
               target="_blank"
               rel="noopener noreferrer"
               class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"

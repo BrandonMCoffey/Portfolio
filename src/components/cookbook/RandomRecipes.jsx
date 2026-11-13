@@ -1,7 +1,8 @@
 import React, { useMemo } from "react";
 import RecipeCard from "./RecipeCard";
+import { COOKBOOK_DEFAULTS } from "../../data/cookbook";
 
-export default function RandomRecipes({ allRecipes, count }) {
+export default function RandomRecipes({ allRecipes, count = COOKBOOK_DEFAULTS.recommendationsCount }) {
   const randomRecipes = useMemo(() => {
     if (!allRecipes || allRecipes.length === 0) return [];
 

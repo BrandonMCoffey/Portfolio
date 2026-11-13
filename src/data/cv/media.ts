@@ -1,4 +1,3 @@
-// src/data/cv/media.ts
 import type { MediaRecognitionItem } from "./types";
 
 export const mediaRecognition: MediaRecognitionItem[] = [

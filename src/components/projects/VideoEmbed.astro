@@ -1,4 +1,6 @@
 ---
+import { PROJECT_COMPONENTS_TEXT } from "../../data/projectsConfig";
+
 interface Props {
   videoId?: string;
   vimeoId?: string;
@@ -10,7 +12,7 @@ interface Props {
 const { videoId, vimeoId, playlistId, autoplay = false, title } = Astro.props;
 
 let videoSrc = "";
-let computedTitle = title || "Embedded video";
+let computedTitle = title || PROJECT_COMPONENTS_TEXT.videoDefaultTitle;
 
 if (vimeoId) {
   const autoParam = autoplay ? "autoplay=1&muted=1&loop=1" : "autoplay=0";

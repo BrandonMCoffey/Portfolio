@@ -1,13 +1,16 @@
+import { COOKBOOK_FORMATTER_CONFIG } from "../data/cookbook";
+
 export function formatTime(totalMinutes) {
   if (!totalMinutes || totalMinutes <= 0) {
     return "N/A";
   }
-  if (totalMinutes < 60) {
+  const { minutesPerHour } = COOKBOOK_FORMATTER_CONFIG;
+  if (totalMinutes < minutesPerHour) {
     return `${totalMinutes} min`;
   }
 
-  const hours = Math.floor(totalMinutes / 60);
-  const minutes = totalMinutes % 60;
+  const hours = Math.floor(totalMinutes / minutesPerHour);
+  const minutes = totalMinutes % minutesPerHour;
 
   const hoursText = `${hours} hour${hours > 1 ? "s" : ""}`;
   const minutesText = minutes > 0 ? ` ${minutes} min` : "";
@@ -23,14 +26,16 @@ export function formatQuantity(quantity) {
     quantity = parsed;
   }
 
+  const { roundUpThreshold, roundDownThreshold, fractionTolerance, decimalPrecisionFactor, fractionMap } =
+    COOKBOOK_FORMATTER_CONFIG;
+
   let whole = Math.floor(quantity);
   let rem = quantity - whole;
 
-  // Handle rounding near whole numbers
-  if (rem > 0.96) {
+  if (rem > roundUpThreshold) {
     whole += 1;
     rem = 0;
-  } else if (rem < 0.04) {
+  } else if (rem < roundDownThreshold) {
     rem = 0;
   }
 
@@ -38,24 +43,11 @@ export function formatQuantity(quantity) {
     return `${whole}`;
   }
 
-  const fractionMap = [
-    { val: 0.125, char: "⅛" },
-    { val: 0.25, char: "¼" },
-    { val: 0.333, char: "⅓" },
-    { val: 0.375, char: "⅜" },
-    { val: 0.5, char: "½" },
-    { val: 0.625, char: "⅝" },
-    { val: 0.666, char: "⅔" },
-    { val: 0.75, char: "¾" },
-    { val: 0.875, char: "⅞" },
-  ];
-
-  const match = fractionMap.find((f) => Math.abs(rem - f.val) < 0.04);
+  const match = fractionMap.find((f) => Math.abs(rem - f.val) < fractionTolerance);
   if (match) {
     return whole > 0 ? `${whole} ${match.char}` : match.char;
   }
 
-  // Fallback to cleanly rounded decimal
-  const rounded = Math.round(quantity * 100) / 100;
+  const rounded = Math.round(quantity * decimalPrecisionFactor) / decimalPrecisionFactor;
   return `${rounded}`;
 }

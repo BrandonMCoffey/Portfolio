@@ -3,6 +3,7 @@ import BaseHead from "../components/BaseHead.astro";
 import RecipeHeader from "../components/cookbook/RecipeHeader.astro";
 import Footer from "../components/Footer.astro";
 import ScrollToTop from "../components/ScrollToTop.astro";
+import { COOKBOOK_SITE } from "../data/site";
 
 interface Props {
   title: string;
@@ -14,7 +15,7 @@ const { title } = Astro.props;
 <!doctype html>
 <html lang="en" class="scroll-smooth">
   <head>
-    <BaseHead title={title + " | Coffey Cookbook"} description={"A curated personal recipe archive."} />
+    <BaseHead title={`${title} | ${COOKBOOK_SITE.brandName}`} description={COOKBOOK_SITE.metaDescription} />
   </head>
   <body
     class="antialiased min-h-screen flex flex-col bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-200 transition-colors duration-300"

@@ -2,6 +2,7 @@
 import { getCollection, render, type CollectionEntry } from "astro:content";
 import ProjectLayout from "../../../layouts/ProjectLayout.astro";
 import { publications, type PublicationItem } from "../../../data/cvData";
+import { PROJECT_LAYOUT_TEXT } from "../../../data/projectsConfig";
 import { mdxComponents } from "../../../components/projects/mdxComponents";
 
 export async function getStaticPaths() {
@@ -9,7 +10,6 @@ export async function getStaticPaths() {
   const projectMap = new Map<string, CollectionEntry<"projects">>();
   allProjects.forEach((p) => projectMap.set(p.id, p));
 
-  // Filter publications that have a valid projectSlug matching a project in the collection
   const validPubs = publications.filter((pub) => pub.projectSlug && projectMap.has(pub.projectSlug));
 
   return validPubs.map((pub: PublicationItem) => {
@@ -30,7 +30,7 @@ const { Content, headings } = await render(project);
   slug={project.id}
   headings={headings}
   academicSpotlight={publication}
-  backLink={{ href: "/cv#publications", label: "Back to Curriculum Vitae" }}
+  backLink={PROJECT_LAYOUT_TEXT.cvPublicationBackLink}
 >
   <Content components={mdxComponents} />
 </ProjectLayout>

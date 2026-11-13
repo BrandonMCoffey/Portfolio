@@ -3,6 +3,7 @@ import Layout from "../../layouts/RecipeLayout.astro";
 import ShoppingList from "../../components/cookbook/ShoppingList.jsx";
 import ActiveList from "../../components/cookbook/ActiveList.jsx";
 import type { Recipe } from "../../types";
+import { COOKBOOK_UI_TEXT } from "../../data/cookbook";
 
 const allJsonFiles = await import.meta.glob("/src/content/cookbook/*.json");
 const allRecipes = (
@@ -10,7 +11,7 @@ const allRecipes = (
 ).flat() as Recipe[];
 ---
 
-<Layout title="Shopping List">
+<Layout title={COOKBOOK_UI_TEXT.pages.shoppingListTitle}>
   <div class="max-w-4xl mx-auto py-2 sm:py-6 space-y-16">
     <ShoppingList allRecipes={allRecipes} client:load />
 

@@ -2,6 +2,7 @@
 import { getCollection, render, type CollectionEntry } from "astro:content";
 import ProjectLayout from "../../../layouts/ProjectLayout.astro";
 import { mediaRecognition, type MediaRecognitionItem } from "../../../data/cvData";
+import { PROJECT_LAYOUT_TEXT } from "../../../data/projectsConfig";
 import { mdxComponents } from "../../../components/projects/mdxComponents";
 
 export async function getStaticPaths() {
@@ -9,7 +10,6 @@ export async function getStaticPaths() {
   const projectMap = new Map<string, CollectionEntry<"projects">>();
   allProjects.forEach((p) => projectMap.set(p.id, p));
 
-  // Filter media items that have a valid projectSlug matching a project in the collection
   const validMedia = mediaRecognition.filter((m) => m.projectSlug && projectMap.has(m.projectSlug));
 
   return validMedia.map((media: MediaRecognitionItem) => {
@@ -30,7 +30,7 @@ const { Content, headings } = await render(project);
   slug={project.id}
   headings={headings}
   mediaSpotlight={media}
-  backLink={{ href: "/cv#media", label: "Back to Curriculum Vitae" }}
+  backLink={PROJECT_LAYOUT_TEXT.cvMediaBackLink}
 >
   <Content components={mdxComponents} />
 </ProjectLayout>

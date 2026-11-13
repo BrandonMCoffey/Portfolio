@@ -1,8 +1,23 @@
 import React, { useState, useEffect, useRef } from "react";
 import { formatQuantity } from "../../utils/formatters.js";
+import {
+  COOKBOOK_FORMATTER_CONFIG,
+  COOKBOOK_INTERACTIVE_CONFIG,
+  COOKBOOK_RECOMMENDATION_CONFIG,
+  COOKBOOK_UI_TEXT,
+} from "../../data/cookbook";
 
-export default function RecipeInteractiveView({ ingredients = [], instructions = [], baseServings = 4, recipeTitle = "" }) {
-  const [scale, setScale] = useState(1);
+const copy = COOKBOOK_UI_TEXT.interactive;
+const { decimalPrecisionFactor } = COOKBOOK_FORMATTER_CONFIG;
+const { defaultScale, minScale, scaleStep, quickMultipliers, servingsRoundingFactor, minDisplayedServings } = COOKBOOK_INTERACTIVE_CONFIG;
+
+export default function RecipeInteractiveView({
+  ingredients = [],
+  instructions = [],
+  baseServings = COOKBOOK_RECOMMENDATION_CONFIG.defaultBaseServings,
+  recipeTitle = "",
+}) {
+  const [scale, setScale] = useState(defaultScale);
   const [checkedIngredients, setCheckedIngredients] = useState(new Set());
   const [completedSteps, setCompletedSteps] = useState(new Set());
   const [wakeLockActive, setWakeLockActive] = useState(false);
@@ -76,7 +91,10 @@ export default function RecipeInteractiveView({ ingredients = [], instructions =
     }
   };
 
-  const currentServings = Math.max(1, Math.round(baseServings * scale * 10) / 10);
+  const currentServings = Math.max(
+    minDisplayedServings,
+    Math.round(baseServings * scale * servingsRoundingFactor) / servingsRoundingFactor,
+  );
 
   return (
     <div className="space-y-8">
@@ -84,15 +102,15 @@ export default function RecipeInteractiveView({ ingredients = [], instructions =
       <div className="print:hidden rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white/70 dark:bg-slate-900/60 backdrop-blur-md p-4 sm:p-5 shadow-xs flex flex-col md:flex-row items-center justify-between gap-4">
         {/* Servings Scaler */}
         <div className="flex items-center gap-3 w-full md:w-auto justify-between md:justify-start">
-          <span className="text-xs font-mono font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Servings:</span>
+          <span className="text-xs font-mono font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">{copy.servingsLabel}</span>
 
           <div className="flex items-center gap-1.5">
             <button
               type="button"
-              onClick={() => setScale(Math.max(0.25, Math.round((scale - 0.25) * 100) / 100))}
+              onClick={() => setScale(Math.max(minScale, Math.round((scale - scaleStep) * decimalPrecisionFactor) / decimalPrecisionFactor))}
               className="h-8 w-8 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold hover:bg-slate-100 dark:hover:bg-slate-700 flex items-center justify-center cursor-pointer transition-colors"
-              title="Decrease servings"
-              aria-label="Decrease servings"
+              title={copy.decreaseAriaLabel}
+              aria-label={copy.decreaseAriaLabel}
             >
               &minus;
             </button>
@@ -101,10 +119,10 @@ export default function RecipeInteractiveView({ ingredients = [], instructions =
 
             <button
               type="button"
-              onClick={() => setScale(Math.round((scale + 0.25) * 100) / 100)}
+              onClick={() => setScale(Math.round((scale + scaleStep) * decimalPrecisionFactor) / decimalPrecisionFactor)}
               className="h-8 w-8 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold hover:bg-slate-100 dark:hover:bg-slate-700 flex items-center justify-center cursor-pointer transition-colors"
-              title="Increase servings"
-              aria-label="Increase servings"
+              title={copy.increaseAriaLabel}
+              aria-label={copy.increaseAriaLabel}
             >
               &#43;
             </button>
@@ -112,7 +130,7 @@ export default function RecipeInteractiveView({ ingredients = [], instructions =
 
           {/* Quick Multiplier Chips */}
           <div className="flex items-center gap-1 ml-2">
-            {[0.5, 1, 2, 3].map((multiplier) => (
+            {quickMultipliers.map((multiplier) => (
               <button
                 key={multiplier}
                 type="button"
@@ -140,10 +158,10 @@ export default function RecipeInteractiveView({ ingredients = [], instructions =
                   ? "bg-emerald-500 text-slate-950 border-emerald-400 font-bold shadow-xs"
                   : "bg-slate-100 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700"
               }`}
-              title="Keep screen awake while cooking"
+              title={copy.cookModeTitle}
             >
               <span>{wakeLockActive ? "🟢" : "⚪"}</span>
-              <span>{wakeLockActive ? "Cook Mode Active" : "Keep Screen Awake"}</span>
+              <span>{wakeLockActive ? copy.cookModeActiveLabel : copy.cookModeIdleLabel}</span>
             </button>
           )}
 
@@ -151,7 +169,7 @@ export default function RecipeInteractiveView({ ingredients = [], instructions =
             type="button"
             onClick={handlePrint}
             className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors cursor-pointer"
-            title="Print clean recipe sheet"
+            title={copy.printTitle}
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path
@@ -160,7 +178,7 @@ export default function RecipeInteractiveView({ ingredients = [], instructions =
                 d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"
               />
             </svg>
-            <span>Print</span>
+            <span>{copy.printLabel}</span>
           </button>
         </div>
       </div>
@@ -170,8 +188,12 @@ export default function RecipeInteractiveView({ ingredients = [], instructions =
         {/* Ingredients Section (5 cols) */}
         <div className="md:col-span-5 space-y-4">
           <div className="flex items-center justify-between">
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-white">Ingredients</h2>
-            {scale !== 1 && <span className="text-xs font-mono text-emerald-600 dark:text-emerald-400 font-semibold">Scaled {scale}x</span>}
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-white">{copy.ingredientsHeading}</h2>
+            {scale !== defaultScale && (
+              <span className="text-xs font-mono text-emerald-600 dark:text-emerald-400 font-semibold">
+                {copy.scaledPrefix} {scale}x
+              </span>
+            )}
           </div>
 
           <ul className="space-y-2">
@@ -198,7 +220,9 @@ export default function RecipeInteractiveView({ ingredients = [], instructions =
                   <span
                     className={`ml-3 text-sm leading-relaxed ${isChecked ? "line-through text-slate-400 dark:text-slate-500" : "text-slate-800 dark:text-slate-200"}`}
                   >
-                    {scaledQty === 0 || !scaledQty ? `${ing.item}, to taste` : `${formatQuantity(scaledQty)} ${ing.unit || ""} ${ing.item}`}
+                    {scaledQty === 0 || !scaledQty
+                      ? `${ing.item}, ${copy.toTasteSuffix}`
+                      : `${formatQuantity(scaledQty)} ${ing.unit || ""} ${ing.item}`}
                     {ing.note && <span className="text-xs text-slate-500 dark:text-slate-400 italic ml-1">({ing.note})</span>}
                   </span>
                 </label>
@@ -210,9 +234,9 @@ export default function RecipeInteractiveView({ ingredients = [], instructions =
         {/* Instructions Section (7 cols) */}
         <div className="md:col-span-7 space-y-4">
           <div className="flex items-center justify-between">
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-white">Instructions</h2>
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-white">{copy.instructionsHeading}</h2>
             <span className="text-xs font-mono text-slate-400 dark:text-slate-500">
-              {completedSteps.size} of {instructions.length} completed
+              {completedSteps.size} {copy.completedOfSeparator} {instructions.length} {copy.completedSuffix}
             </span>
           </div>
 

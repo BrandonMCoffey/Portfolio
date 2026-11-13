@@ -1,4 +1,3 @@
-// src/data/cv/publications.ts
 import type { PublicationItem } from "./types";
 
 export const publications: PublicationItem[] = [

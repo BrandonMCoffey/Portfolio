@@ -1,5 +1,7 @@
 ---
 import { getCollection } from "astro:content";
+import { formatTemplate } from "../../data/site";
+import { loadSectionContent } from "../../utils/sectionContent";
 import ProjectCard from "../projects/ProjectCard.astro";
 import SectionWrapper from "./SectionWrapper.astro";
 
@@ -7,13 +9,16 @@ const allProjects = await getCollection("projects");
 const featuredProjects = allProjects
   .filter((project) => project.data.filters?.includes("featured"))
   .sort((a, b) => a.data.priority - b.data.priority);
+
+const { data, Content } = await loadSectionContent("projects-showcase");
+const ctaLabel = formatTemplate(data.ctaLabelTemplate, { count: allProjects.length });
 ---
 
-<SectionWrapper id="projects" title="Featured Highlights">
+<SectionWrapper id="projects" title={data.title}>
   <div class="max-w-3xl mx-auto text-center mb-12 -mt-4">
-    <p class="text-base sm:text-lg text-slate-600 dark:text-slate-400">
-      Award-winning VR Experiences, training simulations, and interactive projects.
-    </p>
+    <div class="text-base sm:text-lg text-slate-600 dark:text-slate-400 [&>p]:m-0">
+      <Content />
+    </div>
   </div>
 
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -22,10 +27,10 @@ const featuredProjects = allProjects
 
   <div class="mt-14 text-center">
     <a
-      href="/projects"
+      href={data.ctaHref}
       class="btn btn-secondary px-8 py-3.5 text-base shadow-sm hover:border-emerald-500/50 hover:text-emerald-600 dark:hover:text-emerald-400 transition-all"
     >
-      Explore All {allProjects.length} Projects &rarr;
+      {ctaLabel}
     </a>
   </div>
 </SectionWrapper>

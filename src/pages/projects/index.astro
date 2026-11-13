@@ -2,30 +2,37 @@
 import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import ProjectCard from "../../components/projects/ProjectCard.astro";
+import {
+  POPULAR_PROJECT_TECH,
+  PROJECT_FILTER_DEFINITIONS,
+  PROJECT_SORT_OPTIONS,
+} from "../../data/projectsConfig";
+import { SITE_PROFILE, formatTemplate } from "../../data/site";
+import { loadSectionContent } from "../../utils/sectionContent";
 
 const projects = await getCollection("projects");
-// Sort by priority initially
 projects.sort((a, b) => a.data.priority - b.data.priority);
 
-// Pre-calculate filter counts for friendly labels
-const filterDefinitions = [
-  { id: "all", label: "All Projects", count: projects.length },
-  { id: "game", label: "Games", count: projects.filter((p) => p.data.filters?.includes("game")).length },
-  { id: "VR", label: "VR / AR / XR", count: projects.filter((p) => p.data.filters?.includes("VR") || p.data.filters?.includes("AR")).length },
-  { id: "graphics", label: "Graphics & VFX", count: projects.filter((p) => p.data.filters?.includes("graphics")).length },
-  { id: "utility", label: "Tools & Utilities", count: projects.filter((p) => p.data.filters?.includes("utility")).length },
-  { id: "vastlab", label: "VAST Lab", count: projects.filter((p) => p.data.filters?.includes("vastlab")).length },
-  { id: "gamelab", label: "Game Lab", count: projects.filter((p) => p.data.filters?.includes("gamelab")).length },
-  { id: "milab", label: "MI Lab", count: projects.filter((p) => p.data.filters?.includes("milab")).length },
-];
+const { data: copy, Content: ArchiveIntro } = await loadSectionContent("projects-archive");
 
-const popularTech = ["Unreal", "Unity", "C#", "Python", "Maya", "Houdini", "Blender"];
+const filterDefinitions = PROJECT_FILTER_DEFINITIONS.map((def) => {
+  if (def.id === "all") {
+    return { ...def, count: projects.length };
+  }
+  const tags = def.matchTags ?? [def.id];
+  const count = projects.filter((p) => tags.some((tag) => p.data.filters?.includes(tag))).length;
+  return { ...def, count };
+});
+
+const pageTitle = `${copy.metaTitlePrefix} | ${SITE_PROFILE.name}`;
+const pageDescription = formatTemplate(copy.metaDescriptionTemplate, {
+  count: projects.length,
+  author: SITE_PROFILE.name,
+});
+const badgeCountText = formatTemplate(copy.badgeCountTemplate, { count: projects.length });
 ---
 
-<BaseLayout
-  title="All Projects | Brandon Coffey"
-  description="Comprehensive archive of 20+ real-time graphics, XR experiences, engine tools, and game systems developed by Brandon Coffey."
->
+<BaseLayout title={pageTitle} description={pageDescription}>
   <div class="relative overflow-hidden py-16 sm:py-20">
     <!-- Background grid pattern -->
     <div
@@ -39,14 +46,14 @@ const popularTech = ["Unreal", "Unity", "C#", "Python", "Maya", "Houdini", "Blen
         <div
           class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-800 dark:text-emerald-300 border border-emerald-500/20 mb-3"
         >
-          <span>Portfolio Archive</span>
+          <span>{copy.badgeLabel}</span>
           <span>&bull;</span>
-          <span id="header-project-count">{projects.length} Works</span>
+          <span id="header-project-count">{badgeCountText}</span>
         </div>
-        <h1 class="mb-4 text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white">Projects & Case Studies</h1>
-        <p class="text-base sm:text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
-          Explore real-time simulations, virtual reality exhibits, custom editor tools, and gameplay systems. Filter by lab, medium, or tech stack.
-        </p>
+        <h1 class="mb-4 text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white">{copy.title}</h1>
+        <div class="text-base sm:text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto [&>p]:m-0">
+          <ArchiveIntro />
+        </div>
       </div>
 
       <!-- Search & Control Panel -->
@@ -68,14 +75,14 @@ const popularTech = ["Unreal", "Unity", "C#", "Python", "Maya", "Houdini", "Blen
             <input
               type="search"
               id="project-search-input"
-              placeholder="Search by title, role, tech stack, or keywords..."
+              placeholder={copy.searchPlaceholder}
               class="w-full pl-10 pr-9 py-2.5 rounded-xl border border-slate-200/90 dark:border-slate-700/80 bg-white dark:bg-slate-950/80 text-sm text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all"
             />
             <button
               id="search-clear-btn"
               type="button"
               class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 text-xs font-bold p-1"
-              aria-label="Clear search query"
+              aria-label={copy.clearSearchAriaLabel}
             >
               &times;
             </button>
@@ -83,15 +90,12 @@ const popularTech = ["Unreal", "Unity", "C#", "Python", "Maya", "Houdini", "Blen
 
           <!-- Sort Select -->
           <div class="flex items-center gap-2 self-end sm:self-auto text-xs font-semibold text-slate-600 dark:text-slate-400">
-            <label for="project-sort-select" class="whitespace-nowrap">Sort:</label>
+            <label for="project-sort-select" class="whitespace-nowrap">{copy.sortLabel}</label>
             <select
               id="project-sort-select"
               class="py-2 px-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-800 dark:text-slate-200 text-xs font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500"
             >
-              <option value="priority_asc">Default</option>
-              <option value="year_desc">Year (Newest First)</option>
-              <option value="year_asc">Year (Oldest First)</option>
-              <option value="title_asc">Title (A &rarr; Z)</option>
+              {PROJECT_SORT_OPTIONS.map((opt) => <option value={opt.value}>{opt.label}</option>)}
             </select>
           </div>
         </div>
@@ -99,7 +103,9 @@ const popularTech = ["Unreal", "Unity", "C#", "Python", "Maya", "Houdini", "Blen
         <!-- Category Filters -->
         <div class="pt-3 border-t border-slate-200/60 dark:border-slate-800/60">
           <div class="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
-            <span class="text-xs font-mono uppercase tracking-wider text-slate-400 dark:text-slate-500 mr-1 hidden sm:inline">Category:</span>
+            <span class="text-xs font-mono uppercase tracking-wider text-slate-400 dark:text-slate-500 mr-1 hidden sm:inline">
+              {copy.categoryLabel}
+            </span>
             {
               filterDefinitions.map((f) => (
                 <button
@@ -117,9 +123,11 @@ const popularTech = ["Unreal", "Unity", "C#", "Python", "Maya", "Houdini", "Blen
 
         <!-- Tech Stack Quick Filter Chips -->
         <div class="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none text-xs">
-          <span class="text-[11px] font-mono uppercase tracking-wider text-slate-400 dark:text-slate-500 mr-1 hidden sm:inline">Tech:</span>
+          <span class="text-[11px] font-mono uppercase tracking-wider text-slate-400 dark:text-slate-500 mr-1 hidden sm:inline">
+            {copy.techLabel}
+          </span>
           {
-            popularTech.map((tech) => (
+            POPULAR_PROJECT_TECH.map((tech) => (
               <button
                 type="button"
                 data-tech-filter={tech}
@@ -135,10 +143,12 @@ const popularTech = ["Unreal", "Unity", "C#", "Python", "Maya", "Houdini", "Blen
       <!-- Live Results Counter Bar -->
       <div class="flex items-center justify-between mb-6 px-1 text-xs text-slate-500 dark:text-slate-400 font-mono">
         <div>
-          Showing <span id="visible-project-count" class="font-bold text-slate-800 dark:text-slate-200">{projects.length}</span> of {projects.length} projects
+          {copy.showingPrefix}{" "}
+          <span id="visible-project-count" class="font-bold text-slate-800 dark:text-slate-200">{projects.length}</span>{" "}
+          {copy.showingMiddle} {projects.length} {copy.showingSuffix}
         </div>
         <button id="reset-all-btn" class="hidden text-emerald-600 dark:text-emerald-400 hover:underline cursor-pointer font-sans font-semibold">
-          Reset filters
+          {copy.resetLabel}
         </button>
       </div>
 
@@ -165,18 +175,20 @@ const popularTech = ["Unreal", "Unity", "C#", "Python", "Maya", "Houdini", "Blen
 
       <!-- Zero Results Placeholder -->
       <div id="no-projects-found" class="hidden py-16 text-center rounded-2xl border border-dashed border-slate-300 dark:border-slate-700 p-8 my-8">
-        <p class="text-4xl mb-3">🔍</p>
-        <h3 class="text-lg font-bold text-slate-800 dark:text-slate-200 mb-2">No projects matched your criteria</h3>
+        <p class="text-4xl mb-3">{copy.emptyEmoji}</p>
+        <h3 class="text-lg font-bold text-slate-800 dark:text-slate-200 mb-2">{copy.emptyTitle}</h3>
         <p class="text-sm text-slate-500 dark:text-slate-400 max-w-md mx-auto mb-6">
-          Try clearing your search terms or selecting a different category or tech stack filter.
+          {copy.emptyDescription}
         </p>
-        <button id="clear-search-btn" class="btn btn-secondary text-xs px-4 py-2"> Clear All Filters </button>
+        <button id="clear-search-btn" class="btn btn-secondary text-xs px-4 py-2">{copy.emptyCtaLabel}</button>
       </div>
     </div>
   </div>
 </BaseLayout>
 
 <script>
+  import { DEFAULT_PROJECT_PRIORITY } from "../../consts";
+
   function initProjectExplorer() {
     const searchInput = document.getElementById("project-search-input") as HTMLInputElement | null;
     const clearSearchBtn = document.getElementById("search-clear-btn");
@@ -295,7 +307,6 @@ const popularTech = ["Unreal", "Unity", "C#", "Python", "Maya", "Houdini", "Blen
         const platform = card.dataset.platform || "";
         const filters = card.dataset.filters || "";
 
-        // Category Match
         let matchesCategory = false;
         if (activeCategory === "all") {
           matchesCategory = true;
@@ -305,13 +316,11 @@ const popularTech = ["Unreal", "Unity", "C#", "Python", "Maya", "Houdini", "Blen
           matchesCategory = filters.includes(activeCategory.toLowerCase());
         }
 
-        // Tech Chip Match (Single-Select)
         let matchesTech = true;
         if (activeTech) {
           matchesTech = tech.includes(activeTech);
         }
 
-        // Search Query Match
         let matchesSearch = true;
         if (currentSearch) {
           const query = currentSearch.toLowerCase();
@@ -333,10 +342,9 @@ const popularTech = ["Unreal", "Unity", "C#", "Python", "Maya", "Houdini", "Blen
         }
       });
 
-      // Sort visible elements in the DOM
       cardsArray.sort((a, b) => {
-        const prioA = Number(a.dataset.priority || "99");
-        const prioB = Number(b.dataset.priority || "99");
+        const prioA = Number(a.dataset.priority ?? DEFAULT_PROJECT_PRIORITY);
+        const prioB = Number(b.dataset.priority ?? DEFAULT_PROJECT_PRIORITY);
         const yearA = Number(a.dataset.year || "0");
         const yearB = Number(b.dataset.year || "0");
         const titleA = a.dataset.title || "";
@@ -357,7 +365,6 @@ const popularTech = ["Unreal", "Unity", "C#", "Python", "Maya", "Houdini", "Blen
 
       cardsArray.forEach((card) => grid.appendChild(card));
 
-      // Update counters & UI states
       if (visibleCountSpan) visibleCountSpan.textContent = String(visibleCount);
       if (noResults) noResults.classList.toggle("hidden", visibleCount > 0);
       if (resetAllBtn) {
@@ -368,7 +375,6 @@ const popularTech = ["Unreal", "Unity", "C#", "Python", "Maya", "Houdini", "Blen
       updateUrl();
     };
 
-    // Category Button Clicks
     categoryBtns.forEach((btn) => {
       btn.addEventListener("click", () => {
         const cat = (btn.dataset.categoryFilter || "all").toLowerCase();
@@ -378,21 +384,16 @@ const popularTech = ["Unreal", "Unity", "C#", "Python", "Maya", "Houdini", "Blen
       });
     });
 
-    // Tech Chip Clicks (Single-select: clicking active clears it)
+    // Clicking an active tech chip clears the single-select filter.
     techChips.forEach((chip) => {
       chip.addEventListener("click", () => {
         const clickedTech = (chip.dataset.techFilter || "").toLowerCase();
-        if (activeTech === clickedTech) {
-          activeTech = ""; // Clear filter
-        } else {
-          activeTech = clickedTech; // Single active
-        }
+        activeTech = activeTech === clickedTech ? "" : clickedTech;
         updateTechChipStyles(activeTech);
         filterAndSortCards();
       });
     });
 
-    // Search Input
     searchInput?.addEventListener("input", () => {
       currentSearch = searchInput.value.trim();
       if (clearSearchBtn) clearSearchBtn.classList.toggle("hidden", !currentSearch);
@@ -408,13 +409,11 @@ const popularTech = ["Unreal", "Unity", "C#", "Python", "Maya", "Houdini", "Blen
       }
     });
 
-    // Sort Select
     sortSelect?.addEventListener("change", () => {
       currentSort = sortSelect.value;
       filterAndSortCards();
     });
 
-    // Reset Handlers
     const resetFilters = () => {
       activeCategory = "all";
       activeTech = "";
@@ -430,7 +429,6 @@ const popularTech = ["Unreal", "Unity", "C#", "Python", "Maya", "Houdini", "Blen
     resetAllBtn?.addEventListener("click", resetFilters);
     clearAllBtn?.addEventListener("click", resetFilters);
 
-    // Initial filter execution (handles ?filter=, ?tech=, ?q= param if present)
     if (initialFilter || initialTech || initialSearch) {
       filterAndSortCards();
     }

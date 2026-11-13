@@ -1,11 +1,8 @@
-// src/utils/cookbookStore.js
 import { useState, useEffect } from "react";
 
 const STORAGE_EVENT = "storageupdate";
 
-/**
- * Safely read a JSON-serialized key from localStorage
- */
+// Read a JSON-serialized key from localStorage.
 export function getStorage(key, defaultValue = []) {
   if (typeof window === "undefined") return defaultValue;
   try {
@@ -17,9 +14,7 @@ export function getStorage(key, defaultValue = []) {
   }
 }
 
-/**
- * Safely write a value to localStorage and notify all listeners in this and other tabs
- */
+// Write a value to localStorage and notify listeners in this and other tabs.
 export function setStorage(key, value) {
   if (typeof window === "undefined") return;
   try {
@@ -33,9 +28,7 @@ export function setStorage(key, value) {
 export const setStorageItem = setStorage;
 export const getStorageItem = getStorage;
 
-/**
- * Toggle an item ID inside an array stored in localStorage
- */
+// Toggle an item ID inside an array stored in localStorage.
 export function toggleInArray(key, id) {
   const current = getStorage(key, []);
   const next = current.includes(id) ? current.filter((itemId) => itemId !== id) : [...current, id];
@@ -43,26 +36,20 @@ export function toggleInArray(key, id) {
   return next;
 }
 
-/**
- * Check if an item exists inside an array in localStorage
- */
+// Check if an item exists inside an array in localStorage.
 export function isInStorage(key, id) {
   const current = getStorage(key, []);
   return current.includes(id);
 }
 
-/**
- * Broadcast storage update to same-tab listeners
- */
+// Broadcast storage update to same-tab listeners.
 export function dispatchStorageUpdate(key, value) {
   if (typeof window === "undefined") return;
   const event = new CustomEvent(STORAGE_EVENT, { detail: { key, value } });
   window.dispatchEvent(event);
 }
 
-/**
- * React hook to bind state seamlessly with localStorage, syncing across tabs and components
- */
+// React hook to sync state with localStorage across tabs and components.
 export function useCookbookStorage(key, defaultValue) {
   const [data, setData] = useState(() => getStorage(key, defaultValue));
 

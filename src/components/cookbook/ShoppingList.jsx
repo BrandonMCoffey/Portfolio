@@ -1,13 +1,15 @@
 import React, { useState, useMemo } from "react";
 import { formatQuantity } from "../../utils/formatters.js";
 import { useCookbookStorage, setStorageItem, toggleInArray } from "../../utils/cookbookStore.js";
+import { SHOPPING_CLIPBOARD_FEEDBACK_MS } from "../../consts";
+import { COOKBOOK_SHOPPING_SORT_OPTIONS, COOKBOOK_STORAGE_KEYS, COOKBOOK_UI_TEXT } from "../../data/cookbook";
 
-const PRIMARY_SORT_OPTIONS = ["Default", "Alphabetical (A-Z)"];
+const copy = COOKBOOK_UI_TEXT.shoppingList;
 
 function RecipeIngredientGroup({ recipe, checkedSet, onToggleCheck, primarySort, groupChecked }) {
   const sortedIngredients = useMemo(() => {
     let sorted = [...recipe.ingredients];
-    if (primarySort === "Alphabetical (A-Z)") {
+    if (primarySort === COOKBOOK_SHOPPING_SORT_OPTIONS[1]) {
       sorted.sort((a, b) => a.item.localeCompare(b.item));
     }
     if (groupChecked) {
@@ -46,7 +48,9 @@ function RecipeIngredientGroup({ recipe, checkedSet, onToggleCheck, primarySort,
                 isChecked ? "text-slate-400 dark:text-slate-500 line-through" : "text-slate-800 dark:text-slate-200 font-medium"
               }`}
             >
-              {ing.quantity === 0 || !ing.quantity ? `${ing.item}, to taste` : `${formatQuantity(ing.quantity)} ${ing.unit || ""} ${ing.item}`.trim()}
+              {ing.quantity === 0 || !ing.quantity
+                ? `${ing.item}, ${copy.toTasteSuffix}`
+                : `${formatQuantity(ing.quantity)} ${ing.unit || ""} ${ing.item}`.trim()}
               {ing.note && <span className="text-xs text-slate-500 dark:text-slate-400 italic ml-1.5 font-normal">({ing.note})</span>}
             </span>
           </label>
@@ -57,13 +61,13 @@ function RecipeIngredientGroup({ recipe, checkedSet, onToggleCheck, primarySort,
 }
 
 export default function ShoppingList({ allRecipes = [] }) {
-  const [activeIds] = useCookbookStorage("active_recipes", []);
-  const [checkedArray] = useCookbookStorage("shopping_list_checked", []);
-  const [combinedList] = useCookbookStorage("shopping_list_combined", false);
-  const [groupChecked] = useCookbookStorage("shopping_list_group_checked", true);
-  const [customItems] = useCookbookStorage("custom_shopping_items", []);
+  const [activeIds] = useCookbookStorage(COOKBOOK_STORAGE_KEYS.activeRecipes, []);
+  const [checkedArray] = useCookbookStorage(COOKBOOK_STORAGE_KEYS.shoppingListChecked, []);
+  const [combinedList] = useCookbookStorage(COOKBOOK_STORAGE_KEYS.shoppingListCombined, false);
+  const [groupChecked] = useCookbookStorage(COOKBOOK_STORAGE_KEYS.shoppingListGroupChecked, true);
+  const [customItems] = useCookbookStorage(COOKBOOK_STORAGE_KEYS.customShoppingItems, []);
 
-  const [primarySort, setPrimarySort] = useState(PRIMARY_SORT_OPTIONS[0]);
+  const [primarySort, setPrimarySort] = useState(COOKBOOK_SHOPPING_SORT_OPTIONS[0]);
   const [collapsedRecipes, setCollapsedRecipes] = useState(new Set());
   const [customInput, setCustomInput] = useState("");
   const [copiedFeedback, setCopiedFeedback] = useState(false);
@@ -105,7 +109,7 @@ export default function ShoppingList({ allRecipes = [] }) {
   // Sort aggregated ingredients
   const sortedAggregatedIngredients = useMemo(() => {
     let sorted = [...aggregatedIngredients];
-    if (primarySort === "Alphabetical (A-Z)") {
+    if (primarySort === COOKBOOK_SHOPPING_SORT_OPTIONS[1]) {
       sorted.sort((a, b) => a.item.localeCompare(b.item));
     }
     if (groupChecked) {
@@ -118,12 +122,10 @@ export default function ShoppingList({ allRecipes = [] }) {
     return sorted;
   }, [aggregatedIngredients, primarySort, groupChecked, checkedSet]);
 
-  // Single ingredient check/uncheck
   const handleToggleCheck = (key) => {
-    toggleInArray("shopping_list_checked", key);
+    toggleInArray(COOKBOOK_STORAGE_KEYS.shoppingListChecked, key);
   };
 
-  // Aggregated ingredient check/uncheck (all matching recipe sources)
   const handleToggleAggregatedCheck = (sources) => {
     const allKeys = sources.map((s) => `${s.recipeId}_${s.item.toLowerCase()}_${s.unit || ""}`);
     const areAllChecked = allKeys.every((k) => checkedSet.has(k));
@@ -135,20 +137,17 @@ export default function ShoppingList({ allRecipes = [] }) {
       const keysToAdd = allKeys.filter((k) => !checkedSet.has(k));
       nextChecked = [...checkedArray, ...keysToAdd];
     }
-    setStorageItem("shopping_list_checked", nextChecked);
+    setStorageItem(COOKBOOK_STORAGE_KEYS.shoppingListChecked, nextChecked);
   };
 
-  // Toggle combined list mode
   const handleCombinedToggle = () => {
-    setStorageItem("shopping_list_combined", !combinedList);
+    setStorageItem(COOKBOOK_STORAGE_KEYS.shoppingListCombined, !combinedList);
   };
 
-  // Toggle group checked to bottom
   const handleGroupToggle = () => {
-    setStorageItem("shopping_list_group_checked", !groupChecked);
+    setStorageItem(COOKBOOK_STORAGE_KEYS.shoppingListGroupChecked, !groupChecked);
   };
 
-  // Toggle recipe accordion collapse
   const handleCollapseToggle = (recipeId) => {
     const next = new Set(collapsedRecipes);
     if (next.has(recipeId)) next.delete(recipeId);
@@ -156,31 +155,27 @@ export default function ShoppingList({ allRecipes = [] }) {
     setCollapsedRecipes(next);
   };
 
-  // Remove a single recipe from active recipes
   const handleRemoveRecipe = (recipeId) => {
     const nextActive = activeIds.filter((id) => id !== recipeId);
-    setStorageItem("active_recipes", nextActive);
+    setStorageItem(COOKBOOK_STORAGE_KEYS.activeRecipes, nextActive);
 
     const nextChecked = checkedArray.filter((k) => !k.startsWith(`${recipeId}_`));
-    setStorageItem("shopping_list_checked", nextChecked);
+    setStorageItem(COOKBOOK_STORAGE_KEYS.shoppingListChecked, nextChecked);
   };
 
-  // Clear all checked items
   const handleClearChecked = () => {
-    setStorageItem("shopping_list_checked", []);
+    setStorageItem(COOKBOOK_STORAGE_KEYS.shoppingListChecked, []);
     const remainingCustom = customItems.filter((item) => !item.checked);
-    setStorageItem("custom_shopping_items", remainingCustom);
+    setStorageItem(COOKBOOK_STORAGE_KEYS.customShoppingItems, remainingCustom);
   };
 
-  // Clear all active recipes
   const handleClearAllActive = () => {
-    if (window.confirm("Are you sure you want to remove all recipes from your active shopping list?")) {
-      setStorageItem("active_recipes", []);
-      setStorageItem("shopping_list_checked", []);
+    if (window.confirm(copy.confirmClearAll)) {
+      setStorageItem(COOKBOOK_STORAGE_KEYS.activeRecipes, []);
+      setStorageItem(COOKBOOK_STORAGE_KEYS.shoppingListChecked, []);
     }
   };
 
-  // Custom Item Handlers
   const handleAddCustomItem = (e) => {
     e.preventDefault();
     const trimmed = customInput.trim();
@@ -192,23 +187,23 @@ export default function ShoppingList({ allRecipes = [] }) {
       checked: false,
     };
 
-    setStorageItem("custom_shopping_items", [...customItems, newItem]);
+    setStorageItem(COOKBOOK_STORAGE_KEYS.customShoppingItems, [...customItems, newItem]);
     setCustomInput("");
   };
 
   const handleToggleCustomItem = (id) => {
     const updated = customItems.map((item) => (item.id === id ? { ...item, checked: !item.checked } : item));
-    setStorageItem("custom_shopping_items", updated);
+    setStorageItem(COOKBOOK_STORAGE_KEYS.customShoppingItems, updated);
   };
 
   const handleDeleteCustomItem = (id) => {
     const filtered = customItems.filter((item) => item.id !== id);
-    setStorageItem("custom_shopping_items", filtered);
+    setStorageItem(COOKBOOK_STORAGE_KEYS.customShoppingItems, filtered);
   };
 
   // Copy clean checklist to clipboard
   const handleCopyChecklist = () => {
-    const lines = ["# Shopping List\n"];
+    const lines = [copy.markdownHeading];
 
     if (combinedList) {
       const uncheckedAggregated = sortedAggregatedIngredients.filter(
@@ -216,10 +211,12 @@ export default function ShoppingList({ allRecipes = [] }) {
       );
 
       if (uncheckedAggregated.length > 0) {
-        lines.push("## Ingredients");
+        lines.push(copy.markdownIngredientsHeading);
         uncheckedAggregated.forEach((ing) => {
           const qtyStr =
-            ing.totalQuantity === 0 ? `${ing.item}, to taste` : `${formatQuantity(ing.totalQuantity)} ${ing.unit || ""} ${ing.item}`.trim();
+            ing.totalQuantity === 0
+              ? `${ing.item}, ${copy.toTasteSuffix}`
+              : `${formatQuantity(ing.totalQuantity)} ${ing.unit || ""} ${ing.item}`.trim();
           lines.push(`- [ ] ${qtyStr}`);
         });
       }
@@ -229,7 +226,8 @@ export default function ShoppingList({ allRecipes = [] }) {
         if (unchecked.length > 0) {
           lines.push(`\n## ${recipe.title}`);
           unchecked.forEach((ing) => {
-            const qtyStr = ing.quantity === 0 ? `${ing.item}, to taste` : `${formatQuantity(ing.quantity)} ${ing.unit || ""} ${ing.item}`.trim();
+            const qtyStr =
+              ing.quantity === 0 ? `${ing.item}, ${copy.toTasteSuffix}` : `${formatQuantity(ing.quantity)} ${ing.unit || ""} ${ing.item}`.trim();
             lines.push(`- [ ] ${qtyStr}`);
           });
         }
@@ -238,7 +236,7 @@ export default function ShoppingList({ allRecipes = [] }) {
 
     const uncheckedCustom = customItems.filter((item) => !item.checked);
     if (uncheckedCustom.length > 0) {
-      lines.push("\n## Additional Staples");
+      lines.push(copy.markdownStaplesHeading);
       uncheckedCustom.forEach((item) => {
         lines.push(`- [ ] ${item.text}`);
       });
@@ -250,7 +248,7 @@ export default function ShoppingList({ allRecipes = [] }) {
         .writeText(text)
         .then(() => {
           setCopiedFeedback(true);
-          setTimeout(() => setCopiedFeedback(false), 2200);
+          setTimeout(() => setCopiedFeedback(false), SHOPPING_CLIPBOARD_FEEDBACK_MS);
         })
         .catch((err) => {
           console.error("Failed to copy shopping list: ", err);
@@ -287,19 +285,19 @@ export default function ShoppingList({ allRecipes = [] }) {
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
         <div>
           <div className="flex items-center gap-2 mb-2">
-            <span className="text-3xl">🛒</span>
-            <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white">Shopping List</h1>
+            <span className="text-3xl">{copy.emoji}</span>
+            <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white">{copy.title}</h1>
           </div>
-          <p className="text-slate-600 dark:text-slate-400 text-sm sm:text-base">
-            Consolidated ingredients from your active recipes and grocery staples.
-          </p>
+          <p className="text-slate-600 dark:text-slate-400 text-sm sm:text-base">{copy.subtitle}</p>
         </div>
 
         {!isEmpty && (
           <div className="flex items-center gap-2 text-xs font-mono font-semibold px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-slate-900/60 self-start sm:self-auto">
             <span className="text-emerald-600 dark:text-emerald-400">{totalCheckedCount}</span>
             <span className="text-slate-400">/</span>
-            <span className="text-slate-700 dark:text-slate-300">{totalItemsCount} items completed</span>
+            <span className="text-slate-700 dark:text-slate-300">
+              {totalItemsCount} {copy.itemsCompletedSuffix}
+            </span>
           </div>
         )}
       </div>
@@ -314,12 +312,12 @@ export default function ShoppingList({ allRecipes = [] }) {
                 type="button"
                 onClick={handleCopyChecklist}
                 className="btn btn-primary text-xs !px-3.5 !py-2 inline-flex items-center gap-2 cursor-pointer transition-all shadow-xs"
-                title="Copy markdown checklist to clipboard"
+                title={copy.copyTitle}
               >
                 {copiedFeedback ? (
                   <>
                     <span>✓</span>
-                    <span>Copied Checklist!</span>
+                    <span>{copy.copiedLabel}</span>
                   </>
                 ) : (
                   <>
@@ -330,7 +328,7 @@ export default function ShoppingList({ allRecipes = [] }) {
                         d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"
                       />
                     </svg>
-                    <span>Copy to Clipboard</span>
+                    <span>{copy.copyLabel}</span>
                   </>
                 )}
               </button>
@@ -339,7 +337,7 @@ export default function ShoppingList({ allRecipes = [] }) {
                 type="button"
                 onClick={handlePrint}
                 className="btn btn-secondary text-xs !px-3 !py-2 inline-flex items-center gap-1.5 cursor-pointer"
-                title="Print shopping list"
+                title={copy.printTitle}
               >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path
@@ -348,7 +346,7 @@ export default function ShoppingList({ allRecipes = [] }) {
                     d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"
                   />
                 </svg>
-                <span>Print</span>
+                <span>{copy.printLabel}</span>
               </button>
 
               {totalCheckedCount > 0 && (
@@ -356,9 +354,9 @@ export default function ShoppingList({ allRecipes = [] }) {
                   type="button"
                   onClick={handleClearChecked}
                   className="btn btn-secondary text-xs !px-3 !py-2 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white cursor-pointer"
-                  title="Uncheck all completed items"
+                  title={copy.clearCheckedTitle}
                 >
-                  Clear Checked
+                  {copy.clearCheckedLabel}
                 </button>
               )}
             </div>
@@ -368,9 +366,9 @@ export default function ShoppingList({ allRecipes = [] }) {
                 type="button"
                 onClick={handleClearAllActive}
                 className="text-xs font-semibold text-rose-600 dark:text-rose-400 hover:text-rose-700 dark:hover:text-rose-300 underline underline-offset-4 cursor-pointer transition-colors"
-                title="Remove all recipes from active plan"
+                title={copy.clearAllRecipesTitle}
               >
-                Clear All Recipes
+                {copy.clearAllRecipesLabel}
               </button>
             )}
           </div>
@@ -385,7 +383,7 @@ export default function ShoppingList({ allRecipes = [] }) {
                   onChange={handleCombinedToggle}
                   className="h-4 w-4 rounded text-emerald-600 focus:ring-emerald-500 cursor-pointer"
                 />
-                <span>Combine ingredients across recipes</span>
+                <span>{copy.combineLabel}</span>
               </label>
 
               <label className="flex items-center gap-2 cursor-pointer font-medium text-slate-700 dark:text-slate-300">
@@ -395,14 +393,14 @@ export default function ShoppingList({ allRecipes = [] }) {
                   onChange={handleGroupToggle}
                   className="h-4 w-4 rounded text-emerald-600 focus:ring-emerald-500 cursor-pointer"
                 />
-                <span>Group checked items at bottom</span>
+                <span>{copy.groupCheckedLabel}</span>
               </label>
             </div>
 
             <div className="flex items-center gap-2 text-xs">
-              <span className="font-mono uppercase text-slate-400 text-[11px]">Sort:</span>
+              <span className="font-mono uppercase text-slate-400 text-[11px]">{copy.sortLabel}</span>
               <div className="inline-flex rounded-lg border border-slate-200 dark:border-slate-700 p-0.5 bg-slate-100 dark:bg-slate-800">
-                {PRIMARY_SORT_OPTIONS.map((opt) => (
+                {COOKBOOK_SHOPPING_SORT_OPTIONS.map((opt) => (
                   <button
                     key={opt}
                     type="button"
@@ -425,14 +423,14 @@ export default function ShoppingList({ allRecipes = [] }) {
       {/* Empty State */}
       {isEmpty && (
         <div className="py-16 text-center rounded-2xl border border-dashed border-slate-300 dark:border-slate-800 p-8 bg-white/40 dark:bg-slate-900/40 max-w-lg mx-auto">
-          <p className="text-5xl mb-4">🛒</p>
-          <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-2">Your shopping list is empty</h2>
+          <p className="text-5xl mb-4">{copy.emptyTitle ? copy.emoji : "🛒"}</p>
+          <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-2">{copy.emptyTitle}</h2>
           <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-6">
             Add recipes to your Active list by tapping the <strong className="text-emerald-600 dark:text-emerald-400 font-bold">+</strong> button on
             recipe cards, or add custom groceries below.
           </p>
           <a href="/cookbook" className="btn btn-primary text-sm px-5 py-2.5 shadow-sm">
-            Explore All Recipes &rarr;
+            {copy.emptyCtaLabel}
           </a>
         </div>
       )}
@@ -441,9 +439,9 @@ export default function ShoppingList({ allRecipes = [] }) {
       {!isEmpty && activeRecipes.length > 0 && (
         <section className="space-y-4">
           <h2 className="text-xl font-bold text-slate-900 dark:text-white flex items-center justify-between">
-            <span>Recipe Ingredients</span>
+            <span>{copy.recipeIngredientsHeading}</span>
             <span className="text-xs font-mono text-slate-400 font-normal">
-              {activeRecipes.length} {activeRecipes.length === 1 ? "recipe" : "recipes"} active
+              {activeRecipes.length} {activeRecipes.length === 1 ? copy.recipeSingular : copy.recipePlural} {copy.activeSuffix}
             </span>
           </h2>
 
@@ -478,12 +476,12 @@ export default function ShoppingList({ allRecipes = [] }) {
                         }`}
                       >
                         {ing.totalQuantity === 0
-                          ? `${ing.item}, to taste`
+                          ? `${ing.item}, ${copy.toTasteSuffix}`
                           : `${formatQuantity(ing.totalQuantity)} ${ing.unit || ""} ${ing.item}`.trim()}
                       </span>
                       {totalSources > 1 && (
                         <span className="text-xs font-mono px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400">
-                          Used in {totalSources} recipes ({checkedCount}/{totalSources})
+                          {copy.usedInPrefix} {totalSources} {copy.recipePlural} ({checkedCount}/{totalSources})
                         </span>
                       )}
                     </div>
@@ -512,7 +510,7 @@ export default function ShoppingList({ allRecipes = [] }) {
                           type="button"
                           onClick={() => handleCollapseToggle(recipe.id)}
                           className="p-1 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 cursor-pointer"
-                          aria-label={isCollapsed ? "Expand recipe ingredients" : "Collapse recipe ingredients"}
+                          aria-label={isCollapsed ? copy.expandIngredientsAriaLabel : copy.collapseIngredientsAriaLabel}
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -535,13 +533,13 @@ export default function ShoppingList({ allRecipes = [] }) {
 
                       <div className="flex items-center gap-2 shrink-0 print:hidden">
                         <a href={`/cookbook/${recipe.id}`} className="btn btn-secondary text-xs !px-2.5 !py-1 font-medium">
-                          View Recipe
+                          {copy.viewRecipeLabel}
                         </a>
                         <button
                           type="button"
                           onClick={() => handleRemoveRecipe(recipe.id)}
                           className="h-7 w-7 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-slate-500 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 flex items-center justify-center transition-colors cursor-pointer"
-                          title="Remove recipe from shopping list"
+                          title={copy.removeRecipeTitle}
                           aria-label={`Remove ${recipe.title}`}
                         >
                           &times;
@@ -570,11 +568,11 @@ export default function ShoppingList({ allRecipes = [] }) {
       <section className="space-y-4 pt-4 border-t border-slate-200/80 dark:border-slate-800/80">
         <div className="flex items-center justify-between">
           <h2 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
-            <span>🧺</span> Additional Staples
+            <span>{copy.staplesEmoji}</span> {copy.staplesHeading}
           </h2>
           {customItems.length > 0 && (
             <span className="text-xs font-mono text-slate-400">
-              {customItems.filter((i) => i.checked).length} of {customItems.length} checked
+              {customItems.filter((i) => i.checked).length} {copy.checkedOfSeparator} {customItems.length} {copy.checkedSuffix}
             </span>
           )}
         </div>
@@ -585,7 +583,7 @@ export default function ShoppingList({ allRecipes = [] }) {
             type="text"
             value={customInput}
             onChange={(e) => setCustomInput(e.target.value)}
-            placeholder="Add custom item (e.g. olive oil, eggs, coffee)..."
+            placeholder={copy.customInputPlaceholder}
             className="flex-1 rounded-xl border border-slate-300 dark:border-slate-700 bg-white/80 dark:bg-slate-900/80 px-4 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-400 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
           />
           <button
@@ -593,7 +591,7 @@ export default function ShoppingList({ allRecipes = [] }) {
             disabled={!customInput.trim()}
             className="btn btn-primary text-xs !px-4 !py-2.5 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
           >
-            + Add
+            {copy.addButtonLabel}
           </button>
         </form>
 
@@ -629,7 +627,7 @@ export default function ShoppingList({ allRecipes = [] }) {
                   type="button"
                   onClick={() => handleDeleteCustomItem(item.id)}
                   className="h-6 w-6 rounded-md text-slate-400 hover:text-rose-600 hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center justify-center transition-colors cursor-pointer print:hidden"
-                  title="Delete item"
+                  title={copy.deleteItemTitle}
                 >
                   &times;
                 </button>

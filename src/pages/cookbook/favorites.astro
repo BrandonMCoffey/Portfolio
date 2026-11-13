@@ -3,6 +3,7 @@ import Layout from "../../layouts/RecipeLayout.astro";
 import FavoritesList from "../../components/cookbook/FavoritesList.jsx";
 import ActiveRecipeSidebar from "../../components/cookbook/ActiveRecipeSidebar.jsx";
 import type { Recipe } from "../../types";
+import { COOKBOOK_UI_TEXT } from "../../data/cookbook";
 
 const allJsonFiles = await import.meta.glob("/src/content/cookbook/*.json");
 const allRecipes = (
@@ -10,7 +11,7 @@ const allRecipes = (
 ).flat() as Recipe[];
 ---
 
-<Layout title="Favorites">
+<Layout title={COOKBOOK_UI_TEXT.pages.favoritesTitle}>
   <div class="space-y-8">
     <FavoritesList allRecipes={allRecipes} client:load />
 

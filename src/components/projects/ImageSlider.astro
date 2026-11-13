@@ -1,4 +1,6 @@
 ---
+import { IMAGE_SLIDER_DEFAULT_PERCENT } from "../../consts";
+import { PROJECT_COMPONENTS_TEXT } from "../../data/projectsConfig";
 import { resolveProjectImage } from "../../utils/projectImages";
 
 interface Props {
@@ -9,10 +11,17 @@ interface Props {
   afterText?: string;
 }
 
-const { beforeImage, afterImage, alt, beforeText = "Before", afterText = "After" } = Astro.props;
+const {
+  beforeImage,
+  afterImage,
+  alt,
+  beforeText = PROJECT_COMPONENTS_TEXT.imageSliderDefaultBefore,
+  afterText = PROJECT_COMPONENTS_TEXT.imageSliderDefaultAfter,
+} = Astro.props;
 
 const beforePath = resolveProjectImage(beforeImage, Astro.url.pathname);
 const afterPath = resolveProjectImage(afterImage, Astro.url.pathname);
+const initialPercent = IMAGE_SLIDER_DEFAULT_PERCENT;
 ---
 
 <div
@@ -21,13 +30,13 @@ const afterPath = resolveProjectImage(afterImage, Astro.url.pathname);
   tabindex="0"
   role="slider"
   aria-label={`Comparison slider: ${beforeText} vs ${afterText}`}
-  aria-valuenow="50"
+  aria-valuenow={initialPercent}
   aria-valuemin="0"
   aria-valuemax="100"
 >
   <!-- After Image -->
   <img src={afterPath} alt={alt} class="slider-image m-0 block" loading="lazy" draggable="false" />
-  <div class="slider-clipped-after" style="clip-path: inset(0 0 0 50%);">
+  <div class="slider-clipped-after" style={`clip-path: inset(0 0 0 ${initialPercent}%);`}>
     <div class="slider-badge slider-badge-after">
       <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-slate-900/75 text-white backdrop-blur-xs shadow-md whitespace-nowrap">
         {afterText}
@@ -36,7 +45,7 @@ const afterPath = resolveProjectImage(afterImage, Astro.url.pathname);
   </div>
 
   <!-- Before Image -->
-  <div class="slider-clipped-image" style="clip-path: inset(0 50% 0 0);">
+  <div class="slider-clipped-image" style={`clip-path: inset(0 ${100 - initialPercent}% 0 0);`}>
     <img src={beforePath} alt={alt} class="slider-image slider-image-before m-0 block" loading="lazy" draggable="false" />
     <div class="slider-badge slider-badge-before">
       <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-slate-900/75 text-white backdrop-blur-xs shadow-md whitespace-nowrap">
@@ -46,7 +55,7 @@ const afterPath = resolveProjectImage(afterImage, Astro.url.pathname);
   </div>
 
   <!-- Divider Line & Drag Handle -->
-  <div class="slider-line" style="left: 50%;">
+  <div class="slider-line" style={`left: ${initialPercent}%;`}>
     <div class="slider-handle shadow-xl shadow-slate-950/40">
       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" transform="rotate(90 12 12)"
@@ -140,13 +149,15 @@ const afterPath = resolveProjectImage(afterImage, Astro.url.pathname);
 </style>
 
 <script>
+  import { IMAGE_SLIDER_DEFAULT_PERCENT, IMAGE_SLIDER_KEYBOARD_STEP } from "../../consts";
+
   function initImageSliders() {
     document.querySelectorAll<HTMLElement>('[data-testid="image-slider"]').forEach((wrapper) => {
       if (wrapper.dataset.hasListener) return;
       wrapper.dataset.hasListener = "true";
 
       let isDragging = false;
-      let currentPercent = 50;
+      let currentPercent = IMAGE_SLIDER_DEFAULT_PERCENT;
 
       const clippedImage = wrapper.querySelector<HTMLElement>(".slider-clipped-image");
       const clippedAfter = wrapper.querySelector<HTMLElement>(".slider-clipped-after");
@@ -193,10 +204,10 @@ const afterPath = resolveProjectImage(afterImage, Astro.url.pathname);
       wrapper.addEventListener("keydown", (e: KeyboardEvent) => {
         if (e.key === "ArrowLeft") {
           e.preventDefault();
-          setPercentage(currentPercent - 5);
+          setPercentage(currentPercent - IMAGE_SLIDER_KEYBOARD_STEP);
         } else if (e.key === "ArrowRight") {
           e.preventDefault();
-          setPercentage(currentPercent + 5);
+          setPercentage(currentPercent + IMAGE_SLIDER_KEYBOARD_STEP);
         }
       });
     });

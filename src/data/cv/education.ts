@@ -1,4 +1,3 @@
-// src/data/cv/education.ts
 import type { EducationItem } from "./types";
 
 export const education: EducationItem[] = [

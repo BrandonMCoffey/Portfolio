@@ -1,4 +1,3 @@
-// src/data/cv/events.ts
 import type { ShowcaseEventItem, LabTourItem } from "./types";
 
 export const eventsAndShowcases: ShowcaseEventItem[] = [

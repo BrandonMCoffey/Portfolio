@@ -3,6 +3,7 @@ import Layout from "../../layouts/RecipeLayout.astro";
 import RecipeFilter from "../../components/cookbook/RecipeFilter.jsx";
 import ActiveRecipeSidebar from "../../components/cookbook/ActiveRecipeSidebar.jsx";
 import type { Recipe } from "../../types";
+import { COOKBOOK_UI_TEXT } from "../../data/cookbook";
 
 const allJsonFiles = await import.meta.glob("/src/content/cookbook/*.json");
 const allRecipes = (
@@ -41,7 +42,7 @@ const sortedCuisines = toSortedArray(cuisineCounts);
 const sortedDiets = toSortedArray(dietCounts);
 ---
 
-<Layout title="All Recipes">
+<Layout title={COOKBOOK_UI_TEXT.pages.indexTitle}>
   <div class="space-y-8">
     <RecipeFilter allRecipes={allRecipes} categories={sortedCategories} cuisines={sortedCuisines} diets={sortedDiets} client:load />
 

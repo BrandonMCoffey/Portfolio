@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { formatTime } from "../../utils/formatters.js";
 import { useCookbookStorage, toggleInArray } from "../../utils/cookbookStore.js";
+import { DEFAULT_FALLBACK_IMAGE } from "../../consts";
+import { COOKBOOK_DEFAULTS, COOKBOOK_STORAGE_KEYS, COOKBOOK_UI_TEXT } from "../../data/cookbook";
+
+const copy = COOKBOOK_UI_TEXT.card;
 
 export default function RecipeCard({ recipe }) {
-  const [favorites] = useCookbookStorage("favorites", []);
-  const [activeRecipes] = useCookbookStorage("active_recipes", []);
+  const [favorites] = useCookbookStorage(COOKBOOK_STORAGE_KEYS.favorites, []);
+  const [activeRecipes] = useCookbookStorage(COOKBOOK_STORAGE_KEYS.activeRecipes, []);
   const [hasError, setHasError] = useState(false);
 
   const isFavorited = favorites.includes(recipe.id);
@@ -17,7 +21,7 @@ export default function RecipeCard({ recipe }) {
   const handleFavoriteClick = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    toggleInArray("favorites", recipe.id);
+    toggleInArray(COOKBOOK_STORAGE_KEYS.favorites, recipe.id);
   };
 
   const handleActiveClick = (e) => {
@@ -25,12 +29,12 @@ export default function RecipeCard({ recipe }) {
     e.stopPropagation();
     if (isActive) {
       try {
-        const checkedItems = JSON.parse(localStorage.getItem("shopping_list_checked") || "[]");
+        const checkedItems = JSON.parse(localStorage.getItem(COOKBOOK_STORAGE_KEYS.shoppingListChecked) || "[]");
         const newCheckedItems = checkedItems.filter((key) => !key.startsWith(recipe.id));
-        localStorage.setItem("shopping_list_checked", JSON.stringify(newCheckedItems));
+        localStorage.setItem(COOKBOOK_STORAGE_KEYS.shoppingListChecked, JSON.stringify(newCheckedItems));
       } catch (_) {}
     }
-    toggleInArray("active_recipes", recipe.id);
+    toggleInArray(COOKBOOK_STORAGE_KEYS.activeRecipes, recipe.id);
   };
 
   const totalTime = (recipe.time?.prep || 0) + (recipe.time?.cook || 0) + (recipe.time?.rest || 0);
@@ -44,7 +48,7 @@ export default function RecipeCard({ recipe }) {
       {/* Thumbnail & Overlays */}
       <div className="relative aspect-video w-full overflow-hidden bg-slate-100 dark:bg-slate-800">
         <img
-          src={hasError ? "/images/default.jpg" : recipe.thumbnail || "/images/default.jpg"}
+          src={hasError ? DEFAULT_FALLBACK_IMAGE : recipe.thumbnail || DEFAULT_FALLBACK_IMAGE}
           alt={`Photo of ${recipe.title}`}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
           loading="lazy"
@@ -66,13 +70,13 @@ export default function RecipeCard({ recipe }) {
           <button
             type="button"
             onClick={handleActiveClick}
-            title={isActive ? "Remove from Active List" : "Add to Active List"}
+            title={isActive ? copy.removeActiveTitle : copy.addActiveTitle}
             className={`h-8 w-8 rounded-full flex items-center justify-center transition-all duration-200 backdrop-blur-md shadow-md cursor-pointer ${
               isActive
                 ? "bg-emerald-600 text-white scale-105"
                 : "bg-white/85 text-slate-700 hover:bg-emerald-600 hover:text-white dark:bg-slate-900/85 dark:text-slate-200 dark:hover:bg-emerald-500 dark:hover:text-slate-950"
             }`}
-            aria-label={isActive ? "Remove from Active List" : "Add to Active List"}
+            aria-label={isActive ? copy.removeActiveTitle : copy.addActiveTitle}
           >
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-4 h-4">
               {isActive ? (
@@ -86,13 +90,13 @@ export default function RecipeCard({ recipe }) {
           <button
             type="button"
             onClick={handleFavoriteClick}
-            title={isFavorited ? "Remove from Favorites" : "Add to Favorites"}
+            title={isFavorited ? copy.removeFavoriteTitle : copy.addFavoriteTitle}
             className={`h-8 w-8 rounded-full flex items-center justify-center transition-all duration-200 backdrop-blur-md shadow-md cursor-pointer ${
               isFavorited
                 ? "bg-pink-600 text-white scale-105"
                 : "bg-white/85 text-slate-700 hover:bg-pink-600 hover:text-white dark:bg-slate-900/85 dark:text-slate-200 dark:hover:bg-pink-500"
             }`}
-            aria-label={isFavorited ? "Remove from Favorites" : "Add to Favorites"}
+            aria-label={isFavorited ? copy.removeFavoriteTitle : copy.addFavoriteTitle}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -136,7 +140,11 @@ export default function RecipeCard({ recipe }) {
           <h3 className="text-lg font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors line-clamp-1 mb-1">
             {recipe.title}
           </h3>
-          {recipe.author && <p className="text-xs text-slate-500 dark:text-slate-400 font-mono mb-2">From: {recipe.author}</p>}
+          {recipe.author && (
+            <p className="text-xs text-slate-500 dark:text-slate-400 font-mono mb-2">
+              {copy.fromPrefix} {recipe.author}
+            </p>
+          )}
           {recipe.description && (
             <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 line-clamp-2 leading-relaxed">{recipe.description}</p>
           )}
@@ -145,7 +153,7 @@ export default function RecipeCard({ recipe }) {
         {/* Footer chips: Diets or Cookware */}
         <div className="pt-3 mt-3 border-t border-slate-200/60 dark:border-slate-800/60 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
           <div className="flex flex-wrap gap-1">
-            {recipe.diets?.slice(0, 2).map((diet, idx) => (
+            {recipe.diets?.slice(0, COOKBOOK_DEFAULTS.cardMaxVisibleDiets).map((diet, idx) => (
               <span
                 key={idx}
                 className="inline-block px-1.5 py-0.5 rounded text-[10px] bg-emerald-50 text-emerald-700 dark:bg-emerald-950/50 dark:text-emerald-300"
@@ -154,7 +162,9 @@ export default function RecipeCard({ recipe }) {
               </span>
             ))}
           </div>
-          <span className="font-semibold text-emerald-600 dark:text-emerald-400 group-hover:translate-x-1 transition-transform">View &rarr;</span>
+          <span className="font-semibold text-emerald-600 dark:text-emerald-400 group-hover:translate-x-1 transition-transform">
+            {copy.viewLabel}
+          </span>
         </div>
       </div>
     </a>
