@@ -16,20 +16,17 @@ const ctaLabel = formatTemplate(data.ctaLabelTemplate, { count: allProjects.leng
 
 <SectionWrapper id="projects" title={data.title}>
   <div class="max-w-3xl mx-auto text-center mb-12 -mt-4">
-    <div class="text-base sm:text-lg text-slate-600 dark:text-slate-400 [&>p]:m-0">
+    <div class="token-prose text-base sm:text-lg text-[var(--text-secondary)] [&>p]:m-0">
       <Content />
     </div>
   </div>
 
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
     {featuredProjects.map((project) => <ProjectCard project={project} />)}
   </div>
 
-  <div class="mt-14 text-center">
-    <a
-      href={data.ctaHref}
-      class="btn btn-secondary px-8 py-3.5 text-base shadow-sm hover:border-emerald-500/50 hover:text-emerald-600 dark:hover:text-emerald-400 transition-all"
-    >
+  <div class="mt-12 text-center">
+    <a href={data.ctaHref} class="btn btn-secondary px-8 py-3.5 text-base">
       {ctaLabel}
     </a>
   </div>

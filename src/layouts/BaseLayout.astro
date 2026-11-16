@@ -14,12 +14,12 @@ const { title = SITE_TITLE, description = SITE_DESCRIPTION } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en" class="scroll-smooth bg-slate-50 dark:bg-slate-950">
+<html lang="en" class="scroll-smooth">
   <head>
     <BaseHead title={title} description={description} />
   </head>
   <body
-    class="antialiased min-h-screen flex flex-col bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-200 transition-colors duration-300"
+    class="antialiased min-h-screen flex flex-col bg-[var(--bg-page)] text-[var(--text-primary)] transition-colors duration-250"
   >
     <Header />
     <main class="flex-1">
@@ -27,5 +27,12 @@ const { title = SITE_TITLE, description = SITE_DESCRIPTION } = Astro.props;
     </main>
     <Footer />
     <ScrollToTop />
+
+    <script>
+      import { initCardSpotlight } from "../scripts/cardSpotlight";
+      document.addEventListener("astro:page-load", () => {
+        initCardSpotlight();
+      });
+    </script>
   </body>
 </html>

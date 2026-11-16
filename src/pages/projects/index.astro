@@ -43,26 +43,24 @@ const badgeCountText = formatTemplate(copy.badgeCountTemplate, { count: projects
     <div class="container relative mx-auto px-4 max-w-6xl">
       <!-- Header -->
       <div class="text-center mb-12">
-        <div
-          class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-800 dark:text-emerald-300 border border-emerald-500/20 mb-3"
-        >
+        <div class="tag-accent gap-1.5 px-3 py-1.5 text-xs mb-4">
           <span>{copy.badgeLabel}</span>
-          <span>&bull;</span>
+          <span>//</span>
           <span id="header-project-count">{badgeCountText}</span>
         </div>
-        <h1 class="mb-4 text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white">{copy.title}</h1>
-        <div class="text-base sm:text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto [&>p]:m-0">
+        <h1 class="mb-4">{copy.title}</h1>
+        <div class="token-prose text-base sm:text-lg text-[var(--text-secondary)] max-w-2xl mx-auto [&>p]:m-0">
           <ArchiveIntro />
         </div>
       </div>
 
       <!-- Search & Control Panel -->
-      <div class="surface-panel mb-10 space-y-4 p-5 sm:p-6 shadow-sm">
+      <div class="surface-panel mb-10 space-y-4 p-5 sm:p-6">
         <!-- Top row: Search input & Sort selector -->
         <div class="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center justify-between">
           <div class="relative flex-1 max-w-xl">
             <svg
-              class="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400"
+              class="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-[var(--text-muted)]"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
@@ -76,12 +74,12 @@ const badgeCountText = formatTemplate(copy.badgeCountTemplate, { count: projects
               type="search"
               id="project-search-input"
               placeholder={copy.searchPlaceholder}
-              class="w-full pl-10 pr-9 py-2.5 rounded-xl border border-slate-200/90 dark:border-slate-700/80 bg-white dark:bg-slate-950/80 text-sm text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all"
+              class="w-full pl-10 pr-9 py-2.5 rounded-[3px] border border-[var(--border-strong)] bg-[var(--bg-page)] text-sm text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:border-[var(--accent-primary)] transition-colors"
             />
             <button
               id="search-clear-btn"
               type="button"
-              class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 text-xs font-bold p-1"
+              class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-[var(--text-muted)] hover:text-[var(--text-primary)] text-xs font-bold p-1 cursor-pointer"
               aria-label={copy.clearSearchAriaLabel}
             >
               &times;
@@ -89,11 +87,11 @@ const badgeCountText = formatTemplate(copy.badgeCountTemplate, { count: projects
           </div>
 
           <!-- Sort Select -->
-          <div class="flex items-center gap-2 self-end sm:self-auto text-xs font-semibold text-slate-600 dark:text-slate-400">
+          <div class="flex items-center gap-2 self-end sm:self-auto text-xs font-mono text-[var(--text-muted)]">
             <label for="project-sort-select" class="whitespace-nowrap">{copy.sortLabel}</label>
             <select
               id="project-sort-select"
-              class="py-2 px-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-800 dark:text-slate-200 text-xs font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              class="py-2 px-3 rounded-[3px] border border-[var(--border-strong)] bg-[var(--bg-page)] text-[var(--text-primary)] text-xs font-mono focus:outline-none focus:border-[var(--accent-primary)]"
             >
               {PROJECT_SORT_OPTIONS.map((opt) => <option value={opt.value}>{opt.label}</option>)}
             </select>
@@ -101,9 +99,9 @@ const badgeCountText = formatTemplate(copy.badgeCountTemplate, { count: projects
         </div>
 
         <!-- Category Filters -->
-        <div class="pt-3 border-t border-slate-200/60 dark:border-slate-800/60">
+        <div class="pt-3 border-t border-[var(--border-subtle)]">
           <div class="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
-            <span class="text-xs font-mono uppercase tracking-wider text-slate-400 dark:text-slate-500 mr-1 hidden sm:inline">
+            <span class="text-xs font-mono uppercase tracking-wider text-[var(--text-muted)] mr-1 hidden sm:inline">
               {copy.categoryLabel}
             </span>
             {
@@ -123,7 +121,7 @@ const badgeCountText = formatTemplate(copy.badgeCountTemplate, { count: projects
 
         <!-- Tech Stack Quick Filter Chips -->
         <div class="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none text-xs">
-          <span class="text-[11px] font-mono uppercase tracking-wider text-slate-400 dark:text-slate-500 mr-1 hidden sm:inline">
+          <span class="text-[11px] font-mono uppercase tracking-wider text-[var(--text-muted)] mr-1 hidden sm:inline">
             {copy.techLabel}
           </span>
           {
@@ -131,7 +129,7 @@ const badgeCountText = formatTemplate(copy.badgeCountTemplate, { count: projects
               <button
                 type="button"
                 data-tech-filter={tech}
-                class="tech-filter-chip shrink-0 px-2.5 py-1 rounded-md text-[11px] font-mono font-medium border border-slate-200/80 dark:border-slate-700/80 bg-white/60 dark:bg-slate-900/40 text-slate-600 dark:text-slate-400 hover:border-emerald-500/50 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors cursor-pointer"
+                class="tech-filter-chip shrink-0 px-2.5 py-1 rounded-[2px] text-[11px] font-mono font-medium border border-[var(--border-subtle)] bg-[var(--bg-elevated)] text-[var(--text-secondary)] hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)] transition-colors cursor-pointer"
               >
                 +{tech}
               </button>
@@ -141,19 +139,19 @@ const badgeCountText = formatTemplate(copy.badgeCountTemplate, { count: projects
       </div>
 
       <!-- Live Results Counter Bar -->
-      <div class="flex items-center justify-between mb-6 px-1 text-xs text-slate-500 dark:text-slate-400 font-mono">
+      <div class="flex items-center justify-between mb-6 px-1 text-xs text-[var(--text-muted)] font-mono">
         <div>
           {copy.showingPrefix}{" "}
-          <span id="visible-project-count" class="font-bold text-slate-800 dark:text-slate-200">{projects.length}</span>{" "}
+          <span id="visible-project-count" class="font-bold text-[var(--text-primary)]">{projects.length}</span>{" "}
           {copy.showingMiddle} {projects.length} {copy.showingSuffix}
         </div>
-        <button id="reset-all-btn" class="hidden text-emerald-600 dark:text-emerald-400 hover:underline cursor-pointer font-sans font-semibold">
+        <button id="reset-all-btn" class="hidden text-[var(--accent-primary)] hover:underline cursor-pointer font-mono font-semibold">
           {copy.resetLabel}
         </button>
       </div>
 
       <!-- Cards Grid -->
-      <div id="project-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div id="project-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
         {
           projects.map((project) => (
             <div
@@ -174,10 +172,10 @@ const badgeCountText = formatTemplate(copy.badgeCountTemplate, { count: projects
       </div>
 
       <!-- Zero Results Placeholder -->
-      <div id="no-projects-found" class="hidden py-16 text-center rounded-2xl border border-dashed border-slate-300 dark:border-slate-700 p-8 my-8">
+      <div id="no-projects-found" class="hidden py-16 text-center border border-dashed border-[var(--border-strong)] bg-[var(--bg-surface)] p-8 my-8">
         <p class="text-4xl mb-3">{copy.emptyEmoji}</p>
-        <h3 class="text-lg font-bold text-slate-800 dark:text-slate-200 mb-2">{copy.emptyTitle}</h3>
-        <p class="text-sm text-slate-500 dark:text-slate-400 max-w-md mx-auto mb-6">
+        <h3 class="text-lg font-semibold text-[var(--text-primary)] mb-2">{copy.emptyTitle}</h3>
+        <p class="text-sm text-[var(--text-muted)] max-w-md mx-auto mb-6">
           {copy.emptyDescription}
         </p>
         <button id="clear-search-btn" class="btn btn-secondary text-xs px-4 py-2">{copy.emptyCtaLabel}</button>
@@ -185,6 +183,15 @@ const badgeCountText = formatTemplate(copy.badgeCountTemplate, { count: projects
     </div>
   </div>
 </BaseLayout>
+
+<style>
+  .tech-filter-chip.active {
+    background-color: var(--accent-primary);
+    color: var(--accent-primary-fg);
+    border-color: var(--accent-primary);
+    font-weight: 700;
+  }
+</style>
 
 <script>
   import { DEFAULT_PROJECT_PRIORITY } from "../../consts";
@@ -214,15 +221,7 @@ const badgeCountText = formatTemplate(copy.badgeCountTemplate, { count: projects
       const normCat = activeCat.toLowerCase();
       categoryBtns.forEach((b) => {
         const btnCat = (b.dataset.categoryFilter || "").toLowerCase();
-        const isTarget = btnCat === normCat;
-        b.classList.toggle("active", isTarget);
-        b.classList.toggle("bg-emerald-600", isTarget);
-        b.classList.toggle("text-white", isTarget);
-        b.classList.toggle("shadow-xs", isTarget);
-        b.classList.toggle("bg-slate-100/90", !isTarget);
-        b.classList.toggle("dark:bg-slate-800/80", !isTarget);
-        b.classList.toggle("text-slate-700", !isTarget);
-        b.classList.toggle("dark:text-slate-300", !isTarget);
+        b.classList.toggle("active", btnCat === normCat);
       });
     };
 
@@ -231,23 +230,9 @@ const badgeCountText = formatTemplate(copy.badgeCountTemplate, { count: projects
       techChips.forEach((c) => {
         const isChipActive = normTech !== "" && (c.dataset.techFilter || "").toLowerCase() === normTech;
         c.classList.toggle("active", isChipActive);
-        c.classList.toggle("bg-emerald-600", isChipActive);
-        c.classList.toggle("text-white", isChipActive);
-        c.classList.toggle("border-emerald-600", isChipActive);
-        c.classList.toggle("font-bold", isChipActive);
-        c.classList.toggle("shadow-xs", isChipActive);
-        c.classList.toggle("ring-2", isChipActive);
-        c.classList.toggle("ring-emerald-500/30", isChipActive);
-        c.classList.toggle("bg-white/60", !isChipActive);
-        c.classList.toggle("dark:bg-slate-900/40", !isChipActive);
-        c.classList.toggle("text-slate-600", !isChipActive);
-        c.classList.toggle("dark:text-slate-400", !isChipActive);
-        c.classList.toggle("border-slate-200/80", !isChipActive);
-        c.classList.toggle("dark:border-slate-700/80", !isChipActive);
       });
     };
 
-    // Parse initial URL query parameters (e.g. ?filter=vastlab, ?tech=unreal, ?q=mesh)
     const urlParams = new URLSearchParams(window.location.search);
     const initialFilter = urlParams.get("filter");
     const initialTech = urlParams.get("tech");
@@ -281,15 +266,9 @@ const badgeCountText = formatTemplate(copy.badgeCountTemplate, { count: projects
 
     const updateUrl = () => {
       const params = new URLSearchParams();
-      if (activeCategory !== "all") {
-        params.set("filter", activeCategory);
-      }
-      if (activeTech) {
-        params.set("tech", activeTech);
-      }
-      if (currentSearch) {
-        params.set("q", currentSearch);
-      }
+      if (activeCategory !== "all") params.set("filter", activeCategory);
+      if (activeTech) params.set("tech", activeTech);
+      if (currentSearch) params.set("q", currentSearch);
       const queryString = params.toString();
       const newUrl = queryString ? `${window.location.pathname}?${queryString}` : window.location.pathname;
       window.history.replaceState({}, "", newUrl);
@@ -316,11 +295,7 @@ const badgeCountText = formatTemplate(copy.badgeCountTemplate, { count: projects
           matchesCategory = filters.includes(activeCategory.toLowerCase());
         }
 
-        let matchesTech = true;
-        if (activeTech) {
-          matchesTech = tech.includes(activeTech);
-        }
-
+        const matchesTech = activeTech ? tech.includes(activeTech) : true;
         let matchesSearch = true;
         if (currentSearch) {
           const query = currentSearch.toLowerCase();
@@ -334,12 +309,8 @@ const badgeCountText = formatTemplate(copy.badgeCountTemplate, { count: projects
         }
 
         const isVisible = matchesCategory && matchesTech && matchesSearch;
-        if (isVisible) {
-          card.style.display = "";
-          visibleCount++;
-        } else {
-          card.style.display = "none";
-        }
+        card.style.display = isVisible ? "" : "none";
+        if (isVisible) visibleCount++;
       });
 
       cardsArray.sort((a, b) => {
@@ -377,14 +348,12 @@ const badgeCountText = formatTemplate(copy.badgeCountTemplate, { count: projects
 
     categoryBtns.forEach((btn) => {
       btn.addEventListener("click", () => {
-        const cat = (btn.dataset.categoryFilter || "all").toLowerCase();
-        activeCategory = cat;
+        activeCategory = (btn.dataset.categoryFilter || "all").toLowerCase();
         updateCategoryPillStyles(activeCategory);
         filterAndSortCards();
       });
     });
 
-    // Clicking an active tech chip clears the single-select filter.
     techChips.forEach((chip) => {
       chip.addEventListener("click", () => {
         const clickedTech = (chip.dataset.techFilter || "").toLowerCase();

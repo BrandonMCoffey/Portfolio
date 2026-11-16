@@ -3,11 +3,9 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import {
   education,
   publications,
-  grants,
   awards,
   mediaRecognition,
   eventsAndShowcases,
-  labTours,
   teachingExperience,
   CV_PUBLICATION_VENUES,
   getCvMetrics,
@@ -18,7 +16,7 @@ import { loadSectionContent } from "../utils/sectionContent";
 const cvSection = await loadSectionContent("cv-page");
 const copy = cvSection.data;
 const metrics = getCvMetrics();
-const { totalPapers, totalAwards, daveyAwardsCount, totalMedia, totalShowcases, totalLabTours, grants: grantTotals } = metrics;
+const { totalPapers, totalAwards, daveyAwardsCount, totalMedia, totalShowcases, grants: grantTotals } = metrics;
 
 const pageTitle = `${copy.metaTitlePrefix} | ${SITE_PROFILE.name}`;
 const pageDescription = formatTemplate(copy.metaDescriptionTemplate, {
@@ -27,31 +25,22 @@ const pageDescription = formatTemplate(copy.metaDescriptionTemplate, {
 });
 ---
 
-<BaseLayout
-  title={pageTitle}
-  description={pageDescription}
->
+<BaseLayout title={pageTitle} description={pageDescription}>
   <div class="relative overflow-x-clip py-10 sm:py-16">
-    <!-- Subtle ambient glow -->
-    <div
-      class="pointer-events-none absolute top-10 left-1/2 -translate-x-1/2 h-96 w-96 rounded-full bg-emerald-500/10 dark:bg-emerald-500/15 blur-3xl print:hidden"
-    >
-    </div>
-
     <div class="container mx-auto px-4 max-w-5xl">
       <!-- Breadcrumb & Print Action -->
       <div class="flex flex-wrap items-center justify-between gap-4 mb-8 print:hidden">
-        <nav class="flex items-center gap-2 text-xs font-mono text-slate-500 dark:text-slate-400">
-          <a href="/" class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">{copy.breadcrumbHome}</a>
+        <nav class="flex items-center gap-2 text-xs font-mono text-[var(--text-muted)]">
+          <a href="/" class="text-[var(--text-secondary)] hover:text-[var(--accent-primary)] transition-colors">{copy.breadcrumbHome}</a>
           <span>/</span>
-          <span class="text-slate-900 dark:text-white font-semibold">{copy.breadcrumbCurrent}</span>
+          <span class="text-[var(--text-primary)] font-semibold">{copy.breadcrumbCurrent}</span>
         </nav>
 
         <div class="flex items-center gap-3">
           <button
             type="button"
             id="print-cv-btn"
-            class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-emerald-600 text-white hover:bg-emerald-500 shadow-sm transition-all hover:scale-105 active:scale-95 cursor-pointer"
+            class="btn btn-primary px-3.5 py-1.5 text-xs"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -73,27 +62,27 @@ const pageDescription = formatTemplate(copy.metaDescriptionTemplate, {
       </div>
 
       <!-- CV Header -->
-      <header class="cv-header mb-12 pb-8 border-b border-slate-200/80 dark:border-slate-800/80">
+      <header class="cv-header mb-12 pb-8 border-b border-[var(--border-subtle)]">
         <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div>
-            <span class="text-xs font-mono font-bold uppercase tracking-widest text-emerald-600 dark:text-emerald-400 mb-2 block">
+            <span class="text-xs font-mono font-bold uppercase tracking-widest text-[var(--accent-primary)] mb-2 block">
               {copy.eyebrow}
             </span>
-            <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white">{SITE_PROFILE.name}</h1>
-            <p class="text-lg sm:text-xl text-slate-600 dark:text-slate-300 font-medium mt-2">{SITE_PROFILE.researchRole}</p>
-            <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">
+            <h1 class="text-4xl sm:text-5xl">{SITE_PROFILE.name}</h1>
+            <p class="text-lg sm:text-xl text-[var(--text-secondary)] font-medium mt-2">{SITE_PROFILE.researchRole}</p>
+            <p class="text-sm text-[var(--text-muted)] mt-1">
               {SITE_PROFILE.affiliation}
             </p>
           </div>
 
-          <div class="flex flex-col sm:flex-row md:flex-col gap-2 text-xs font-mono text-slate-600 dark:text-slate-400">
+          <div class="flex flex-col sm:flex-row md:flex-col gap-2 text-xs font-mono text-[var(--text-secondary)]">
             <a
               href={`mailto:${SITE_PROFILE.email}`}
-              class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors flex items-center gap-1.5"
+              class="text-[var(--text-secondary)] hover:text-[var(--accent-primary)] transition-colors flex items-center gap-1.5"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                class="h-3.5 w-3.5 text-emerald-500"
+                class="h-3.5 w-3.5 text-[var(--accent-primary)]"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -106,7 +95,7 @@ const pageDescription = formatTemplate(copy.metaDescriptionTemplate, {
               href={SITE_PROFILE.orcid.url}
               target="_blank"
               rel="noopener noreferrer"
-              class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors flex items-center gap-1.5"
+              class="text-[var(--text-secondary)] hover:text-[var(--accent-primary)] transition-colors flex items-center gap-1.5"
             >
               <svg class="h-3.5 w-3.5 text-[#A6CE39] fill-current" viewBox="0 0 256 256">
                 <path d="M256 128c0 70.7-57.3 128-128 128S0 198.7 0 128 57.3 0 128 0s128 57.3 128 128z" fill="#A6CE39"></path>
@@ -120,9 +109,9 @@ const pageDescription = formatTemplate(copy.metaDescriptionTemplate, {
               href={SITE_PROFILE.linkedin.url}
               target="_blank"
               rel="noopener noreferrer"
-              class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors flex items-center gap-1.5"
+              class="text-[var(--text-secondary)] hover:text-[var(--accent-primary)] transition-colors flex items-center gap-1.5"
             >
-              <svg class="h-3.5 w-3.5 text-emerald-500" viewBox="0 0 16 16" fill="currentColor"
+              <svg class="h-3.5 w-3.5 text-[var(--accent-primary)]" viewBox="0 0 16 16" fill="currentColor"
                 ><path
                   d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854zm4.943 12.248V6.169H2.542v7.225zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248S2.4 3.226 2.4 3.934c0 .694.521 1.248 1.327 1.248zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016l.016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225z"
                 ></path></svg
@@ -133,19 +122,19 @@ const pageDescription = formatTemplate(copy.metaDescriptionTemplate, {
               href={SITE_PROFILE.github.url}
               target="_blank"
               rel="noopener noreferrer"
-              class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors flex items-center gap-1.5"
+              class="text-[var(--text-secondary)] hover:text-[var(--accent-primary)] transition-colors flex items-center gap-1.5"
             >
-              <svg class="h-3.5 w-3.5 text-emerald-500" viewBox="0 0 16 16" fill="currentColor"
+              <svg class="h-3.5 w-3.5 text-[var(--accent-primary)]" viewBox="0 0 16 16" fill="currentColor"
                 ><path
                   d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"
                 ></path></svg
               >
               <span>{SITE_PROFILE.github.display}</span>
             </a>
-            <span class="text-slate-500 flex items-center gap-1.5">
+            <span class="text-[var(--text-muted)] flex items-center gap-1.5">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                class="h-3.5 w-3.5 text-emerald-500"
+                class="h-3.5 w-3.5 text-[var(--accent-primary)]"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -156,132 +145,96 @@ const pageDescription = formatTemplate(copy.metaDescriptionTemplate, {
           </div>
         </div>
 
-        <!-- High-Impact CV Metrics Bar (Clickable Jump Buttons) -->
+        <!-- High-Impact CV Metrics Bar -->
         <div class="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4 print:hidden">
-          <!-- 1. Peer-Reviewed Papers Button -->
           <a
             href="#publications"
-            class="group p-4 rounded-xl border border-slate-200/80 dark:border-slate-800/80 bg-white/70 dark:bg-slate-900/60 backdrop-blur-md hover:border-emerald-500/60 hover:bg-emerald-50/40 dark:hover:bg-emerald-950/20 hover:scale-[1.02] transition-all block cursor-pointer"
+            class="card-brutal card-spotlight group p-4 block cursor-pointer"
             title={copy.metrics.publications.title}
           >
-            <span
-              class="text-2xl sm:text-3xl font-extrabold text-emerald-600 dark:text-emerald-400 font-mono block group-hover:translate-x-0.5 transition-transform"
-            >
+            <span class="text-2xl sm:text-3xl font-bold text-[var(--accent-primary)] font-mono block group-hover:translate-x-0.5 transition-transform">
               {totalPapers}
             </span>
-            <span class="text-xs font-semibold text-slate-800 dark:text-slate-200 flex items-center justify-between">
+            <span class="text-xs font-semibold text-[var(--text-primary)] flex items-center justify-between mt-1">
               <span>{copy.metrics.publications.label}</span>
-              <svg
-                class="h-3 w-3 text-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2.5"><path d="m19.5 8.25-7.5 7.5-7.5-7.5"></path></svg
-              >
+              <svg class="h-3 w-3 text-[var(--accent-primary)] opacity-0 group-hover:opacity-100 transition-opacity" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m19.5 8.25-7.5 7.5-7.5-7.5"></path></svg>
             </span>
-            <span class="text-[10px] text-slate-500 block font-mono mt-0.5">{copy.metrics.publications.summary}</span>
+            <span class="text-[10px] text-[var(--text-muted)] block font-mono mt-0.5">{copy.metrics.publications.summary}</span>
           </a>
 
-          <!-- 2. Honors & Awards Button -->
           <a
             href="#awards"
-            class="group p-4 rounded-xl border border-slate-200/80 dark:border-slate-800/80 bg-white/70 dark:bg-slate-900/60 backdrop-blur-md hover:border-emerald-500/60 hover:bg-emerald-50/40 dark:hover:bg-emerald-950/20 hover:scale-[1.02] transition-all block cursor-pointer"
+            class="card-brutal card-spotlight group p-4 block cursor-pointer"
             title={copy.metrics.awards.title}
           >
-            <span
-              class="text-2xl sm:text-3xl font-extrabold text-emerald-600 dark:text-emerald-400 font-mono block group-hover:translate-x-0.5 transition-transform"
-            >
+            <span class="text-2xl sm:text-3xl font-bold text-[var(--accent-primary)] font-mono block group-hover:translate-x-0.5 transition-transform">
               {totalAwards}
             </span>
-            <span class="text-xs font-semibold text-slate-800 dark:text-slate-200 flex items-center justify-between">
+            <span class="text-xs font-semibold text-[var(--text-primary)] flex items-center justify-between mt-1">
               <span>{copy.metrics.awards.label}</span>
-              <svg
-                class="h-3 w-3 text-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2.5"><path d="m19.5 8.25-7.5 7.5-7.5-7.5"></path></svg
-              >
+              <svg class="h-3 w-3 text-[var(--accent-primary)] opacity-0 group-hover:opacity-100 transition-opacity" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m19.5 8.25-7.5 7.5-7.5-7.5"></path></svg>
             </span>
-            <span class="text-[10px] text-slate-500 block font-mono mt-0.5">
+            <span class="text-[10px] text-[var(--text-muted)] block font-mono mt-0.5">
               {formatTemplate(copy.metrics.awards.summaryTemplate, { daveyCount: daveyAwardsCount })}
             </span>
           </a>
 
-          <!-- 3. Press & Media Recognition Button -->
           <a
             href="#media"
-            class="group p-4 rounded-xl border border-slate-200/80 dark:border-slate-800/80 bg-white/70 dark:bg-slate-900/60 backdrop-blur-md hover:border-emerald-500/60 hover:bg-emerald-50/40 dark:hover:bg-emerald-950/20 hover:scale-[1.02] transition-all block cursor-pointer"
+            class="card-brutal card-spotlight group p-4 block cursor-pointer"
             title={copy.metrics.media.title}
           >
-            <span
-              class="text-2xl sm:text-3xl font-extrabold text-emerald-600 dark:text-emerald-400 font-mono block group-hover:translate-x-0.5 transition-transform"
-            >
+            <span class="text-2xl sm:text-3xl font-bold text-[var(--accent-primary)] font-mono block group-hover:translate-x-0.5 transition-transform">
               {totalMedia}
             </span>
-            <span class="text-xs font-semibold text-slate-800 dark:text-slate-200 flex items-center justify-between">
+            <span class="text-xs font-semibold text-[var(--text-primary)] flex items-center justify-between mt-1">
               <span>{copy.metrics.media.label}</span>
-              <svg
-                class="h-3 w-3 text-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2.5"><path d="m19.5 8.25-7.5 7.5-7.5-7.5"></path></svg
-              >
+              <svg class="h-3 w-3 text-[var(--accent-primary)] opacity-0 group-hover:opacity-100 transition-opacity" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m19.5 8.25-7.5 7.5-7.5-7.5"></path></svg>
             </span>
-            <span class="text-[10px] text-slate-500 block font-mono mt-0.5">{copy.metrics.media.summary}</span>
+            <span class="text-[10px] text-[var(--text-muted)] block font-mono mt-0.5">{copy.metrics.media.summary}</span>
           </a>
 
-          <!-- 4. Conferences & Public Exhibitions Button -->
           <a
             href="#exhibitions"
-            class="group p-4 rounded-xl border border-slate-200/80 dark:border-slate-800/80 bg-white/70 dark:bg-slate-900/60 backdrop-blur-md hover:border-emerald-500/60 hover:bg-emerald-50/40 dark:hover:bg-emerald-950/20 hover:scale-[1.02] transition-all block cursor-pointer"
+            class="card-brutal card-spotlight group p-4 block cursor-pointer"
             title={copy.metrics.exhibitions.title}
           >
-            <span
-              class="text-2xl sm:text-3xl font-extrabold text-emerald-600 dark:text-emerald-400 font-mono block group-hover:translate-x-0.5 transition-transform"
-            >
+            <span class="text-2xl sm:text-3xl font-bold text-[var(--accent-primary)] font-mono block group-hover:translate-x-0.5 transition-transform">
               {totalShowcases}+
             </span>
-            <span class="text-xs font-semibold text-slate-800 dark:text-slate-200 flex items-center justify-between">
+            <span class="text-xs font-semibold text-[var(--text-primary)] flex items-center justify-between mt-1">
               <span>{copy.metrics.exhibitions.label}</span>
-              <svg
-                class="h-3 w-3 text-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2.5"><path d="m19.5 8.25-7.5 7.5-7.5-7.5"></path></svg
-              >
+              <svg class="h-3 w-3 text-[var(--accent-primary)] opacity-0 group-hover:opacity-100 transition-opacity" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m19.5 8.25-7.5 7.5-7.5-7.5"></path></svg>
             </span>
-            <span class="text-[10px] text-slate-500 block font-mono mt-0.5">{copy.metrics.exhibitions.summary}</span>
+            <span class="text-[10px] text-[var(--text-muted)] block font-mono mt-0.5">{copy.metrics.exhibitions.summary}</span>
           </a>
         </div>
       </header>
 
       <!-- 1. EDUCATION & ACADEMIC APPOINTMENTS -->
-      <section id="education" class="mb-14 scroll-mt-28">
+      <section id="education" class="mb-14 scroll-mt-28 py-0">
         <div class="flex items-center gap-3 mb-6">
-          <div class="p-2 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
+          <div class="p-2 rounded-[2px] bg-[var(--accent-badge-bg)] text-[var(--accent-primary)]">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
               ><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg
             >
           </div>
           <div>
-            <h2 class="text-2xl font-bold text-slate-900 dark:text-white">{copy.sections.education.title}</h2>
-            <p class="text-xs text-slate-500 font-mono">{copy.sections.education.subtitle}</p>
+            <h2 class="text-2xl">{copy.sections.education.title}</h2>
+            <p class="text-xs text-[var(--text-muted)] font-mono">{copy.sections.education.subtitle}</p>
           </div>
         </div>
 
         <div class="space-y-4">
           {
             education.map((item) => (
-              <div class="surface-panel p-5">
+              <div class="surface-panel card-spotlight p-5">
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-1">
-                  <h3 class="text-base font-bold text-slate-900 dark:text-white">{item.degree}</h3>
-                  <span class="text-xs font-mono font-semibold text-emerald-600 dark:text-emerald-400">{item.period}</span>
+                  <h3 class="text-base font-semibold text-[var(--text-primary)]">{item.degree}</h3>
+                  <span class="text-xs font-mono font-semibold text-[var(--accent-primary)]">{item.period}</span>
                 </div>
-                <p class="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">{item.institution}</p>
-                {item.notes && <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">{item.notes}</p>}
+                <p class="text-sm font-semibold text-[var(--text-secondary)] mb-2">{item.institution}</p>
+                {item.notes && <p class="text-xs text-[var(--text-muted)] leading-relaxed">{item.notes}</p>}
               </div>
             ))
           }
@@ -289,10 +242,10 @@ const pageDescription = formatTemplate(copy.metaDescriptionTemplate, {
       </section>
 
       <!-- 2. PEER-REVIEWED PUBLICATIONS -->
-      <section id="publications" class="mb-14 scroll-mt-28">
+      <section id="publications" class="mb-14 scroll-mt-28 py-0">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
           <div class="flex items-center gap-3">
-            <div class="p-2 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
+            <div class="p-2 rounded-[2px] bg-[var(--accent-badge-bg)] text-[var(--accent-primary)]">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 ><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"></path><path d="M6 6h10"></path><path d="M6 10h10"
                 ></path></svg
@@ -300,12 +253,12 @@ const pageDescription = formatTemplate(copy.metaDescriptionTemplate, {
             </div>
             <div>
               <div class="flex items-center gap-3 flex-wrap">
-                <h2 class="text-2xl font-bold text-slate-900 dark:text-white">{copy.sections.publications.title}</h2>
+                <h2 class="text-2xl">{copy.sections.publications.title}</h2>
                 <a
                   href={SITE_PROFILE.orcid.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-mono font-medium bg-[#A6CE39]/15 text-[#4d6614] dark:text-[#a6ce39] border border-[#A6CE39]/30 hover:bg-[#A6CE39]/25 transition-colors"
+                  class="tag-square gap-1.5 hover:border-[var(--accent-primary)]"
                   title={SITE_PROFILE.orcid.label}
                 >
                   <svg class="h-3.5 w-3.5 fill-[#A6CE39]" viewBox="0 0 256 256">
@@ -317,13 +270,12 @@ const pageDescription = formatTemplate(copy.metaDescriptionTemplate, {
                   <span>ORCID: {SITE_PROFILE.orcid.id}</span>
                 </a>
               </div>
-              <p class="text-xs text-slate-500 font-mono mt-0.5">
+              <p class="text-xs text-[var(--text-muted)] font-mono mt-0.5">
                 {formatTemplate(copy.sections.publications.subtitleTemplate, { count: totalPapers })}
               </p>
             </div>
           </div>
 
-          <!-- Venue Quick Filter (Client Side) -->
           <div id="pub-filter-container" class="flex items-center gap-1.5 flex-wrap print:hidden text-xs font-mono">
             <button type="button" data-pub-filter="all" class="pub-filter-btn filter-pill active cursor-pointer">
               {copy.sections.publications.allFilterLabel} ({totalPapers})
@@ -341,33 +293,26 @@ const pageDescription = formatTemplate(copy.metaDescriptionTemplate, {
         <div class="space-y-4" id="publications-list">
           {
             publications.map((pub, idx) => (
-              <article class="pub-card surface-panel p-5 transition-all hover:border-emerald-500/40" data-venue={pub.venue}>
+              <article class="pub-card card-brutal card-spotlight p-5" data-venue={pub.venue}>
                 <div class="flex flex-wrap items-center gap-2 mb-2">
-                  <span class="px-2 py-0.5 rounded text-[11px] font-mono font-bold bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border border-emerald-500/20">
-                    [{idx + 1}] {pub.venue}
-                  </span>
-                  <span class="text-xs font-mono text-slate-500 dark:text-slate-400">&bull; {pub.date}</span>
-                  <span class="text-xs font-mono text-slate-500 dark:text-slate-400">
-                    &bull; {copy.sections.publications.rolesPrefix} <strong class="text-slate-700 dark:text-slate-300">{pub.roles}</strong>
+                  <span class="tag-accent">[{idx + 1}] {pub.venue}</span>
+                  <span class="text-xs font-mono text-[var(--text-muted)]">&bull; {pub.date}</span>
+                  <span class="text-xs font-mono text-[var(--text-muted)]">
+                    &bull; {copy.sections.publications.rolesPrefix} <strong class="text-[var(--text-primary)]">{pub.roles}</strong>
                   </span>
                 </div>
 
-                <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white mb-3 leading-snug">{pub.title}</h3>
+                <h3 class="text-base sm:text-lg font-semibold text-[var(--text-primary)] mb-3 leading-snug">{pub.title}</h3>
 
-                <div class="flex flex-wrap items-center gap-2 pt-2 border-t border-slate-100 dark:border-slate-800/60 text-xs font-mono">
+                <div class="flex flex-wrap items-center gap-2 pt-2 border-t border-[var(--border-subtle)] text-xs font-mono">
                   {pub.doi && (
                     <a
                       href={pub.doi}
                       target="_blank"
                       rel="noopener noreferrer"
-                      class="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
+                      class="tag-square hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)] transition-colors"
                     >
                       <span>{copy.sections.publications.doiPrefix} {pub.doi.replace("https://doi.org/", "").replace("https://dl.acm.org/doi/", "")}</span>
-                      <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M15 3h6v6" />
-                        <path d="M10 14 21 3" />
-                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-                      </svg>
                     </a>
                   )}
 
@@ -376,14 +321,9 @@ const pageDescription = formatTemplate(copy.metaDescriptionTemplate, {
                       href={pub.paperUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      class="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
+                      class="tag-square hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)] transition-colors"
                     >
                       <span>{copy.sections.publications.officialPdfLabel}</span>
-                      <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M15 3h6v6" />
-                        <path d="M10 14 21 3" />
-                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-                      </svg>
                     </a>
                   )}
 
@@ -392,21 +332,16 @@ const pageDescription = formatTemplate(copy.metaDescriptionTemplate, {
                       href={pub.extraUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      class="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
+                      class="tag-square hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)] transition-colors"
                     >
                       <span>{copy.sections.publications.archiveLabel}</span>
-                      <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M15 3h6v6" />
-                        <path d="M10 14 21 3" />
-                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-                      </svg>
                     </a>
                   )}
 
                   {pub.projectSlug && (
                     <a
                       href={`/cv/publications/${pub.id}`}
-                      class="inline-flex items-center gap-1 ml-auto font-semibold text-emerald-600 hover:text-emerald-500 dark:text-emerald-400 dark:hover:text-emerald-300 transition-colors print:hidden"
+                      class="inline-flex items-center gap-1 ml-auto font-semibold text-[var(--accent-primary)] hover:text-[var(--accent-primary-hover)] transition-colors print:hidden"
                     >
                       <span>{copy.sections.publications.caseStudyLabel}</span>
                       <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -420,12 +355,11 @@ const pageDescription = formatTemplate(copy.metaDescriptionTemplate, {
           }
         </div>
 
-        <!-- Show All Publications Reset Button (Visible when filtered) -->
         <div id="pub-reset-container" class="mt-6 text-center hidden print:hidden">
           <button
             type="button"
             id="pub-reset-btn"
-            class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold bg-emerald-600 text-white hover:bg-emerald-500 shadow-md shadow-emerald-600/20 transition-all hover:scale-105 cursor-pointer"
+            class="btn btn-primary px-4 py-2 text-xs"
           >
             <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
               ><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path><path d="M21 3v5h-5"></path><path
@@ -436,115 +370,55 @@ const pageDescription = formatTemplate(copy.metaDescriptionTemplate, {
         </div>
       </section>
 
-      <!-- 3. GRANTS & SPONSORED RESEARCH
-      <section id="grants" class="mb-14 scroll-mt-28">
-        <div class="flex items-center gap-3 mb-6">
-          <div class="p-2 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-              ><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg
-            >
-          </div>
-          <div>
-            <h2 class="text-2xl font-bold text-slate-900 dark:text-white">{copy.sections.grants.title}</h2>
-            <p class="text-xs text-slate-500 font-mono">
-              {formatTemplate(copy.sections.grants.subtitleTemplate, {
-                total: grantTotals.combinedFormatted,
-                approved: grantTotals.approvedFormatted,
-                pending: grantTotals.pendingFormatted,
-              })}
-            </p>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {
-            grants.map((grant) => (
-              <div class="surface-panel p-5 flex flex-col justify-between">
-                <div>
-                  <div class="flex items-center justify-between gap-2 mb-2">
-                    <span
-                      class={
-                        grant.status === "Approved"
-                          ? "pill-status-released"
-                          : "pill-status-dev"
-                      }
-                    >
-                      {grant.status}
-                    </span>
-                    <span class="text-base font-extrabold font-mono text-emerald-600 dark:text-emerald-400">{grant.amount}</span>
-                  </div>
-
-                  <h3 class="text-base font-bold text-slate-900 dark:text-white mb-1.5 leading-snug">{grant.title}</h3>
-
-                  <p class="text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                    {grant.agency} {grant.program ? `— ${grant.program}` : ""}
-                  </p>
-                </div>
-
-                <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/60 flex items-center justify-between text-[11px] font-mono text-slate-500 dark:text-slate-400">
-                  <span>{copy.sections.grants.cyclePrefix} {grant.date}</span>
-                  {grant.duration && <span>{copy.sections.grants.durationPrefix} {grant.duration}</span>}
-                </div>
-              </div>
-            ))
-          }
-        </div>
-      </section> -->
-
       <!-- 4. HONORS & AWARDS -->
-      <section id="awards" class="mb-14 scroll-mt-28">
+      <section id="awards" class="mb-14 scroll-mt-28 py-0">
         <div class="flex items-center gap-3 mb-6">
-          <div class="p-2 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
+          <div class="p-2 rounded-[2px] bg-[var(--accent-badge-bg)] text-[var(--accent-primary)]">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
               ><circle cx="12" cy="8" r="6"></circle><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"></path></svg
             >
           </div>
           <div>
-            <h2 class="text-2xl font-bold text-slate-900 dark:text-white">{copy.sections.awards.title}</h2>
-            <p class="text-xs text-slate-500 font-mono">{formatTemplate(copy.sections.awards.subtitleTemplate, { count: totalAwards })}</p>
+            <h2 class="text-2xl">{copy.sections.awards.title}</h2>
+            <p class="text-xs text-[var(--text-muted)] font-mono">{formatTemplate(copy.sections.awards.subtitleTemplate, { count: totalAwards })}</p>
           </div>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {
             awards.map((award) => (
-              <div class="surface-panel p-4 flex flex-col justify-between transition-all hover:border-emerald-500/40">
+              <div class="card-brutal card-spotlight p-4 flex flex-col justify-between">
                 <div>
                   <div class="flex items-center justify-between gap-2 mb-2">
-                    <span class="text-[11px] font-mono text-slate-500">{award.organization}</span>
+                    <span class="text-[11px] font-mono text-[var(--text-muted)]">{award.organization}</span>
                     <span class="pill-date">{award.year}</span>
                   </div>
 
-                  <h3 class="text-sm font-bold text-slate-900 dark:text-white mb-1.5 leading-snug">{award.title}</h3>
+                  <h3 class="text-sm font-semibold text-[var(--text-primary)] mb-1.5 leading-snug">{award.title}</h3>
 
-                  <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">
-                    {copy.sections.awards.projectPrefix} <strong class="text-slate-800 dark:text-slate-200">{award.project}</strong>
+                  <p class="text-xs text-[var(--text-secondary)] mb-2">
+                    {copy.sections.awards.projectPrefix} <strong class="text-[var(--text-primary)]">{award.project}</strong>
                   </p>
                 </div>
 
-                <div class="mt-3 pt-2 border-t border-slate-100 dark:border-slate-800/60 flex items-center justify-between text-[11px] font-mono">
+                <div class="mt-3 pt-2 border-t border-[var(--border-subtle)] flex items-center justify-between text-[11px] font-mono">
                   {award.url ? (
                     <a
                       href={award.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      class="inline-flex items-center gap-1 text-emerald-600 dark:text-emerald-400 hover:underline"
+                      class="inline-flex items-center gap-1 text-[var(--accent-primary)] hover:underline"
                     >
                       <span>{copy.sections.awards.galleryLabel}</span>
-                      <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M15 3h6v6" />
-                        <path d="M10 14 21 3" />
-                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-                      </svg>
                     </a>
                   ) : (
-                    <span class="text-slate-400">{copy.sections.awards.institutionalFallback}</span>
+                    <span class="text-[var(--text-muted)]">{copy.sections.awards.institutionalFallback}</span>
                   )}
 
                   {award.projectSlug && (
                     <a
                       href={`/projects/${award.projectSlug}`}
-                      class="text-slate-500 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors print:hidden"
+                      class="text-[var(--text-muted)] hover:text-[var(--accent-primary)] transition-colors print:hidden"
                     >
                       {copy.sections.awards.caseStudyLabel}
                     </a>
@@ -557,47 +431,42 @@ const pageDescription = formatTemplate(copy.metaDescriptionTemplate, {
       </section>
 
       <!-- 5. PRESS & MEDIA RECOGNITION -->
-      <section id="media" class="mb-14 scroll-mt-28">
+      <section id="media" class="mb-14 scroll-mt-28 py-0">
         <div class="flex items-center gap-3 mb-6">
-          <div class="p-2 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
+          <div class="p-2 rounded-[2px] bg-[var(--accent-badge-bg)] text-[var(--accent-primary)]">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
               ><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"></path><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"
               ></path><path d="M7 21h10"></path><path d="M12 3v18"></path><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"></path></svg
             >
           </div>
           <div>
-            <h2 class="text-2xl font-bold text-slate-900 dark:text-white">{copy.sections.media.title}</h2>
-            <p class="text-xs text-slate-500 font-mono">{formatTemplate(copy.sections.media.subtitleTemplate, { count: totalMedia })}</p>
+            <h2 class="text-2xl">{copy.sections.media.title}</h2>
+            <p class="text-xs text-[var(--text-muted)] font-mono">{formatTemplate(copy.sections.media.subtitleTemplate, { count: totalMedia })}</p>
           </div>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {
             mediaRecognition.map((media) => (
-              <div class="surface-panel p-4 flex flex-col justify-between">
+              <div class="card-brutal card-spotlight p-4 flex flex-col justify-between">
                 <div>
                   <div class="flex items-center justify-between gap-2 mb-1.5">
-                    <span class="text-xs font-mono font-bold text-emerald-600 dark:text-emerald-400">{media.outlet}</span>
+                    <span class="text-xs font-mono font-bold text-[var(--accent-primary)]">{media.outlet}</span>
                     <span class="pill-date">{media.date}</span>
                   </div>
 
-                  <h3 class="text-sm font-bold text-slate-900 dark:text-white mb-2 leading-snug">{media.title}</h3>
+                  <h3 class="text-sm font-semibold text-[var(--text-primary)] mb-2 leading-snug">{media.title}</h3>
                 </div>
 
-                <div class="mt-3 pt-2 border-t border-slate-100 dark:border-slate-800/60 flex flex-wrap items-center gap-2 text-[11px] font-mono">
+                <div class="mt-3 pt-2 border-t border-[var(--border-subtle)] flex flex-wrap items-center gap-2 text-[11px] font-mono">
                   {media.articleUrl && (
                     <a
                       href={media.articleUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      class="inline-flex items-center gap-1 text-emerald-600 dark:text-emerald-400 hover:underline"
+                      class="inline-flex items-center gap-1 text-[var(--accent-primary)] hover:underline"
                     >
                       <span>{copy.sections.media.readArticleLabel}</span>
-                      <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M15 3h6v6" />
-                        <path d="M10 14 21 3" />
-                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-                      </svg>
                     </a>
                   )}
 
@@ -606,12 +475,9 @@ const pageDescription = formatTemplate(copy.metaDescriptionTemplate, {
                       href={media.videoUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      class="inline-flex items-center gap-1 text-emerald-600 dark:text-emerald-400 hover:underline"
+                      class="inline-flex items-center gap-1 text-[var(--accent-primary)] hover:underline"
                     >
                       <span>{copy.sections.media.watchVideoLabel}</span>
-                      <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <polygon points="5 3 19 12 5 21 5 3" />
-                      </svg>
                     </a>
                   )}
 
@@ -620,20 +486,16 @@ const pageDescription = formatTemplate(copy.metaDescriptionTemplate, {
                       href={media.podcastUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      class="inline-flex items-center gap-1 text-emerald-600 dark:text-emerald-400 hover:underline"
+                      class="inline-flex items-center gap-1 text-[var(--accent-primary)] hover:underline"
                     >
                       <span>{copy.sections.media.listenPodcastLabel}</span>
-                      <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="10" />
-                        <circle cx="12" cy="12" r="3" />
-                      </svg>
                     </a>
                   )}
 
                   {media.projectSlug && (
                     <a
                       href={`/cv/media/${media.id}`}
-                      class="text-slate-500 hover:text-emerald-600 dark:hover:text-emerald-400 ml-auto print:hidden font-semibold inline-flex items-center gap-1"
+                      class="text-[var(--text-muted)] hover:text-[var(--accent-primary)] ml-auto print:hidden font-semibold inline-flex items-center gap-1"
                     >
                       <span>{copy.sections.media.spotlightLabel}</span>
                       <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -649,36 +511,29 @@ const pageDescription = formatTemplate(copy.metaDescriptionTemplate, {
       </section>
 
       <!-- 6. EXHIBITIONS & ACADEMIC CONFERENCES -->
-      <section id="exhibitions" class="mb-14 scroll-mt-28">
+      <section id="exhibitions" class="mb-14 scroll-mt-28 py-0">
         <div class="flex items-center gap-3 mb-6">
-          <div class="p-2 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
+          <div class="p-2 rounded-[2px] bg-[var(--accent-badge-bg)] text-[var(--accent-primary)]">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
               ><path d="M2 3h20"></path><path d="M21 3v18H3V3"></path><path d="m9 8 3 3-3 3"></path><path d="M15 14h-3"></path></svg
             >
           </div>
           <div>
-            <h2 class="text-2xl font-bold text-slate-900 dark:text-white">{copy.sections.exhibitions.title}</h2>
-            <p class="text-xs text-slate-500 font-mono">{formatTemplate(copy.sections.exhibitions.subtitleTemplate, { count: totalShowcases })}</p>
+            <h2 class="text-2xl">{copy.sections.exhibitions.title}</h2>
+            <p class="text-xs text-[var(--text-muted)] font-mono">{formatTemplate(copy.sections.exhibitions.subtitleTemplate, { count: totalShowcases })}</p>
           </div>
         </div>
 
         <div class="space-y-3">
           {
             eventsAndShowcases.map((event) => (
-              <div class="p-4 rounded-xl border border-slate-200/80 dark:border-slate-800/80 bg-white/70 dark:bg-slate-900/60 backdrop-blur-md flex items-start justify-between gap-4">
+              <div class="surface-panel p-4 flex items-start justify-between gap-4">
                 <div>
                   <div class="flex items-center gap-2 mb-1">
-                    <h3 class="text-sm font-bold text-slate-900 dark:text-white">{event.title}</h3>
+                    <h3 class="text-sm font-semibold text-[var(--text-primary)]">{event.title}</h3>
                     {event.url && (
-                      <a href={event.url} target="_blank" rel="noopener noreferrer" class="text-emerald-600 dark:text-emerald-400 hover:underline">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          class="h-3 w-3"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-width="2"
-                        >
+                      <a href={event.url} target="_blank" rel="noopener noreferrer" class="text-[var(--accent-primary)] hover:underline">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                           <path d="M15 3h6v6" />
                           <path d="M10 14 21 3" />
                           <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
@@ -686,8 +541,8 @@ const pageDescription = formatTemplate(copy.metaDescriptionTemplate, {
                       </a>
                     )}
                   </div>
-                  <p class="text-xs text-slate-600 dark:text-slate-400">
-                    {copy.sections.exhibitions.featuredWorkPrefix} <strong class="text-slate-800 dark:text-slate-200">{event.project}</strong> &bull; {event.location}
+                  <p class="text-xs text-[var(--text-secondary)]">
+                    {copy.sections.exhibitions.featuredWorkPrefix} <strong class="text-[var(--text-primary)]">{event.project}</strong> &bull; {event.location}
                   </p>
                 </div>
 
@@ -698,51 +553,17 @@ const pageDescription = formatTemplate(copy.metaDescriptionTemplate, {
         </div>
       </section>
 
-      <!-- 7. VIP LAB TOURS & PROPOSALS
-      <section id="tours" class="mb-14 scroll-mt-28">
-        <div class="flex items-center gap-3 mb-6">
-          <div class="p-2 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-              ><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"
-              ></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg
-            >
-          </div>
-          <div>
-            <h2 class="text-2xl font-bold text-slate-900 dark:text-white">{copy.sections.tours.title}</h2>
-            <p class="text-xs text-slate-500 font-mono">{formatTemplate(copy.sections.tours.subtitleTemplate, { count: totalLabTours })}</p>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-          {
-            labTours.map((tour) => (
-              <div class="p-3.5 rounded-xl border border-slate-200/80 dark:border-slate-800/80 bg-white/70 dark:bg-slate-900/60 backdrop-blur-md text-xs">
-                <div class="flex items-center justify-between gap-2 mb-1">
-                  <span class="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
-                    {tour.type}
-                  </span>
-                  <span class="pill-date">
-                    {tour.date}
-                  </span>
-                </div>
-                <p class="font-semibold text-slate-900 dark:text-white mt-1">{tour.guest}</p>
-              </div>
-            ))
-          }
-        </div>
-      </section> -->
-
       <!-- 8. TEACHING EXPERIENCE & SERVICE -->
-      <section id="teaching" class="mb-14 scroll-mt-28">
+      <section id="teaching" class="mb-14 scroll-mt-28 py-0">
         <div class="flex items-center gap-3 mb-6">
-          <div class="p-2 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
+          <div class="p-2 rounded-[2px] bg-[var(--accent-badge-bg)] text-[var(--accent-primary)]">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
               ><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg
             >
           </div>
           <div>
-            <h2 class="text-2xl font-bold text-slate-900 dark:text-white">{copy.sections.teaching.title}</h2>
-            <p class="text-xs text-slate-500 font-mono">{copy.sections.teaching.subtitle}</p>
+            <h2 class="text-2xl">{copy.sections.teaching.title}</h2>
+            <p class="text-xs text-[var(--text-muted)] font-mono">{copy.sections.teaching.subtitle}</p>
           </div>
         </div>
 
@@ -751,12 +572,12 @@ const pageDescription = formatTemplate(copy.metaDescriptionTemplate, {
             teachingExperience.map((item) => (
               <div class="surface-panel p-5">
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-1">
-                  <h3 class="text-base font-bold text-slate-900 dark:text-white">
-                    {item.role} &mdash; <span class="text-emerald-600 dark:text-emerald-400">{item.courseOrEvent}</span>
+                  <h3 class="text-base font-semibold text-[var(--text-primary)]">
+                    {item.role} &mdash; <span class="text-[var(--accent-primary)]">{item.courseOrEvent}</span>
                   </h3>
                   <span class="pill-date">{item.term}</span>
                 </div>
-                <p class="text-xs font-mono text-slate-600 dark:text-slate-400">{item.institution}</p>
+                <p class="text-xs font-mono text-[var(--text-muted)]">{item.institution}</p>
               </div>
             ))
           }
@@ -780,30 +601,29 @@ const pageDescription = formatTemplate(copy.metaDescriptionTemplate, {
       :global(body) {
         background: #ffffff !important;
         background-color: #ffffff !important;
-        color: #0f172a !important;
+        color: #151515 !important;
         font-size: 10pt !important;
         line-height: 1.4 !important;
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
       }
 
-      /* Explicitly display CV Header in print */
       .cv-header {
         display: block !important;
         margin-bottom: 1.5rem !important;
         padding-bottom: 1rem !important;
-        border-bottom: 2px solid #cbd5e1 !important;
+        border-bottom: 2px solid #dddcd6 !important;
       }
 
-      /* Clean light mode overrides across the printed document */
       :global(.surface-panel),
       :global(.surface-card),
+      :global(.card-brutal),
       article,
       .pub-card {
         background: #ffffff !important;
         background-color: #ffffff !important;
-        border: 1px solid #e2e8f0 !important;
-        border-radius: 8px !important;
+        border: 1px solid #dddcd6 !important;
+        border-radius: 3px !important;
         box-shadow: none !important;
         backdrop-filter: none !important;
         break-inside: avoid !important;
@@ -814,13 +634,13 @@ const pageDescription = formatTemplate(copy.metaDescriptionTemplate, {
 
       :global(h1) {
         font-size: 24pt !important;
-        color: #0f172a !important;
+        color: #151515 !important;
         margin-bottom: 0.25rem !important;
       }
 
       :global(h2) {
         font-size: 14pt !important;
-        color: #0f172a !important;
+        color: #151515 !important;
         page-break-after: avoid !important;
         break-after: avoid !important;
         margin-bottom: 0.5rem !important;
@@ -828,7 +648,7 @@ const pageDescription = formatTemplate(copy.metaDescriptionTemplate, {
 
       :global(h3) {
         font-size: 11pt !important;
-        color: #0f172a !important;
+        color: #151515 !important;
         page-break-after: avoid !important;
         break-after: avoid !important;
       }
@@ -837,19 +657,19 @@ const pageDescription = formatTemplate(copy.metaDescriptionTemplate, {
       :global(span),
       :global(li),
       :global(time) {
-        color: #334155 !important;
+        color: #3f3f3f !important;
       }
 
       :global(.pill-date) {
-        background: #f1f5f9 !important;
-        color: #334155 !important;
-        border: 1px solid #cbd5e1 !important;
+        background: #eaeae6 !important;
+        color: #3f3f3f !important;
+        border: 1px solid #dddcd6 !important;
         font-size: 8.5pt !important;
         padding: 0.1rem 0.4rem !important;
       }
 
       :global(a) {
-        color: #047857 !important;
+        color: #d94916 !important;
         text-decoration: none !important;
       }
 
@@ -870,7 +690,6 @@ const pageDescription = formatTemplate(copy.metaDescriptionTemplate, {
         });
       }
 
-      // Ensure clean light mode while printing even if user has dark theme active.
       if (!(window as any).__cvPrintListenersAttached) {
         (window as any).__cvPrintListenersAttached = true;
         let wasDarkBeforePrint = false;
@@ -901,12 +720,6 @@ const pageDescription = formatTemplate(copy.metaDescriptionTemplate, {
           const btnFilter = (b.dataset.pubFilter || "").toLowerCase();
           const isActive = btnFilter === normTarget || (normTarget === "all" && btnFilter === "all");
           b.classList.toggle("active", isActive);
-          b.classList.toggle("bg-emerald-600", isActive);
-          b.classList.toggle("text-white", isActive);
-          b.classList.toggle("bg-slate-100", !isActive);
-          b.classList.toggle("dark:bg-slate-800", !isActive);
-          b.classList.toggle("text-slate-700", !isActive);
-          b.classList.toggle("dark:text-slate-300", !isActive);
         });
 
         pubCards.forEach((card) => {

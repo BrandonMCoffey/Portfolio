@@ -22,7 +22,7 @@ const gridCols = file2 ? "grid-cols-1 sm:grid-cols-2" : "grid-cols-1";
 
 <figure class="not-prose my-8">
   <div class={`grid ${gridCols} gap-4`}>
-    <div class="relative group rounded-xl overflow-hidden border border-slate-200/80 dark:border-slate-800/80 shadow-md">
+    <div class="relative group rounded-[3px] overflow-hidden border border-[var(--border-subtle)] bg-[var(--bg-surface)]">
       <img
         src={imagePath}
         alt={alt}
@@ -32,7 +32,7 @@ const gridCols = file2 ? "grid-cols-1 sm:grid-cols-2" : "grid-cols-1";
         onerror={`this.onerror=null; this.src='${defaultImagePath}';`}
       />
       <button
-        class="open-lightbox-btn absolute bottom-3 right-3 h-10 w-10 bg-slate-900/60 hover:bg-slate-900 text-white backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110 cursor-pointer"
+        class="open-lightbox-btn absolute bottom-3 right-3 h-10 w-10 bg-[color-mix(in_srgb,var(--bg-page)_82%,transparent)] hover:bg-[var(--accent-primary)] hover:text-[var(--accent-primary-fg)] text-[var(--text-primary)] border border-[var(--border-strong)] backdrop-blur-sm rounded-[6px] flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 cursor-pointer"
         title={PROJECT_COMPONENTS_TEXT.imageEmbedFullscreenTitle}
         data-src={imagePath}
         data-alt={alt}
@@ -48,7 +48,7 @@ const gridCols = file2 ? "grid-cols-1 sm:grid-cols-2" : "grid-cols-1";
     </div>
     {
       file2 && (
-        <div class="relative group rounded-xl overflow-hidden border border-slate-200/80 dark:border-slate-800/80 shadow-md">
+        <div class="relative group rounded-[3px] overflow-hidden border border-[var(--border-subtle)] bg-[var(--bg-surface)]">
           <img
             src={imagePath2}
             alt={alt2}
@@ -58,7 +58,7 @@ const gridCols = file2 ? "grid-cols-1 sm:grid-cols-2" : "grid-cols-1";
             onerror={`this.onerror=null; this.src='${defaultImagePath}';`}
           />
           <button
-            class="open-lightbox-btn absolute bottom-3 right-3 h-10 w-10 bg-slate-900/60 hover:bg-slate-900 text-white backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110 cursor-pointer"
+            class="open-lightbox-btn absolute bottom-3 right-3 h-10 w-10 bg-[color-mix(in_srgb,var(--bg-page)_82%,transparent)] hover:bg-[var(--accent-primary)] hover:text-[var(--accent-primary-fg)] text-[var(--text-primary)] border border-[var(--border-strong)] backdrop-blur-sm rounded-[6px] flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 cursor-pointer"
             title={PROJECT_COMPONENTS_TEXT.imageEmbedFullscreenTitle}
             data-src={imagePath2}
             data-alt={alt2}
@@ -75,7 +75,7 @@ const gridCols = file2 ? "grid-cols-1 sm:grid-cols-2" : "grid-cols-1";
       )
     }
   </div>
-  {caption && <figcaption class="mt-2.5 text-center text-xs font-mono text-slate-500 dark:text-slate-400 italic">{caption}</figcaption>}
+  {caption && <figcaption class="mt-2.5 text-center text-xs font-mono text-[var(--text-muted)] italic">{caption}</figcaption>}
 </figure>
 
 <script>

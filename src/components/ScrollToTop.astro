@@ -7,20 +7,20 @@ import { UI_COMMON_TEXT } from "../data/site";
   type="button"
   aria-label={UI_COMMON_TEXT.scrollToTopAriaLabel}
   title={UI_COMMON_TEXT.scrollToTopTitle}
-  class="fixed bottom-6 right-6 z-40 flex h-12 w-12 items-center justify-center rounded-full bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-slate-200/80 dark:border-slate-800/80 text-emerald-600 dark:text-emerald-400 shadow-lg shadow-slate-950/5 opacity-0 translate-y-4 pointer-events-none transition-all duration-300 hover:scale-110 hover:border-emerald-500/50 hover:shadow-emerald-500/10 active:scale-95 cursor-pointer focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 dark:focus:ring-offset-slate-950"
+  class="scroll-to-top fixed bottom-6 right-6 z-40 flex h-11 w-11 items-center justify-center rounded-[6px] bg-[var(--bg-surface)] backdrop-blur-md border border-[var(--border-strong)] text-[var(--accent-primary)] shadow-lg opacity-0 translate-y-4 pointer-events-none transition-all duration-300 hover:scale-105 hover:border-[var(--accent-primary)] active:scale-95 cursor-pointer focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)]"
 >
   <!-- Circular SVG Progress Ring -->
-  <svg class="absolute inset-0 h-full w-full -rotate-90 transform p-1" viewBox="0 0 36 36">
+  <svg class="absolute inset-0 h-full w-full -rotate-90 transform p-1.5" viewBox="0 0 36 36">
     <path
-      class="text-slate-200 dark:text-slate-800 stroke-current"
+      class="text-[var(--border-subtle)] stroke-current"
       stroke-width="3"
       fill="none"
       d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"></path>
     <path
       id="scroll-progress-ring"
-      class="text-emerald-600 dark:text-emerald-400 stroke-current transition-all duration-150"
+      class="text-[var(--accent-primary)] stroke-current transition-all duration-150"
       stroke-width="3"
-      stroke-linecap="round"
+      stroke-linecap="square"
       stroke-dasharray="100, 100"
       stroke-dashoffset="100"
       fill="none"

@@ -7,12 +7,12 @@ interface Props {
 const { id, title } = Astro.props;
 ---
 
-<section id={id}>
-  <div class="container mx-auto px-4">
+<section id={id} class="border-b border-[var(--border-subtle)] last:border-b-0">
+  <div class="container mx-auto px-4 max-w-6xl">
     <div class="text-center mb-12">
-      <h2 class="inline-block relative">
+      <h2 class="inline-block relative text-3xl sm:text-4xl">
         {title}
-        <span class="absolute -bottom-2 left-1/2 -translate-x-1/2 w-2/3 h-1 bg-emerald-500 rounded-full"></span>
+        <span class="absolute -bottom-2.5 left-1/2 -translate-x-1/2 w-14 h-[2px] bg-[var(--accent-primary)]"></span>
       </h2>
     </div>
     <slot />

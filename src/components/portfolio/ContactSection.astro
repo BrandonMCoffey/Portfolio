@@ -8,9 +8,9 @@ const { data, Content } = await loadSectionContent("contact");
 
 <SectionWrapper id="contact" title={data.title}>
   <div class="max-w-xl mx-auto text-center">
-    <div class="text-lg text-muted mb-8 [&>p]:m-0">
+    <div class="token-prose text-lg text-[var(--text-secondary)] mb-8 [&>p]:m-0">
       <Content />
     </div>
-    <a href={`mailto:${SITE_PROFILE.email}`} class="btn btn-primary text-lg">{data.ctaLabel}</a>
+    <a href={`mailto:${SITE_PROFILE.email}`} class="btn btn-primary text-base px-8 py-3.5">{data.ctaLabel}</a>
   </div>
 </SectionWrapper>

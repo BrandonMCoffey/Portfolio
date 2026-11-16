@@ -25,7 +25,7 @@ const initialPercent = IMAGE_SLIDER_DEFAULT_PERCENT;
 ---
 
 <div
-  class="image-slider-wrapper not-prose my-8 aspect-video rounded-xl overflow-hidden select-none relative cursor-ew-resize border border-slate-200/80 dark:border-slate-800/80 shadow-lg"
+  class="image-slider-wrapper not-prose my-8 aspect-video rounded-[3px] overflow-hidden select-none relative cursor-ew-resize border border-[var(--border-subtle)]"
   data-testid="image-slider"
   tabindex="0"
   role="slider"
@@ -38,7 +38,7 @@ const initialPercent = IMAGE_SLIDER_DEFAULT_PERCENT;
   <img src={afterPath} alt={alt} class="slider-image m-0 block" loading="lazy" draggable="false" />
   <div class="slider-clipped-after" style={`clip-path: inset(0 0 0 ${initialPercent}%);`}>
     <div class="slider-badge slider-badge-after">
-      <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-slate-900/75 text-white backdrop-blur-xs shadow-md whitespace-nowrap">
+      <span class="tag-square bg-[color-mix(in_srgb,var(--bg-page)_88%,transparent)] text-[var(--text-primary)] whitespace-nowrap">
         {afterText}
       </span>
     </div>
@@ -48,7 +48,7 @@ const initialPercent = IMAGE_SLIDER_DEFAULT_PERCENT;
   <div class="slider-clipped-image" style={`clip-path: inset(0 ${100 - initialPercent}% 0 0);`}>
     <img src={beforePath} alt={alt} class="slider-image slider-image-before m-0 block" loading="lazy" draggable="false" />
     <div class="slider-badge slider-badge-before">
-      <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-slate-900/75 text-white backdrop-blur-xs shadow-md whitespace-nowrap">
+      <span class="tag-square bg-[color-mix(in_srgb,var(--bg-page)_88%,transparent)] text-[var(--text-primary)] whitespace-nowrap">
         {beforeText}
       </span>
     </div>

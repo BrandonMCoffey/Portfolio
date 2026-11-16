@@ -16,29 +16,32 @@ const getNavHref = (link: NavLinkItem) => {
 ---
 
 <header
-  class="site-header sticky top-0 z-50 backdrop-blur-md bg-white/80 dark:bg-slate-950/80 border-b border-slate-200/60 dark:border-slate-800/60 transition-colors duration-300"
+  class="site-header sticky top-0 z-50 backdrop-blur-md bg-[color-mix(in_srgb,var(--bg-page)_88%,transparent)] border-b border-[var(--border-subtle)] transition-colors duration-250"
 >
   <div class="container mx-auto px-4 max-w-6xl">
     <div class="flex items-center justify-between h-16">
       <!-- Logo / Brand -->
-      <a href={isHomepage ? "#home" : "/"} class="group flex items-center gap-2.5 font-bold text-slate-900 dark:text-white transition-colors">
+      <a
+        href={isHomepage ? "#home" : "/"}
+        class="group flex items-center gap-2.5 font-bold text-[var(--text-primary)] hover:text-[var(--text-primary)] transition-colors"
+      >
         <span
-          class="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-600 text-white font-mono text-sm font-semibold shadow-sm shadow-emerald-600/30 group-hover:scale-105 transition-transform"
+          class="flex h-8 w-8 items-center justify-center bg-[var(--accent-primary)] text-[var(--accent-primary-fg)] font-mono text-xs font-semibold tracking-wider group-hover:scale-105 transition-transform"
         >
           {SITE_PROFILE.initials}
         </span>
         <div class="flex flex-col">
-          <span class="text-base font-bold leading-tight group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+          <span class="font-heading text-base font-semibold leading-tight group-hover:text-[var(--accent-primary)] transition-colors">
             {SITE_PROFILE.name}
           </span>
-          <span class="text-[10px] uppercase font-mono tracking-wider text-slate-500 dark:text-slate-400 hidden sm:block">
+          <span class="text-[10px] uppercase font-mono tracking-wider text-[var(--text-muted)] hidden sm:block">
             {SITE_PROFILE.roleShort}
           </span>
         </div>
       </a>
 
       <!-- Desktop Navigation Links -->
-      <nav class="site-nav hidden md:flex items-center gap-1.5 lg:gap-2">
+      <nav class="site-nav hidden md:flex items-center gap-1 lg:gap-1.5">
         {
           PORTFOLIO_NAV_LINKS.map((link) => {
             const isActive = (isProjectsPage && link.id === "projects") || (isCvPage && link.id === "cv");
@@ -48,10 +51,10 @@ const getNavHref = (link: NavLinkItem) => {
                 href={linkHref}
                 data-nav-section={link.id}
                 class:list={[
-                  "nav-link px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200",
+                  "nav-link px-3 py-1.5 rounded-[4px] text-xs font-mono uppercase tracking-wider transition-all duration-200",
                   isActive
-                    ? "text-emerald-600 dark:text-emerald-400 font-semibold bg-emerald-500/10 dark:bg-emerald-500/15"
-                    : "text-slate-600 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-slate-100/70 dark:hover:bg-slate-800/60",
+                    ? "text-[var(--accent-primary)] font-semibold bg-[var(--accent-badge-bg)]"
+                    : "text-[var(--text-secondary)] hover:text-[var(--accent-primary)] hover:bg-[var(--bg-elevated)]",
                 ]}
               >
                 {link.text}
@@ -62,14 +65,14 @@ const getNavHref = (link: NavLinkItem) => {
       </nav>
 
       <!-- Action Controls: Theme Toggle, Mobile Menu -->
-      <div class="flex items-center gap-3">
+      <div class="flex items-center gap-2.5">
         <ThemeToggle />
 
         <!-- Mobile Hamburger Button -->
         <button
           id="portfolio-menu-btn"
           type="button"
-          class="hamburger md:hidden p-1.5 rounded-lg text-slate-700 dark:text-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+          class="hamburger md:hidden p-1.5 rounded-[4px] text-[var(--text-secondary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)]"
           aria-label={HEADER_UI_TEXT.menuToggleAriaLabel}
           aria-expanded="false"
           aria-controls="portfolio-mobile-menu"
@@ -85,7 +88,7 @@ const getNavHref = (link: NavLinkItem) => {
   <!-- Mobile Menu Drawer -->
   <div
     id="portfolio-mobile-menu"
-    class="hidden md:hidden border-t border-slate-200/60 dark:border-slate-800/60 bg-white/95 dark:bg-slate-950/95 backdrop-blur-xl transition-all duration-300"
+    class="hidden md:hidden border-t border-[var(--border-subtle)] bg-[var(--bg-surface)] backdrop-blur-xl transition-all duration-250"
   >
     <div class="container mx-auto px-4 py-4 space-y-1">
       {
@@ -95,7 +98,7 @@ const getNavHref = (link: NavLinkItem) => {
             <a
               href={linkHref}
               data-mobile-nav={link.id}
-              class="mobile-nav-link block px-3 py-2.5 rounded-lg text-base font-medium text-slate-700 dark:text-slate-200 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors"
+              class="mobile-nav-link block px-3 py-2.5 rounded-[4px] text-sm font-mono uppercase tracking-wider text-[var(--text-secondary)] hover:text-[var(--accent-primary)] hover:bg-[var(--bg-elevated)] transition-colors"
             >
               {link.text}
             </a>
@@ -130,61 +133,53 @@ const getNavHref = (link: NavLinkItem) => {
 
     btn.addEventListener("click", toggleMenu);
 
-    const mobileLinks = menu.querySelectorAll(".mobile-nav-link");
-    mobileLinks.forEach((link) => {
+    menu.querySelectorAll(".mobile-nav-link").forEach((link) => {
       link.addEventListener("click", closeMenu);
     });
 
-    // Close on Escape
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape" && !menu.classList.contains("hidden")) {
         closeMenu();
       }
     });
 
-    // Scroll-spy on Homepage
+    const activeClasses = ["text-[var(--accent-primary)]", "font-semibold", "bg-[var(--accent-badge-bg)]"];
+    const inactiveClasses = ["text-[var(--text-secondary)]"];
+
     if (isHome) {
       const sections = document.querySelectorAll("section[id]");
       const desktopNavLinks = document.querySelectorAll<HTMLAnchorElement>(".nav-link[data-nav-section]");
 
       if (sections.length > 0 && desktopNavLinks.length > 0) {
-        const observerOptions = {
-          root: null,
-          rootMargin: "-20% 0px -60% 0px",
-          threshold: 0,
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              const id = entry.target.getAttribute("id");
-              desktopNavLinks.forEach((link) => {
-                const matches = link.dataset.navSection === id;
-                link.classList.toggle("text-emerald-600", matches);
-                link.classList.toggle("dark:text-emerald-400", matches);
-                link.classList.toggle("font-semibold", matches);
-                link.classList.toggle("bg-emerald-500/10", matches);
-                link.classList.toggle("dark:bg-emerald-500/15", matches);
-                link.classList.toggle("text-slate-600", !matches);
-                link.classList.toggle("dark:text-slate-300", !matches);
-              });
-            }
-          });
-        }, observerOptions);
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                const id = entry.target.getAttribute("id");
+                desktopNavLinks.forEach((link) => {
+                  const matches = link.dataset.navSection === id;
+                  activeClasses.forEach((cls) => link.classList.toggle(cls, matches));
+                  inactiveClasses.forEach((cls) => link.classList.toggle(cls, !matches));
+                });
+              }
+            });
+          },
+          { root: null, rootMargin: "-20% 0px -60% 0px", threshold: 0 },
+        );
 
         sections.forEach((sec) => observer.observe(sec));
       }
     } else if (isProjects) {
       const projectsNavLink = document.querySelector<HTMLAnchorElement>('.nav-link[data-nav-section="projects"]');
       if (projectsNavLink) {
-        projectsNavLink.classList.add("text-emerald-600", "dark:text-emerald-400", "font-semibold", "bg-emerald-500/10", "dark:bg-emerald-500/15");
-        projectsNavLink.classList.remove("text-slate-600", "dark:text-slate-300");
+        projectsNavLink.classList.add(...activeClasses);
+        projectsNavLink.classList.remove(...inactiveClasses);
       }
     } else if (window.location.pathname.startsWith("/cv")) {
       const cvNavLink = document.querySelector<HTMLAnchorElement>('.nav-link[data-nav-section="cv"]');
       if (cvNavLink) {
-        cvNavLink.classList.add("text-emerald-600", "dark:text-emerald-400", "font-semibold", "bg-emerald-500/10", "dark:bg-emerald-500/15");
-        cvNavLink.classList.remove("text-slate-600", "dark:text-slate-300");
+        cvNavLink.classList.add(...activeClasses);
+        cvNavLink.classList.remove(...inactiveClasses);
       }
     }
   }

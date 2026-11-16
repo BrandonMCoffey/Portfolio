@@ -31,32 +31,23 @@ const badgeLabel = badge || PROJECT_COMPONENTS_TEXT.highlightDefaultBadge;
 
 <div
   class:list={[
-    "highlight-wrapper not-prose my-8 relative overflow-hidden rounded-2xl",
-    "border border-emerald-500/30 dark:border-emerald-500/20",
-    "border-l-4 border-l-emerald-600 dark:border-l-emerald-400",
-    "bg-gradient-to-br from-emerald-500/10 via-white/80 to-transparent dark:from-emerald-950/40 dark:via-slate-900/70 dark:to-slate-900/30",
-    "p-6 sm:p-7 backdrop-blur-md shadow-md shadow-emerald-500/5",
-    "transition-all duration-300 hover:border-emerald-500/50 hover:shadow-lg hover:shadow-emerald-500/10",
+    "highlight-wrapper not-prose my-8 relative overflow-hidden",
+    "border-2 border-[var(--border-strong)] border-l-4 border-l-[var(--accent-primary)]",
+    "bg-[var(--bg-surface)] p-6 sm:p-7",
+    "shadow-[4px_4px_0px_var(--border-subtle)] transition-all duration-200 hover:border-[var(--accent-primary)]",
     customClasses,
   ]}
   role="region"
   aria-label={title || PROJECT_COMPONENTS_TEXT.highlightDefaultBadge}
 >
-  <!-- Ambient background glow -->
-  <div
-    class="pointer-events-none absolute -top-12 -right-12 h-36 w-36 rounded-full bg-emerald-500/10 dark:bg-emerald-500/15 blur-2xl"
-    aria-hidden="true"
-  >
-  </div>
-
   <div class="relative z-10 flex flex-col gap-2.5">
     {
       showBadge && (
         <div class="flex items-center gap-2">
-          <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-mono font-bold uppercase tracking-wider bg-emerald-100/90 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border border-emerald-500/20 shadow-xs">
+          <span class="tag-accent gap-1.5 px-2.5 py-1 text-[11px] uppercase tracking-wider">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              class="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400 shrink-0"
+              class="h-3.5 w-3.5 text-[var(--accent-primary)] shrink-0"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -74,13 +65,13 @@ const badgeLabel = badge || PROJECT_COMPONENTS_TEXT.highlightDefaultBadge;
       )
     }
 
-    {hasTitle && <h3 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white leading-snug tracking-tight m-0">{title}</h3>}
+    {hasTitle && <h3 class="text-lg sm:text-xl font-semibold text-[var(--text-primary)] leading-snug tracking-tight m-0">{title}</h3>}
 
-    {hasDescription && <p class="text-sm sm:text-base text-slate-700 dark:text-slate-300 leading-relaxed m-0 font-normal">{description}</p>}
+    {hasDescription && <p class="text-sm sm:text-base text-[var(--text-secondary)] leading-relaxed m-0 font-normal">{description}</p>}
 
     {
       Astro.slots.has("default") && (
-        <div class="highlight-slot mt-2 text-sm sm:text-base text-slate-700 dark:text-slate-300 leading-relaxed prose prose-slate dark:prose-invert max-w-none prose-p:my-2 prose-a:text-emerald-600 dark:prose-a:text-emerald-400">
+        <div class="highlight-slot token-prose mt-2 text-sm sm:text-base text-[var(--text-secondary)] leading-relaxed prose prose-neutral dark:prose-invert max-w-none prose-p:my-2 prose-a:text-[var(--accent-primary)]">
           <slot />
         </div>
       )
@@ -88,12 +79,12 @@ const badgeLabel = badge || PROJECT_COMPONENTS_TEXT.highlightDefaultBadge;
 
     {
       linkUrl && (
-        <div class="mt-2 pt-3 border-t border-emerald-500/10 dark:border-emerald-500/15">
+        <div class="mt-2 pt-3 border-t border-[var(--border-subtle)]">
           <a
             href={linkUrl}
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-flex items-center gap-1.5 text-xs font-mono font-semibold text-emerald-600 hover:text-emerald-500 dark:text-emerald-400 dark:hover:text-emerald-300 transition-colors"
+            class="inline-flex items-center gap-1.5 text-xs font-mono font-semibold text-[var(--accent-primary)] hover:text-[var(--accent-primary-hover)] transition-colors"
           >
             <span>{linkText}</span>
             <svg
