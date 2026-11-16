@@ -212,8 +212,8 @@ const pageDescription = formatTemplate(copy.metaDescriptionTemplate, {
       </header>
 
       <!-- 1. EDUCATION & ACADEMIC APPOINTMENTS -->
-      <section id="education" class="mb-14 scroll-mt-28 py-0">
-        <div class="flex items-center gap-3 mb-6">
+      <section id="education" class="mb-16 scroll-mt-28 py-0">
+        <div class="flex items-center gap-3 mb-7">
           <div class="p-2 rounded-[2px] bg-[var(--accent-badge-bg)] text-[var(--accent-primary)]">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
               ><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg
@@ -225,13 +225,13 @@ const pageDescription = formatTemplate(copy.metaDescriptionTemplate, {
           </div>
         </div>
 
-        <div class="space-y-4">
+        <div class="space-y-5">
           {
             education.map((item) => (
-              <div class="surface-panel card-spotlight p-5">
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-1">
-                  <h3 class="text-base font-semibold text-[var(--text-primary)]">{item.degree}</h3>
-                  <span class="text-xs font-mono font-semibold text-[var(--accent-primary)]">{item.period}</span>
+              <div class="card-primary card-spotlight p-5 sm:p-6">
+                <div class="flex items-start justify-between gap-3 mb-1.5">
+                  <h3 class="text-base sm:text-lg font-semibold text-[var(--text-primary)] leading-snug">{item.degree}</h3>
+                  <span class="text-xs font-mono font-semibold text-[var(--accent-primary)] shrink-0">{item.period}</span>
                 </div>
                 <p class="text-sm font-semibold text-[var(--text-secondary)] mb-2">{item.institution}</p>
                 {item.notes && <p class="text-xs text-[var(--text-muted)] leading-relaxed">{item.notes}</p>}
@@ -242,8 +242,8 @@ const pageDescription = formatTemplate(copy.metaDescriptionTemplate, {
       </section>
 
       <!-- 2. PEER-REVIEWED PUBLICATIONS -->
-      <section id="publications" class="mb-14 scroll-mt-28 py-0">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+      <section id="publications" class="mb-16 scroll-mt-28 py-0">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-7">
           <div class="flex items-center gap-3">
             <div class="p-2 rounded-[2px] bg-[var(--accent-badge-bg)] text-[var(--accent-primary)]">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -290,63 +290,66 @@ const pageDescription = formatTemplate(copy.metaDescriptionTemplate, {
           </div>
         </div>
 
-        <div class="space-y-4" id="publications-list">
+        <div class="space-y-5" id="publications-list">
           {
             publications.map((pub, idx) => (
-              <article class="pub-card card-primary card-spotlight p-5" data-venue={pub.venue}>
-                <div class="flex flex-wrap items-center gap-2 mb-2">
-                  <span class="tag-accent">[{idx + 1}] {pub.venue}</span>
-                  <span class="text-xs font-mono text-[var(--text-muted)]">&bull; {pub.date}</span>
-                  <span class="text-xs font-mono text-[var(--text-muted)]">
-                    &bull; {copy.sections.publications.rolesPrefix} <strong class="text-[var(--text-primary)]">{pub.roles}</strong>
+              <article class="pub-card card-primary card-spotlight p-5 sm:p-6" data-venue={pub.venue}>
+                <div class="flex items-start justify-between gap-3 mb-2">
+                  <span class="text-xs font-mono font-medium text-[var(--text-muted)]">
+                    [{idx + 1}] {pub.venue}
                   </span>
+                  <span class="text-xs font-mono font-semibold text-[var(--accent-primary)] shrink-0">{pub.date}</span>
                 </div>
 
-                <h3 class="text-base sm:text-lg font-semibold text-[var(--text-primary)] mb-3 leading-snug">{pub.title}</h3>
+                <h3 class="text-base sm:text-lg font-semibold text-[var(--text-primary)] mb-2 leading-snug">{pub.title}</h3>
 
-                <div class="flex flex-wrap items-center gap-2 pt-2 border-t border-[var(--border-subtle)] text-xs font-mono">
-                  {pub.doi && (
-                    <a
-                      href={pub.doi}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="tag-square hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)] transition-colors"
-                    >
-                      <span>{copy.sections.publications.doiPrefix} {pub.doi.replace("https://doi.org/", "").replace("https://dl.acm.org/doi/", "")}</span>
-                    </a>
-                  )}
+                <p class="text-xs font-mono text-[var(--text-muted)] mb-1">
+                  {copy.sections.publications.rolesPrefix} <strong class="text-[var(--text-secondary)]">{pub.roles}</strong>
+                </p>
 
-                  {pub.paperUrl && (
-                    <a
-                      href={pub.paperUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="tag-square hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)] transition-colors"
-                    >
-                      <span>{copy.sections.publications.officialPdfLabel}</span>
-                    </a>
-                  )}
+                <div class="mt-4 pt-3 border-t border-[var(--border-subtle)] flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
+                  <div class="flex flex-wrap items-center gap-3">
+                    {pub.doi && (
+                      <a
+                        href={pub.doi}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="text-[var(--accent-primary)] hover:text-[var(--accent-primary-hover)] hover:underline transition-colors"
+                      >
+                        {copy.sections.publications.doiPrefix} {pub.doi.replace("https://doi.org/", "").replace("https://dl.acm.org/doi/", "")}
+                      </a>
+                    )}
 
-                  {pub.extraUrl && (
-                    <a
-                      href={pub.extraUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="tag-square hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)] transition-colors"
-                    >
-                      <span>{copy.sections.publications.archiveLabel}</span>
-                    </a>
-                  )}
+                    {pub.paperUrl && (
+                      <a
+                        href={pub.paperUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="text-[var(--accent-primary)] hover:text-[var(--accent-primary-hover)] hover:underline transition-colors"
+                      >
+                        {copy.sections.publications.officialPdfLabel}
+                      </a>
+                    )}
+
+                    {pub.extraUrl && (
+                      <a
+                        href={pub.extraUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="text-[var(--accent-primary)] hover:text-[var(--accent-primary-hover)] hover:underline transition-colors"
+                      >
+                        {copy.sections.publications.archiveLabel}
+                      </a>
+                    )}
+                  </div>
 
                   {pub.projectSlug && (
                     <a
                       href={`/cv/publications/${pub.id}`}
-                      class="inline-flex items-center gap-1 ml-auto font-semibold text-[var(--accent-primary)] hover:text-[var(--accent-primary-hover)] transition-colors print:hidden"
+                      class="inline-flex items-center gap-1 ml-auto font-semibold text-[var(--accent-primary)] hover:text-[var(--accent-primary-hover)] hover:underline transition-colors print:hidden"
                     >
                       <span>{copy.sections.publications.caseStudyLabel}</span>
-                      <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-                      </svg>
+                      <span>&rarr;</span>
                     </a>
                   )}
                 </div>
@@ -371,8 +374,8 @@ const pageDescription = formatTemplate(copy.metaDescriptionTemplate, {
       </section>
 
       <!-- 4. HONORS & AWARDS -->
-      <section id="awards" class="mb-14 scroll-mt-28 py-0">
-        <div class="flex items-center gap-3 mb-6">
+      <section id="awards" class="mb-16 scroll-mt-28 py-0">
+        <div class="flex items-center gap-3 mb-7">
           <div class="p-2 rounded-[2px] bg-[var(--accent-badge-bg)] text-[var(--accent-primary)]">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
               ><circle cx="12" cy="8" r="6"></circle><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"></path></svg
@@ -384,46 +387,49 @@ const pageDescription = formatTemplate(copy.metaDescriptionTemplate, {
           </div>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
           {
             awards.map((award) => (
-              <div class="card-primary card-spotlight p-4 flex flex-col justify-between">
+              <div class="card-primary card-spotlight p-5 sm:p-6 flex flex-col justify-between">
                 <div>
-                  <div class="flex items-center justify-between gap-2 mb-2">
-                    <span class="text-[11px] font-mono text-[var(--text-muted)]">{award.organization}</span>
-                    <span class="pill-date">{award.year}</span>
+                  <div class="flex items-start justify-between gap-3 mb-2">
+                    <span class="text-xs font-mono font-medium text-[var(--text-muted)]">{award.organization}</span>
+                    <span class="text-xs font-mono font-semibold text-[var(--accent-primary)] shrink-0">{award.year}</span>
                   </div>
 
-                  <h3 class="text-sm font-semibold text-[var(--text-primary)] mb-1.5 leading-snug">{award.title}</h3>
+                  <h3 class="text-base sm:text-lg font-semibold text-[var(--text-primary)] mb-2 leading-snug">{award.title}</h3>
 
-                  <p class="text-xs text-[var(--text-secondary)] mb-2">
+                  <p class="text-xs text-[var(--text-secondary)]">
                     {copy.sections.awards.projectPrefix} <strong class="text-[var(--text-primary)]">{award.project}</strong>
                   </p>
                 </div>
 
-                <div class="mt-3 pt-2 border-t border-[var(--border-subtle)] flex items-center justify-between text-[11px] font-mono">
-                  {award.url ? (
-                    <a
-                      href={award.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="inline-flex items-center gap-1 text-[var(--accent-primary)] hover:underline"
-                    >
-                      <span>{copy.sections.awards.galleryLabel}</span>
-                    </a>
-                  ) : (
-                    <span class="text-[var(--text-muted)]">{copy.sections.awards.institutionalFallback}</span>
-                  )}
+                {(award.url || award.projectSlug) && (
+                  <div class="mt-4 pt-3 border-t border-[var(--border-subtle)] flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
+                    {award.url ? (
+                      <a
+                        href={award.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="text-[var(--accent-primary)] hover:text-[var(--accent-primary-hover)] hover:underline transition-colors"
+                      >
+                        {copy.sections.awards.galleryLabel}
+                      </a>
+                    ) : (
+                      <span />
+                    )}
 
-                  {award.projectSlug && (
-                    <a
-                      href={`/projects/${award.projectSlug}`}
-                      class="text-[var(--text-muted)] hover:text-[var(--accent-primary)] transition-colors print:hidden"
-                    >
-                      {copy.sections.awards.caseStudyLabel}
-                    </a>
-                  )}
-                </div>
+                    {award.projectSlug && (
+                      <a
+                        href={`/projects/${award.projectSlug}`}
+                        class="inline-flex items-center gap-1 ml-auto font-semibold text-[var(--accent-primary)] hover:text-[var(--accent-primary-hover)] hover:underline transition-colors print:hidden"
+                      >
+                        <span>{copy.sections.awards.caseStudyLabel}</span>
+                        <span>&rarr;</span>
+                      </a>
+                    )}
+                  </div>
+                )}
               </div>
             ))
           }
@@ -431,8 +437,8 @@ const pageDescription = formatTemplate(copy.metaDescriptionTemplate, {
       </section>
 
       <!-- 5. PRESS & MEDIA RECOGNITION -->
-      <section id="media" class="mb-14 scroll-mt-28 py-0">
-        <div class="flex items-center gap-3 mb-6">
+      <section id="media" class="mb-16 scroll-mt-28 py-0">
+        <div class="flex items-center gap-3 mb-7">
           <div class="p-2 rounded-[2px] bg-[var(--accent-badge-bg)] text-[var(--accent-primary)]">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
               ><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"></path><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"
@@ -445,65 +451,67 @@ const pageDescription = formatTemplate(copy.metaDescriptionTemplate, {
           </div>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
           {
             mediaRecognition.map((media) => (
-              <div class="card-primary card-spotlight p-4 flex flex-col justify-between">
+              <div class="card-primary card-spotlight p-5 sm:p-6 flex flex-col justify-between">
                 <div>
-                  <div class="flex items-center justify-between gap-2 mb-1.5">
-                    <span class="text-xs font-mono font-bold text-[var(--accent-primary)]">{media.outlet}</span>
-                    <span class="pill-date">{media.date}</span>
+                  <div class="flex items-start justify-between gap-3 mb-2">
+                    <span class="text-xs font-mono font-medium text-[var(--text-muted)]">{media.outlet}</span>
+                    <span class="text-xs font-mono font-semibold text-[var(--accent-primary)] shrink-0">{media.date}</span>
                   </div>
 
-                  <h3 class="text-sm font-semibold text-[var(--text-primary)] mb-2 leading-snug">{media.title}</h3>
+                  <h3 class="text-base sm:text-lg font-semibold text-[var(--text-primary)] leading-snug">{media.title}</h3>
                 </div>
 
-                <div class="mt-3 pt-2 border-t border-[var(--border-subtle)] flex flex-wrap items-center gap-2 text-[11px] font-mono">
-                  {media.articleUrl && (
-                    <a
-                      href={media.articleUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="inline-flex items-center gap-1 text-[var(--accent-primary)] hover:underline"
-                    >
-                      <span>{copy.sections.media.readArticleLabel}</span>
-                    </a>
-                  )}
+                {(media.articleUrl || media.videoUrl || media.podcastUrl || media.projectSlug) && (
+                  <div class="mt-4 pt-3 border-t border-[var(--border-subtle)] flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
+                    <div class="flex flex-wrap items-center gap-3">
+                      {media.articleUrl && (
+                        <a
+                          href={media.articleUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          class="text-[var(--accent-primary)] hover:text-[var(--accent-primary-hover)] hover:underline transition-colors"
+                        >
+                          {copy.sections.media.readArticleLabel}
+                        </a>
+                      )}
 
-                  {media.videoUrl && (
-                    <a
-                      href={media.videoUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="inline-flex items-center gap-1 text-[var(--accent-primary)] hover:underline"
-                    >
-                      <span>{copy.sections.media.watchVideoLabel}</span>
-                    </a>
-                  )}
+                      {media.videoUrl && (
+                        <a
+                          href={media.videoUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          class="text-[var(--accent-primary)] hover:text-[var(--accent-primary-hover)] hover:underline transition-colors"
+                        >
+                          {copy.sections.media.watchVideoLabel}
+                        </a>
+                      )}
 
-                  {media.podcastUrl && (
-                    <a
-                      href={media.podcastUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="inline-flex items-center gap-1 text-[var(--accent-primary)] hover:underline"
-                    >
-                      <span>{copy.sections.media.listenPodcastLabel}</span>
-                    </a>
-                  )}
+                      {media.podcastUrl && (
+                        <a
+                          href={media.podcastUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          class="text-[var(--accent-primary)] hover:text-[var(--accent-primary-hover)] hover:underline transition-colors"
+                        >
+                          {copy.sections.media.listenPodcastLabel}
+                        </a>
+                      )}
+                    </div>
 
-                  {media.projectSlug && (
-                    <a
-                      href={`/cv/media/${media.id}`}
-                      class="text-[var(--text-muted)] hover:text-[var(--accent-primary)] ml-auto print:hidden font-semibold inline-flex items-center gap-1"
-                    >
-                      <span>{copy.sections.media.spotlightLabel}</span>
-                      <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-                      </svg>
-                    </a>
-                  )}
-                </div>
+                    {media.projectSlug && (
+                      <a
+                        href={`/cv/media/${media.id}`}
+                        class="text-[var(--accent-primary)] hover:text-[var(--accent-primary-hover)] hover:underline ml-auto print:hidden font-semibold inline-flex items-center gap-1 transition-colors"
+                      >
+                        <span>{copy.sections.media.spotlightLabel}</span>
+                        <span>&rarr;</span>
+                      </a>
+                    )}
+                  </div>
+                )}
               </div>
             ))
           }
@@ -511,8 +519,8 @@ const pageDescription = formatTemplate(copy.metaDescriptionTemplate, {
       </section>
 
       <!-- 6. EXHIBITIONS & ACADEMIC CONFERENCES -->
-      <section id="exhibitions" class="mb-14 scroll-mt-28 py-0">
-        <div class="flex items-center gap-3 mb-6">
+      <section id="exhibitions" class="mb-16 scroll-mt-28 py-0">
+        <div class="flex items-center gap-3 mb-7">
           <div class="p-2 rounded-[2px] bg-[var(--accent-badge-bg)] text-[var(--accent-primary)]">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
               ><path d="M2 3h20"></path><path d="M21 3v18H3V3"></path><path d="m9 8 3 3-3 3"></path><path d="M15 14h-3"></path></svg
@@ -524,29 +532,29 @@ const pageDescription = formatTemplate(copy.metaDescriptionTemplate, {
           </div>
         </div>
 
-        <div class="space-y-3">
+        <div class="space-y-4">
           {
             eventsAndShowcases.map((event) => (
-              <div class="surface-panel p-4 flex items-start justify-between gap-4">
-                <div>
-                  <div class="flex items-center gap-2 mb-1">
-                    <h3 class="text-sm font-semibold text-[var(--text-primary)]">{event.title}</h3>
-                    {event.url && (
-                      <a href={event.url} target="_blank" rel="noopener noreferrer" class="text-[var(--accent-primary)] hover:underline">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                          <path d="M15 3h6v6" />
-                          <path d="M10 14 21 3" />
-                          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-                        </svg>
-                      </a>
-                    )}
-                  </div>
-                  <p class="text-xs text-[var(--text-secondary)]">
-                    {copy.sections.exhibitions.featuredWorkPrefix} <strong class="text-[var(--text-primary)]">{event.project}</strong> &bull; {event.location}
-                  </p>
+              <div class="card-primary card-spotlight p-5 sm:p-6">
+                <div class="flex items-start justify-between gap-3 mb-1.5">
+                  <h3 class="text-base sm:text-lg font-semibold text-[var(--text-primary)] leading-snug">{event.title}</h3>
+                  <span class="text-xs font-mono font-semibold text-[var(--accent-primary)] shrink-0">{event.date}</span>
                 </div>
-
-                <span class="pill-date shrink-0 self-start">{event.date}</span>
+                <p class="text-xs text-[var(--text-secondary)]">
+                  {copy.sections.exhibitions.featuredWorkPrefix} <strong class="text-[var(--text-primary)]">{event.project}</strong> &bull; {event.location}
+                </p>
+                {event.url && (
+                  <div class="mt-4 pt-3 border-t border-[var(--border-subtle)] flex items-center justify-between text-xs font-mono">
+                    <a
+                      href={event.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="text-[var(--accent-primary)] hover:text-[var(--accent-primary-hover)] hover:underline transition-colors"
+                    >
+                      View Event
+                    </a>
+                  </div>
+                )}
               </div>
             ))
           }
@@ -554,8 +562,8 @@ const pageDescription = formatTemplate(copy.metaDescriptionTemplate, {
       </section>
 
       <!-- 8. TEACHING EXPERIENCE & SERVICE -->
-      <section id="teaching" class="mb-14 scroll-mt-28 py-0">
-        <div class="flex items-center gap-3 mb-6">
+      <section id="teaching" class="mb-16 scroll-mt-28 py-0">
+        <div class="flex items-center gap-3 mb-7">
           <div class="p-2 rounded-[2px] bg-[var(--accent-badge-bg)] text-[var(--accent-primary)]">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
               ><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg
@@ -567,15 +575,15 @@ const pageDescription = formatTemplate(copy.metaDescriptionTemplate, {
           </div>
         </div>
 
-        <div class="space-y-4">
+        <div class="space-y-5">
           {
             teachingExperience.map((item) => (
-              <div class="surface-panel p-5">
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-1">
-                  <h3 class="text-base font-semibold text-[var(--text-primary)]">
-                    {item.role} &mdash; <span class="text-[var(--accent-primary)]">{item.courseOrEvent}</span>
+              <div class="card-primary card-spotlight p-5 sm:p-6">
+                <div class="flex items-start justify-between gap-3 mb-1.5">
+                  <h3 class="text-base sm:text-lg font-semibold text-[var(--text-primary)] leading-snug">
+                    {item.role} &mdash; <span class="text-[var(--text-secondary)] font-normal">{item.courseOrEvent}</span>
                   </h3>
-                  <span class="pill-date">{item.term}</span>
+                  <span class="text-xs font-mono font-semibold text-[var(--accent-primary)] shrink-0">{item.term}</span>
                 </div>
                 <p class="text-xs font-mono text-[var(--text-muted)]">{item.institution}</p>
               </div>

@@ -74,7 +74,7 @@ export const PROJECT_LAYOUT_TEXT = {
     abstractLabel: "Abstract Preview",
     doiLabel: "DOI Citation",
     pdfLabel: "Official PDF",
-    caseStudyLabel: "CV Academic Case Study",
+    caseStudyLabel: "View Abstract and Project Details",
   },
   mediaSection: {
     title: "Press & Media Recognition",
@@ -82,7 +82,7 @@ export const PROJECT_LAYOUT_TEXT = {
     readArticleLabel: "Read Article",
     watchVideoLabel: "Watch Video",
     podcastLabel: "Podcast",
-    spotlightLabel: "Media Spotlight →",
+    spotlightLabel: "View Project Details",
   },
   tocHeading: "Contents",
   prevProjectLabel: "Previous Project",

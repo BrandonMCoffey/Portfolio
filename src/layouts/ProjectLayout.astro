@@ -368,53 +368,58 @@ const txt = PROJECT_LAYOUT_TEXT;
 
 							<div class="space-y-4">
 								{projectPublications.map(pub => (
-									<div class="card-primary card-spotlight p-5">
-										<div class="flex flex-wrap items-center gap-2 mb-2">
-											<span class="tag-accent">{pub.venue}</span>
-											<span class="text-xs font-mono text-[var(--text-muted)]">&bull; {pub.date}</span>
-											<span class="text-xs font-mono text-[var(--text-muted)]">&bull; {txt.publicationsSection.rolesLabel} <strong class="text-[var(--text-primary)]">{pub.roles}</strong></span>
+									<div class="card-primary card-spotlight p-5 sm:p-6">
+										<div class="flex items-start justify-between gap-3 mb-2">
+											<span class="text-xs font-mono font-medium text-[var(--text-muted)]">{pub.venue}</span>
+											<span class="text-xs font-mono font-semibold text-[var(--accent-primary)] shrink-0">{pub.date}</span>
 										</div>
 
-										<h4 class="text-base font-semibold text-[var(--text-primary)] mb-3">
+										<h4 class="text-base sm:text-lg font-semibold text-[var(--text-primary)] mb-2 leading-snug">
 											{pub.title}
 										</h4>
 
+										<p class="text-xs font-mono text-[var(--text-muted)] mb-3">
+											{txt.publicationsSection.rolesLabel} <strong class="text-[var(--text-secondary)]">{pub.roles}</strong>
+										</p>
+
 										{pub.abstract && (
-											<div class="mb-3.5 p-3 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] text-xs text-[var(--text-secondary)] leading-relaxed">
-												<span class="font-mono font-bold uppercase tracking-wider text-[10px] text-[var(--accent-primary)] block mb-1">
+											<div class="mb-4 p-3 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] text-xs text-[var(--text-secondary)] leading-relaxed">
+												<span class="font-mono font-bold uppercase tracking-wider text-[10px] text-[var(--text-muted)] block mb-1">
 													{txt.publicationsSection.abstractLabel}
 												</span>
 												<p class="line-clamp-3 hover:line-clamp-none transition-all">{pub.abstract}</p>
 											</div>
 										)}
 
-										<div class="flex flex-wrap items-center gap-2 pt-2 border-t border-[var(--border-subtle)] text-xs font-mono">
-											{pub.doi && (
-												<a
-													href={pub.doi}
-													target="_blank"
-													rel="noopener noreferrer"
-													class="tag-square hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)]"
-												>
-													<span>{txt.publicationsSection.doiLabel}</span>
-												</a>
-											)}
-											{pub.paperUrl && (
-												<a
-													href={pub.paperUrl}
-													target="_blank"
-													rel="noopener noreferrer"
-													class="tag-square hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)]"
-												>
-													<span>{txt.publicationsSection.pdfLabel}</span>
-												</a>
-											)}
+										<div class="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-[var(--border-subtle)] text-xs font-mono">
+											<div class="flex flex-wrap items-center gap-3">
+												{pub.doi && (
+													<a
+														href={pub.doi}
+														target="_blank"
+														rel="noopener noreferrer"
+														class="text-[var(--accent-primary)] hover:text-[var(--accent-primary-hover)] hover:underline transition-colors"
+													>
+														{txt.publicationsSection.doiLabel}
+													</a>
+												)}
+												{pub.paperUrl && (
+													<a
+														href={pub.paperUrl}
+														target="_blank"
+														rel="noopener noreferrer"
+														class="text-[var(--accent-primary)] hover:text-[var(--accent-primary-hover)] hover:underline transition-colors"
+													>
+														{txt.publicationsSection.pdfLabel}
+													</a>
+												)}
+											</div>
 											<a
 												href={`/cv/publications/${pub.id}`}
-												class="btn btn-primary ml-auto px-3.5 py-1.5 text-xs"
+												class="inline-flex items-center gap-1 ml-auto font-semibold text-[var(--accent-primary)] hover:text-[var(--accent-primary-hover)] hover:underline transition-colors"
 											>
 												<span>{txt.publicationsSection.caseStudyLabel}</span>
-												<svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" /></svg>
+												<span>&rarr;</span>
 											</a>
 										</div>
 									</div>
@@ -436,38 +441,41 @@ const txt = PROJECT_LAYOUT_TEXT;
 								</div>
 							</div>
 
-							<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+							<div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
 								{projectMedia.map(media => (
-									<div class="card-primary card-spotlight p-4 flex flex-col justify-between">
+									<div class="card-primary card-spotlight p-5 flex flex-col justify-between">
 										<div>
-											<div class="flex items-center justify-between gap-2 mb-1.5 text-xs font-mono">
-												<span class="font-bold text-[var(--accent-primary)]">{media.outlet}</span>
-												<span class="text-[var(--text-muted)]">{media.date}</span>
+											<div class="flex items-start justify-between gap-3 mb-2 text-xs font-mono">
+												<span class="font-medium text-[var(--text-muted)]">{media.outlet}</span>
+												<span class="font-semibold text-[var(--accent-primary)] shrink-0">{media.date}</span>
 											</div>
-											<h4 class="text-sm font-semibold text-[var(--text-primary)] mb-2 leading-snug">{media.title}</h4>
+											<h4 class="text-base sm:text-lg font-semibold text-[var(--text-primary)] mb-2 leading-snug">{media.title}</h4>
 										</div>
 
-										<div class="mt-3 pt-2 border-t border-[var(--border-subtle)] flex flex-wrap items-center gap-2 text-[11px] font-mono">
-											{media.articleUrl && (
-												<a href={media.articleUrl} target="_blank" rel="noopener noreferrer" class="text-[var(--accent-primary)] hover:underline inline-flex items-center gap-1">
-													<span>{txt.mediaSection.readArticleLabel}</span>
-												</a>
-											)}
-											{media.videoUrl && (
-												<a href={media.videoUrl} target="_blank" rel="noopener noreferrer" class="text-[var(--accent-primary)] hover:underline inline-flex items-center gap-1">
-													<span>{txt.mediaSection.watchVideoLabel}</span>
-												</a>
-											)}
-											{media.podcastUrl && (
-												<a href={media.podcastUrl} target="_blank" rel="noopener noreferrer" class="text-[var(--accent-primary)] hover:underline inline-flex items-center gap-1">
-													<span>{txt.mediaSection.podcastLabel}</span>
-												</a>
-											)}
+										<div class="mt-4 pt-3 border-t border-[var(--border-subtle)] flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
+											<div class="flex flex-wrap items-center gap-3">
+												{media.articleUrl && (
+													<a href={media.articleUrl} target="_blank" rel="noopener noreferrer" class="text-[var(--accent-primary)] hover:text-[var(--accent-primary-hover)] hover:underline">
+														{txt.mediaSection.readArticleLabel}
+													</a>
+												)}
+												{media.videoUrl && (
+													<a href={media.videoUrl} target="_blank" rel="noopener noreferrer" class="text-[var(--accent-primary)] hover:text-[var(--accent-primary-hover)] hover:underline">
+														{txt.mediaSection.watchVideoLabel}
+													</a>
+												)}
+												{media.podcastUrl && (
+													<a href={media.podcastUrl} target="_blank" rel="noopener noreferrer" class="text-[var(--accent-primary)] hover:text-[var(--accent-primary-hover)] hover:underline">
+														{txt.mediaSection.podcastLabel}
+													</a>
+												)}
+											</div>
 											<a
 												href={`/cv/media/${media.id}`}
-												class="text-[var(--text-muted)] hover:text-[var(--accent-primary)] font-semibold ml-auto"
+												class="text-[var(--accent-primary)] hover:text-[var(--accent-primary-hover)] hover:underline font-semibold ml-auto inline-flex items-center gap-1"
 											>
-												{txt.mediaSection.spotlightLabel}
+												<span>{txt.mediaSection.spotlightLabel}</span>
+												<span>&rarr;</span>
 											</a>
 										</div>
 									</div>

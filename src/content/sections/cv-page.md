@@ -35,7 +35,7 @@ sections:
     doiPrefix: "DOI:"
     officialPdfLabel: "Official PDF"
     archiveLabel: "Repository / Archive"
-    caseStudyLabel: "Academic Case Study"
+    caseStudyLabel: "View Abstract and Project Details"
     resetButtonLabel: "Show All Publications"
   grants:
     title: "Grants & Sponsored Research"
@@ -48,14 +48,14 @@ sections:
     projectPrefix: "Project:"
     galleryLabel: "View Award"
     institutionalFallback: ""
-    caseStudyLabel: "Case Study →"
+    caseStudyLabel: "View Related Project"
   media:
     title: "Press & Media Recognition"
     subtitleTemplate: "{count} Features across The New York Times, Fox News, & University Outlets"
     readArticleLabel: "Read Article"
     watchVideoLabel: "Watch Video"
     listenPodcastLabel: "Listen to Podcast"
-    spotlightLabel: "Media Spotlight"
+    spotlightLabel: "View Project Details"
   exhibitions:
     title: "Conferences & Public Exhibitions"
     subtitleTemplate: "{count} Showcases including GDC, SXSW, and IEEE ISEMV"
