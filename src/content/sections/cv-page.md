@@ -34,7 +34,7 @@ sections:
     rolesPrefix: "Roles:"
     doiPrefix: "DOI:"
     officialPdfLabel: "Official PDF"
-    archiveLabel: "Repository / Archive"
+    archiveLabel: "Alt Link"
     caseStudyLabel: "View Abstract and Project Details"
     resetButtonLabel: "Show All Publications"
   grants:

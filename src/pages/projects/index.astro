@@ -98,10 +98,10 @@ const badgeCountText = formatTemplate(copy.badgeCountTemplate, { count: projects
           </div>
         </div>
 
-        <!-- Category Filters -->
+        <!-- Category Filters (Wrapped) -->
         <div class="pt-3 border-t border-[var(--border-subtle)]">
-          <div class="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
-            <span class="text-xs font-mono uppercase tracking-wider text-[var(--text-muted)] mr-1 hidden sm:inline">
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="text-xs font-mono uppercase tracking-wider text-[var(--text-muted)] mr-1">
               {copy.categoryLabel}
             </span>
             {
@@ -109,7 +109,8 @@ const badgeCountText = formatTemplate(copy.badgeCountTemplate, { count: projects
                 <button
                   type="button"
                   data-category-filter={f.id.toLowerCase()}
-                  class:list={["category-filter-btn filter-pill shrink-0", f.id.toLowerCase() === "all" ? "active" : ""]}
+                  data-filter-label={f.label}
+                  class:list={["category-filter-btn filter-pill", f.id.toLowerCase() === "all" ? "active" : ""]}
                 >
                   <span>{f.label}</span>
                   <span class="filter-count text-[10px] opacity-75 font-mono">({f.count})</span>
@@ -119,9 +120,9 @@ const badgeCountText = formatTemplate(copy.badgeCountTemplate, { count: projects
           </div>
         </div>
 
-        <!-- Tech Stack Quick Filter Chips -->
-        <div class="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none text-xs">
-          <span class="text-[11px] font-mono uppercase tracking-wider text-[var(--text-muted)] mr-1 hidden sm:inline">
+        <!-- Tech Stack Quick Filter Chips (Wrapped) -->
+        <div class="flex flex-wrap items-center gap-1.5 text-xs">
+          <span class="text-[11px] font-mono uppercase tracking-wider text-[var(--text-muted)] mr-1">
             {copy.techLabel}
           </span>
           {
@@ -129,7 +130,7 @@ const badgeCountText = formatTemplate(copy.badgeCountTemplate, { count: projects
               <button
                 type="button"
                 data-tech-filter={tech}
-                class="tech-filter-chip shrink-0 px-2.5 py-1 rounded-[2px] text-[11px] font-mono font-medium border border-[var(--border-subtle)] bg-[var(--bg-elevated)] text-[var(--text-secondary)] hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)] transition-colors cursor-pointer"
+                class="tech-filter-chip px-2.5 py-1 rounded-[2px] text-[11px] font-mono font-medium border border-[var(--border-subtle)] bg-[var(--bg-elevated)] text-[var(--text-secondary)] hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)] transition-colors cursor-pointer"
               >
                 +{tech}
               </button>
@@ -150,6 +151,12 @@ const badgeCountText = formatTemplate(copy.badgeCountTemplate, { count: projects
         </button>
       </div>
 
+      <!-- Large Active Filter Heading (Visible when a filter is active) -->
+      <div id="active-filter-heading-wrap" class="hidden mb-7 pb-4 border-b border-[var(--border-subtle)]">
+        <div class="section-rule mb-1.5">Active Filter</div>
+        <h2 id="active-filter-title" class="text-2xl sm:text-3xl md:text-4xl font-semibold text-[var(--text-primary)]"></h2>
+      </div>
+
       <!-- Cards Grid -->
       <div id="project-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
         {
@@ -165,7 +172,7 @@ const badgeCountText = formatTemplate(copy.badgeCountTemplate, { count: projects
               data-platform={(project.data.platform || []).join(" ").toLowerCase()}
               data-filters={(project.data.filters || []).join(" ").toLowerCase()}
             >
-              <ProjectCard project={project} />
+              <ProjectCard project={project} origin="projects" />
             </div>
           ))
         }
@@ -195,6 +202,12 @@ const badgeCountText = formatTemplate(copy.badgeCountTemplate, { count: projects
 
 <script>
   import { DEFAULT_PROJECT_PRIORITY } from "../../consts";
+  import {
+    clearProjectNavigationState,
+    loadProjectsExplorerState,
+    restoreReturnScroll,
+    saveProjectsExplorerState,
+  } from "../../scripts/projectNavState";
 
   function initProjectExplorer() {
     const searchInput = document.getElementById("project-search-input") as HTMLInputElement | null;
@@ -205,6 +218,8 @@ const badgeCountText = formatTemplate(copy.badgeCountTemplate, { count: projects
     const projectCards = document.querySelectorAll<HTMLElement>(".project-item-card");
     const visibleCountSpan = document.getElementById("visible-project-count");
     const resetAllBtn = document.getElementById("reset-all-btn");
+    const activeHeadingWrap = document.getElementById("active-filter-heading-wrap");
+    const activeHeadingTitle = document.getElementById("active-filter-title");
     const noResults = document.getElementById("no-projects-found");
     const clearAllBtn = document.getElementById("clear-search-btn");
     const grid = document.getElementById("project-grid");
@@ -233,38 +248,99 @@ const badgeCountText = formatTemplate(copy.badgeCountTemplate, { count: projects
       });
     };
 
+    const updateActiveFilterHeading = () => {
+      if (!activeHeadingWrap || !activeHeadingTitle) return;
+      const parts: string[] = [];
+
+      if (activeCategory !== "all") {
+        const activeBtn = Array.from(categoryBtns).find(
+          (b) => (b.dataset.categoryFilter || "").toLowerCase() === activeCategory,
+        );
+        parts.push(activeBtn?.dataset.filterLabel || activeCategory);
+      }
+
+      if (activeTech) {
+        const activeChip = Array.from(techChips).find(
+          (c) => (c.dataset.techFilter || "").toLowerCase() === activeTech,
+        );
+        parts.push(activeChip?.dataset.techFilter || activeTech);
+      }
+
+      if (parts.length > 0) {
+        activeHeadingTitle.textContent = parts.join(" / ");
+        activeHeadingWrap.classList.remove("hidden");
+      } else {
+        activeHeadingWrap.classList.add("hidden");
+      }
+    };
+
     const urlParams = new URLSearchParams(window.location.search);
     const initialFilter = urlParams.get("filter");
     const initialTech = urlParams.get("tech");
     const initialSearch = urlParams.get("q");
+    const hasUrlParams = Boolean(initialFilter || initialTech || initialSearch);
+    const savedState = loadProjectsExplorerState();
 
-    if (initialFilter) {
-      const normFilter = initialFilter.toLowerCase();
-      const matchingBtn = Array.from(categoryBtns).find((b) => (b.dataset.categoryFilter || "").toLowerCase() === normFilter);
-      if (matchingBtn) {
-        activeCategory = normFilter;
-        updateCategoryPillStyles(activeCategory);
+    if (hasUrlParams) {
+      if (initialFilter) {
+        const normFilter = initialFilter.toLowerCase();
+        const matchingBtn = Array.from(categoryBtns).find(
+          (b) => (b.dataset.categoryFilter || "").toLowerCase() === normFilter,
+        );
+        if (matchingBtn) activeCategory = normFilter;
       }
+      if (initialTech) {
+        const normTech = initialTech.toLowerCase();
+        const matchingChip = Array.from(techChips).find(
+          (c) => (c.dataset.techFilter || "").toLowerCase() === normTech,
+        );
+        if (matchingChip) activeTech = normTech;
+      }
+      if (initialSearch) {
+        currentSearch = initialSearch;
+      }
+      if (savedState?.sort) {
+        currentSort = savedState.sort;
+      }
+    } else if (savedState) {
+      const matchingBtn = Array.from(categoryBtns).find(
+        (b) => (b.dataset.categoryFilter || "").toLowerCase() === savedState.category.toLowerCase(),
+      );
+      if (matchingBtn) activeCategory = savedState.category.toLowerCase();
+
+      if (savedState.tech) {
+        const matchingChip = Array.from(techChips).find(
+          (c) => (c.dataset.techFilter || "").toLowerCase() === savedState.tech.toLowerCase(),
+        );
+        if (matchingChip) activeTech = savedState.tech.toLowerCase();
+      }
+
+      currentSearch = savedState.search;
+      currentSort = savedState.sort || "priority_asc";
     }
 
-    if (initialTech) {
-      const normTech = initialTech.toLowerCase();
-      const matchingChip = Array.from(techChips).find((c) => (c.dataset.techFilter || "").toLowerCase() === normTech);
-      if (matchingChip) {
-        activeTech = normTech;
-        updateTechChipStyles(activeTech);
-      }
-    }
+    updateCategoryPillStyles(activeCategory);
+    updateTechChipStyles(activeTech);
+    updateActiveFilterHeading();
+    if (searchInput) searchInput.value = currentSearch;
+    if (clearSearchBtn) clearSearchBtn.classList.toggle("hidden", !currentSearch);
+    if (sortSelect) sortSelect.value = currentSort;
 
-    if (initialSearch) {
-      currentSearch = initialSearch;
-      if (searchInput) {
-        searchInput.value = initialSearch;
-        if (clearSearchBtn) clearSearchBtn.classList.remove("hidden");
-      }
-    }
+    const persistStateAndUrl = () => {
+      const isDefault =
+        activeCategory === "all" && activeTech === "" && currentSearch === "" && currentSort === "priority_asc";
 
-    const updateUrl = () => {
+      if (isDefault) {
+        clearProjectNavigationState();
+      } else {
+        saveProjectsExplorerState({
+          category: activeCategory,
+          tech: activeTech,
+          search: currentSearch,
+          sort: currentSort,
+        });
+      }
+
       const params = new URLSearchParams();
       if (activeCategory !== "all") params.set("filter", activeCategory);
       if (activeTech) params.set("tech", activeTech);
@@ -343,7 +419,8 @@ const badgeCountText = formatTemplate(copy.badgeCountTemplate, { count: projects
         resetAllBtn.classList.toggle("hidden", !isFiltered);
       }
 
-      updateUrl();
+      updateActiveFilterHeading();
+      persistStateAndUrl();
     };
 
     categoryBtns.forEach((btn) => {
@@ -387,8 +464,10 @@ const badgeCountText = formatTemplate(copy.badgeCountTemplate, { count: projects
       activeCategory = "all";
       activeTech = "";
       currentSearch = "";
+      currentSort = "priority_asc";
       if (searchInput) searchInput.value = "";
       if (clearSearchBtn) clearSearchBtn.classList.add("hidden");
+      if (sortSelect) sortSelect.value = "priority_asc";
 
       updateCategoryPillStyles("all");
       updateTechChipStyles("");
@@ -398,9 +477,22 @@ const badgeCountText = formatTemplate(copy.badgeCountTemplate, { count: projects
     resetAllBtn?.addEventListener("click", resetFilters);
     clearAllBtn?.addEventListener("click", resetFilters);
 
-    if (initialFilter || initialTech || initialSearch) {
+    (window as any).__resetProjectsExplorerFn = resetFilters;
+    if (!(window as any).__projectsResetListenerAttached) {
+      (window as any).__projectsResetListenerAttached = true;
+      window.addEventListener("reset-projects-explorer", () => {
+        if (document.getElementById("project-grid")) {
+          (window as any).__resetProjectsExplorerFn?.();
+        }
+      });
+    }
+
+    if (hasUrlParams || savedState) {
       filterAndSortCards();
     }
+
+    // Restore scroll after filters & sort have shaped the grid
+    restoreReturnScroll(true);
   }
 
   document.addEventListener("astro:page-load", initProjectExplorer);

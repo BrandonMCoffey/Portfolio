@@ -9,7 +9,7 @@ const highlightWords = data.headlineHighlight.trim().split(/\s+/);
 const suffixWords = data.headlineSuffix.trim().split(/\s+/);
 ---
 
-<section id="home" class="relative overflow-hidden border-b border-[var(--border-subtle)] py-16 sm:py-24 lg:py-28">
+<section id="home" class="relative overflow-hidden border-b border-[var(--border-subtle)] py-24 sm:py-32 lg:py-40">
   <!-- Interactive Halftone Dot Grid WebGL Background Shader -->
   <canvas
     id="hero-bg-shader"
@@ -18,9 +18,9 @@ const suffixWords = data.headlineSuffix.trim().split(/\s+/);
   ></canvas>
 
   <div class="container relative z-10 mx-auto px-4 max-w-6xl">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-      <!-- Left Column: Copy & CTAs (7 cols) -->
-      <div class="lg:col-span-7 text-center lg:text-left">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 items-center">
+      <!-- Left Column: Copy & CTAs (6 cols) -->
+      <div class="lg:col-span-6 text-center lg:text-left">
         <div class="hero-fg-title-wrap mb-6">
           <canvas
             id="hero-fg-shader"
@@ -77,13 +77,13 @@ const suffixWords = data.headlineSuffix.trim().split(/\s+/);
         </div>
       </div>
 
-      <!-- Right Column: Brutalist Profile Spec Card (5 cols) -->
-      <div class="lg:col-span-5">
-        <div class="card-primary card-spotlight p-6">
+      <!-- Right Column: Brutalist Profile Spec Card (6 cols) -->
+      <div class="lg:col-span-6">
+        <div class="card-primary card-spotlight p-7 sm:p-8">
           <!-- Top profile bar + Connect icons -->
-          <div class="flex items-start justify-between gap-4 mb-5 pb-5 border-b border-[var(--border-subtle)]">
-            <div class="flex items-center gap-4 min-w-0">
-              <div class="h-16 w-16 shrink-0 border-2 border-[var(--accent-primary)] p-0.5 overflow-hidden">
+          <div class="flex items-start justify-between gap-4 mb-6 pb-6 border-b border-[var(--border-subtle)]">
+            <div class="flex items-center gap-5 min-w-0">
+              <div class="h-24 w-24 sm:h-28 sm:w-28 shrink-0 border-2 border-[var(--accent-primary)] p-0.5 overflow-hidden">
                 <img
                   src={SITE_PROFILE.avatar}
                   alt={SITE_PROFILE.name}
@@ -92,14 +92,14 @@ const suffixWords = data.headlineSuffix.trim().split(/\s+/);
                 />
               </div>
               <div class="min-w-0">
-                <h3 class="text-base font-semibold text-[var(--text-primary)]">{SITE_PROFILE.name}</h3>
-                <p class="text-xs text-[var(--accent-secondary)] font-mono mt-0.5">{SITE_PROFILE.heroSubtitle}</p>
-                <p class="text-[11px] text-[var(--text-muted)] font-mono mt-0.5">{SITE_PROFILE.location}</p>
+                <h3 class="text-lg sm:text-xl font-semibold text-[var(--text-primary)]">{SITE_PROFILE.name}</h3>
+                <p class="text-xs sm:text-sm text-[var(--accent-secondary)] font-mono mt-1">{SITE_PROFILE.heroSubtitle}</p>
+                <p class="text-xs text-[var(--text-muted)] font-mono mt-1">{SITE_PROFILE.location}</p>
               </div>
             </div>
 
             <!-- Social Links (Top Right) -->
-            <div class="flex items-center gap-3 shrink-0 pt-0.5">
+            <div class="flex items-center gap-4 shrink-0 pt-0.5">
               <a
                 href={`mailto:${SITE_PROFILE.email}`}
                 target="_blank"

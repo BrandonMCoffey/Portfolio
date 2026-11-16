@@ -137,13 +137,13 @@ export function mountHeroTitleShader(titleEl: HTMLElement, canvas: HTMLCanvasEle
     secondary: gl.getUniformLocation(program, "u_secondary"),
   };
 
-  let primaryRgb: [number, number, number] = [1.0, 0.42, 0.21];
+  let primaryRgb: [number, number, number] = [0.21, 0.75, 1.0];
   let secondaryRgb: [number, number, number] = [0.65, 0.71, 0.74];
 
   const syncThemeTokens = () => {
     const isDark = document.documentElement.classList.contains("dark");
     const cs = getComputedStyle(document.documentElement);
-    primaryRgb = parseCssColor(cs.getPropertyValue("--accent-primary"), isDark ? [1, 0.42, 0.21] : [0.85, 0.29, 0.09]);
+    primaryRgb = parseCssColor(cs.getPropertyValue("--accent-primary"), isDark ? [0.21, 0.75, 1.0] : [1.0, 0.42, 0.21]);
     secondaryRgb = parseCssColor(cs.getPropertyValue("--accent-secondary"), isDark ? [0.65, 0.71, 0.74] : [0.29, 0.35, 0.38]);
   };
   syncThemeTokens();

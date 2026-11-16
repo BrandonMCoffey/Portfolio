@@ -57,11 +57,13 @@ const txt = PROJECT_LAYOUT_TEXT;
 			<!-- Breadcrumb Navigation Bar -->
 			<nav class="flex flex-wrap items-center justify-between gap-3 py-3 px-4 mb-8 border border-[var(--border-subtle)] bg-[var(--bg-surface)] text-xs font-mono text-[var(--text-muted)]">
 				<a
+					id="project-back-link"
 					href={backLink.href}
+					data-custom-back={backLink.href !== txt.defaultBackLink.href ? "1" : "0"}
 					class="inline-flex items-center gap-1.5 font-semibold text-[var(--accent-primary)] hover:text-[var(--accent-primary-hover)] transition-colors"
 				>
 					<svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" /></svg>
-					<span>{backLink.label}</span>
+					<span id="project-back-label">{backLink.label}</span>
 				</a>
 
 				<div class="flex items-center gap-2">
@@ -553,4 +555,34 @@ const txt = PROJECT_LAYOUT_TEXT;
 			)}
 		</div>
 	</div>
+
+	<script>
+		import { getProjectOrigin, getReturnScrollFor } from "../scripts/projectNavState";
+
+		function syncProjectBackLink() {
+			const link = document.getElementById("project-back-link") as HTMLAnchorElement | null;
+			const label = document.getElementById("project-back-label");
+			if (!link || !label) return;
+
+			if (link.dataset.customBack === "1") {
+				try {
+					const targetUrl = new URL(link.href, window.location.origin);
+					if (getReturnScrollFor(targetUrl.pathname) !== null) {
+						link.href = targetUrl.pathname;
+					}
+				} catch {
+					// Keep default href
+				}
+				return;
+			}
+
+			if (getProjectOrigin() === "home") {
+				// Return to "/" directly so instant scroll restoration places the viewport at the exact previous scrollY
+				link.href = getReturnScrollFor("/") !== null ? "/" : "/#projects";
+				label.textContent = "Back to Home";
+			}
+		}
+
+		document.addEventListener("astro:page-load", syncProjectBackLink);
+	</script>
 </BaseLayout>

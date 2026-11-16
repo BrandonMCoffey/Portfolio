@@ -32,6 +32,7 @@
     background-color: var(--accent-primary-hover);
     border-color: var(--accent-primary-hover);
     color: var(--accent-primary-fg);
+    box-shadow: 0 6px 20px -4px color-mix(in srgb, var(--accent-primary) 42%, transparent);
     transform: translateY(-1px);
   }
 
@@ -154,25 +155,29 @@
   .pill-status-released {
     @apply inline-flex items-center px-1.5 py-0.5 text-[10px] font-mono font-semibold uppercase tracking-wider;
     border-radius: var(--radius-tag);
-    color: var(--accent-primary);
-    background-color: var(--accent-badge-bg);
-    border: 1px solid color-mix(in srgb, var(--accent-primary) 35%, transparent);
+    color: #0284c7;
+    background-color: rgba(53, 191, 255, 0.14);
+    border: 1px solid rgba(53, 191, 255, 0.4);
+  }
+  .dark .pill-status-released {
+    color: #7dd8ff;
+    background-color: rgba(53, 191, 255, 0.14);
+    border: 1px solid rgba(79, 201, 255, 0.4);
   }
 
-  .pill-status-dev {
-    @apply inline-flex items-center px-1.5 py-0.5 text-[10px] font-mono font-semibold uppercase tracking-wider;
-    border-radius: var(--radius-tag);
-    color: var(--accent-secondary);
-    background-color: var(--accent-secondary-muted);
-    border: 1px solid color-mix(in srgb, var(--accent-secondary) 35%, transparent);
-  }
-
+  .pill-status-dev,
   .pill-status-ongoing {
     @apply inline-flex items-center px-1.5 py-0.5 text-[10px] font-mono font-semibold uppercase tracking-wider;
     border-radius: var(--radius-tag);
-    color: var(--text-primary);
-    background-color: var(--bg-elevated);
-    border: 1px solid var(--border-strong);
+    color: #15803d;
+    background-color: rgba(74, 222, 128, 0.14);
+    border: 1px solid rgba(74, 222, 128, 0.4);
+  }
+  .dark .pill-status-dev,
+  .dark .pill-status-ongoing {
+    color: #86efac;
+    background-color: rgba(74, 222, 128, 0.14);
+    border: 1px solid rgba(134, 239, 172, 0.4);
   }
 
   .filter-pill {

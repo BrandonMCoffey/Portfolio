@@ -47,6 +47,7 @@
   }
   .project-card:hover {
     border-color: var(--accent-primary);
+    box-shadow: 0 10px 26px -8px color-mix(in srgb, var(--accent-primary) 26%, transparent);
     transform: translateY(-6px);
   }
 

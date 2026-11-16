@@ -30,8 +30,64 @@ const { title = SITE_TITLE, description = SITE_DESCRIPTION } = Astro.props;
 
     <script>
       import { initCardSpotlight } from "../scripts/cardSpotlight";
+      import {
+        clearProjectNavigationState,
+        isProjectDetailPath,
+        normalizePath,
+        restoreReturnScroll,
+        saveReturnScroll,
+        setProjectOrigin,
+      } from "../scripts/projectNavState";
+
+      if (!(window as any).__projectNavListenersAttached) {
+        (window as any).__projectNavListenersAttached = true;
+
+        // Capture origin and scrollY when navigating from a listing/hub page into any project details page
+        document.addEventListener("click", (e) => {
+          const anchor = (e.target as HTMLElement | null)?.closest("a") as HTMLAnchorElement | null;
+          if (!anchor || anchor.target === "_blank") return;
+
+          let targetPath = "";
+          try {
+            const url = new URL(anchor.href, window.location.origin);
+            if (url.origin !== window.location.origin) return;
+            targetPath = url.pathname;
+          } catch {
+            return;
+          }
+
+          const currentPath = normalizePath(window.location.pathname);
+          if (isProjectDetailPath(targetPath) && !isProjectDetailPath(currentPath)) {
+            if (currentPath === "/") {
+              clearProjectNavigationState();
+              setProjectOrigin("home");
+            } else if (currentPath === "/projects") {
+              setProjectOrigin("projects");
+            }
+            saveReturnScroll(currentPath, window.scrollY);
+          }
+        });
+
+        // Pre-restore scroll before paint on Astro View Transition swap
+        document.addEventListener("astro:after-swap", () => {
+          if (!isProjectDetailPath(window.location.pathname)) {
+            restoreReturnScroll(false);
+          }
+        });
+      }
+
       document.addEventListener("astro:page-load", () => {
         initCardSpotlight();
+
+        const path = normalizePath(window.location.pathname);
+        if (!path.startsWith("/projects")) {
+          if (!isProjectDetailPath(path)) {
+            restoreReturnScroll(true);
+            clearProjectNavigationState();
+          }
+        } else if (path !== "/projects") {
+          // On project detail pages, nothing to clear yet
+        }
       });
     </script>
   </body>

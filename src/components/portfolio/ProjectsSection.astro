@@ -22,7 +22,7 @@ const ctaLabel = formatTemplate(data.ctaLabelTemplate, { count: allProjects.leng
   </div>
 
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-    {featuredProjects.map((project) => <ProjectCard project={project} />)}
+    {featuredProjects.map((project) => <ProjectCard project={project} origin="home" />)}
   </div>
 
   <div class="mt-12 text-center">

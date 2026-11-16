@@ -14,49 +14,51 @@ ctas:
     type: "linkedin"
     variant: "secondary"
 skillCategories:
-  - title: "Languages & Shading"
+  - title: "Software & Game Engines"
+    icon: "🎮"
+    skills:
+      - "Unreal Engine"
+      - "Unity"
+      - "Autodesk Maya"
+      - "Blender"
+      - "Houdini"
+      - "Nuke"
+      - "Substance Painter"
+  - title: "Languages & Graphics APIs"
     icon: "💻"
     skills:
       - "C++"
       - "C#"
       - "HLSL / GLSL"
-      - "Python (PyMel/Qt)"
+      - "Python"
       - "Java"
       - "TypeScript"
       - "SQL"
-  - title: "Engines & Graphics APIs"
-    icon: "🎮"
-    skills:
-      - "Unreal Engine 5"
-      - "Unity"
-      - "MRTK3 / OpenXR"
       - "Vulkan"
       - "OpenGL"
-      - "WebXR"
-  - title: "DCC & Pipeline Tools"
+  - title: "Tools & Backends"
     icon: "🎨"
     skills:
-      - "Autodesk Maya"
-      - "Houdini"
-      - "Blender"
-      - "Nuke"
-      - "Substance Painter"
-      - "Git / Perforce"
+      - "Git"
+      - "Supabase"
+      - "OpenXR"
+      - "MRTK3"
   - title: "Specializations & Systems"
     icon: "⚡"
     skills:
-      - "Custom Shader Graph / Material Nodes"
+      - "Procedural Shaders"
       - "Digital Twins & IoT Sync"
       - "Ultrasound Haptics"
-      - "Performance Optimization"
-      - "Editor Scripting"
+      - "Optimization"
+      - "Editor Tool Scripting"
 ---
+
 import { getCvMetrics } from "../../data/cvData";
 
 export const cvMetrics = getCvMetrics();
 
-I am a Lead Technical Artist and Graphics/XR Programmer who thrives at the intersection of aesthetic fidelity and robust systems architecture. Whether developing real-time shaders in HLSL, crafting custom Maya rigging tools in Python, or profiling rendering passes for standalone VR headsets, I build solutions that empower teams and delight users.
+I am a Lead Technical Artist and Graphics/XR Programmer who thrives at the intersection of visual fidelity and systems architecture.
 
-Currently pursuing an <strong class="font-semibold">MFA in Game Development</strong> at The University of Texas at Dallas, following a B.A. in Arts, Technology, and Emerging Communication with a Computer Science minor.
+Currently pursuing an <strong class="font-semibold">MFA in Game Development</strong> at The University of Texas at Dallas, following a B.A. in Arts, Technology, and Emerging Communication and a Computer Science minor.
 
 My work with the VAST Lab has been recognized with <span class="font-semibold text-[var(--accent-primary)]">{cvMetrics.daveyAwardsCount}× Davey Awards</span> and featured in <em class="font-medium">The New York Times</em>, <em class="font-medium">Fox News</em>, and {cvMetrics.totalPapers} peer-reviewed IEEE/ACM publications.

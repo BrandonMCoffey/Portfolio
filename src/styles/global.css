@@ -76,16 +76,16 @@
   --border-subtle: #3d3d3d;
   --border-strong: #575757;
   --border-card: #3d3d3d;
-  --border-accent: rgba(255, 107, 53, 0.45);
+  --border-accent: rgba(53, 191, 255, 0.45);
 
   /* Accents */
-  --accent-primary: #ff6b35;
-  --accent-primary-hover: #ff8559;
-  --accent-primary-fg: #14110f;
+  --accent-primary: #35bfff;
+  --accent-primary-hover: #66d0ff;
+  --accent-primary-fg: #0a141a;
   --accent-secondary: #a6b5bd;
   --accent-secondary-muted: rgba(166, 181, 189, 0.14);
-  --accent-badge-bg: rgba(255, 107, 53, 0.14);
-  --accent-badge-text: #ff8559;
+  --accent-badge-bg: rgba(53, 191, 255, 0.14);
+  --accent-badge-text: #66d0ff;
 
   /* Spotlight */
   --spotlight-opacity: 8%;

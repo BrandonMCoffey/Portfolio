@@ -110,7 +110,29 @@ const getNavHref = (link: NavLinkItem) => {
 </header>
 
 <script>
+  import { clearProjectNavigationState, normalizePath } from "../scripts/projectNavState";
+
   function setupPortfolioNav() {
+    const header = document.querySelector(".site-header");
+    if (header && !(header as HTMLElement).dataset.navResetAttached) {
+      (header as HTMLElement).dataset.navResetAttached = "true";
+      header.addEventListener("click", (e) => {
+        const link = (e.target as HTMLElement | null)?.closest("a") as HTMLAnchorElement | null;
+        if (!link) return;
+        clearProjectNavigationState();
+
+        // Only reset filters visibly right away when clicking the Projects link while already on /projects
+        try {
+          const targetUrl = new URL(link.href, window.location.origin);
+          if (normalizePath(window.location.pathname) === "/projects" && normalizePath(targetUrl.pathname) === "/projects") {
+            window.dispatchEvent(new CustomEvent("reset-projects-explorer"));
+          }
+        } catch {
+          // Ignore malformed URLs
+        }
+      });
+    }
+
     const btn = document.getElementById("portfolio-menu-btn");
     const menu = document.getElementById("portfolio-mobile-menu");
     const isHome = window.location.pathname === "/" || window.location.pathname === "";
@@ -146,41 +168,46 @@ const getNavHref = (link: NavLinkItem) => {
     const activeClasses = ["text-[var(--accent-primary)]", "font-semibold", "bg-[var(--accent-badge-bg)]"];
     const inactiveClasses = ["text-[var(--text-secondary)]"];
 
+    if ((window as any).__navSectionObserver) {
+      (window as any).__navSectionObserver.disconnect();
+      (window as any).__navSectionObserver = null;
+    }
+
+    const desktopNavLinks = document.querySelectorAll<HTMLAnchorElement>(".nav-link[data-nav-section]");
+
+    const setActiveNav = (targetId: string) => {
+      desktopNavLinks.forEach((link) => {
+        const matches = link.dataset.navSection === targetId;
+        activeClasses.forEach((cls) => link.classList.toggle(cls, matches));
+        inactiveClasses.forEach((cls) => link.classList.toggle(cls, !matches));
+      });
+    };
+
     if (isHome) {
       const sections = document.querySelectorAll("section[id]");
-      const desktopNavLinks = document.querySelectorAll<HTMLAnchorElement>(".nav-link[data-nav-section]");
 
       if (sections.length > 0 && desktopNavLinks.length > 0) {
         const observer = new IntersectionObserver(
           (entries) => {
             entries.forEach((entry) => {
               if (entry.isIntersecting) {
-                const id = entry.target.getAttribute("id");
-                desktopNavLinks.forEach((link) => {
-                  const matches = link.dataset.navSection === id;
-                  activeClasses.forEach((cls) => link.classList.toggle(cls, matches));
-                  inactiveClasses.forEach((cls) => link.classList.toggle(cls, !matches));
-                });
+                const id = entry.target.getAttribute("id") || "home";
+                // Keep "Home" highlighted while viewing the homepage #projects showcase (Projects nav links to /projects)
+                const navId = id === "projects" ? "home" : id;
+                setActiveNav(navId);
               }
             });
           },
           { root: null, rootMargin: "-20% 0px -60% 0px", threshold: 0 },
         );
 
+        (window as any).__navSectionObserver = observer;
         sections.forEach((sec) => observer.observe(sec));
       }
     } else if (isProjects) {
-      const projectsNavLink = document.querySelector<HTMLAnchorElement>('.nav-link[data-nav-section="projects"]');
-      if (projectsNavLink) {
-        projectsNavLink.classList.add(...activeClasses);
-        projectsNavLink.classList.remove(...inactiveClasses);
-      }
+      setActiveNav("projects");
     } else if (window.location.pathname.startsWith("/cv")) {
-      const cvNavLink = document.querySelector<HTMLAnchorElement>('.nav-link[data-nav-section="cv"]');
-      if (cvNavLink) {
-        cvNavLink.classList.add(...activeClasses);
-        cvNavLink.classList.remove(...inactiveClasses);
-      }
+      setActiveNav("cv");
     }
   }
 
