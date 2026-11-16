@@ -46,8 +46,8 @@ sections:
     title: "Honors & Awards"
     subtitleTemplate: "{count} International, National, and University Recognitions"
     projectPrefix: "Project:"
-    galleryLabel: "Award Gallery"
-    institutionalFallback: "Institutional Award"
+    galleryLabel: "View Award"
+    institutionalFallback: ""
     caseStudyLabel: "Case Study →"
   media:
     title: "Press & Media Recognition"

@@ -65,7 +65,7 @@ export const FOOTER_CONTENT = {
       { label: "Diagnostics", href: "/cookbook/data" },
     ],
   },
-  copyrightAttribution: "Crafted with Astro 7 & Tailwind CSS v4.",
+  copyrightAttribution: "",
 } as const;
 
 export const COOKBOOK_SITE = {

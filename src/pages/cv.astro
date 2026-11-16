@@ -149,7 +149,7 @@ const pageDescription = formatTemplate(copy.metaDescriptionTemplate, {
         <div class="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4 print:hidden">
           <a
             href="#publications"
-            class="card-brutal card-spotlight group p-4 block cursor-pointer"
+            class="card-primary card-spotlight group p-4 block cursor-pointer"
             title={copy.metrics.publications.title}
           >
             <span class="text-2xl sm:text-3xl font-bold text-[var(--accent-primary)] font-mono block group-hover:translate-x-0.5 transition-transform">
@@ -164,7 +164,7 @@ const pageDescription = formatTemplate(copy.metaDescriptionTemplate, {
 
           <a
             href="#awards"
-            class="card-brutal card-spotlight group p-4 block cursor-pointer"
+            class="card-primary card-spotlight group p-4 block cursor-pointer"
             title={copy.metrics.awards.title}
           >
             <span class="text-2xl sm:text-3xl font-bold text-[var(--accent-primary)] font-mono block group-hover:translate-x-0.5 transition-transform">
@@ -181,7 +181,7 @@ const pageDescription = formatTemplate(copy.metaDescriptionTemplate, {
 
           <a
             href="#media"
-            class="card-brutal card-spotlight group p-4 block cursor-pointer"
+            class="card-primary card-spotlight group p-4 block cursor-pointer"
             title={copy.metrics.media.title}
           >
             <span class="text-2xl sm:text-3xl font-bold text-[var(--accent-primary)] font-mono block group-hover:translate-x-0.5 transition-transform">
@@ -196,7 +196,7 @@ const pageDescription = formatTemplate(copy.metaDescriptionTemplate, {
 
           <a
             href="#exhibitions"
-            class="card-brutal card-spotlight group p-4 block cursor-pointer"
+            class="card-primary card-spotlight group p-4 block cursor-pointer"
             title={copy.metrics.exhibitions.title}
           >
             <span class="text-2xl sm:text-3xl font-bold text-[var(--accent-primary)] font-mono block group-hover:translate-x-0.5 transition-transform">
@@ -293,7 +293,7 @@ const pageDescription = formatTemplate(copy.metaDescriptionTemplate, {
         <div class="space-y-4" id="publications-list">
           {
             publications.map((pub, idx) => (
-              <article class="pub-card card-brutal card-spotlight p-5" data-venue={pub.venue}>
+              <article class="pub-card card-primary card-spotlight p-5" data-venue={pub.venue}>
                 <div class="flex flex-wrap items-center gap-2 mb-2">
                   <span class="tag-accent">[{idx + 1}] {pub.venue}</span>
                   <span class="text-xs font-mono text-[var(--text-muted)]">&bull; {pub.date}</span>
@@ -387,7 +387,7 @@ const pageDescription = formatTemplate(copy.metaDescriptionTemplate, {
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {
             awards.map((award) => (
-              <div class="card-brutal card-spotlight p-4 flex flex-col justify-between">
+              <div class="card-primary card-spotlight p-4 flex flex-col justify-between">
                 <div>
                   <div class="flex items-center justify-between gap-2 mb-2">
                     <span class="text-[11px] font-mono text-[var(--text-muted)]">{award.organization}</span>
@@ -448,7 +448,7 @@ const pageDescription = formatTemplate(copy.metaDescriptionTemplate, {
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {
             mediaRecognition.map((media) => (
-              <div class="card-brutal card-spotlight p-4 flex flex-col justify-between">
+              <div class="card-primary card-spotlight p-4 flex flex-col justify-between">
                 <div>
                   <div class="flex items-center justify-between gap-2 mb-1.5">
                     <span class="text-xs font-mono font-bold text-[var(--accent-primary)]">{media.outlet}</span>
@@ -617,7 +617,7 @@ const pageDescription = formatTemplate(copy.metaDescriptionTemplate, {
 
       :global(.surface-panel),
       :global(.surface-card),
-      :global(.card-brutal),
+      :global(.card-primary),
       article,
       .pub-card {
         background: #ffffff !important;

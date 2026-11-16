@@ -10,7 +10,7 @@ const { data, Content } = await loadSectionContent("about");
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
       <!-- Bio & Background (5 cols) -->
       <div class="lg:col-span-5">
-        <div class="card-brutal card-spotlight p-6 sm:p-7">
+        <div class="card-primary card-spotlight p-6 sm:p-7">
           <h3 class="text-xl font-semibold text-[var(--text-primary)] mb-4">{data.bioHeading}</h3>
           <div class="token-prose space-y-4 text-sm sm:text-base leading-relaxed">
             <Content />
@@ -44,7 +44,7 @@ const { data, Content } = await loadSectionContent("about");
       <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
         {
           data.skillCategories.map((cat) => (
-            <div class="card-brutal card-spotlight p-5">
+            <div class="card-primary card-spotlight p-5">
               <div class="flex items-center justify-between gap-2 mb-3">
                 <div class="flex items-center gap-2">
                   <span class="text-lg" role="img" aria-hidden="true">
@@ -52,9 +52,6 @@ const { data, Content } = await loadSectionContent("about");
                   </span>
                   <h4 class="text-sm font-semibold text-[var(--text-primary)]">{cat.title}</h4>
                 </div>
-                <span class="font-mono text-xs text-[var(--accent-primary)]">
-                  {String(cat.skills.length).padStart(2, "0")}
-                </span>
               </div>
               <div class="flex flex-wrap gap-1.5">
                 {cat.skills.map((skill) => (

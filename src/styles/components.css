@@ -1,0 +1,289 @@
+/* Components */
+@layer components {
+  /* Buttons */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: var(--radius-btn);
+    padding: 0.65rem 1.35rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition:
+      transform 0.18s ease,
+      background-color 0.18s ease,
+      border-color 0.18s ease,
+      color 0.18s ease;
+  }
+  .btn:focus-visible {
+    outline: 2px solid var(--accent-primary);
+    outline-offset: 2px;
+  }
+
+  .btn-primary {
+    background-color: var(--accent-primary);
+    color: var(--accent-primary-fg);
+    border-color: var(--accent-primary);
+  }
+  .btn-primary:hover {
+    background-color: var(--accent-primary-hover);
+    border-color: var(--accent-primary-hover);
+    color: var(--accent-primary-fg);
+    transform: translateY(-1px);
+  }
+
+  .btn-secondary {
+    background-color: var(--bg-surface);
+    color: var(--text-primary);
+    border-color: var(--border-strong);
+  }
+  .btn-secondary:hover {
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
+    transform: translateY(-1px);
+  }
+
+  .btn-remove {
+    @apply flex items-center justify-center h-7 w-7 rounded-[4px] transition-all;
+    background-color: var(--bg-elevated);
+    color: var(--text-muted);
+  }
+  .btn-remove:hover {
+    @apply bg-red-500 text-white;
+  }
+
+  /* Sort */
+  .sort-group {
+    @apply flex flex-wrap items-center gap-2 mb-6;
+  }
+  .sort-btn {
+    @apply px-3 py-1 text-sm rounded-[4px] cursor-pointer transition-colors;
+    background-color: var(--bg-elevated);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-subtle);
+  }
+  .sort-btn:hover {
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
+  }
+  .sort-btn.active {
+    background-color: var(--accent-primary);
+    color: var(--accent-primary-fg);
+    border-color: var(--accent-primary);
+    font-weight: 600;
+  }
+  .sort-btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
+  /* Tags */
+  .tag-square,
+  .pill-tech,
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.28rem 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    line-height: 1;
+    border-radius: var(--radius-tag);
+    background-color: var(--bg-elevated);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-subtle);
+  }
+
+  .tag-square-secondary,
+  .pill-platform {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.28rem 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    line-height: 1;
+    border-radius: var(--radius-tag);
+    background-color: var(--accent-secondary-muted);
+    color: var(--accent-secondary);
+    border: 1px solid color-mix(in srgb, var(--accent-secondary) 35%, transparent);
+  }
+
+  .tag-accent,
+  .badge-emerald {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.28rem 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    line-height: 1;
+    border-radius: var(--radius-tag);
+    background-color: var(--accent-badge-bg);
+    color: var(--accent-badge-text);
+    border: 1px solid color-mix(in srgb, var(--accent-primary) 35%, transparent);
+  }
+
+  .badge-slate {
+    @apply inline-flex items-center px-2.5 py-1 text-xs font-mono font-semibold;
+    border-radius: var(--radius-tag);
+    background-color: var(--bg-elevated);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-subtle);
+  }
+
+  .badge-blue {
+    @apply inline-flex items-center px-2.5 py-1 text-xs font-mono font-semibold;
+    border-radius: var(--radius-tag);
+    background-color: var(--accent-secondary-muted);
+    color: var(--accent-secondary);
+    border: 1px solid color-mix(in srgb, var(--accent-secondary) 35%, transparent);
+  }
+
+  .pill-date {
+    @apply inline-flex items-center px-2 py-0.5 text-[10px] font-mono font-bold;
+    border-radius: var(--radius-tag);
+    background-color: var(--bg-elevated);
+    color: var(--accent-secondary);
+    border: 1px solid var(--border-subtle);
+  }
+
+  .pill-status-released {
+    @apply inline-flex items-center px-1.5 py-0.5 text-[10px] font-mono font-semibold uppercase tracking-wider;
+    border-radius: var(--radius-tag);
+    color: var(--accent-primary);
+    background-color: var(--accent-badge-bg);
+    border: 1px solid color-mix(in srgb, var(--accent-primary) 35%, transparent);
+  }
+
+  .pill-status-dev {
+    @apply inline-flex items-center px-1.5 py-0.5 text-[10px] font-mono font-semibold uppercase tracking-wider;
+    border-radius: var(--radius-tag);
+    color: var(--accent-secondary);
+    background-color: var(--accent-secondary-muted);
+    border: 1px solid color-mix(in srgb, var(--accent-secondary) 35%, transparent);
+  }
+
+  .pill-status-ongoing {
+    @apply inline-flex items-center px-1.5 py-0.5 text-[10px] font-mono font-semibold uppercase tracking-wider;
+    border-radius: var(--radius-tag);
+    color: var(--text-primary);
+    background-color: var(--bg-elevated);
+    border: 1px solid var(--border-strong);
+  }
+
+  .filter-pill {
+    @apply inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono font-medium transition-all cursor-pointer select-none;
+    border-radius: var(--radius-tag);
+    background-color: var(--bg-elevated);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-subtle);
+  }
+  .filter-pill:hover {
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
+  }
+  .filter-pill.active {
+    background-color: var(--accent-primary);
+    color: var(--accent-primary-fg);
+    border-color: var(--accent-primary);
+    font-weight: 600;
+  }
+
+  /* Callout */
+  .well {
+    border-radius: 0px;
+    border-left: 4px solid var(--accent-primary);
+    background-color: var(--bg-surface);
+    color: var(--text-secondary);
+    padding: 1.25rem;
+  }
+
+  /* Cookbook */
+  .recipe-header {
+    @apply flex items-center justify-between p-3 mb-2 rounded-[3px] transition-all duration-300;
+    background-color: var(--bg-elevated);
+  }
+  .ingredient-item {
+    @apply flex items-center p-3 rounded-[3px] cursor-pointer transition-all duration-300;
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+  }
+  .ingredient-item:hover {
+    border-color: var(--accent-primary);
+  }
+}
+
+/* Menu */
+.hamburger {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  transition: all 0.25s;
+}
+.hamburger-top,
+.hamburger-middle,
+.hamburger-bottom {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 24px;
+  height: 2px;
+  background-color: var(--text-primary);
+  transform: rotate(0);
+  transition: all 0.5s;
+}
+.hamburger-middle {
+  transform: translateY(7px);
+}
+.hamburger-bottom {
+  transform: translateY(14px);
+}
+.open .hamburger-top {
+  transform: rotate(45deg) translateY(6px) translateX(6px);
+}
+.open .hamburger-middle {
+  display: none;
+}
+.open .hamburger-bottom {
+  transform: rotate(-45deg) translateY(6px) translateX(-6px);
+}
+
+/* Lightbox */
+.lightbox-overlay {
+  @apply fixed inset-0 z-[999] flex items-center justify-center p-4 backdrop-blur-md;
+  background-color: rgba(16, 16, 16, 0.88);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.3s ease,
+    visibility 0.3s ease;
+}
+body.lightbox-open .lightbox-overlay {
+  opacity: 1;
+  visibility: visible;
+}
+body.lightbox-open {
+  overflow: hidden;
+}
+.lightbox-content {
+  @apply relative flex h-full w-full items-center justify-center;
+}
+.lightbox-image {
+  @apply block h-auto w-auto max-h-[85vh] max-w-[90vw] rounded-[3px] shadow-2xl;
+}
+.lightbox-btn {
+  @apply absolute flex h-10 w-10 items-center justify-center rounded-[6px] text-white backdrop-blur-sm transition-all hover:scale-105;
+  background-color: rgba(33, 33, 33, 0.8);
+  border: 1px solid var(--border-strong);
+}
+.lightbox-close-btn {
+  @apply right-4 top-4;
+}
+.lightbox-fullscreen-btn {
+  @apply left-4 top-4;
+}

@@ -93,7 +93,7 @@ export const PROJECT_CARD_TEXT = {
   liveDemoTitle: "Live Demo Available",
   githubTitle: "GitHub Repository Available",
   videoTitle: "Gameplay Video Available",
-  ctaLabel: "View Case Study",
+  ctaLabel: "View Project Details",
 } as const;
 
 export const PROJECT_COMPONENTS_TEXT = {

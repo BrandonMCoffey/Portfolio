@@ -1,0 +1,128 @@
+/* Cards */
+@layer components {
+  /* Primary Card */
+  .card-primary,
+  .surface-card {
+    position: relative;
+    border-radius: 0px;
+    border: 2px solid var(--border-strong);
+    background-color: var(--bg-surface);
+    box-shadow: 4px 4px 0px var(--border-subtle);
+    transition:
+      transform 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 0.22s ease,
+      box-shadow 0.22s ease,
+      background-color 0.22s ease;
+  }
+  .card-primary:hover,
+  .surface-card-interactive:hover {
+    border-color: var(--accent-primary);
+    box-shadow: 6px 6px 0px var(--accent-primary);
+    transform: translate(-2px, -2px);
+  }
+
+  /* Panel */
+  .surface-panel {
+    position: relative;
+    border-radius: 0px;
+    border: 1px solid var(--border-strong);
+    background-color: var(--bg-surface);
+    box-shadow: 4px 4px 0px var(--border-subtle);
+  }
+
+  /* Project */
+  .project-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: var(--radius-project-card);
+    border: 1px solid var(--border-subtle);
+    background-color: var(--bg-surface);
+    color: var(--text-primary);
+    transition:
+      transform 0.24s cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 0.24s ease,
+      box-shadow 0.24s ease;
+  }
+  .project-card:hover {
+    border-color: var(--accent-primary);
+    transform: translateY(-6px);
+  }
+
+  /* Spotlight */
+  .card-spotlight::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 3;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    background: radial-gradient(
+      240px circle at var(--mx, -500px) var(--my, -500px),
+      color-mix(in srgb, var(--accent-primary) var(--spotlight-opacity), transparent),
+      transparent 70%
+    );
+    mix-blend-mode: screen;
+  }
+  html:not(.dark) .card-spotlight::before {
+    mix-blend-mode: multiply;
+  }
+  .card-spotlight:hover::before {
+    opacity: 1;
+  }
+
+  /* Generic */
+  .card {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    border-radius: var(--radius-project-card);
+    border: 1px solid var(--border-subtle);
+    background-color: var(--bg-surface);
+    transition:
+      transform 0.24s ease,
+      border-color 0.24s ease;
+  }
+  .card:hover {
+    border-color: var(--accent-primary);
+    transform: translateY(-4px);
+  }
+  .card-static {
+    border-radius: 0px;
+    border: 2px solid var(--border-strong);
+    background-color: var(--bg-surface);
+  }
+  .card-glow {
+    transition:
+      border-color 0.22s ease,
+      box-shadow 0.22s ease,
+      transform 0.22s ease;
+  }
+  .card-image {
+    @apply aspect-video w-full object-cover;
+  }
+  .card-body {
+    @apply p-5;
+  }
+  .card-actions {
+    @apply absolute top-2 right-2 flex flex-col gap-2 z-10;
+  }
+  .card-btn {
+    @apply h-10 w-10 rounded-[4px] flex items-center justify-center transition-all duration-200;
+  }
+  .card-btn.inactive {
+    background-color: var(--bg-surface-glass);
+    color: var(--text-primary);
+    @apply backdrop-blur-sm opacity-0 group-hover:opacity-100;
+  }
+  .card-btn.active-heart {
+    @apply bg-pink-600 text-white opacity-100 shadow-md;
+  }
+  .card-btn.active-plus {
+    background-color: var(--accent-primary);
+    color: var(--accent-primary-fg);
+    @apply opacity-100 shadow-md;
+  }
+}

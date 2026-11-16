@@ -1,27 +1,13 @@
-/**
- * Foreground Chromatic Lens WebGL Shader for Hero Title Highlight.
- * Renders over the DOM <h1> using an exact pixel-matched word mask while keeping
- * DOM text accessible and selectable. Tracks pointer globally with unclamped
- * coordinates and Gaussian falloff so entering/leaving bounds never jumps.
- */
-
+/* Foreground Chromatic Lens WebGL Shader */
 function parseCssColor(raw: string, fallback: [number, number, number]): [number, number, number] {
   const clean = raw.trim();
   if (clean.startsWith("#")) {
     const hex = clean.slice(1);
     if (hex.length === 3) {
-      return [
-        parseInt(hex[0] + hex[0], 16) / 255,
-        parseInt(hex[1] + hex[1], 16) / 255,
-        parseInt(hex[2] + hex[2], 16) / 255,
-      ];
+      return [parseInt(hex[0] + hex[0], 16) / 255, parseInt(hex[1] + hex[1], 16) / 255, parseInt(hex[2] + hex[2], 16) / 255];
     }
     if (hex.length >= 6) {
-      return [
-        parseInt(hex.slice(0, 2), 16) / 255,
-        parseInt(hex.slice(2, 4), 16) / 255,
-        parseInt(hex.slice(4, 6), 16) / 255,
-      ];
+      return [parseInt(hex.slice(0, 2), 16) / 255, parseInt(hex.slice(2, 4), 16) / 255, parseInt(hex.slice(4, 6), 16) / 255];
     }
   }
   const rgbMatch = clean.match(/rgba?\((\d+)[,\s]+(\d+)[,\s]+(\d+)/i);
@@ -52,11 +38,10 @@ const FRAGMENT_SHADER = `
   uniform float u_hover;
   uniform vec3 u_primary;
   uniform vec3 u_secondary;
-  uniform vec3 u_text;
 
-  vec2 sampleMask(vec2 uv) {
-    if (uv.x < 0.0 || uv.x > 1.0 || uv.y < 0.0 || uv.y > 1.0) return vec2(0.0);
-    return texture2D(u_mask, uv).rg;
+  float sampleMask(vec2 uv) {
+    if (uv.x < 0.0 || uv.x > 1.0 || uv.y < 0.0 || uv.y > 1.0) return 0.0;
+    return texture2D(u_mask, uv).a;
   }
 
   void main() {
@@ -67,40 +52,29 @@ const FRAGMENT_SHADER = `
     vec2 diff = p - m;
     float dist = length(diff);
 
-    // Radius 0.7 with smooth Gaussian falloff; fades cleanly to zero out-of-bounds
     float rad = 0.7 * 0.72;
     float influence = exp(-(dist * dist) / (rad * rad * 0.55)) * u_hover;
     float speed = clamp(length(u_vel) * 14.0, 0.0, 1.6);
     float intensity = 0.85;
 
-    vec2 baseMask = sampleMask(v_uv);
-    float staticBaseAlpha = baseMask.r;
-
-    vec2 shiftDir = normalize(diff + vec2(0.0001)) * (0.0075 + 0.011 * speed) * influence * intensity;
+    vec2 shiftDir = normalize(diff + vec2(0.0001)) * (0.007 + 0.011 * speed) * influence * intensity;
     vec2 velShift = u_vel * 0.18 * intensity * influence;
     vec2 offset = shiftDir + velShift;
 
-    // Subtle cursor lens magnification scaled purely by influence
-    vec2 lensUv = v_uv - (diff * vec2(1.0 / aspect, 1.0)) * 0.04 * influence * intensity;
+    vec2 lensUv = v_uv - (diff * vec2(1.0 / aspect, 1.0)) * 0.038 * influence * intensity;
 
-    vec2 mC = sampleMask(lensUv);
-    vec2 mP = sampleMask(lensUv + offset);
-    vec2 mS = sampleMask(lensUv - offset);
-
-    // Target highlight phrase (green mask channel)
-    float maskC = mC.g;
-    float maskP = mP.g;
-    float maskS = mS.g;
+    float maskC = sampleMask(lensUv);
+    float maskP = sampleMask(lensUv + offset);
+    float maskS = sampleMask(lensUv - offset);
 
     vec3 col = u_primary * maskC;
-    col += u_primary * max(0.0, maskP - maskC) * 0.95;
-    col += u_secondary * max(0.0, maskS - maskC) * 0.95;
+    col += u_primary * max(0.0, maskP - maskC) * 0.92;
+    col += u_secondary * max(0.0, maskS - maskC) * 0.92;
 
-    float hlAlpha = max(maskC, max(maskP, maskS) * 0.85);
-    vec3 outCol = staticBaseAlpha > hlAlpha ? u_text : col / max(hlAlpha, 0.001);
-    float outAlpha = max(staticBaseAlpha, hlAlpha);
+    float alpha = max(maskC, max(maskP, maskS) * 0.85);
+    vec3 outCol = alpha > 0.001 ? col / alpha : u_primary;
 
-    gl_FragColor = vec4(outCol, clamp(outAlpha, 0.0, 1.0));
+    gl_FragColor = vec4(outCol, clamp(alpha, 0.0, 1.0));
   }
 `;
 
@@ -161,19 +135,16 @@ export function mountHeroTitleShader(titleEl: HTMLElement, canvas: HTMLCanvasEle
     hover: gl.getUniformLocation(program, "u_hover"),
     primary: gl.getUniformLocation(program, "u_primary"),
     secondary: gl.getUniformLocation(program, "u_secondary"),
-    text: gl.getUniformLocation(program, "u_text"),
   };
 
   let primaryRgb: [number, number, number] = [1.0, 0.42, 0.21];
   let secondaryRgb: [number, number, number] = [0.65, 0.71, 0.74];
-  let textRgb: [number, number, number] = [0.96, 0.96, 0.95];
 
   const syncThemeTokens = () => {
     const isDark = document.documentElement.classList.contains("dark");
     const cs = getComputedStyle(document.documentElement);
     primaryRgb = parseCssColor(cs.getPropertyValue("--accent-primary"), isDark ? [1, 0.42, 0.21] : [0.85, 0.29, 0.09]);
     secondaryRgb = parseCssColor(cs.getPropertyValue("--accent-secondary"), isDark ? [0.65, 0.71, 0.74] : [0.29, 0.35, 0.38]);
-    textRgb = parseCssColor(cs.getPropertyValue("--text-primary"), isDark ? [0.96, 0.96, 0.95] : [0.08, 0.08, 0.08]);
   };
   syncThemeTokens();
 
@@ -189,7 +160,8 @@ export function mountHeroTitleShader(titleEl: HTMLElement, canvas: HTMLCanvasEle
     const rect = titleEl.getBoundingClientRect();
     if (rect.width <= 0 || rect.height <= 0) return;
 
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    // Supersample at >= 2.5x (up to 4x) to eliminate glyph aliasing on 1x displays
+    const dpr = Math.max(2.5, Math.min((window.devicePixelRatio || 1) * 2, 4));
     const cssW = rect.width + PAD * 2;
     const cssH = rect.height + PAD * 2;
     const pxW = Math.max(1, Math.round(cssW * dpr));
@@ -211,12 +183,14 @@ export function mountHeroTitleShader(titleEl: HTMLElement, canvas: HTMLCanvasEle
 
     maskCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
     maskCtx.clearRect(0, 0, cssW, cssH);
+    maskCtx.imageSmoothingEnabled = true;
+    maskCtx.imageSmoothingQuality = "high";
 
-    const words = titleEl.querySelectorAll<HTMLElement>(".hero-fg-word");
+    const hlWords = titleEl.querySelectorAll<HTMLElement>('.hero-fg-word[data-hl="1"]');
     const titleCs = getComputedStyle(titleEl);
     const isUppercase = titleCs.textTransform === "uppercase";
 
-    words.forEach((wordEl) => {
+    hlWords.forEach((wordEl) => {
       const wRect = wordEl.getBoundingClientRect();
       const cs = getComputedStyle(wordEl);
       const rawText = (wordEl.textContent || "").trim();
@@ -238,8 +212,7 @@ export function mountHeroTitleShader(titleEl: HTMLElement, canvas: HTMLCanvasEle
       const x = wRect.left - rect.left + PAD;
       const y = wRect.top - rect.top + PAD + leading * 0.5 + fAscent;
 
-      const isHl = wordEl.dataset.hl === "1";
-      maskCtx.fillStyle = isHl ? "rgb(0, 255, 0)" : "rgb(255, 0, 0)";
+      maskCtx.fillStyle = "#ffffff";
       maskCtx.textBaseline = "alphabetic";
       maskCtx.fillText(text, x, y);
     });
@@ -278,7 +251,6 @@ export function mountHeroTitleShader(titleEl: HTMLElement, canvas: HTMLCanvasEle
   let hasMoved = false;
   let rafId = 0;
 
-  // Unclamped global pointer tracking so cursor continues guiding the shader outside bounds with zero jump
   const onPointerMove = (e: PointerEvent) => {
     const rect = canvas.getBoundingClientRect();
     if (rect.width <= 0 || rect.height <= 0) return;
@@ -331,7 +303,6 @@ export function mountHeroTitleShader(titleEl: HTMLElement, canvas: HTMLCanvasEle
     gl.uniform1f(locs.hover, smoothHover);
     gl.uniform3f(locs.primary, primaryRgb[0], primaryRgb[1], primaryRgb[2]);
     gl.uniform3f(locs.secondary, secondaryRgb[0], secondaryRgb[1], secondaryRgb[2]);
-    gl.uniform3f(locs.text, textRgb[0], textRgb[1], textRgb[2]);
 
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
   };

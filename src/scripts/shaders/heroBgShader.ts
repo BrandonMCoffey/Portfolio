@@ -1,26 +1,13 @@
-/**
- * Interactive Halftone Dot Grid WebGL Background Shader for Hero Section.
- * Reads palette colors dynamically from CSS custom properties and adapts opacity
- * smoothly for dark (0.31 max alpha) and light (0.13 max alpha) themes.
- */
-
+/* Interactive Halftone Dot Grid WebGL Background Shader */
 function parseCssColor(raw: string, fallback: [number, number, number]): [number, number, number] {
   const clean = raw.trim();
   if (clean.startsWith("#")) {
     const hex = clean.slice(1);
     if (hex.length === 3) {
-      return [
-        parseInt(hex[0] + hex[0], 16) / 255,
-        parseInt(hex[1] + hex[1], 16) / 255,
-        parseInt(hex[2] + hex[2], 16) / 255,
-      ];
+      return [parseInt(hex[0] + hex[0], 16) / 255, parseInt(hex[1] + hex[1], 16) / 255, parseInt(hex[2] + hex[2], 16) / 255];
     }
     if (hex.length >= 6) {
-      return [
-        parseInt(hex.slice(0, 2), 16) / 255,
-        parseInt(hex.slice(2, 4), 16) / 255,
-        parseInt(hex.slice(4, 6), 16) / 255,
-      ];
+      return [parseInt(hex.slice(0, 2), 16) / 255, parseInt(hex.slice(2, 4), 16) / 255, parseInt(hex.slice(4, 6), 16) / 255];
     }
   }
   const rgbMatch = clean.match(/rgba?\((\d+)[,\s]+(\d+)[,\s]+(\d+)/i);
@@ -98,23 +85,28 @@ const FRAGMENT_SHADER = `
     float edgeFade = smoothstep(0.0, 0.14, v_uv.y) * smoothstep(1.0, 0.86, v_uv.y);
     edgeFade *= smoothstep(0.0, 0.08, v_uv.x) * smoothstep(1.0, 0.92, v_uv.x);
 
-    // Anti-aliased Circular Halftone Matrix (scale = 1.0, ambient = 0.0)
     float cells = 28.0;
     vec2 gp = p * cells;
     vec2 cellUv = fract(gp) - 0.5;
     float wave = snoise(floor(gp) * 0.12 + vec2(u_time * 0.08, -u_time * 0.06)) * 0.5 + 0.5;
 
-    float energy = clamp(influence * 0.72 + wideInfluence * 0.18, 0.0, 0.92);
-    float dotRadius = energy * 0.44 * edgeFade;
+    // Visible idle dot matrix baseline + cursor bloom
+    float idleEnergy = 0.35 + 0.1 * wave;
+    float cursorEnergy = influence * 0.5 + wideInfluence * 0.15;
+    float energy = clamp(idleEnergy + cursorEnergy, 0.0, 0.94);
+
+    float dotRadius = energy * 0.42 * edgeFade;
     float d = length(cellUv);
-    float dotAlpha = 1.0 - smoothstep(dotRadius - 0.06, dotRadius + 0.06, d);
+    float dotAlpha = 1.0 - smoothstep(dotRadius - 0.055, dotRadius + 0.055, d);
 
-    vec3 col = mix(u_secondary, u_primary, smoothstep(0.15, 0.85, influence + wave * 0.25));
-    vec3 outColor = u_isDark > 0.5 ? col : col * 0.86;
+    vec3 col = mix(u_secondary, u_primary, smoothstep(0.12, 0.85, influence + wave * 0.16));
+    vec3 outColor = u_isDark > 0.5 ? col : col * 0.82;
 
-    // Half transparency on dark mode (0.31), quarter transparency on light mode (0.13)
-    float maxAlpha = u_isDark > 0.5 ? 0.31 : 0.13;
-    gl_FragColor = vec4(outColor, dotAlpha * maxAlpha);
+    float darkAlpha = mix(0.3, 0.45, clamp(wideInfluence * 1.15, 0.0, 1.0));
+    float lightAlpha = mix(0.15, 0.25, clamp(wideInfluence * 1.15, 0.0, 1.0));
+    float alphaScale = u_isDark > 0.5 ? darkAlpha : lightAlpha;
+
+    gl_FragColor = vec4(outColor, dotAlpha * alphaScale);
   }
 `;
 
@@ -219,7 +211,6 @@ export function mountHeroBgShader(canvas: HTMLCanvasElement) {
   let rafId = 0;
   const startTime = performance.now();
 
-  // Track globally across window so approaching or leaving the hero edge fades smoothly with zero snap
   const onPointerMove = (e: PointerEvent) => {
     if (!heroEl) return;
     const rect = heroEl.getBoundingClientRect();
@@ -253,8 +244,6 @@ export function mountHeroBgShader(canvas: HTMLCanvasElement) {
 
     gl.clearColor(0, 0, 0, 0);
     gl.clear(gl.COLOR_BUFFER_BIT);
-
-    if (smoothHover < 0.004) return;
 
     const now = (performance.now() - startTime) * 0.001;
     gl.uniform2f(locs.resolution, canvas.width, canvas.height);

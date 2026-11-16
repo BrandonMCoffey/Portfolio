@@ -26,8 +26,7 @@ export function formatQuantity(quantity) {
     quantity = parsed;
   }
 
-  const { roundUpThreshold, roundDownThreshold, fractionTolerance, decimalPrecisionFactor, fractionMap } =
-    COOKBOOK_FORMATTER_CONFIG;
+  const { roundUpThreshold, roundDownThreshold, fractionTolerance, decimalPrecisionFactor, fractionMap } = COOKBOOK_FORMATTER_CONFIG;
 
   let whole = Math.floor(quantity);
   let rem = quantity - whole;

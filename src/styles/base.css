@@ -1,0 +1,118 @@
+/* Base */
+@layer base {
+  html {
+    background-color: var(--bg-page);
+    color: var(--text-primary);
+  }
+
+  body {
+    background-color: var(--bg-page);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.65;
+    transition:
+      background-color 0.25s ease,
+      color 0.25s ease;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-heading);
+    letter-spacing: var(--heading-tracking);
+    font-weight: var(--heading-weight);
+    color: var(--text-primary);
+  }
+
+  h1 {
+    font-size: clamp(2.25rem, 4.5vw, 3.5rem);
+    line-height: 1.08;
+  }
+
+  h2 {
+    @apply text-2xl md:text-3xl;
+  }
+
+  h3 {
+    @apply text-xl;
+  }
+
+  a {
+    color: var(--accent-primary);
+    transition: color 0.18s ease;
+  }
+
+  a:hover {
+    color: var(--accent-primary-hover);
+  }
+
+  section {
+    padding-top: var(--section-py);
+    padding-bottom: var(--section-py);
+  }
+
+  code,
+  pre {
+    font-family: var(--font-mono);
+  }
+}
+
+@layer components {
+  /* Prose */
+  .token-prose,
+  .token-prose p,
+  .token-prose li {
+    color: var(--text-secondary);
+  }
+  .token-prose strong,
+  .token-prose b,
+  .token-prose em,
+  .token-prose i {
+    color: var(--text-primary) !important;
+  }
+  .token-prose span[class*="text-emerald"],
+  .token-prose a {
+    color: var(--accent-primary) !important;
+  }
+
+  /* Title */
+  .hero-fg-title-wrap {
+    position: relative;
+  }
+  .hero-fg-canvas {
+    position: absolute;
+    pointer-events: none;
+    z-index: 2;
+  }
+  #hero-title.hero-fg-active .hero-fg-word[data-hl="1"] {
+    color: transparent !important;
+  }
+  #hero-title::selection,
+  #hero-title .hero-fg-word::selection {
+    background-color: var(--accent-primary);
+    color: var(--accent-primary-fg);
+  }
+
+  /* Eyebrow */
+  .section-rule {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent-secondary);
+  }
+  .section-rule::before {
+    content: "";
+    display: inline-block;
+    width: 22px;
+    height: 2px;
+    background-color: var(--accent-primary);
+  }
+}
