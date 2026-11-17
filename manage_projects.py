@@ -147,7 +147,7 @@ def _format_inline_array(items: list[str]) -> str:
     return "[" + ", ".join(escaped) + "]"
 
 
-def update_project_frontmatter(path: Path, new_priority: int, new_featured: bool) -> bool:
+def update_project_frontmatter(path: Path, new_priority: int, new_filters: list[str]) -> bool:
     """Update only `priority` and `filters` in frontmatter, preserving line endings and body."""
     raw_bytes = path.read_bytes()
     eol = "\r\n" if b"\r\n" in raw_bytes else "\n"
@@ -159,9 +159,8 @@ def update_project_frontmatter(path: Path, new_priority: int, new_featured: bool
     open_delim, fm, close_delim, body = m.groups()
     current_priority = _parse_int_field(fm, "priority", DEFAULT_PRIORITY)
     current_filters = _parse_filters(fm)
-    current_featured = "featured" in current_filters
 
-    if current_priority == new_priority and current_featured == new_featured:
+    if current_priority == new_priority and current_filters == new_filters:
         return False
 
     updated_fm = fm
@@ -178,11 +177,8 @@ def update_project_frontmatter(path: Path, new_priority: int, new_featured: bool
     else:
         updated_fm = updated_fm.rstrip("\r\n") + f"{eol}priority: {new_priority}"
 
-    # Update filters if featured flag changed
-    if current_featured != new_featured:
-        new_filters = [f for f in current_filters if f != "featured"]
-        if new_featured:
-            new_filters.insert(0, "featured")
+    # Update filters if changed
+    if current_filters != new_filters:
         filters_line = f"filters: {_format_inline_array(new_filters)}"
 
         if re.search(r"^filters:\s*\[[^\]]*\].*$", updated_fm, re.MULTILINE):
@@ -212,6 +208,19 @@ def update_project_frontmatter(path: Path, new_priority: int, new_featured: bool
     tmp_path.write_bytes(new_text.encode("utf-8"))
     os.replace(tmp_path, path)
     return True
+
+
+def move_project_collection(path: Path, target_collection: str) -> Path:
+    """Move a project MDX file between `projects` and `projects-hidden`."""
+    dest_dir = PROJECTS_DIR if target_collection == "projects" else HIDDEN_DIR
+    dest_dir.mkdir(parents=True, exist_ok=True)
+    dest_path = dest_dir / path.name
+    if dest_path.resolve() == path.resolve():
+        return path
+    if dest_path.exists():
+        raise FileExistsError(f"Destination already exists: {dest_path}")
+    os.replace(path, dest_path)
+    return dest_path
 
 
 HTML_PAGE = """<!DOCTYPE html>
@@ -286,15 +295,69 @@ HTML_PAGE = """<!DOCTYPE html>
     main { padding: 20px 24px 48px; }
     .toolbar {
       display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      align-items: center;
-      justify-content: space-between;
+      flex-direction: column;
+      gap: 12px;
       margin-bottom: 16px;
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 6px;
-      padding: 12px;
+      padding: 12px 14px;
+    }
+    .toolbar-top {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .tags-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+      padding-top: 10px;
+      border-top: 1px solid var(--border);
+    }
+    .tags-label {
+      font-family: ui-monospace, monospace;
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      margin-right: 4px;
+    }
+    .palette-chip {
+      padding: 4px 9px;
+      font-size: 0.78rem;
+      font-family: ui-monospace, monospace;
+      border-radius: 4px;
+      background: var(--bg);
+      color: var(--muted);
+      border: 1px solid var(--border);
+    }
+    .palette-chip.active {
+      background: var(--accent);
+      color: var(--accent-fg);
+      border-color: var(--accent);
+    }
+    .add-tag-wrap {
+      display: inline-flex;
+      gap: 4px;
+      align-items: center;
+      margin-left: auto;
+    }
+    .add-tag-input {
+      background: var(--bg);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 4px 8px;
+      font-size: 0.8rem;
+      width: 130px;
+    }
+    .add-tag-btn {
+      padding: 4px 9px;
+      font-size: 0.82rem;
     }
     .tabs { display: flex; flex-wrap: wrap; gap: 6px; }
     .tab.active {
@@ -316,16 +379,19 @@ HTML_PAGE = """<!DOCTYPE html>
       flex-direction: column;
       gap: 8px;
     }
+    .list.dragging-active .row * {
+      pointer-events: none;
+    }
     .row {
       display: grid;
-      grid-template-columns: 32px 84px 88px 1fr auto auto;
+      grid-template-columns: 32px 84px 88px 1fr auto auto auto;
       gap: 12px;
       align-items: center;
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 6px;
       padding: 10px 14px;
-      transition: border-color 0.15s, background 0.15s;
+      transition: border-color 0.12s, background 0.12s;
     }
     .thumb {
       width: 88px;
@@ -337,7 +403,8 @@ HTML_PAGE = """<!DOCTYPE html>
       display: block;
     }
     .row.dragging { opacity: 0.45; }
-    .row.drag-over { border-color: var(--accent); background: var(--elevated); }
+    .row.drop-before { box-shadow: inset 0 3px 0 0 var(--accent); border-top-color: var(--accent); }
+    .row.drop-after { box-shadow: inset 0 -3px 0 0 var(--accent); border-bottom-color: var(--accent); }
     .row.dirty { border-left: 3px solid var(--accent); }
     .handle {
       cursor: grab;
@@ -365,7 +432,46 @@ HTML_PAGE = """<!DOCTYPE html>
       gap: 8px;
     }
     .title { font-weight: 600; font-size: 0.96rem; }
-    .slug { font-family: ui-monospace, monospace; font-size: 0.76rem; color: var(--muted); }
+    .slug { font-family: ui-monospace, monospace; font-size: 0.74rem; color: var(--muted); margin-top: 2px; }
+    .row-tags {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 5px;
+      margin-top: 6px;
+    }
+    .tag-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-family: ui-monospace, monospace;
+      font-size: 0.72rem;
+      padding: 2px 6px;
+      border-radius: 3px;
+      background: var(--elevated);
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+    .tag-remove {
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      padding: 0 2px;
+      font-size: 0.85rem;
+      line-height: 1;
+      cursor: pointer;
+    }
+    .tag-remove:hover { color: #f87171; border: none; }
+    .tag-add-select {
+      background: var(--bg);
+      color: var(--muted);
+      border: 1px dashed var(--border);
+      border-radius: 3px;
+      padding: 2px 6px;
+      font-family: ui-monospace, monospace;
+      font-size: 0.72rem;
+      cursor: pointer;
+    }
     .badge {
       font-family: ui-monospace, monospace;
       font-size: 0.7rem;
@@ -374,10 +480,10 @@ HTML_PAGE = """<!DOCTYPE html>
       border: 1px solid var(--border);
       color: var(--muted);
     }
-    .badge.hidden-col {
+    .visibility-btn.is-hidden {
       background: var(--hidden-bg);
       color: var(--hidden-fg);
-      border-color: rgba(214, 146, 84, 0.45);
+      border-color: rgba(214, 146, 84, 0.5);
     }
     .featured-btn.on {
       background: rgba(245, 158, 11, 0.18);
@@ -399,10 +505,10 @@ HTML_PAGE = """<!DOCTYPE html>
       display: none;
       z-index: 50;
     }
-    @media (max-width: 720px) {
+    @media (max-width: 820px) {
       .row { grid-template-columns: 24px 72px 72px 1fr; }
       .thumb { width: 72px; height: 42px; }
-      .featured-btn, .move-btns { grid-column: 2 / -1; justify-self: start; }
+      .visibility-btn, .featured-btn, .move-btns { grid-column: 2 / -1; justify-self: start; }
     }
   </style>
 </head>
@@ -424,12 +530,22 @@ HTML_PAGE = """<!DOCTYPE html>
 
   <main class="container">
     <div class="toolbar">
-      <div class="tabs">
-        <button class="tab active" data-tab="all" id="tab-all">All (0)</button>
-        <button class="tab" data-tab="public" id="tab-public">Public (0)</button>
-        <button class="tab" data-tab="hidden" id="tab-hidden">Hidden (0)</button>
+      <div class="toolbar-top">
+        <div class="tabs">
+          <button class="tab active" data-tab="all" id="tab-all">All (0)</button>
+          <button class="tab" data-tab="public" id="tab-public">Public (0)</button>
+          <button class="tab" data-tab="hidden" id="tab-hidden">Hidden (0)</button>
+        </div>
+        <input type="search" id="search" placeholder="Filter by title, filename, or tag..." />
       </div>
-      <input type="search" id="search" placeholder="Filter by title, filename, or tag..." />
+      <div class="tags-bar" id="tags-bar">
+        <span class="tags-label">Tags:</span>
+        <div id="tag-palette" style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;"></div>
+        <div class="add-tag-wrap">
+          <input type="text" id="new-tag-input" class="add-tag-input" placeholder="New tag..." />
+          <button type="button" id="add-tag-btn" class="add-tag-btn" title="Add tag to available tag list">+</button>
+        </div>
+      </div>
     </div>
 
     <div class="list" id="project-list"></div>
@@ -438,16 +554,21 @@ HTML_PAGE = """<!DOCTYPE html>
   <div class="toast" id="toast"></div>
 
   <script>
+    const DEFAULT_TAGS = ["game", "VR", "AR", "graphics", "utility", "vastlab", "gamelab", "milab", "metaverse", "gamejam"];
     let projects = [];
     let originalMap = new Map();
+    let availableTags = [...DEFAULT_TAGS];
     let activeTab = "all";
+    let activeTagFilter = "";
     let searchQuery = "";
     let dragSrcId = null;
+    let dropTargetInfo = null; // { id, position: "before" | "after" }
 
     const listEl = document.getElementById("project-list");
     const summaryEl = document.getElementById("summary");
     const saveBtn = document.getElementById("save-btn");
     const toastEl = document.getElementById("toast");
+    const tagPaletteEl = document.getElementById("tag-palette");
 
     function showToast(msg, isError = false) {
       toastEl.textContent = msg;
@@ -459,11 +580,67 @@ HTML_PAGE = """<!DOCTYPE html>
       showToast._timer = setTimeout(() => { toastEl.style.display = "none"; }, 2600);
     }
 
+    function arraysEqual(a, b) {
+      return a.length === b.length && a.every((v, i) => v === b[i]);
+    }
+
+    function buildFullFilters(p) {
+      const base = p.tags.filter((t) => t !== "featured");
+      return p.featured ? ["featured", ...base] : base;
+    }
+
+    function isRowDirty(p) {
+      const orig = originalMap.get(p.id);
+      if (!orig) return true;
+      return (
+        orig.priority !== p.priority ||
+        orig.featured !== p.featured ||
+        orig.collection !== p.collection ||
+        !arraysEqual(orig.tags, p.tags)
+      );
+    }
+
     function getDirtyItems() {
-      return projects.filter((p) => {
-        const orig = originalMap.get(p.id);
-        return !orig || orig.priority !== p.priority || orig.featured !== p.featured;
+      return projects.filter(isRowDirty);
+    }
+
+    function syncAvailableTagsFromProjects() {
+      const set = new Set(availableTags);
+      for (const p of projects) {
+        for (const t of p.tags) {
+          if (t && t !== "featured") set.add(t);
+        }
+      }
+      availableTags = Array.from(set);
+    }
+
+    function renderTagPalette() {
+      syncAvailableTagsFromProjects();
+      tagPaletteEl.innerHTML = "";
+
+      const allChip = document.createElement("button");
+      allChip.type = "button";
+      allChip.className = "palette-chip" + (activeTagFilter === "" ? " active" : "");
+      allChip.textContent = "All Tags";
+      allChip.addEventListener("click", () => {
+        activeTagFilter = "";
+        render();
       });
+      tagPaletteEl.appendChild(allChip);
+
+      for (const tag of availableTags) {
+        const chip = document.createElement("button");
+        chip.type = "button";
+        chip.className = "palette-chip" + (activeTagFilter.toLowerCase() === tag.toLowerCase() ? " active" : "");
+        const count = projects.filter((p) => p.tags.some((t) => t.toLowerCase() === tag.toLowerCase())).length;
+        chip.textContent = `${tag} (${count})`;
+        chip.title = `Filter projects with "${tag}"`;
+        chip.addEventListener("click", () => {
+          activeTagFilter = activeTagFilter.toLowerCase() === tag.toLowerCase() ? "" : tag;
+          render();
+        });
+        tagPaletteEl.appendChild(chip);
+      }
     }
 
     function updateSummaryAndSaveButton() {
@@ -490,24 +667,34 @@ HTML_PAGE = """<!DOCTYPE html>
           return true;
         })
         .filter((p) => {
+          if (!activeTagFilter) return true;
+          return p.tags.some((t) => t.toLowerCase() === activeTagFilter.toLowerCase());
+        })
+        .filter((p) => {
           if (!searchQuery) return true;
           const q = searchQuery.toLowerCase();
           return (
             p.title.toLowerCase().includes(q) ||
             p.id.toLowerCase().includes(q) ||
-            p.filters.join(" ").toLowerCase().includes(q)
+            p.tags.join(" ").toLowerCase().includes(q)
           );
         })
         .sort((a, b) => a.priority - b.priority || a.title.localeCompare(b.title));
     }
 
+    function clearDropIndicators() {
+      document.querySelectorAll(".row.drop-before, .row.drop-after").forEach((el) => {
+        el.classList.remove("drop-before", "drop-after");
+      });
+    }
+
     function render() {
+      renderTagPalette();
       const visible = getVisibleProjects();
       listEl.innerHTML = "";
 
       for (const p of visible) {
-        const orig = originalMap.get(p.id);
-        const isDirty = !orig || orig.priority !== p.priority || orig.featured !== p.featured;
+        const isDirty = isRowDirty(p);
 
         const row = document.createElement("div");
         row.className = "row" + (isDirty ? " dirty" : "");
@@ -541,17 +728,69 @@ HTML_PAGE = """<!DOCTYPE html>
 
         const meta = document.createElement("div");
         meta.className = "meta";
-        const tags = p.filters.filter((f) => f !== "featured").join(", ");
         meta.innerHTML = `
           <div class="title-line">
             <span class="title"></span>
-            ${p.collection === "projects-hidden" ? '<span class="badge hidden-col">HIDDEN</span>' : ""}
             ${p.year ? `<span class="badge">${p.year}</span>` : ""}
-            ${tags ? `<span class="badge">${tags}</span>` : ""}
           </div>
-          <div class="slug">${p.id}</div>
+          <div class="slug">${p.collection}/${p.filename}</div>
         `;
         meta.querySelector(".title").textContent = p.title;
+
+        const rowTags = document.createElement("div");
+        rowTags.className = "row-tags";
+        for (const tag of p.tags) {
+          const chip = document.createElement("span");
+          chip.className = "tag-chip";
+          const labelSpan = document.createElement("span");
+          labelSpan.textContent = tag;
+          const removeBtn = document.createElement("button");
+          removeBtn.type = "button";
+          removeBtn.className = "tag-remove";
+          removeBtn.textContent = "×";
+          removeBtn.title = `Remove "${tag}"`;
+          removeBtn.addEventListener("click", () => {
+            p.tags = p.tags.filter((t) => t !== tag);
+            render();
+          });
+          chip.append(labelSpan, removeBtn);
+          rowTags.appendChild(chip);
+        }
+
+        const missingTags = availableTags.filter(
+          (t) => !p.tags.some((existing) => existing.toLowerCase() === t.toLowerCase())
+        );
+        const addSelect = document.createElement("select");
+        addSelect.className = "tag-add-select";
+        const placeholderOpt = document.createElement("option");
+        placeholderOpt.value = "";
+        placeholderOpt.textContent = "+ Tag";
+        addSelect.appendChild(placeholderOpt);
+        for (const t of missingTags) {
+          const opt = document.createElement("option");
+          opt.value = t;
+          opt.textContent = t;
+          addSelect.appendChild(opt);
+        }
+        addSelect.addEventListener("change", () => {
+          const chosen = addSelect.value;
+          if (chosen && !p.tags.some((t) => t.toLowerCase() === chosen.toLowerCase())) {
+            p.tags.push(chosen);
+            render();
+          }
+        });
+        rowTags.appendChild(addSelect);
+        meta.appendChild(rowTags);
+
+        const visBtn = document.createElement("button");
+        const isHidden = p.collection === "projects-hidden";
+        visBtn.className = "visibility-btn" + (isHidden ? " is-hidden" : "");
+        visBtn.textContent = isHidden ? "Hidden" : "Public";
+        visBtn.title = isHidden ? "Click to move to public projects" : "Click to move to projects-hidden";
+        visBtn.addEventListener("click", () => {
+          p.collection = p.collection === "projects" ? "projects-hidden" : "projects";
+          render();
+        });
 
         const featBtn = document.createElement("button");
         featBtn.className = "featured-btn" + (p.featured ? " on" : "");
@@ -575,49 +814,90 @@ HTML_PAGE = """<!DOCTYPE html>
 
         row.addEventListener("dragstart", (e) => {
           dragSrcId = p.id;
-          row.classList.add("dragging");
+          dropTargetInfo = null;
           e.dataTransfer.effectAllowed = "move";
+          e.dataTransfer.setData("text/plain", p.id);
+          row.classList.add("dragging");
+          listEl.classList.add("dragging-active");
         });
         row.addEventListener("dragend", () => {
+          dragSrcId = null;
+          dropTargetInfo = null;
           row.classList.remove("dragging");
-          document.querySelectorAll(".row.drag-over").forEach((el) => el.classList.remove("drag-over"));
-        });
-        row.addEventListener("dragover", (e) => {
-          e.preventDefault();
-          row.classList.add("drag-over");
-        });
-        row.addEventListener("dragleave", () => {
-          row.classList.remove("drag-over");
-        });
-        row.addEventListener("drop", (e) => {
-          e.preventDefault();
-          row.classList.remove("drag-over");
-          if (dragSrcId && dragSrcId !== p.id) {
-            reorderItems(dragSrcId, p.id);
-          }
+          listEl.classList.remove("dragging-active");
+          clearDropIndicators();
         });
 
-        row.append(handle, prioInput, thumb, meta, featBtn, moves);
+        row.append(handle, prioInput, thumb, meta, visBtn, featBtn, moves);
         listEl.appendChild(row);
       }
 
       updateSummaryAndSaveButton();
     }
 
-    function reorderItems(srcId, targetId) {
+    listEl.addEventListener("dragenter", (e) => {
+      if (!dragSrcId) return;
+      e.preventDefault();
+    });
+
+    listEl.addEventListener("dragover", (e) => {
+      if (!dragSrcId) return;
+      e.preventDefault();
+      e.dataTransfer.dropEffect = "move";
+
+      const rows = Array.from(listEl.querySelectorAll(".row"));
+      if (rows.length === 0) return;
+
+      let chosen = null;
+      for (const r of rows) {
+        const rect = r.getBoundingClientRect();
+        const mid = rect.top + rect.height / 2;
+        if (e.clientY < mid) {
+          chosen = { el: r, id: r.dataset.id, position: "before" };
+          break;
+        }
+      }
+      if (!chosen) {
+        const last = rows[rows.length - 1];
+        chosen = { el: last, id: last.dataset.id, position: "after" };
+      }
+
+      clearDropIndicators();
+      if (chosen.id !== dragSrcId) {
+        chosen.el.classList.add(chosen.position === "before" ? "drop-before" : "drop-after");
+      }
+      dropTargetInfo = { id: chosen.id, position: chosen.position };
+    });
+
+    listEl.addEventListener("drop", (e) => {
+      if (!dragSrcId) return;
+      e.preventDefault();
+      const target = dropTargetInfo;
+      const src = dragSrcId;
+      dragSrcId = null;
+      dropTargetInfo = null;
+      listEl.classList.remove("dragging-active");
+      clearDropIndicators();
+      if (target && target.id && src !== target.id) {
+        reorderItems(src, target.id, target.position);
+      }
+    });
+
+    function reorderItems(srcId, targetId, position = "before") {
       const visible = getVisibleProjects();
       const srcIdx = visible.findIndex((x) => x.id === srcId);
-      const tgtIdx = visible.findIndex((x) => x.id === targetId);
+      let tgtIdx = visible.findIndex((x) => x.id === targetId);
       if (srcIdx === -1 || tgtIdx === -1) return;
 
       const priorities = visible.map((x) => x.priority).sort((a, b) => a - b);
-      // Ensure strictly increasing slots if duplicates existed
       for (let i = 1; i < priorities.length; i++) {
         if (priorities[i] <= priorities[i - 1]) priorities[i] = priorities[i - 1] + 1;
       }
 
       const [moved] = visible.splice(srcIdx, 1);
-      visible.splice(tgtIdx, 0, moved);
+      tgtIdx = visible.findIndex((x) => x.id === targetId);
+      const insertIdx = position === "after" ? tgtIdx + 1 : tgtIdx;
+      visible.splice(insertIdx, 0, moved);
       visible.forEach((item, idx) => { item.priority = priorities[idx]; });
       render();
     }
@@ -627,16 +907,54 @@ HTML_PAGE = """<!DOCTYPE html>
       const idx = visible.findIndex((x) => x.id === id);
       const targetIdx = idx + delta;
       if (idx === -1 || targetIdx < 0 || targetIdx >= visible.length) return;
-      reorderItems(id, visible[targetIdx].id);
+      reorderItems(id, visible[targetIdx].id, delta > 0 ? "after" : "before");
     }
 
     async function loadFromServer() {
       const res = await fetch("/api/projects");
       const data = await res.json();
-      projects = data.projects;
-      originalMap = new Map(projects.map((p) => [p.id, { priority: p.priority, featured: p.featured }]));
+      projects = data.projects.map((p) => ({
+        ...p,
+        filename: p.id.split("/").slice(1).join("/"),
+        tags: (p.filters || []).filter((f) => f !== "featured"),
+      }));
+      originalMap = new Map(
+        projects.map((p) => [
+          p.id,
+          {
+            priority: p.priority,
+            featured: p.featured,
+            collection: p.collection,
+            tags: [...p.tags],
+          },
+        ])
+      );
       render();
     }
+
+    function addPaletteTag() {
+      const input = document.getElementById("new-tag-input");
+      const val = input.value.trim();
+      if (!val) return;
+      if (val.toLowerCase() === "featured") {
+        showToast('Use the "Featured" button on each project row for featured status', true);
+        return;
+      }
+      if (!availableTags.some((t) => t.toLowerCase() === val.toLowerCase())) {
+        availableTags.push(val);
+        showToast(`Added "${val}" to tag list`);
+      }
+      input.value = "";
+      render();
+    }
+
+    document.getElementById("add-tag-btn").addEventListener("click", addPaletteTag);
+    document.getElementById("new-tag-input").addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        addPaletteTag();
+      }
+    });
 
     document.querySelectorAll(".tab").forEach((btn) => {
       btn.addEventListener("click", () => {
@@ -677,7 +995,8 @@ HTML_PAGE = """<!DOCTYPE html>
       const dirty = getDirtyItems().map((p) => ({
         id: p.id,
         priority: p.priority,
-        featured: p.featured,
+        filters: buildFullFilters(p),
+        collection: p.collection,
       }));
       if (dirty.length === 0) return;
 
@@ -692,7 +1011,7 @@ HTML_PAGE = """<!DOCTYPE html>
         return;
       }
       await loadFromServer();
-      showToast(`Updated ${result.updatedCount} project file(s)`);
+      showToast(`Updated ${result.updatedCount} project(s)`);
     });
 
     loadFromServer();
@@ -791,9 +1110,28 @@ class ProjectManagerHandler(BaseHTTPRequestHandler):
             proj_id = item.get("id")
             if proj_id not in records_by_id:
                 continue
+            record = records_by_id[proj_id]
+            target_path = record.path
             new_priority = int(item.get("priority", DEFAULT_PRIORITY))
-            new_featured = bool(item.get("featured", False))
-            if update_project_frontmatter(records_by_id[proj_id].path, new_priority, new_featured):
+            raw_filters = item.get("filters")
+            if isinstance(raw_filters, list):
+                new_filters = [str(f).strip() for f in raw_filters if str(f).strip()]
+            else:
+                new_filters = record.filters
+            target_collection = item.get("collection", record.collection)
+            if target_collection not in ("projects", "projects-hidden"):
+                target_collection = record.collection
+
+            changed = update_project_frontmatter(target_path, new_priority, new_filters)
+            if target_collection != record.collection:
+                try:
+                    move_project_collection(target_path, target_collection)
+                    changed = True
+                except FileExistsError as exc:
+                    self._send_json(HTTPStatus.CONFLICT, {"error": str(exc)})
+                    return
+
+            if changed:
                 updated_count += 1
                 updated_ids.append(proj_id)
 
