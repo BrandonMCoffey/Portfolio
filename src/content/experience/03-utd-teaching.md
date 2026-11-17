@@ -1,9 +1,9 @@
 ---
 order: 3
-role: "Graduate Teaching Assistant & Academic Outreach"
+role: "Graduate Research Assistant"
 company: "UT Dallas — Bass School"
 labBadge: "Pedagogy & Studio Mentorship"
-time: "2023 – 2025"
+time: "2024 – 2027"
 location: "Richardson, TX"
 takeaways:
   - "Graduate Teaching Assistant for Small Group Game Lab (Spring 2025), guiding student cohorts through milestone-driven agile sprints."
