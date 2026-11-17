@@ -1,3 +1,10 @@
+export const PROJECT_SETTINGS = {
+  // Show the featured thumbnail banner at the top of individual project detail pages.
+  showDetailThumbnail: false,
+  // Make software & tech stack tags on project detail pages clickable external links.
+  enableTechStackLinks: false,
+} as const;
+
 export interface ProjectFilterDefinition {
   id: string;
   label: string;
@@ -15,6 +22,13 @@ export const PROJECT_FILTER_DEFINITIONS: ProjectFilterDefinition[] = [
   { id: "gamelab", label: "Game Lab" },
   { id: "milab", label: "MI Lab" },
 ];
+
+// Optional external website URLs shown under the active filter title on /projects.
+export const PROJECT_FILTER_WEBSITE_URLS: Record<string, string> = {
+  vastlab: "https://vastlab.com",
+  gamelab: "https://www.atec-animgames.com/game-lab",
+  milab: "https://mi-lab.io/",
+};
 
 export const POPULAR_PROJECT_TECH = ["Unreal", "Unity", "C#", "Python", "Maya", "Houdini", "Blender"] as const;
 
@@ -61,7 +75,7 @@ export const PROJECT_LAYOUT_TEXT = {
     platformHeading: "Target Platforms",
     techHeading: "Software & Tech Stack",
     linksHeading: "Project Links",
-    liveDemoLabel: "Live 3D Demo →",
+    liveDemoLabel: "Live Project Page →",
     githubLabel: "GitHub",
     videoLabel: "Watch Video",
     fallbackLabel: "Research & Production",

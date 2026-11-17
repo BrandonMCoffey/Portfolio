@@ -2,7 +2,7 @@
 import BaseLayout from './BaseLayout.astro';
 import type { CollectionEntry } from 'astro:content';
 import { publications, mediaRecognition, type PublicationItem, type MediaRecognitionItem } from '../data/cvData';
-import { INTERACTIVE_DEMO_HOSTS, PROJECT_LAYOUT_TEXT } from '../data/projectsConfig';
+import { INTERACTIVE_DEMO_HOSTS, PROJECT_LAYOUT_TEXT, PROJECT_SETTINGS } from '../data/projectsConfig';
 import { SITE_PROFILE, formatTemplate } from '../data/site';
 import { getTechLink } from '../data/techLinks';
 import { resolveProjectThumbnail } from '../utils/projectImages';
@@ -235,7 +235,7 @@ const txt = PROJECT_LAYOUT_TEXT;
 			</div>
 
 			<!-- Featured Image with View Transition -->
-			{thumbnailSrc && (
+			{PROJECT_SETTINGS.showDetailThumbnail && thumbnailSrc && (
 				<div class="mb-10 rounded-[3px] overflow-hidden border border-[var(--border-subtle)] bg-[var(--bg-surface)]">
 					<img
 						src={thumbnailSrc}
@@ -288,7 +288,7 @@ const txt = PROJECT_LAYOUT_TEXT;
 						</span>
 						<div class="flex flex-wrap gap-1.5">
 							{tech.map((t: string) => {
-								const link = getTechLink(t);
+								const link = PROJECT_SETTINGS.enableTechStackLinks ? getTechLink(t) : undefined;
 								if (link) {
 									return (
 										<a

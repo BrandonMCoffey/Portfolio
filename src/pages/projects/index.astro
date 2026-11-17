@@ -5,6 +5,7 @@ import ProjectCard from "../../components/projects/ProjectCard.astro";
 import {
   POPULAR_PROJECT_TECH,
   PROJECT_FILTER_DEFINITIONS,
+  PROJECT_FILTER_WEBSITE_URLS,
   PROJECT_SORT_OPTIONS,
 } from "../../data/projectsConfig";
 import { SITE_PROFILE, formatTemplate } from "../../data/site";
@@ -152,9 +153,24 @@ const badgeCountText = formatTemplate(copy.badgeCountTemplate, { count: projects
       </div>
 
       <!-- Large Active Filter Heading (Visible when a filter is active) -->
-      <div id="active-filter-heading-wrap" class="hidden mb-7 pb-4 border-b border-[var(--border-subtle)]">
-        <div class="section-rule mb-1.5">Active Filter</div>
+      <div
+        id="active-filter-heading-wrap"
+        class="hidden mb-7 pb-4 border-b border-[var(--border-subtle)]"
+        data-website-urls={JSON.stringify(PROJECT_FILTER_WEBSITE_URLS)}
+      >
         <h2 id="active-filter-title" class="text-2xl sm:text-3xl md:text-4xl font-semibold text-[var(--text-primary)]"></h2>
+        <div id="active-filter-website-wrap" class="hidden mt-1.5">
+          <a
+            id="active-filter-website"
+            href="#"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-1.5 text-xs sm:text-sm font-mono font-medium text-[var(--accent-primary)] hover:text-[var(--accent-primary-hover)] hover:underline transition-colors"
+          >
+            <span id="active-filter-website-label"></span>
+            <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6"></path><path d="M10 14 21 3"></path><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path></svg>
+          </a>
+        </div>
       </div>
 
       <!-- Cards Grid -->
@@ -220,6 +236,9 @@ const badgeCountText = formatTemplate(copy.badgeCountTemplate, { count: projects
     const resetAllBtn = document.getElementById("reset-all-btn");
     const activeHeadingWrap = document.getElementById("active-filter-heading-wrap");
     const activeHeadingTitle = document.getElementById("active-filter-title");
+    const activeWebsiteWrap = document.getElementById("active-filter-website-wrap");
+    const activeWebsiteLink = document.getElementById("active-filter-website") as HTMLAnchorElement | null;
+    const activeWebsiteLabel = document.getElementById("active-filter-website-label");
     const noResults = document.getElementById("no-projects-found");
     const clearAllBtn = document.getElementById("clear-search-btn");
     const grid = document.getElementById("project-grid");
@@ -248,6 +267,15 @@ const badgeCountText = formatTemplate(copy.badgeCountTemplate, { count: projects
       });
     };
 
+    const websiteUrls: Record<string, string> = (() => {
+      try {
+        const parsed = JSON.parse(activeHeadingWrap?.dataset.websiteUrls || "{}") as Record<string, string>;
+        return Object.fromEntries(Object.entries(parsed).map(([k, v]) => [k.toLowerCase(), v]));
+      } catch {
+        return {};
+      }
+    })();
+
     const updateActiveFilterHeading = () => {
       if (!activeHeadingWrap || !activeHeadingTitle) return;
       const parts: string[] = [];
@@ -271,6 +299,19 @@ const badgeCountText = formatTemplate(copy.badgeCountTemplate, { count: projects
         activeHeadingWrap.classList.remove("hidden");
       } else {
         activeHeadingWrap.classList.add("hidden");
+      }
+
+      if (activeWebsiteWrap && activeWebsiteLink && activeWebsiteLabel) {
+        const websiteUrl = activeCategory !== "all" ? websiteUrls[activeCategory] : "";
+        if (websiteUrl) {
+          activeWebsiteLink.href = websiteUrl;
+          activeWebsiteLabel.textContent = websiteUrl.replace(/^https?:\/\//, "").replace(/\/+$/, "");
+          activeWebsiteWrap.classList.remove("hidden");
+        } else {
+          activeWebsiteLink.href = "#";
+          activeWebsiteLabel.textContent = "";
+          activeWebsiteWrap.classList.add("hidden");
+        }
       }
     };
 
