@@ -1,17 +1,39 @@
 ---
 title: "Volumetric Video"
-tagline: ""
-role: "Programmer & Pipeline Engineer"
-client: ""
+tagline: "3D/4D Gaussian Splatting Renderer, Compression & Real-Time Streaming"
+thumbnail: "/images/projects/solo-volumetric-video/thumbnail.jpg"
+role: "Principal Student Investigator & Pipeline Engineer"
+client: "UT Dallas Bass School"
 priority: 16
 year: 2026
 status: "In Development"
 filters: ["vastlab", "graphics"]
-tech: ["Gaussian Splatting", "CUDA"]
-platform: ["PC", "Web"]
+tech: ["Unity", "C#", "HLSL", "Compute Shaders", "Gaussian Splatting", "Python", "WebGPU"]
+platform: ["PC", "Web", "VR"]
 liveUrl: ""
-githubUrl: ""
+githubUrl: "https://github.com/VAST-Lab/vast-volumetricvideo-renderer"
 videoUrl: ""
 ---
 
-WIP
+<ProjectHighlight
+  title="Funded by UT Dallas Bass School Collaborative Research Grant"
+  description="Awarded research grant funding in December 2025 ('Advancing Research and Pedagogy in Volumetric Video through Student Collaboration') to engineer real-time 3D/4D Gaussian Splatting pipelines and accessible volumetric video tooling."
+/>
+
+Developed at the [VAST Lab](/projects?filter=vastlab), this initiative spans two companion repositories—a production **Unity 6 (`6000.6+`) UPM Renderer Package** ([`vast-volumetricvideo-renderer`](https://github.com/VAST-Lab/vast-volumetricvideo-renderer)) and a multi-platform **Capture & R&D Toolkit** ([`VolumetricVideo`](https://github.com/VAST-Lab/VolumetricVideo))—for compressing, streaming, and rendering 3D and 4D Gaussian Splatting volumetric video across desktop and WebGPU browsers.
+
+### Unity 6 Volumetric Video Renderer (`vast-volumetricvideo-renderer` v3.0.4)
+
+Built for **Built-in RP**, **URP 17**, and **HDRP 17** with full **WebGPU** support:
+
+- **`.4dgs` Temporal GOP Compression (`GaussianSplat4DPlayer`)**: Combines SPZ v4 keyframes with Burst-compiled `int16` position and quaternion deltas (15x–40x compression at 30 FPS) and performs in-place GPU buffer updates with zero per-frame `GraphicsBuffer` reallocation.
+- **MP4 Video-Texture Splatting (`GaussianSplatVideoPlayer`)**: Samples 4-quadrant video atlases directly inside a compute shader (`CSDecodeVideoSplats`), leveraging native browser H.264/VP9/AV1 hardware decoding on WebGPU.
+- **Subgroup-Free WebGPU Radix Sort & Stochastic Accumulation**: Pairs wave-intrinsic desktop sorting (`DeviceRadixSort.hlsl`) with a subgroup-free compute radix sort (`WebGpuRadixSort.hlsl`), multi-threaded WASM CPU octree sorting fallback, and SteadySplats reprojected temporal accumulation (`GaussianSplatTemporalAccumulator`).
+- **Live Binary WebSocket Streaming (`GaussianSplatStreamReceiver`)**: Streams live volumetric frames over the `"SGST"` protocol from Unity Editor or Python servers (`stream_ply_sequence.py`) to desktop and WebGPU clients.
+- **Unified Mesh + 3DGS + 4DGS Composition**: Static scenes and animated 4D actors share the global radix sort buffer and hardware depth testing with no sorting seams.
+
+### Capture, Compression & Cross-Platform R&D (`VolumetricVideo`)
+
+- **Orbbec RGB-D Live Streaming (`Camera Streaming/unitystreamer.py`)**: Python capture pipeline using `PyOrbbec`, OpenCV, and NumPy to stream live depth and RGB point clouds to Unity receivers (`OrbbecPointcloudReceiver`).
+- **Texture-Based Splat Compression (`Compress to Images/plycompress.py`)**: Converts `.ply` and `.splat` point clouds into compact image atlases encoding position, rotation, scale, and color.
+- **Custom Compute Renderer & Multi-Target Studies**: Includes a custom Unity compute-shader GS renderer (with Spatial SDK support) and reference implementations across WebGL, WebGPU, Metal, OpenGL, and Rust.

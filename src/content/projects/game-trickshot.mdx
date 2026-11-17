@@ -1,16 +1,27 @@
 ---
 title: "Trickshot"
-tagline: "Basketball Trick Simulator & Card Trading Game"
+tagline: "Deck-Building Arcade Basketball Trickshot Game"
 role: "Lead Programmer"
 priority: 30
-year: 2022
+year: 2025
 status: "Released"
-filters: ["game", "gamejam"]
-tech: ["Unity", "C#"]
-platform: ["PC"]
+filters: ["game"]
+tech: ["Unity", "C#", "DOTween", "Cinemachine", "Odin Inspector"]
+platform: ["Mobile", "PC"]
 liveUrl: ""
-githubUrl: ""
+githubUrl: "https://github.com/BrandonMCoffey/Basketball-Game"
 videoUrl: ""
 ---
 
-WIP
+**Trickshot** (*Basketball Tricks*) is a deck-building arcade basketball game built in Unity 2022.3 (URP) where players assemble rosters, draft hands of action cards, and chain dribbles, passes, and high-flying dunks to entertain the crowd and maximize hype.
+
+### Card-Driven Trickshots & Crowd Hype
+
+- **Action Deck System (`ActionDeckManager`)**: Players draw from customizable decks, drag and reorder action cards in a curved hand layout powered by DOTween, and execute chained trickshot sequences.
+- **Hype Scoring Tiers**: Routines are scored dynamically against Bronze, Silver, and Gold hype thresholds (`HypeScoreDisplay`, `CrowdController`), rewarding creative card synergies and crowd excitement.
+- **Dynamic Trickshot Camera (`TrickshotCamera`)**: Smoothly blends Cinemachine virtual cameras between court overview and dynamic multi-target trickshot angles as the ball and players move.
+
+### Roster Management & Game Modes
+
+- **Team Loadout & Progression (`GameManager`, `GameSaveData`)**: Players earn currency from performances to unlock, purchase, and assign player cards across court positions with persistent local save progression.
+- **Multi-Scene Experience**: Features `MainUI` for team and shop management, an interactive `Tutorial`, the main `HalftimeShow` performance mode, and a `DribbleGame` minigame, tuned for both Android mobile (with Samsung Adaptive Performance) and PC.

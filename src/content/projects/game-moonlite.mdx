@@ -1,18 +1,36 @@
 ---
 title: "Moonlite"
-tagline: "2D Roguelike Mine & Shoot"
+tagline: "2D Sci-Fi Extraction Shooter & Mineral-Crafting Roguelike"
 role: "Lead Programmer"
 priority: 30
-year: 2022
+year: 2025
 status: "Released"
-filters: ["game", "gamejam"]
-tech: ["Unity", "C#"]
+filters: ["game"]
+tech: ["Unity", "C#", "DOTween", "Cinemachine"]
 platform: ["PC"]
-liveUrl: "https://dancoches.wixsite.com/dani-games/pagetorn"
-githubUrl: ""
+liveUrl: ""
+githubUrl: "https://github.com/BrandonMCoffey/Moon-lite"
 videoUrl: "https://www.youtube.com/watch?v=_4v-FMqlB5Y"
 ---
 
 <VideoEmbed videoId="_4v-FMqlB5Y" title="Moonlite Gameplay" />
 
-WIP
+**Moonlite** is a 2D sci-fi extraction roguelike and shooter built in Unity (URP 2D) alongside teammates Mikey Bess and Sai Mangipudi. Players descend onto hazardous moons, mine rare mineral veins through destructible terrain, synthesize specialized elemental ammunition, and extract back to the mother ship before alien swarms overwhelm them.
+
+### Mineral-Synthesized Elemental Ammunition
+
+Each mined mineral powers a distinct projectile behavior driven by ScriptableObject `MineralData` configurations and object-pooled bullet systems (`BulletPooling`):
+
+- **Copper**: High-velocity standard rounds
+- **Cryselium**: Freezes enemies on impact
+- **Voltthorn**: Chains lightning arcs between nearby targets
+- **Phaseum**: Pierces enemies and phases through terrain walls
+- **Pyrokite**: Incendiary rounds inflicting burn damage over time
+- **Aethergem**: Penetrates foes and destroys terrain blocks
+- **Corestone**: Heavy bouncing kinetic projectiles
+
+### Mother Ship Hub & Planetary Expeditions
+
+- **Spaceship Hub (`ShipHub`)**: Between expeditions, players return to the ship to access the research lab, weapon forge, gun upgrade sliders, inventory management, and mission navigation.
+- **Planetary Mining & Extraction (`Planet`)**: Destructible 2D tilemaps, quad-tree spatial queries, flashlight lighting mechanics, `AutoMiner` stations, enemy swarms, and emergency extraction teleporters.
+- **Engine Architecture**: Built with a custom `SoundManager` / `SfxPool` audio system, `JsonPlayerPrefs` persistence, `MouseControllerManager` input handling, and Cinemachine camera follow/shake feedback.

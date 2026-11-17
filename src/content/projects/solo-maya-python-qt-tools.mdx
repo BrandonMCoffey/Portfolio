@@ -1,12 +1,12 @@
 ---
 title: "Maya Python QT Tools"
-tagline: "Various Lighting and Rendering Projects"
+tagline: "Custom Autodesk Maya Rigging & Pipeline Automation Tools"
 thumbnail: "kitty-city-example.png"
 role: "Sole Programmer & Designer"
 priority: 50
 year: 2023
 filters: ["utility"]
-tech: ["Maya", "QT"]
+tech: ["Maya", "Python", "Qt"]
 platform: []
 liveUrl: ""
 githubUrl: ""
@@ -19,7 +19,7 @@ videoUrl: ""
 
 When exporting rigs and animations done in Autodesk Maya to Unreal Engine or Unity, any custom deform nodes or constraints are unable to normally be exported. This became apparent with my experience in [Death Bloom](/projects/gamelab-death-bloom) and [Kitty City](/projects/vast-kitty-city), when animators used custom rigs that they were used to, as they were not used to building rigs for game development. So, I created a tool, called CreateCompatibilityRig, which does the following:
 
-- Allows the user to specificy components of the source rig
+- Allows the user to specify components of the source rig
 - Duplicates the entire joint structure and skinned mesh
 - Creates position and rotation constraints from the source joints to the new joints
 
@@ -44,12 +44,12 @@ def run():
     rigCreator.init_gui()
 
 class CreateCompatibilityRig:
-def **init**(self):
-self.windowName = 'unrealRigCreator'
-self.sourceJointsField = None
-self.sourceJoints = None
-self.destinationJointsField = None
-self.destinationJoints = None
+    def __init__(self):
+        self.windowName = 'unrealRigCreator'
+        self.sourceJointsField = None
+        self.sourceJoints = None
+        self.destinationJointsField = None
+        self.destinationJoints = None
 
     def init_gui(self):
         # Delete Existing Window if it Exists

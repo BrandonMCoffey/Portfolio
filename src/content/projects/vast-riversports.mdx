@@ -1,16 +1,16 @@
 ---
 title: "OpenWater Sports"
-tagline: "Interactive Whitewater & Athletic Training Simulation"
+tagline: "Multiplayer Whitewater Kayaking & Olympic Rowing Game"
 role: "Lead Programmer & Networking Engineer"
 client: "OKC Riversport"
 priority: 5
-year: 2025
+year: 2026
 status: "In Development"
-filters: ["featured", "vastlab", "VR"]
-tech: ["Unity", "C#", "UGS", "Blender"]
-platform: ["PC", "Mobile"]
+filters: ["featured", "vastlab", "game"]
+tech: ["Unity", "C#", "Netcode for GameObjects", "UGS", "Blender"]
+platform: ["Web", "PC", "Mobile"]
 liveUrl: "https://vastlab.itch.io/riversports"
-githubUrl: ""
+githubUrl: "https://github.com/VAST-Lab/Riversports"
 videoUrl: "https://youtu.be/sOFzvUWr0L8"
 ---
 
@@ -18,9 +18,24 @@ videoUrl: "https://youtu.be/sOFzvUWr0L8"
 
 <ProjectHighlight
 	title="Olympic Whitewater Kayaking and Rowing Multiplayer Game"
-	description="Prototyping an interactive kayak and paddle sports simulation in collaboration with OKC Riversport, an official U.S. Olympic and Paralympic Training Site."
+	description="Developing an interactive cross-platform kayak and rowing multiplayer game in collaboration with OKC Riversport, an official U.S. Olympic and Paralympic Training Site."
 />
 
-**OpenWater Sports** is a competitive multiplayer game experience developed at the [VAST Lab](/projects?filter=vastlab) in partnership with **OKC Riversport** in Oklahoma City. The system brings semi-realistic kayak and rowing movements into a web-playable and accessible gaming experience to bring excitement and interest to the world of Olympic water sports.
+**OpenWater Sports** (*Riversports*) is a competitive multiplayer water sports game developed at the [VAST Lab](/projects?filter=vastlab) in partnership with **OKC Riversport** in Oklahoma City. Built in Unity 6 (`6000.3.16f1`, URP), the game brings accessible, physics-driven rowing and whitewater kayaking to WebGL, PC, and mobile players.
 
-The game is still a work-in-progress, and this page will be updated as development continues.
+### Playable Events & Water Physics
+
+- **Rowing Race (`RR-OklahomaRiver`)**: Competitive sprint rowing along buoy-lined lanes on the Oklahoma River (`RacingShellController`, `BouyLanes`), balancing stroke timing, stamina, and wake dynamics.
+- **Whitewater Kayaking (`WW-RiversportOKC`)**: Slalom and rapids navigation (`KayakController`, `KayakGate`) featuring turbulent flow currents (`RiverZone`, `CurrentZone`) and obstacle avoidance.
+- **WaterWorks Hydrodynamics**: Custom buoyancy, wave displacement, and cross-platform shader fallbacks (`SwapMaterialOnWebGl`) tailored for both desktop and browser WebGL performance.
+
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+	<ImageEmbed file="choose.jpg" caption="Boathouse mode and challenge selection menu" />
+	<ImageEmbed file="rowing.jpg" caption="Multiplayer sprint rowing on the Oklahoma River" />
+	<ImageEmbed file="kayak.jpg" caption="Whitewater kayaking course at RIVERSPORT OKC" />
+</div>
+
+### Dedicated Server Multiplayer & Customization
+
+- **Cross-Platform Networking**: Built on **Unity Netcode for GameObjects** and **Unity Gaming Services (UGS)** (`LobbyNetworkManager`, `MatchmakingManager`, `LeaderboardManager`) with support for Unity Dedicated Server hosting alongside WebGL, Windows PC, and Android clients.
+- **Boathouse & Athlete Customization**: Interactive avatar and watercraft customization (`CustomizeAvatarPanel`, `CustomizeVehiclePage`), Olympic country flag selection, Animation Rigging paddle IK (`PlayerIKManager`), and mobile touch HUD controls (`MobileControls`).

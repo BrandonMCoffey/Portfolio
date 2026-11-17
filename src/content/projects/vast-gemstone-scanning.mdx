@@ -1,37 +1,41 @@
 ---
 title: "Digital Gemstone Scanning"
-tagline: "High-Precision 3D Scanning & Physically Based Refraction for Fine Minerals"
+tagline: "3D Gaussian Splatting Capture, Web Catalog & Virtual Gallery for Fine Minerals"
 role: "Programmer & Pipeline Engineer"
 client: "Arkenstone"
 priority: 16
 year: 2026
 status: "In Development"
 filters: ["vastlab", "graphics"]
-tech: ["RealityScan", "Polarized Photogrammetry", "Gaussian Splatting", "Jawset PostShot", "LichtFeld Studio"]
-platform: ["PC", "Web"]
+tech: ["RealityScan", "Gaussian Splatting", "React", "PlayCanvas", "Unity", "Supabase"]
+platform: ["Web", "PC"]
 liveUrl: "https://gemscans.com"
-githubUrl: ""
+githubUrl: "https://github.com/VAST-Lab/gems_site"
 videoUrl: ""
 ---
 
 <ProjectHighlight
-	title="Advanced Gemstone Scanning & Polarized Photogrammetry"
-	description="Assited with a specialized scanning rig and custom processing suite and real-time shaders capable of capturing translucent, highly refractive crystalline gemstones and minerals with accurate internal visuals and reflectivity."
+	title="GemScans: Mineral Scanning, Web Catalog & 3D Gallery"
+	description="Assisted with a specialized scanning rig and built web and Unity 6 Gaussian Splatting viewers capable of capturing and rendering translucent, reflective mineral specimens across web browsers and virtual galleries."
 />
 
-Developed in collaboration with **Arkenstone**, this project pioneers specialized technical art and computer vision workflows to digitize, reconstruct, and interactively render mineral specimens, gemstones, and crystalline structures on various platforms.
+Developed at the [VAST Lab](/projects?filter=vastlab) in collaboration with **Arkenstone**, this project combines cross-polarized photogrammetry, 3D Gaussian Splatting reconstruction, a full-stack web catalog (**[gemscans.com](https://gemscans.com)**), and a Unity 6 virtual gallery to digitize and interactively inspect fine mineral specimens.
 
-### The Challenge of Scanning Translucent Crystals
+### Cross-Polarized Photogrammetry & Gaussian Splatting
 
-Standard photogrammetry algorithms fail on minerals due to internal light refractions, specular caustics, and total internal reflection:
+Standard photogrammetry struggles with transparent crystals and specular mineral facets. To capture true internal structure and surface reflectivity:
 
-- **Cross-Polarized Lighting Array**: Custom camera rigs utilizing linear polarizing filters on both strobe illumination and camera lenses to eliminate surface glare and isolate true volumetric pigmentation.
-- **Micro-Photogrammetry**: Macro-focus stacking pipelines capturing crystalline facets with sub-millimeter geometric precision.
+- **Cross-Polarized Capture & Photogrammetry**: Multi-angle turntable capture processed through **RealityScan** alongside polarized lighting setups to preserve fine mineral geometry and color fidelity.
+- **3D Gaussian Splatting Reconstruction**: Specimens are reconstructed with **Jawset PostShot** and **LichtFeld Studio** into `.spz`, `.ply`, and `.splat` representations that retain view-dependent specular highlights and translucent depth.
 
-### Custom Physically Based HLSL Shading
+### GemScans Web Catalog (`gems_site`)
 
-Real-time gemstone rendering demands custom optical shader calculations beyond standard PBR:
+The **[gemscans.com](https://gemscans.com)** platform is built with **React 18**, **Vite**, **Tailwind CSS v4**, and **Supabase**:
 
-- **Wavelength-Dependent Chromatic Dispersion**: Simulating Abbe number refraction splits in real-time ray-marched pixel shaders.
-- **Birefringence (Double Refraction)**: Reproducing the anisotropic optical splitting characteristic of calcite, tourmaline, and quartz crystal structures.
-- **Thin-Film Iridescence**: Implementing spectral wave interference equations for iridescent mineral veneers and peacock ore.
+- **In-Browser Gaussian Splat & glTF Viewer (`viewer.js`)**: Powered by **PlayCanvas** (`gsplat` and glTF container assets) with persistent browser Cache API storage (`gem-splat-cache`), automatic mobile/desktop tiering, and robust bounding-center framing.
+- **Geographic Provenance & Chemistry Search**: Features an interactive **3D Globe** plotting specimen discovery locations worldwide and an interactive **Periodic Table** modal (`PeriodicTableModal`) for filtering minerals by chemical formula and constituent elements.
+- **Private Vault & Model Conversion**: Supports Supabase-authenticated private vault collections alongside a client-side **Three.js** GLB/glTF converter (`Convert`).
+
+### Unity 6 Virtual Gemstone Gallery (`Gemstone-Gallery`)
+
+In companion repository **[VAST-Lab/Gemstone-Gallery](https://github.com/VAST-Lab/Gemstone-Gallery)**, a **Unity 6 (`6000.6.2f1`, URP)** 3D virtual gallery built on [`vast-volumetricvideo-renderer`](https://github.com/VAST-Lab/vast-volumetricvideo-renderer) and [`vast-metaverse-tools`](https://github.com/VAST-Lab/vast-metaverse-tools) dynamically fetches public catalog JSON and Supabase vault models via `GemScanGalleryLoader`, spawning `.spz` and `.ply` scans onto gallery pedestals within WebGPU splat memory budgets.
