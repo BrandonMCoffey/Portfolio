@@ -1,13 +1,13 @@
 ---
 title: "Digital Gemstone Scanning"
-tagline: "3D Gaussian Splatting Capture, Web Catalog & Virtual Gallery for Fine Minerals"
+tagline: "3D Gaussian Splatting Capture, Web Catalog, Virtual Gallery & Minecraft Exporter"
 role: "Programmer & Pipeline Engineer"
 client: "Arkenstone"
 priority: 16
 year: 2026
 status: "In Development"
 filters: ["vastlab", "graphics"]
-tech: ["RealityScan", "Gaussian Splatting", "React", "PlayCanvas", "Unity", "Supabase"]
+tech: ["RealityScan", "Gaussian Splatting", "React", "PlayCanvas", "Unity", "Python", "Supabase"]
 platform: ["Web", "PC"]
 liveUrl: "https://gemscans.com"
 githubUrl: "https://github.com/VAST-Lab/gems_site"
@@ -15,11 +15,11 @@ videoUrl: ""
 ---
 
 <ProjectHighlight
-	title="GemScans: Mineral Scanning, Web Catalog & 3D Gallery"
-	description="Assisted with a specialized scanning rig and built web and Unity 6 Gaussian Splatting viewers capable of capturing and rendering translucent, reflective mineral specimens across web browsers and virtual galleries."
+	title="GemScans: Mineral Scanning, Web Catalog, Unity Gallery & Minecraft Add-On Pipeline"
+	description="Assisted with a specialized scanning rig and built web, Unity 6, and Minecraft Bedrock Gaussian Splatting pipelines capable of capturing and displaying mineral specimens across browsers, virtual galleries, and voxel worlds."
 />
 
-Developed at the [VAST Lab](/projects?filter=vastlab) in collaboration with **Arkenstone**, this project combines cross-polarized photogrammetry, 3D Gaussian Splatting reconstruction, a full-stack web catalog (**[gemscans.com](https://gemscans.com)**), and a Unity 6 virtual gallery to digitize and interactively inspect fine mineral specimens.
+Developed at the [VAST Lab](/projects?filter=vastlab) in collaboration with **Arkenstone**, this project combines cross-polarized photogrammetry, 3D Gaussian Splatting reconstruction, a full-stack web catalog (**[gemscans.com](https://gemscans.com)**), a Unity 6 virtual gallery, and a splat-to-Minecraft export toolchain (`splat2mc`) to digitize and showcase fine mineral specimens.
 
 ### Cross-Polarized Photogrammetry & Gaussian Splatting
 
@@ -38,4 +38,12 @@ The **[gemscans.com](https://gemscans.com)** platform is built with **React 18**
 
 ### Unity 6 Virtual Gemstone Gallery (`Gemstone-Gallery`)
 
-In companion repository **[VAST-Lab/Gemstone-Gallery](https://github.com/VAST-Lab/Gemstone-Gallery)**, a **Unity 6 (`6000.6.2f1`, URP)** 3D virtual gallery built on [`vast-volumetricvideo-renderer`](https://github.com/VAST-Lab/vast-volumetricvideo-renderer) and [`vast-metaverse-tools`](https://github.com/VAST-Lab/vast-metaverse-tools) dynamically fetches public catalog JSON and Supabase vault models via `GemScanGalleryLoader`, spawning `.spz` and `.ply` scans onto gallery pedestals within WebGPU splat memory budgets.
+In companion repository **[VAST-Lab/Gemstone-Gallery](https://github.com/VAST-Lab/Gemstone-Gallery)**, a **Unity 6 (`6000.6.2f1`, URP)** 3D virtual gallery built on [`vast-volumetricvideo-renderer`](https://github.com/VAST-Lab/vast-volumetricvideo-renderer) and VAST Lab's shared metaverse packages ([`vast-metaverse-tools`](https://github.com/VAST-Lab/vast-metaverse-tools) / [`vast-metaverse-networking`](https://github.com/VAST-Lab/vast-metaverse-networking)) dynamically fetches public catalog JSON and Supabase vault models via `GemScanGalleryLoader`, spawning `.spz` and `.ply` scans onto gallery pedestals within WebGPU splat memory budgets.
+
+### Gaussian Splats & Scans in Minecraft (`splat2mc`)
+
+**[VAST-Lab/splat2mc](https://github.com/VAST-Lab/splat2mc)** is a Python (`uv`) pipeline that converts 3D Gaussian Splats (`.ply`) and high-poly photogrammetry scans (`.fbx`) into playable **Minecraft Bedrock Edition** Add-On packs (with interactive Gem Catalog UIs and `/scriptevent` commands) and Java Edition particle datapacks:
+
+- **Angle-Pinned Spherical Imposters (`01_SplatImposter_Pack`)**: Bakes discrete yaw/pitch spritesheets (`v.snapped_yaw`, `v.snapped_pitch`) across Low/Med/High tiers for smooth, zero-flipping billboard rendering in-game.
+- **Multi-View TSDF Splat-to-Mesh Bake (`02_SplatMesh_Pack`)**: Renders 42 Fibonacci-sphere 3DGS RGB-D views, fuses them into a `216³` TSDF volume with visual-hull carving, and runs Marching Cubes, QEM decimation, Taubin smoothing, connected-chart UV unwrapping, and visibility-tested texture baking (`export_splat_mesh.py`).
+- **Oriented Splat Clouds & FBX Baking (`03_SplatRenderer_Pack`, `04_FBXMesh_Pack`)**: Supports static quaternion-oriented Gaussian splat entities (`export_geo_splat.py`), 5,000-particle live streams (`export_oriented.py`), and high-to-low poly FBX photogrammetry decimation (`export_fbx_mesh.py`), alongside an interactive browser Imposter Preview Lab.

@@ -5,36 +5,37 @@ thumbnail: "UPS_1.jpg"
 role: "Lead Developer & XR Researcher"
 client: "Federal Aviation Administration"
 priority: 2
-year: 2025
+year: 2026
 status: "Ongoing"
 filters: ["featured", "vastlab", "VR"]
 tech: ["Unity", "C#", "MRTK3", "OpenXR", "Android Studio", "Java", "Autodesk Maya"]
 platform: ["Vuzix M4000", "Magic Leap 2", "Microsoft HoloLens 2", "RealWear Navigator Z1", "Meta Quest 3"]
 liveUrl: ""
-githubUrl: ""
+githubUrl: "https://github.com/VAST-Lab/FAA-HololensDemo"
 videoUrl: "https://vimeo.com/1090585071"
 ---
 
 <VideoEmbed vimeoId="1090585071" title="FAA Technical Operations XR Simulation Showcase" />
 
-The **FAA Technical Operations Extended Reality (XR) Comfort Analysis & Maintenance Simulation** is a safety-critical training and ergonomics research system developed at the [VAST Lab](/projects?filter=vastlab) in close partnership with the **Federal Aviation Administration (FAA)**. The platform provides Augmented Reality and Mixed Reality applications to test wearability, comfort, and cybersickness to recommend how long users can wear the XR headsets, how often breaks are needed, and how long they should last. This is facilitated through equipment training on operations such as a Uninterruptible Power Supply (UPS), routing airplane traffic over a tower, multimeter usage, and other small training scenarios and procedures.
+The **FAA Technical Operations Extended Reality (XR) Comfort Analysis & Maintenance Simulation** is a safety-critical training and ergonomics research system developed at the [VAST Lab](/projects?filter=vastlab) in partnership with the **Federal Aviation Administration (FAA)**. The platform provides Augmented Reality and Mixed Reality applications to evaluate wearability, comfort, and cybersickness—helping determine safe wear durations and break intervals through technical operations training scenarios.
 
-### Human Factors & Wear Time Research
+### Human Factors & Multi-Device User Studies
 
-Beyond technical procedural guidance, the project investigates cognitive load, physical neck/eye strain, and spatial interaction degradation across sustained XR usage in field maintenance environments:
+The research spans multiple hardware platforms and dedicated IRB user-study software across two repositories:
 
-- **Ergonomic Fatigue**: Measuring cervical spine tilt angles and center-of-mass head torque during multi-hour overhead equipment inspections.
-- **Cognitive Aptitude Tailoring**: Adapting UI guidance density based on real-time task completion heuristics and eye-gaze tracking metrics.
+- **HoloLens 2 MRTK3 & OpenXR Study Suite ([`FAA-HololensDemo`](https://github.com/VAST-Lab/FAA-HololensDemo))**: Built in Unity 2022.3 with **MRTK3**, **Microsoft Mixed Reality OpenXR**, and **glTFast**. Runs structured study sessions (`UserStudy`, `StartUserStudyManager`, `UserStudyLiveController`, `StudyPlayback`) with a companion tablet interface (`UserStudyTabletInterface`), QR code spatial alignment (`QRCodeDetection`), and timed in-headset questionnaires tracking **Cybersickness** and **General Headset Discomfort** (`CybersicknessQuestions`).
+- **Vuzix M4000 Native Android Study ([`FAA_Vuzix_UserStudy`](https://github.com/VAST-Lab/FAA_Vuzix_UserStudy))**: Native **Android Studio (Java)** application using the **Vuzix Speech Recognition SDK** (`VuzixSpeechClient`), Bluetooth SPP tablet pairing, and JSON-driven audio narration and subtitles (`instructions.json`) to guide technicians hands-free through forklift assembly, multimeter probing, and UPS procedures via voice commands.
 
 <VideoEmbed videoId="YWEq9FQKt2A" title="UT Dallas News: VR Lab's FAA Research Giving Students Vast Experiences" />
 
 ### Modules & Simulations
 
-The suite trains field technicians across several operational modules:
+Across the AR and MR applications, technicians and study participants complete procedural and spatial tasks:
 
-1. **Uninterruptible Power Supply (UPS) Maintenance**: Step-by-step breaker lock-out/tag-out protocols.
-2. **Digital Multimeter Calibration**: Multimeter probe interactions, voltage testing, and circuit measurements.
-3. **Air Traffic Control Plane Routing**: Simplification of airplane re-routing and navigation adjustments.
+1. **Uninterruptible Power Supply (UPS) Bypass & Maintenance (`BypassProcedure`, `UPSInteractions`)**: Step-by-step Kirk Key and breaker lock-out/tag-out protocols with animated hand guidance and error feedback.
+2. **Digital Multimeter Calibration (`MultimeterInteractions`)**: Interactive probe placement, dial hints, voltage testing, and circuit measurements.
+3. **Air Traffic Control Plane Routing (`AirTrafficScenarioManager`)**: Interactive 3D aircraft pathing and routing adjustments (`PlanePathDraggablePoint`).
+4. **Spatial Manipulation & Forklift Assembly (`BlockGameScenario`)**: Precision spatial block-placement tasks and forklift assembly guidance.
 
 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 	<ImageEmbed file="UPS_2.jpg" caption="UPS Kirk Key System Operations 1" />

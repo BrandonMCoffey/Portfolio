@@ -1,6 +1,6 @@
 ---
 title: "Volumetric Video"
-tagline: "3D/4D Gaussian Splatting Renderer, Compression & Real-Time Streaming"
+tagline: "Real-Time 4D Capture Engine, WebGPU Renderer & Previous Splat R&D"
 thumbnail: "/images/projects/solo-volumetric-video/thumbnail.jpg"
 role: "Principal Student Investigator & Pipeline Engineer"
 client: "UT Dallas Bass School"
@@ -8,32 +8,42 @@ priority: 16
 year: 2026
 status: "In Development"
 filters: ["vastlab", "graphics"]
-tech: ["Unity", "C#", "HLSL", "Compute Shaders", "Gaussian Splatting", "Python", "WebGPU"]
+tech: ["C++", "CUDA", "Vulkan", "Unity", "C#", "HLSL", "Gaussian Splatting", "WebGPU", "Python"]
 platform: ["PC", "Web", "VR"]
 liveUrl: ""
-githubUrl: "https://github.com/VAST-Lab/vast-volumetricvideo-renderer"
+githubUrl: "https://github.com/VAST-Lab/volumetric-studio"
 videoUrl: ""
 ---
 
 <ProjectHighlight
   title="Funded by UT Dallas Bass School Collaborative Research Grant"
-  description="Awarded research grant funding in December 2025 ('Advancing Research and Pedagogy in Volumetric Video through Student Collaboration') to engineer real-time 3D/4D Gaussian Splatting pipelines and accessible volumetric video tooling."
+  description="Awarded research grant funding in December 2025 ('Advancing Research and Pedagogy in Volumetric Video through Student Collaboration') to engineer real-time 3D/4D Gaussian Splatting capture, compression, and playback pipelines."
 />
 
-Developed at the [VAST Lab](/projects?filter=vastlab), this initiative spans two companion repositories—a production **Unity 6 (`6000.6+`) UPM Renderer Package** ([`vast-volumetricvideo-renderer`](https://github.com/VAST-Lab/vast-volumetricvideo-renderer)) and a multi-platform **Capture & R&D Toolkit** ([`VolumetricVideo`](https://github.com/VAST-Lab/VolumetricVideo))—for compressing, streaming, and rendering 3D and 4D Gaussian Splatting volumetric video across desktop and WebGPU browsers.
+Developed at the [VAST Lab](/projects?filter=vastlab), this initiative evolves from earlier Python/Unity volumetric prototypes ([`VolumetricVideo`](https://github.com/VAST-Lab/VolumetricVideo)) into our current in-development production stack: a native C++20 multi-camera capture and reconstruction engine ([`volumetric-studio`](https://github.com/VAST-Lab/volumetric-studio)) paired with a Unity 6 WebGPU playback package ([`vast-volumetricvideo-renderer`](https://github.com/VAST-Lab/vast-volumetricvideo-renderer)).
 
-### Unity 6 Volumetric Video Renderer (`vast-volumetricvideo-renderer` v3.0.4)
+### Current Solution in Development: Volumetric Studio (`volumetric-studio`)
 
-Built for **Built-in RP**, **URP 17**, and **HDRP 17** with full **WebGPU** support:
+[`volumetric-studio`](https://github.com/VAST-Lab/volumetric-studio) (`volstream.exe`) is a native **C++20** real-time 4D volumetric capture, calibration, reconstruction, and streaming engine with dual GPU compute backends (**CUDA** and **Vulkan via Slang/SPIR-V**) and zero Python/PyTorch runtime dependencies:
+
+- **Deterministic Memory & Multi-Sensor Capture**: Uses pre-allocated `ArenaPool` slabs and lock-free `RingBuffer` queues for zero steady-state heap allocations across **Orbbec SDK v2** RGB-D sensors (Femto Bolt rigs with 8-pin hardware sync and pinhole D2C), UVC webcams, and a raytraced `MockSensor` simulator.
+- **Automated Multi-Camera Calibration (`SyncCameras`, `DriftTracker`)**: Detects concentric coded markers and `ALIKED` / LightGlue features, solves `SE3` alignment via Kabsch SVD + Levenberg-Marquardt point-to-plane ICP, and tracks per-frame drift recovery.
+- **Foreground Matting & Reconstruction**: Combines `DepthBoxFilter`, `BgSubtractor`, and BiRefNet / SAM-tiny `LearnedMatting` with `RealtimeSplatEngine` (3DGS), `TsdfMeshEngine` (Marching Cubes), and `VolumeCodec` (Morton 16-bit quantization + LZ4/Zstd `.volrec`).
+- **Web Control Center & WASM Viewer**: Hosts a browser control dashboard (`localhost:8080`) and a **WebGL2 + WebWorker + WASM** live client (`viewer/`).
+
+### Current Unity 6 Playback Package (`vast-volumetricvideo-renderer` v3.0.4)
+
+[`vast-volumetricvideo-renderer`](https://github.com/VAST-Lab/vast-volumetricvideo-renderer) is a **Unity 6 (`6000.6+`)** UPM package supporting **Built-in RP**, **URP 17**, **HDRP 17**, and **WebGPU** across desktop and browser deployments:
 
 - **`.4dgs` Temporal GOP Compression (`GaussianSplat4DPlayer`)**: Combines SPZ v4 keyframes with Burst-compiled `int16` position and quaternion deltas (15x–40x compression at 30 FPS) and performs in-place GPU buffer updates with zero per-frame `GraphicsBuffer` reallocation.
 - **MP4 Video-Texture Splatting (`GaussianSplatVideoPlayer`)**: Samples 4-quadrant video atlases directly inside a compute shader (`CSDecodeVideoSplats`), leveraging native browser H.264/VP9/AV1 hardware decoding on WebGPU.
 - **Subgroup-Free WebGPU Radix Sort & Stochastic Accumulation**: Pairs wave-intrinsic desktop sorting (`DeviceRadixSort.hlsl`) with a subgroup-free compute radix sort (`WebGpuRadixSort.hlsl`), multi-threaded WASM CPU octree sorting fallback, and SteadySplats reprojected temporal accumulation (`GaussianSplatTemporalAccumulator`).
-- **Live Binary WebSocket Streaming (`GaussianSplatStreamReceiver`)**: Streams live volumetric frames over the `"SGST"` protocol from Unity Editor or Python servers (`stream_ply_sequence.py`) to desktop and WebGPU clients.
-- **Unified Mesh + 3DGS + 4DGS Composition**: Static scenes and animated 4D actors share the global radix sort buffer and hardware depth testing with no sorting seams.
+- **Live Binary WebSocket Streaming (`GaussianSplatStreamReceiver`)**: Streams live volumetric frames over the `"SGST"` protocol from Unity Editor or Python servers to desktop and WebGPU clients, with unified global sorting alongside 3D meshes and static 3DGS rooms.
 
-### Capture, Compression & Cross-Platform R&D (`VolumetricVideo`)
+### Previous Volumetric Video Attempts & Prototypes (`VolumetricVideo`)
 
-- **Orbbec RGB-D Live Streaming (`Camera Streaming/unitystreamer.py`)**: Python capture pipeline using `PyOrbbec`, OpenCV, and NumPy to stream live depth and RGB point clouds to Unity receivers (`OrbbecPointcloudReceiver`).
-- **Texture-Based Splat Compression (`Compress to Images/plycompress.py`)**: Converts `.ply` and `.splat` point clouds into compact image atlases encoding position, rotation, scale, and color.
-- **Custom Compute Renderer & Multi-Target Studies**: Includes a custom Unity compute-shader GS renderer (with Spatial SDK support) and reference implementations across WebGL, WebGPU, Metal, OpenGL, and Rust.
+Prior to building the native C++20 studio engine and Unity 6 UPM renderer, earlier lab prototypes in [`VolumetricVideo`](https://github.com/VAST-Lab/VolumetricVideo) explored several foundational approaches:
+
+- **Python Orbbec Live Streaming (`Camera Streaming/unitystreamer.py`)**: Prototype Python capture scripts using `PyOrbbec`, OpenCV, and NumPy to stream depth and RGB point clouds into a Unity receiver (`Realtime Streaming`).
+- **Image-Atlas Splat Compression (`Compress to Images/plycompress.py`)**: Experiments converting `.ply` and `.splat` point clouds into compact PNG/TIFF image sets encoding position, rotation, scale, and color for lightweight web streaming.
+- **Prototype Unity 2021.3 Compute Renderer (`Unity GS Renderer`)**: Custom compute-shader distance sorting and rasterization in Unity 2021.3 (including Spatial SDK projection adjustments) alongside cross-API reference studies (`Example GS Scripts`) across WebGL, WebGPU, Metal, OpenGL, and Rust.

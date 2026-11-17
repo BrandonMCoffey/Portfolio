@@ -10,7 +10,7 @@ filters: ["featured", "vastlab", "VR"]
 tech: ["Unity", "C#", "Maya", "Meta Quest Pro / 3", "Spatial Anchors"]
 platform: ["Meta Quest Pro", "Meta Quest 3"]
 liveUrl: ""
-githubUrl: ""
+githubUrl: "https://github.com/VAST-Lab/KittyCity"
 videoUrl: "https://vimeo.com/952096359"
 ---
 
@@ -38,8 +38,10 @@ Exporting complex multi-joint character rigs with squash-and-stretch controls re
 <ImageEmbed file="kitty-city-cats.png" caption="Custom stylized feline characters modeled and textured for real-time passthrough" />
 <ImageEmbed file="kitty-city-rigs.png" caption="Skeletal joint structures and blendshape animation rigs in Autodesk Maya" />
 
-### Spatial Anchors & Physical Alignment
+### Spatial Anchors, AI Behaviors & Physical Alignment
 
-To enable virtual cats to navigate gallery benches, archways, and pedestals naturally, an exact 1:1 digital twin floor plan of the Vladem Contemporary exhibition space was constructed. Meta Spatial Anchors were pinned to physical architectural datum points, ensuring persistent, drift-free room alignment across multi-day museum operations.
+To enable virtual cats to navigate gallery benches, archways, and pedestals naturally, an exact 1:1 digital twin floor plan of the Vladem Contemporary exhibition space was constructed (`NavBaker`, `DirectedNavMeshAgent`). Meta Spatial Anchors (`RoomAnchorManager`, `RoomAligner`, `SaveLoadAnchors`) were pinned to physical architectural datum points to align the virtual gallery with the physical museum floor.
+
+Autonomous feline behavior is driven by state machines and weighted action tables (`CatController`, `InkaController`, `CatPersonality`, `CatBlendShapeAnimator`), with OVR hand-gesture beckoning and touch reactions (`GestureTracker`), gallery boundary hazard warnings (`HazardArea`, `HazardWarning`), and inspector tooling powered by [Coffey Utils](/projects/solo-coffey-utils).
 
 <ImageEmbed file="gallery-mapping.png" caption="Spatial floor plan reconstruction and spatial anchor placement in the museum gallery" />
