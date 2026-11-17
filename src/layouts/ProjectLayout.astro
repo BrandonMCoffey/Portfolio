@@ -13,12 +13,16 @@ interface Heading {
 	text: string;
 }
 
+type ProjectEntry = CollectionEntry<'projects'> | CollectionEntry<'projectsHidden'>;
+
 interface Props {
-	project: CollectionEntry<'projects'>['data'];
+	project: ProjectEntry['data'];
 	slug?: string;
 	headings?: Heading[];
-	prevProject?: CollectionEntry<'projects'>;
-	nextProject?: CollectionEntry<'projects'>;
+	prevProject?: ProjectEntry;
+	nextProject?: ProjectEntry;
+	detailBasePath?: string;
+	noindex?: boolean;
 	academicSpotlight?: PublicationItem;
 	mediaSpotlight?: MediaRecognitionItem;
 	backLink?: { href: string; label: string };
@@ -30,6 +34,8 @@ const {
 	headings = [],
 	prevProject,
 	nextProject,
+	detailBasePath = '/projects',
+	noindex = false,
 	academicSpotlight,
 	mediaSpotlight,
 	backLink = PROJECT_LAYOUT_TEXT.defaultBackLink
@@ -51,7 +57,7 @@ const isInteractiveLiveDemo = Boolean(liveUrl && INTERACTIVE_DEMO_HOSTS.some(hos
 const txt = PROJECT_LAYOUT_TEXT;
 ---
 
-<BaseLayout title={`${title} | ${SITE_PROFILE.name}`} description={tagline}>
+<BaseLayout title={`${title} | ${SITE_PROFILE.name}`} description={tagline} noindex={noindex}>
 	<div class="relative overflow-x-clip py-10 sm:py-16">
 		<div class="container relative mx-auto px-4 max-w-5xl">
 			<!-- Breadcrumb Navigation Bar -->
@@ -68,7 +74,7 @@ const txt = PROJECT_LAYOUT_TEXT;
 
 				<div class="flex items-center gap-2">
 					{status && (
-						<span class={status === 'Released' ? 'pill-status-released' : status === 'In Development' ? 'pill-status-dev' : 'pill-status-ongoing'}>
+						<span class={status === 'Released' ? 'pill-status-released' : status === 'Hidden' ? 'pill-status-hidden' : status === 'In Development' ? 'pill-status-dev' : 'pill-status-ongoing'}>
 							{status}
 						</span>
 					)}
@@ -519,7 +525,7 @@ const txt = PROJECT_LAYOUT_TEXT;
 					<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
 						{prevProject && (
 							<a
-								href={`/projects/${prevProject.id}`}
+								href={`${detailBasePath}/${prevProject.id}`}
 								class="project-card card-spotlight group p-4 flex-row items-center gap-3.5"
 							>
 								<div class="h-8 w-8 rounded-[2px] bg-[var(--bg-elevated)] border border-[var(--border-subtle)] flex items-center justify-center text-[var(--text-secondary)] group-hover:text-[var(--accent-primary)] group-hover:-translate-x-0.5 transition-transform shrink-0">
@@ -536,7 +542,7 @@ const txt = PROJECT_LAYOUT_TEXT;
 
 						{nextProject && (
 							<a
-								href={`/projects/${nextProject.id}`}
+								href={`${detailBasePath}/${nextProject.id}`}
 								class="project-card card-spotlight group p-4 flex-row items-center justify-end gap-3.5 text-right sm:ml-auto w-full"
 							>
 								<div class="overflow-hidden">
@@ -580,6 +586,9 @@ const txt = PROJECT_LAYOUT_TEXT;
 				// Return to "/" directly so instant scroll restoration places the viewport at the exact previous scrollY
 				link.href = getReturnScrollFor("/") !== null ? "/" : "/#projects";
 				label.textContent = "Back to Home";
+			} else if (getProjectOrigin() === "projects-hidden") {
+				link.href = "/projects-hidden";
+				label.textContent = "Back to Hidden Projects";
 			}
 		}
 

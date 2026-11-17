@@ -29,12 +29,13 @@ export function isProjectDetailPath(path: string): boolean {
   const norm = normalizePath(path);
   return (
     norm.startsWith("/projects/") ||
+    norm.startsWith("/projects-hidden/") ||
     norm.startsWith("/cv/publications/") ||
     norm.startsWith("/cv/media/")
   );
 }
 
-export function setProjectOrigin(origin: "home" | "projects") {
+export function setProjectOrigin(origin: "home" | "projects" | "projects-hidden") {
   try {
     sessionStorage.setItem(ORIGIN_KEY, origin);
   } catch {
@@ -42,10 +43,10 @@ export function setProjectOrigin(origin: "home" | "projects") {
   }
 }
 
-export function getProjectOrigin(): "home" | "projects" | null {
+export function getProjectOrigin(): "home" | "projects" | "projects-hidden" | null {
   try {
     const val = sessionStorage.getItem(ORIGIN_KEY);
-    return val === "home" || val === "projects" ? val : null;
+    return val === "home" || val === "projects" || val === "projects-hidden" ? val : null;
   } catch {
     return null;
   }

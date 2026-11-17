@@ -180,6 +180,19 @@
     border: 1px solid rgba(134, 239, 172, 0.4);
   }
 
+  .pill-status-hidden {
+    @apply inline-flex items-center px-1.5 py-0.5 text-[10px] font-mono font-semibold uppercase tracking-wider;
+    border-radius: var(--radius-tag);
+    color: #7c4a1d;
+    background-color: rgba(161, 98, 39, 0.16);
+    border: 1px solid rgba(161, 98, 39, 0.45);
+  }
+  .dark .pill-status-hidden {
+    color: #e6b17a;
+    background-color: rgba(161, 98, 39, 0.2);
+    border: 1px solid rgba(214, 146, 84, 0.45);
+  }
+
   .filter-pill {
     @apply inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono font-medium transition-all cursor-pointer select-none;
     border-radius: var(--radius-tag);

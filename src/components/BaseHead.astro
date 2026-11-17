@@ -9,16 +9,18 @@ interface Props {
   title: string;
   description: string;
   image?: ImageMetadata;
+  noindex?: boolean;
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
-const { title, description, image = FallbackImage } = Astro.props;
+const { title, description, image = FallbackImage, noindex = false } = Astro.props;
 ---
 
 <!-- Global Metadata -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
+{noindex && <meta name="robots" content="noindex, nofollow" />}
 <link rel="icon" type="image/svg+xml" href="/website-icon.png" />
 <link rel="sitemap" href="/sitemap-index.xml" />
 <link rel="alternate" type="application/rss+xml" title={SITE_TITLE} href={new URL("rss.xml", Astro.site)} />

@@ -8,15 +8,16 @@ import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 interface Props {
   title?: string;
   description?: string;
+  noindex?: boolean;
 }
 
-const { title = SITE_TITLE, description = SITE_DESCRIPTION } = Astro.props;
+const { title = SITE_TITLE, description = SITE_DESCRIPTION, noindex = false } = Astro.props;
 ---
 
 <!doctype html>
 <html lang="en" class="scroll-smooth">
   <head>
-    <BaseHead title={title} description={description} />
+    <BaseHead title={title} description={description} noindex={noindex} />
   </head>
   <body
     class="antialiased min-h-screen flex flex-col bg-[var(--bg-page)] text-[var(--text-primary)] transition-colors duration-250"
@@ -63,6 +64,8 @@ const { title = SITE_TITLE, description = SITE_DESCRIPTION } = Astro.props;
               setProjectOrigin("home");
             } else if (currentPath === "/projects") {
               setProjectOrigin("projects");
+            } else if (currentPath === "/projects-hidden") {
+              setProjectOrigin("projects-hidden");
             }
             saveReturnScroll(currentPath, window.scrollY);
           }

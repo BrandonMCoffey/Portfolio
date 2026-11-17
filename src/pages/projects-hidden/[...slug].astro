@@ -1,0 +1,39 @@
+---
+import { getCollection, render, type CollectionEntry } from "astro:content";
+import ProjectLayout from "../../layouts/ProjectLayout.astro";
+import { mdxComponents } from "../../components/projects/mdxComponents";
+
+export async function getStaticPaths() {
+  const hiddenProjects = await getCollection("projectsHidden");
+  hiddenProjects.sort((a, b) => a.data.priority - b.data.priority);
+
+  return hiddenProjects.map((project: CollectionEntry<"projectsHidden">, index: number) => {
+    const prevProject = index > 0 ? hiddenProjects[index - 1] : hiddenProjects[hiddenProjects.length - 1];
+    const nextProject = index < hiddenProjects.length - 1 ? hiddenProjects[index + 1] : hiddenProjects[0];
+    return {
+      params: { slug: project.id },
+      props: { project, prevProject, nextProject },
+    };
+  });
+}
+
+const { project, prevProject, nextProject } = Astro.props;
+const { Content, headings } = await render(project);
+const forcedHiddenData = {
+  ...project.data,
+  status: "Hidden" as const,
+};
+---
+
+<ProjectLayout
+  project={forcedHiddenData}
+  slug={project.id}
+  headings={headings}
+  prevProject={prevProject}
+  nextProject={nextProject}
+  detailBasePath="/projects-hidden"
+  noindex={true}
+  backLink={{ href: "/projects-hidden", label: "Back to Hidden Projects" }}
+>
+  <Content components={mdxComponents} />
+</ProjectLayout>

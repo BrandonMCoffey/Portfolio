@@ -1,0 +1,34 @@
+---
+import { getCollection } from "astro:content";
+import ProjectsExplorer from "../../components/projects/ProjectsExplorer.astro";
+
+const publicProjects = await getCollection("projects");
+const hiddenProjects = await getCollection("projectsHidden");
+
+const items = [
+  ...publicProjects.map((project) => ({
+    project,
+    href: `/projects/${project.id}`,
+    isHidden: false,
+  })),
+  ...hiddenProjects.map((project) => ({
+    project: {
+      ...project,
+      data: {
+        ...project.data,
+        status: "Hidden" as const,
+      },
+    },
+    href: `/projects-hidden/${project.id}`,
+    isHidden: true,
+  })),
+].sort((a, b) => a.project.data.priority - b.project.data.priority);
+---
+
+<ProjectsExplorer
+  items={items}
+  includeHiddenFilter={true}
+  noindex={true}
+  pageTitlePrefix="Hidden Projects Archive"
+  badgeLabel="Hidden Archive"
+/>

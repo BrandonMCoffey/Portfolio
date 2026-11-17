@@ -11,7 +11,9 @@ export default defineConfig({
     site: 'https://brandoncoffey.com',
     integrations: [
         react(),
-        sitemap(),
+        sitemap({
+            filter: (page) => !page.includes('/projects-hidden'),
+        }),
         mdx(),
     ],
     markdown: {

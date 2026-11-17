@@ -16,7 +16,7 @@ export function resolveProjectSlugFromUrl(pathname: string): string {
 
   const cleanPath = pathname.replace(/\/+$/, "");
 
-  const projectMatch = cleanPath.match(/\/projects\/([^/]+)$/);
+  const projectMatch = cleanPath.match(/\/projects(?:-hidden)?\/([^/]+)$/);
   if (projectMatch) {
     return projectMatch[1];
   }

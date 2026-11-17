@@ -5,19 +5,23 @@ import { PROJECT_CARD_TEXT } from "../../data/projectsConfig";
 import { resolveProjectThumbnail } from "../../utils/projectImages";
 
 interface Props {
-  project: CollectionEntry<"projects">;
-  origin?: "home" | "projects";
+  project: CollectionEntry<"projects"> | CollectionEntry<"projectsHidden">;
+  origin?: "home" | "projects" | "projects-hidden";
+  href?: string;
+  statusOverride?: "Released" | "In Development" | "Ongoing" | "Hidden";
 }
 
-const { project, origin = "projects" } = Astro.props;
+const { project, origin = "projects", href, statusOverride } = Astro.props;
 const slug = project.id;
 const { title, thumbnail, tech = [], tagline, role, year, status, client } = project.data;
+const cardHref = href ?? `/projects/${slug}`;
+const displayStatus = statusOverride ?? status;
 const thumbnailSrc = resolveProjectThumbnail(slug, thumbnail);
 const visibleTech = tech.slice(0, 3);
 ---
 
 <a
-  href={`/projects/${slug}`}
+  href={cardHref}
   class="project-card card-spotlight group h-full"
   data-origin={origin}
   data-slug={slug}
@@ -47,18 +51,20 @@ const visibleTech = tech.slice(0, 3);
       )
     }
 
-    <!-- Top Right: Status (Released = light blue; In Development / Ongoing = light green) -->
+    <!-- Top Right: Status (Released = light blue; Hidden = brown; In Development / Ongoing = light green) -->
     {
-      status && (
+      displayStatus && (
         <span
           class:list={[
             "absolute top-2.5 right-2.5 z-10 px-2 py-0.5 rounded-[2px] text-[10px] font-mono font-semibold uppercase tracking-wider backdrop-blur-sm border",
-            status === "Released"
+            displayStatus === "Released"
               ? "bg-[#112c3b]/72 text-[#7dd8ff] border-[#4fc9ff]/45"
+              : displayStatus === "Hidden"
+              ? "bg-[#2e1e12]/80 text-[#e6b17a] border-[#c07a3e]/50"
               : "bg-[#122d22]/72 text-[#86efac] border-[#6ee7b7]/45",
           ]}
         >
-          {status}
+          {displayStatus}
         </span>
       )
     }
