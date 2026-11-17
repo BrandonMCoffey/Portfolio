@@ -9,24 +9,39 @@ interface Props {
   file2?: string;
   alt2?: string;
   caption?: string;
+  title?: string;
+  disableHoverZoom?: boolean;
 }
 
-const { file, alt = "", file2, alt2 = "", caption } = Astro.props;
+const { file, alt = "", file2, alt2 = "", caption, title, disableHoverZoom = false } = Astro.props;
 
 const imagePath = resolveProjectImage(file, Astro.url.pathname);
 const imagePath2 = file2 ? resolveProjectImage(file2, Astro.url.pathname) : "";
 const defaultImagePath = DEFAULT_FALLBACK_IMAGE;
 
 const gridCols = file2 ? "grid-cols-1 sm:grid-cols-2" : "grid-cols-1";
+const imageClass = [
+  "m-0 block w-full h-full object-cover",
+  !disableHoverZoom && "transition-transform duration-300 group-hover:scale-102",
+]
+  .filter(Boolean)
+  .join(" ");
 ---
 
-<figure class="not-prose my-8">
+<figure class:list={["image-embed-figure not-prose", title ? "mt-3 mb-8" : "my-8"]}>
+  {
+    title && (
+      <h3 class="mt-0 mb-3 pb-2 text-xl font-semibold tracking-tight text-[var(--text-primary)] border-b border-[var(--border-subtle)]">
+        {title}
+      </h3>
+    )
+  }
   <div class={`grid ${gridCols} gap-4`}>
     <div class="relative group rounded-[3px] overflow-hidden border border-[var(--border-subtle)] bg-[var(--bg-surface)]">
       <img
         src={imagePath}
         alt={alt}
-        class="m-0 block w-full h-full object-cover transition-transform duration-300 group-hover:scale-102"
+        class={imageClass}
         loading="lazy"
         decoding="async"
         onerror={`this.onerror=null; this.src='${defaultImagePath}';`}
@@ -52,7 +67,7 @@ const gridCols = file2 ? "grid-cols-1 sm:grid-cols-2" : "grid-cols-1";
           <img
             src={imagePath2}
             alt={alt2}
-            class="m-0 block w-full h-full object-cover transition-transform duration-300 group-hover:scale-102"
+            class={imageClass}
             loading="lazy"
             decoding="async"
             onerror={`this.onerror=null; this.src='${defaultImagePath}';`}

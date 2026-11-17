@@ -13,8 +13,6 @@ githubUrl: ""
 videoUrl: ""
 ---
 
-<br />
-
 ### Maya to Unity/Unreal Rig Exporter
 
 When exporting rigs and animations done in Autodesk Maya to Unreal Engine or Unity, any custom deform nodes or constraints are unable to normally be exported. This became apparent with my experience in [Death Bloom](/projects/gamelab-death-bloom) and [Kitty City](/projects/vast-kitty-city), when animators used custom rigs that they were used to, as they were not used to building rigs for game development. So, I created a tool, called CreateCompatibilityRig, which does the following:
@@ -28,8 +26,6 @@ When exporting rigs and animations done in Autodesk Maya to Unreal Engine or Uni
 <p style="text-align:center">
 	<i>Left: Source Maya Rig. Middle: Duplicated Joint Structure. Right: Output Mesh Compatible with Unity</i>
 </p>
-
-<br />
 
 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 	<ImageEmbed file="tool.png" />
@@ -113,9 +109,3 @@ self.destinationJoints = None
 
 ```
 </CodeSnippet>
-
-{/*
-[Image of Stacker Tool]
-With python and Qt, I built a simple interface to select objects and stack them on each other based on their bounding box sizes.
-*/}
-```

@@ -17,6 +17,16 @@
   }
 }
 
+@layer utilities {
+  .prose .grid:has(> .image-embed-figure) {
+    margin-block: 2rem;
+  }
+
+  .prose .grid > .image-embed-figure {
+    margin-block: 0;
+  }
+}
+
 /* Print */
 @media print {
   @page {

@@ -26,15 +26,24 @@ if (vimeoId) {
 }
 ---
 
-<div class="lazy-video-embed my-8 rounded-[3px] overflow-hidden border border-[var(--border-subtle)] bg-[#141414]">
-  <div class="aspect-video relative w-full">
-    <iframe
-      title={computedTitle}
-      data-src={videoSrc}
-      frameborder="0"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      allowfullscreen
-      class="w-full h-full"></iframe>
+<div class:list={["not-prose", title ? "mt-3 mb-8" : "my-8"]}>
+  {
+    title && (
+      <h3 class="mt-0 mb-3 pb-2 text-xl font-semibold tracking-tight text-[var(--text-primary)] border-b border-[var(--border-subtle)]">
+        {title}
+      </h3>
+    )
+  }
+  <div class="lazy-video-embed rounded-[3px] overflow-hidden border border-[var(--border-subtle)] bg-[#141414]">
+    <div class="aspect-video relative w-full">
+      <iframe
+        title={computedTitle}
+        data-src={videoSrc}
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+        class="w-full h-full"></iframe>
+    </div>
   </div>
 </div>
 
