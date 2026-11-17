@@ -10,30 +10,30 @@ filters: ["featured", "vastlab", "VR"]
 tech: ["Unity", "C#", "OpenXR", "XR Interaction Toolkit", "Blender"]
 platform: ["Meta Quest", "VR"]
 liveUrl: ""
-githubUrl: "https://github.com/VAST-Lab/VR-9-11"
+githubUrl: ""
 videoUrl: "https://youtu.be/JqvotZyVxSk"
 ---
 
 <VideoEmbed videoId="JqvotZyVxSk" title="VR 9/11 Memorial VR" />
 
-The **VR 9/11 Memorial** is a standalone virtual reality historical commemoration experience developed at the [VAST Lab](/projects?filter=vastlab) for the **UT Dallas Military and Veterans Center**. Built in **Unity 6 (`6000.3.16f1`, URP)** for Meta Quest headsets, the experience honors the victims, first responders, and service members connected to the events of September 11, 2001.
+The VR 9/11 Memorial is a standalone virtual reality historical commemoration experience developed at the [VAST Lab](/projects?filter=vastlab) for the UT Dallas Military and Veterans Center. Built in Unity 6 for Meta Quest headsets, the experience honors the victims, first responders, and service members connected to the events of September 11, 2001.
 
 ### Three-Chapter Historical Experience
 
-Orchestrated by a timed narrative sequence (`SceneTransitionManager`, `FadeScreenVisual`) with synchronized audio narration and screen fades, visitors progress through three distinct historical scenes:
+The application is structured around a continuous, timed narrative controller that blends audio narration, lighting transitions, and cross-faded scene loading across three historical chapters:
 
-1. **World Trade Center (`WorldTradeCenter`)**: A spatial reconstruction of the Twin Towers plaza complex prior to the attacks.
-2. **Ground Zero Aftermath (`DestroyedWorldTradeCenter`)**: A solemn post-event environment depicting the destroyed World Trade Center site with atmospheric smoke and emergency vehicles.
-3. **Rubble with Flag (`RubbleWithFlag`)**: A commemorative tribute scene honoring the iconic flag raising at Ground Zero.
+1. World Trade Center: A spatial reconstruction of the Twin Towers plaza complex prior to the attacks.
+2. Ground Zero Aftermath: A post-event environment depicting the destroyed World Trade Center site with atmospheric smoke and emergency vehicles.
+3. Rubble with Flag: A commemorative tribute scene honoring the iconic flag raising at Ground Zero.
 
 ### Spatial Narrative & Standalone Quest Optimization
 
-- **Floating Spatial Annotations (`FloatingTextManager`)**: Dynamically anchors reflective historical narratives and timeline quotes around the viewer's head space with smooth distance, scale, and fade distribution.
-- **XR Interaction & Hand Tracking**: Built on OpenXR, **XR Interaction Toolkit 3.4.1**, and **Unity XR Hands 1.7.3** to support both tracked controllers and natural bare-hand interaction.
-- **Meta Quest Performance**: Tuned for standalone Android XR exhibition hardware with `FixedFoveationSetup` (fixed foveated rendering) and custom URP optimization passes.
+- Floating Spatial Annotations: A dynamic text manager anchors historical quotes and narrative reflections around the viewer's head space with controlled spacing, scale, and fade timing.
+- XR Interaction & Hand Tracking: Built on OpenXR, Unity XR Interaction Toolkit, and XR Hands to support both tracked controllers and natural bare-hand interaction.
+- Meta Quest Performance: Tuned for standalone Android XR exhibition hardware with fixed foveated rendering and optimized URP lighting and geometry passes.
 
 ### Community Exhibition & Impact
 
-- **Exhibition Date**: September 2026 (25th Anniversary Showcase, Build 1.4)
-- **Location**: Dallas, Texas
-- **Showcase Feature**: [LinkedIn Memorial Feature](https://lnkd.in/p/g9zV4AaH)
+- Exhibition Date: September 2026 (25th Anniversary Showcase)
+- Location: Dallas, Texas
+- Showcase Feature: [LinkedIn Memorial Feature](https://lnkd.in/p/g9zV4AaH)

@@ -11,7 +11,7 @@ filters: ["featured", "vastlab", "VR"]
 tech: ["Unity", "C#", "MRTK3", "OpenXR", "Android Studio", "Java", "Autodesk Maya"]
 platform: ["Vuzix M4000", "Magic Leap 2", "Microsoft HoloLens 2", "RealWear Navigator Z1", "Meta Quest 3"]
 liveUrl: ""
-githubUrl: "https://github.com/VAST-Lab/FAA-HololensDemo"
+githubUrl: ""
 videoUrl: "https://vimeo.com/1090585071"
 ---
 
@@ -22,25 +22,25 @@ videoUrl: "https://vimeo.com/1090585071"
 	description="Recognized with the 2026 UT Dallas Recognition of Outstanding Achievements in Research (ROAR) Award. Funded by a 5-year, $5,000,000 FAA Civil Aerospace Medical Institute (CAMI) grant (2024–2029) and showcased at SXSW 2025 and the 2026 Verizon Smart Campus Competition."
 />
 
-The **FAA Technical Operations Extended Reality (XR) Comfort Analysis & Maintenance Simulation** is a safety-critical training and ergonomics research system developed at the [VAST Lab](/projects?filter=vastlab) in partnership with the **Federal Aviation Administration (FAA)**. The platform provides Augmented Reality and Mixed Reality applications to evaluate wearability, comfort, and cybersickness—helping determine safe wear durations and break intervals through technical operations training scenarios.
+The FAA Technical Operations Extended Reality (XR) Comfort Analysis and Maintenance Simulation is a safety-critical training and ergonomics research platform developed at the [VAST Lab](/projects?filter=vastlab) in partnership with the Federal Aviation Administration (FAA). Using Augmented and Mixed Reality applications across several head-mounted displays, the system evaluates wearability, physical comfort, and cybersickness to help establish safe wear durations and break schedules during aviation maintenance tasks.
 
 ### Human Factors & Multi-Device User Studies
 
-The research spans multiple hardware platforms and dedicated IRB user-study software across two repositories:
+The software architecture supports controlled IRB user studies across both optical see-through mixed reality headsets and monocular smart glasses:
 
-- **HoloLens 2 MRTK3 & OpenXR Study Suite ([`FAA-HololensDemo`](https://github.com/VAST-Lab/FAA-HololensDemo))**: Built in Unity 2022.3 with **MRTK3**, **Microsoft Mixed Reality OpenXR**, and **glTFast**. Runs structured study sessions (`UserStudy`, `StartUserStudyManager`, `UserStudyLiveController`, `StudyPlayback`) with a companion tablet interface (`UserStudyTabletInterface`), QR code spatial alignment (`QRCodeDetection`), and timed in-headset questionnaires tracking **Cybersickness** and **General Headset Discomfort** (`CybersicknessQuestions`).
-- **Vuzix M4000 Native Android Study ([`FAA_Vuzix_UserStudy`](https://github.com/VAST-Lab/FAA_Vuzix_UserStudy))**: Native **Android Studio (Java)** application using the **Vuzix Speech Recognition SDK** (`VuzixSpeechClient`), Bluetooth SPP tablet pairing, and JSON-driven audio narration and subtitles (`instructions.json`) to guide technicians hands-free through forklift assembly, multimeter probing, and UPS procedures via voice commands.
+- HoloLens 2 MRTK3 & OpenXR Study Suite: Built in Unity with MRTK3, Microsoft Mixed Reality OpenXR, and glTFast. A structured session flow pairs the headset application with a companion tablet controller, QR code spatial alignment for table calibration, study playback tools, and timed in-headset questionnaires that record cybersickness and general headset discomfort ratings.
+- Vuzix M4000 Native Android Study: Built in Android Studio using Java, the Vuzix Speech Recognition SDK, and Bluetooth SPP tablet pairing. A data-driven step sequencer plays synchronized audio narration, subtitles, and reference diagrams while letting technicians navigate forklift assembly, multimeter probing, and UPS procedures hands-free via voice commands.
 
 <VideoEmbed videoId="YWEq9FQKt2A" title="UT Dallas News: VR Lab's FAA Research Giving Students Vast Experiences" />
 
-### Modules & Simulations
+### Training Modules & Scenarios
 
-Across the AR and MR applications, technicians and study participants complete procedural and spatial tasks:
+Across the AR and MR applications, participants work through modular procedural and spatial tasks:
 
-1. **Uninterruptible Power Supply (UPS) Bypass & Maintenance (`BypassProcedure`, `UPSInteractions`)**: Step-by-step Kirk Key and breaker lock-out/tag-out protocols with animated hand guidance and error feedback.
-2. **Digital Multimeter Calibration (`MultimeterInteractions`)**: Interactive probe placement, dial hints, voltage testing, and circuit measurements.
-3. **Air Traffic Control Plane Routing (`AirTrafficScenarioManager`)**: Interactive 3D aircraft pathing and routing adjustments (`PlanePathDraggablePoint`).
-4. **Spatial Manipulation & Forklift Assembly (`BlockGameScenario`)**: Precision spatial block-placement tasks and forklift assembly guidance.
+1. Uninterruptible Power Supply (UPS) Maintenance: Step-by-step Kirk Key and breaker lock-out/tag-out procedures with animated hand guidance, flipbook instructions, and error feedback.
+2. Digital Multimeter Calibration: Interactive probe placement, dial guidance, voltage testing, and circuit measurements.
+3. Air Traffic Control Plane Routing: Spatial 3D aircraft pathing and routing adjustments over a virtual airfield.
+4. Spatial Manipulation & Forklift Assembly: Precision block-placement tasks and guided hardware assembly scenarios.
 
 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 	<ImageEmbed file="UPS_2.jpg" caption="UPS Kirk Key System Operations 1" />

@@ -9,17 +9,17 @@ filters: ["game"]
 tech: ["Unity", "C#", "DOTween", "Cinemachine"]
 platform: ["PC"]
 liveUrl: ""
-githubUrl: "https://github.com/BrandonMCoffey/Moon-lite"
+githubUrl: ""
 videoUrl: "https://www.youtube.com/watch?v=_4v-FMqlB5Y"
 ---
 
 <VideoEmbed videoId="_4v-FMqlB5Y" title="Moonlite Gameplay" />
 
-**Moonlite** is a 2D sci-fi extraction roguelike and shooter built in Unity (URP 2D) alongside teammates Mikey Bess and Sai Mangipudi. Players descend onto hazardous moons, mine rare mineral veins through destructible terrain, synthesize specialized elemental ammunition, and extract back to the mother ship before alien swarms overwhelm them.
+Moonlite is a 2D sci-fi extraction roguelike and shooter built in Unity alongside teammates Mikey Bess and Sai Mangipudi. Players descend onto hazardous moons, mine rare mineral veins through destructible terrain, synthesize specialized elemental ammunition, and extract back to the mother ship before alien swarms overwhelm them.
 
 ### Mineral-Synthesized Elemental Ammunition
 
-Each mined mineral powers a distinct projectile behavior driven by ScriptableObject `MineralData` configurations and object-pooled bullet systems (`BulletPooling`):
+Each mined mineral powers a distinct projectile behavior configured through modular data assets and an object-pooled bullet system:
 
 - **Copper**: High-velocity standard rounds
 - **Cryselium**: Freezes enemies on impact
@@ -31,6 +31,6 @@ Each mined mineral powers a distinct projectile behavior driven by ScriptableObj
 
 ### Mother Ship Hub & Planetary Expeditions
 
-- **Spaceship Hub (`ShipHub`)**: Between expeditions, players return to the ship to access the research lab, weapon forge, gun upgrade sliders, inventory management, and mission navigation.
-- **Planetary Mining & Extraction (`Planet`)**: Destructible 2D tilemaps, quad-tree spatial queries, flashlight lighting mechanics, `AutoMiner` stations, enemy swarms, and emergency extraction teleporters.
-- **Engine Architecture**: Built with a custom `SoundManager` / `SfxPool` audio system, `JsonPlayerPrefs` persistence, `MouseControllerManager` input handling, and Cinemachine camera follow/shake feedback.
+- Spaceship Hub: Between runs, players return to the mother ship to access the research lab, weapon forge, upgrade menus, inventory management, and mission navigation.
+- Planetary Mining & Extraction: Expeditions take place across destructible 2D terrain backed by quad-tree spatial queries, dynamic flashlight lighting, automated mining stations, enemy swarms, and emergency extraction teleporters.
+- Core Systems: Built on a modular Unity 2D foundation with pooled audio management, JSON-based save persistence, flexible mouse and controller UI switching, and Cinemachine camera feedback.

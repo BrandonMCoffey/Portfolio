@@ -43,40 +43,40 @@ The above image demonstrates these features, set up using the code below:
 [SerializeField, ReadOnly] private float _readOnlyValue;
 
 [Header("Highlights")]
-[SerializeField, Highlight(0.1f, 1f, 0.1f, HighlightMode.Text)] private bool _greenFieldText;
-[SerializeField, Highlight(ColorField.Blue)] private int _blueField;
-[SerializeField, Highlight(250, 200, 15)] private float _yellowField;
-[SerializeField, Highlight(System.Drawing.KnownColor.Red)] private GameObject _redField;
+[SerializeField, Highlight(0.1f, 1f, 0.1f, HighlightMode.Text)] private bool \_greenFieldText;
+[SerializeField, Highlight(ColorField.Blue)] private int \_blueField;
+[SerializeField, Highlight(250, 200, 15)] private float \_yellowField;
+[SerializeField, Highlight(System.Drawing.KnownColor.Red)] private GameObject \_redField;
 
 [Header("Highlight If")]
-[SerializeField] private bool _test;
-[SerializeField, HighlightIf("_test")] private float _hightlightIfAboveIsTrue;
+[SerializeField] private bool \_test;
+[SerializeField, HighlightIf("_test")] private float \_hightlightIfAboveIsTrue;
 
 [Header("Highlight If Null")]
-[SerializeField, HighlightIfNull] private GameObject _highlightIfNull;
-[SerializeField, HighlightIfNull(ColorField.Green)] private GameObject _highlightIfNull2;
+[SerializeField, HighlightIfNull] private GameObject \_highlightIfNull;
+[SerializeField, HighlightIfNull(ColorField.Green)] private GameObject \_highlightIfNull2;
 
 [Header("Optional")]
-[SerializeField] private Optional<float> _optionalValue;
-[SerializeField] private Optional<Vector3> _optionalValue2;
+[SerializeField] private Optional<float> \_optionalValue;
+[SerializeField] private Optional<Vector3> \_optionalValue2;
 
 [Header("Show If")]
-[SerializeField] private bool _show;
-[SerializeField, ShowIf("_show")] private float _value;
+[SerializeField] private bool \_show;
+[SerializeField, ShowIf("_show")] private float \_value;
 
-[SerializeField, ShowIf("_show")] private bool _secondardShow;
-[SerializeField, ShowIf("_show", "_secondardShow")] private float _secondaryValue;
+[SerializeField, ShowIf("_show")] private bool \_secondardShow;
+[SerializeField, ShowIf("_show", "_secondardShow")] private float \_secondaryValue;
 
 // Ranged Floats have the following properties: MinValue, MaxValue, GetRandomInRange
 // Set a custom valid range using the MinMaxRange attribute
 [Header("Ranged Floats")]
-[SerializeField, MinMaxRange(-1, 2)] private RangedFloat _customRangedFloat = new RangedFloat(0.5f);
-[SerializeField] private RangedFloat _rangedFloat = new RangedFloat(0.5f, 1f);
+[SerializeField, MinMaxRange(-1, 2)] private RangedFloat \_customRangedFloat = new RangedFloat(0.5f);
+[SerializeField] private RangedFloat \_rangedFloat = new RangedFloat(0.5f, 1f);
 
 [Button(Spacing = 20)]
 private void NormalButton()
 {
-    Debug.Log("Runs some code when a button in the inspector is clicked");
+Debug.Log("Runs some code when a button in the inspector is clicked");
 }
 
 [Button(Mode = RuntimeMode.OnlyPlaying)]
@@ -110,3 +110,4 @@ A versatile sound system for sound effects and music is optionally included with
 With these various scriptable objects, they can be played from a script with the Play() function or from a unity event in the inspector such as from a UI button.
 
 <ImageEmbed file="unity-event.png" />
+```

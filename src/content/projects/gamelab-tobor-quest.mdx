@@ -54,33 +54,34 @@ private void ReturnToKeyboardController(InputAction.CallbackContext context)
 
 private void OnMouseMovement(InputAction.CallbackContext context)
 {
-    if (!CanUpdate || _ignoreMouseMovement)
-    {
-        return;
-    }
-    if (_wasController)
-    {
-        var center = new Vector2(Screen.width, Screen.height);
-        Mouse.current.WarpCursorPosition(center * 0.5f);
-        _wasController = false;
-        return;
-    }
-    if (_usingMouse)
-    {
-        return;
-    }
-    SetUsingMouse(true);
+if (!CanUpdate || \_ignoreMouseMovement)
+{
+return;
+}
+if (\_wasController)
+{
+var center = new Vector2(Screen.width, Screen.height);
+Mouse.current.WarpCursorPosition(center \* 0.5f);
+\_wasController = false;
+return;
+}
+if (\_usingMouse)
+{
+return;
+}
+SetUsingMouse(true);
 }
 
 private void SetUsingMouse(bool usingMouse, bool setSelected = true)
 {
-    _usingMouse = usingMouse;
-    Cursor.visible = usingMouse;
-    if (setSelected)
-    {
-        SetSelected(usingMouse ? null : _currentlySelected);
-    }
+\_usingMouse = usingMouse;
+Cursor.visible = usingMouse;
+if (setSelected)
+{
+SetSelected(usingMouse ? null : \_currentlySelected);
 }
+}
+
 ```
 </CodeSnippet>
 
@@ -101,3 +102,4 @@ As development neared completion and the game was in content lock, I began profi
 <ImageEmbed file="tobor-quest-team.jpg" />
 
 The Team was all amazing to work with and very talented. It was a pleasure to bring such a fun game to reality.
+```
