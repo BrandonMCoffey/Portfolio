@@ -958,9 +958,11 @@ HTML_PAGE = """<!DOCTYPE html>
 
     document.querySelectorAll(".tab").forEach((btn) => {
       btn.addEventListener("click", () => {
-        document.querySelectorAll(".tab").forEach((b) => b.classList.remove("active"));
-        btn.classList.add("active");
-        activeTab = btn.dataset.tab;
+        const clickedTab = btn.dataset.tab;
+        activeTab = activeTab === clickedTab ? "all" : clickedTab;
+        document.querySelectorAll(".tab").forEach((b) => {
+          b.classList.toggle("active", b.dataset.tab === activeTab);
+        });
         render();
       });
     });

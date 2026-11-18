@@ -502,7 +502,8 @@ const origin = includeHiddenFilter ? "projects-hidden" : "projects";
 
     categoryBtns.forEach((btn) => {
       btn.addEventListener("click", () => {
-        activeCategory = (btn.dataset.categoryFilter || "all").toLowerCase();
+        const clickedCategory = (btn.dataset.categoryFilter || "all").toLowerCase();
+        activeCategory = activeCategory === clickedCategory ? "all" : clickedCategory;
         updateCategoryPillStyles(activeCategory);
         filterAndSortCards();
       });
